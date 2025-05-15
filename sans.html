@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中学受験 社会 サンズ学習！</title>
+    <!-- Google Fonts (PixelMplus12代替として日本語対応ピクセルフォント) -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <!-- Howler.js for sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <!-- Anime.js for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- SweetAlert2 for stylish popups -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Confetti.js for celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- GSAP for additional animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Typed.js for typing animations -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- Hover.css for hover effects -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #000, #001f3f);
+            color: #fff;
+            font-family: 'VT323', monospace;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            font-size: 20px;
+        }
+
+        h1, h2 {
+            border: 2px solid #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 28px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #333, #00f);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 255, 255, 0.2);
+        }
+
+        p::before {
+            content: '＊ ';
+            color: #0f0;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tab {
+            border: 2px solid #fff;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background: #333;
+            color: #ff0;
+        }
+
+        .tab:hover, .tab.active {
+            background: linear-gradient(45deg, #555, #ff0);
+            color: #000;
+        }
+
+        .tab-content {
+            display: none;
+            width: 80%;
+            max-width: 800px;
+            margin: 20px 0;
+            animation: slideIn 0.5s ease-in-out;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00f;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid #fff;
+            background: #222;
+        }
+
+        th, td {
+            border: 1px solid #00f;
+            padding: 8px;
+            text-align: left;
+            color: #fff;
+        }
+
+        .quiz-start {
+            border: 2px solid #fff;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #333, #0f0);
+            color: #000;
+            cursor: pointer;
+            font-size: 20px;
+            margin: 20px 0;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+        }
+
+        .quiz-start:hover {
+            background: linear-gradient(45deg, #0f0, #fff);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .quiz-start::before {
+            content: '＊ ';
+            color: #fff;
+        }
+
+        .quiz-modal, .category-modal, .difficulty-modal, .shop-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            max-width: 800px;
+            max-height: 600px;
+            background: #000;
+            border: 4px solid #fff;
+            padding: 20px;
+            text-align: center;
+            z-index: 2000;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-modal.active, .category-modal.active, .difficulty-modal.active, .shop-modal.active {
+            display: block;
+        }
+
+        .quiz-header {
+            font-size: 24px;
+            border-bottom: 2px solid #ff0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #00f;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: #111;
+            border-radius: 5px;
+        }
+
+        .status span {
+            color: #0f0;
+        }
+
+        .status #hp { color: #0f0; }
+        .status #exp { color: #ff0; }
+        .status #gold { color: #ff0; }
+
+        .quiz-question {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 0 3px #00f;
+        }
+
+        .quiz-options, .category-options, .difficulty-options, .shop-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quiz-option, .category-option, .difficulty-option, .shop-option {
+            border: 2px solid #fff;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #222;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .quiz-option:hover, .quiz-option.selected, 
+        .category-option:hover, .category-option.selected,
+        .difficulty-option:hover, .difficulty-option.selected,
+        .shop-option:hover, .shop-option.selected {
+            background: linear-gradient(45deg, #555, #0f0);
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        .quiz-option::before, .category-option::before, .difficulty-option::before, .shop-option::before {
+            content: '＊ ';
+            color: #0f0;
+        }
+
+        .timer {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #00f;
+            text-shadow: 0 0 3px #00f;
+        }
+
+        .sans-dialog {
+            margin-top: 10px;
+            font-style: italic;
+            text-align: left;
+            padding-left: 20px;
+            color: #fff;
+            background: rgba(0, 0, 255, 0.1);
+            border-left: 4px solid #00f;
+        }
+
+        .sans-dialog::before {
+            content: '＊ ';
+            color: #ff0;
+        }
+
+        .quiz-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .button {
+            border: 2px solid #fff;
+            padding: 8px 16px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #333, #f00);
+            color: #fff;
+            transition: all 0.2s;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(255, 0, 0, 0.3);
+        }
+
+        .button:hover {
+            background: linear-gradient(45deg, #f00, #fff);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .game-over {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            max-width: 800px;
+            max-height: 600px;
+            background: #000;
+            border: 4px solid #f00;
+            padding: 20px;
+            text-align: center;
+            z-index: 2000;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .game-over.active {
+            display: block;
+        }
+
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            max-width: 800px;
+            max-height: 600px;
+            background: #000;
+            border: 4px solid #fff;
+            padding: 20px;
+            text-align: center;
+            z-index: 2000;
+            border-radius: 10px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 16px;
+            color: #ff0;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border: 2px solid #00f;
+            border-radius: 5px;
+        }
+
+        footer p::before {
+            content: '＊ ';
+            color: #0f0;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-5px); }
+        }
+
+        @keyframes shrinkCircle {
+            0% { width: 300px; height: 300px; opacity: 0.8; border: 10px solid #0f0; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+            100% { width: 0; height: 0; opacity: 0; border: 0; }
+        }
+
+        @keyframes vibrate {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px); }
+            50% { transform: translateY(5px); }
+            75% { transform: translateY(-5px); }
+        }
+
+        @keyframes wrongEffect {
+            0% { background-color: #000; }
+            50% { background-color: #f00; }
+            100% { background-color: #000; }
+        }
+
+        @keyframes boneAttack {
+            0% { content: '＊'; position: absolute; top: 0; left: -20px; }
+            100% { content: '＊'; position: absolute; top: 0; left: 100%; }
+        }
+
+        @keyframes buzzerShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        .effect-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            font-size: 200px;
+            text-shadow: 0 0 20px #fff;
+        }
+
+        .correct .effect-overlay, .wrong .effect-overlay {
+            display: flex;
+        }
+
+        .correct .effect-overlay {
+            color: #0f0;
+        }
+
+        .wrong .effect-overlay {
+            color: #f00;
+        }
+
+        .hvr-grow {
+            display: inline-block;
+            vertical-align: middle;
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            transition-duration: 0.3s;
+            transition-property: transform;
+        }
+
+        .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loadingModal">
+        <p>サンズがデータを掘り起こしてるぜ...</p>
+    </div>
+
+    <header>
+        <h1>中学受験 社会 サンズ学習！</h1>
+        <p>よお、キッド。社会を骨まで学びな！</p>
+    </header>
+
+    <button class="quiz-start hvr-grow" onclick="showDifficultyModal()">クイズを始める！</button>
+
+    <div class="tabs">
+        <div class="tab active hvr-grow" onclick="showTab('geography')">地理</div>
+        <div class="tab hvr-grow" onclick="showTab('history')">歴史</div>
+        <div class="tab hvr-grow" onclick="showTab('civics')">公民</div>
+        <div class="tab hvr-grow" onclick="showTab('regions')">地域</div>
+    </div>
+
+    <div class="tab-content active" id="geography-tab">
+        <h2>地理</h2>
+        <table id="geography-table">
+            <tr><th>用語</th><th>説明</th></tr>
+        </table>
+        <p>サンズ「この骨、掘り起こしてみな！」</p>
+        <p>注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
+    </div>
+
+    <div class="tab-content" id="history-tab">
+        <h2>歴史</h2>
+        <table id="history-table">
+            <tr><th>用語</th><th>説明</th></tr>
+        </table>
+        <p>サンズ「古い骨にもコツがあるぜ」</p>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div class="tab-content" id="civics-tab">
+        <h2>公民</h2>
+        <table id="civics-table">
+            <tr><th>用語</th><th>説明</th></tr>
+        </table>
+        <p>サンズ「ソウルをシャープに保てよ」</p>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div class="tab-content" id="regions-tab">
+        <h2>地域</h2>
+        <table id="regions-table">
+            <tr><th>用語</th><th>説明</th></tr>
+        </table>
+        <p>サンズ「この場所、ホコリを払え！」</p>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div class="difficulty-modal" id="difficultyModal">
+        <div class="quiz-header">難易度を選べ、キッド！</div>
+        <div class="difficulty-options" id="difficultyOptions">
+            <div class="difficulty-option hvr-grow" onclick="setDifficulty('easy')">初級（タイマー40秒、ダメージ-3）</div>
+            <div class="difficulty-option hvr-grow" onclick="setDifficulty('medium')">中級（タイマー30秒、ダメージ-5）</div>
+            <div class="difficulty-option hvr-grow" onclick="setDifficulty('hard')">上級（タイマー20秒、ダメージ-7）</div>
+        </div>
+        <div class="sans-dialog" id="difficultyDialog">どの難易度で骨を折るんだ？ 選べよ！</div>
+    </div>
+
+    <div class="category-modal" id="categoryModal">
+        <div class="quiz-header">カテゴリを選べ、キッド！</div>
+        <div class="category-options" id="categoryOptions">
+            <div class="category-option hvr-grow" onclick="startQuiz('geography')">地理</div>
+            <div class="category-option hvr-grow" onclick="startQuiz('history')">歴史</div>
+            <div class="category-option hvr-grow" onclick="startQuiz('civics')">公民</div>
+            <div class="category-option hvr-grow" onclick="startQuiz('regions')">地域</div>
+        </div>
+        <div class="sans-dialog" id="categoryDialog">どの骨を掘り起こすんだ？ 選べよ！</div>
+    </div>
+
+    <div class="quiz-modal" id="quizModal">
+        <div class="effect-overlay" id="effectOverlay"></div>
+        <div class="quiz-header">サンズのクイズバトル！ VS <span id="monsterName"></span></div>
+        <div class="status">
+            <span>HP: <span id="hp">20/20</span></span>
+            <span>EXP: <span id="exp">0/10</span></span>
+            <span>GOLD: <span id="gold">0</span></span>
+        </div>
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="timer">残り: <span id="timer">30</span>秒</div>
+        <div class="sans-dialog" id="sansDialog">よお、キッド。この問題、骨が折れるぜ！</div>
+        <div class="quiz-buttons">
+            <button class="button hvr-grow" onclick="openShop()">アイテム</button>
+            <button class="button hvr-grow" onclick="nextQuestion()">次の敵</button>
+            <button class="button hvr-grow" onclick="closeQuiz()">逃げる</button>
+        </div>
+    </div>
+
+    <div class="shop-modal" id="shopModal">
+        <div class="quiz-header">サンズのショップだぜ！</div>
+        <div class="shop-options" id="shopOptions">
+            <div class="shop-option hvr-grow" onclick="buyItem('pie')">バタースコッチパイ（HP+10、20G）</div>
+            <div class="shop-option hvr-grow" onclick="buyItem('coffee')">サンズのコーヒー（タイマー+5秒、10G）</div>
+        </div>
+        <div class="sans-dialog" id="shopDialog">何を買うんだ、キッド？ GOLD: <span id="shopGold">0</span></div>
+        <div class="quiz-buttons">
+            <button class="button hvr-grow" onclick="closeShop()">戻る</button>
+        </div>
+    </div>
+
+    <div class="game-over" id="gameOver">
+        <h2>ゲームオーバー</h2>
+        <p>骨折れちまったな、キッド。もう一度？</p>
+        <div>
+            <button class="button hvr-grow" onclick="retryQuiz()">もう一度</button>
+            <button class="button hvr-grow" onclick="closeGameOver()">やめる</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>サンズがロード中...</p>
+        <p>© 2025 サンズ学習 | がんばれよ、キッド。</p>
+    </footer>
+
+    <script>
+        let data = {};
+        let hp = 20;
+        let maxHp = 20;
+        let exp = 0;
+        let gold = 0;
+        let timeLeft = 30;
+        let damage = 5;
+        let timerInterval;
+        let currentQuestion = null;
+        let selectedOption = null;
+        let currentCategory = null;
+        let quizData = [];
+        let difficulty = 'medium';
+        let currentMonster = null;
+        let typed;
+        let questionCount = 0;
+        const maxQuestions = 10;
+
+        // サウンドの初期化
+        const correctSound = new Howl({
+            src: ['correct.mp3'], // 代替音（剣の音）
+            volume: 0.5
+        });
+        const wrongSound = new Howl({
+            src: ['incorrect.mp3'], // 代替音（ブザー音）
+            volume: 0.5
+        });
+
+        const monsters = [
+            { name: 'フロギー', hp: 10 },
+            { name: 'テミー', hp: 8 },
+            { name: 'モルデン', hp: 12 },
+            { name: 'ナプスタブルーク', hp: 15 }
+        ];
+
+        // JSONファイルの読み込み
+        async function loadData() {
+            document.getElementById('loadingModal').classList.add('active');
+            try {
+                const [civics, geography, history, regions] = await Promise.all([
+                    fetch('civics.json').then(res => res.json()),
+                    fetch('geography.json').then(res => res.json()),
+                    fetch('history.json').then(res => res.json()),
+                    fetch('regions.json').then(res => res.json())
+                ]);
+                data = { civics, geography, history, regions };
+                populateTable('geography', 'geography');
+                populateTable('history', 'history');
+                populateTable('civics', 'civics');
+                populateTable('regions', 'regions');
+                document.getElementById('loadingModal').classList.remove('active');
+            } catch (error) {
+                document.getElementById('loadingModal').innerHTML = '<p>おっと、骨が折れたぜ...データが読み込めねえ！</p>';
+                console.error('Error loading JSON:', error);
+            }
+        }
+
+        // 表の動的生成
+        function populateTable(sectionId, dataKey) {
+            const table = document.getElementById(`${sectionId}-table`);
+            data[dataKey].forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${item.term}</td><td>${item.description}</td>`;
+                table.appendChild(row);
+            });
+        }
+
+        // タブ切り替え
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+        }
+
+        // クイズデータの生成（10問に制限）
+        function generateQuizData(category) {
+            const allQuestions = data[category].map(item => {
+                const otherOptions = data[category]
+                    .filter(i => i.term !== item.term)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(i => i.term);
+                const options = [...otherOptions, item.term].sort(() => Math.random() - 0.5);
+                return {
+                    question: `${item.description}といえば、次のうちどれ？`,
+                    options,
+                    answer: item.term
+                };
+            });
+            return allQuestions.sort(() => Math.random() - 0.5).slice(0, maxQuestions);
+        }
+
+        function showDifficultyModal() {
+            if (Object.keys(data).length === 0) {
+                document.getElementById('loadingModal').innerHTML = '<p>データがまだだ、キッド。ちょっと待たな！</p>';
+                return;
+            }
+            document.getElementById('difficultyModal').classList.add('active');
+            updateDialog('difficultyDialog', 'どの難易度で骨を折るんだ？ 選べよ！');
+        }
+
+        function setDifficulty(level) {
+            difficulty = level;
+            if (level === 'easy') {
+                timeLeft = 40;
+                damage = 3;
+            } else if (level === 'medium') {
+                timeLeft = 30;
+                damage = 5;
+            } else if (level === 'hard') {
+                timeLeft = 20;
+                damage = 7;
+            }
+            document.getElementById('difficultyModal').classList.remove('active');
+            showCategoryModal();
+        }
+
+        function showCategoryModal() {
+            document.getElementById('categoryModal').classList.add('active');
+            updateDialog('categoryDialog', 'どの骨を掘り起こすんだ？ 選べよ！');
+        }
+
+        function startQuiz(category) {
+            currentCategory = category;
+            quizData = generateQuizData(category);
+            questionCount = 0;
+            document.getElementById('categoryModal').classList.remove('active');
+            document.getElementById('quizModal').classList.add('active');
+            spawnMonster();
+            updateStatus();
+            nextQuestion();
+            startTimer();
+        }
+
+        function spawnMonster() {
+            currentMonster = { ...monsters[Math.floor(Math.random() * monsters.length)] };
+            document.getElementById('monsterName').textContent = currentMonster.name;
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizModal').classList.remove('active');
+            clearInterval(timerInterval);
+            if (typed) typed.destroy();
+        }
+
+        function startTimer() {
+            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
+            document.getElementById('timer').textContent = timeLeft;
+            if (timerInterval) clearInterval(timerInterval); // 既存のタイマーをクリア
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    hp -= damage;
+                    updateStatus();
+                    updateDialog('sansDialog', '時間切れだ、キッド。骨折れたな！');
+                    document.getElementById('quizModal').classList.add('wrong');
+                    if (hp <= 0) {
+                        showGameOver();
+                    } else {
+                        setTimeout(nextQuestion, 1500); // 時間切れ後に次の問題へ
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateStatus() {
+            document.getElementById('hp').textContent = `${hp}/${maxHp}`;
+            document.getElementById('exp').textContent = `${exp}/10`;
+            document.getElementById('gold').textContent = gold;
+        }
+
+        function updateDialog(elementId, text) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = '＊ ';
+                if (typed) typed.destroy();
+                typed = new Typed(`#${elementId}`, {
+                    strings: ['＊ ' + text],
+                    typeSpeed: 50,
+                    showCursor: false,
+                    contentType: 'text'
+                });
+            }
+        }
+
+        function nextQuestion() {
+            if (questionCount >= maxQuestions) {
+                document.getElementById('quizModal').classList.remove('active');
+                clearInterval(timerInterval);
+                Swal.fire({
+                    title: 'クリア！',
+                    text: '10問クリアしたぜ、キッド！よくやったな！',
+                    icon: 'success',
+                    confirmButtonText: 'もう一度',
+                    background: '#000',
+                    color: '#fff',
+                    confirmButtonColor: '#0f0'
+                }).then(() => {
+                    retryQuiz();
+                });
+                return;
+            }
+
+            if (!currentQuestion || (selectedOption !== null && hp > 0)) { // 回答後または時間切れ時のみ進む
+                clearInterval(timerInterval);
+                startTimer();
+                currentQuestion = quizData[questionCount];
+                questionCount++;
+                document.getElementById('quizQuestion').textContent = currentQuestion.question;
+                const optionsDiv = document.getElementById('quizOptions');
+                optionsDiv.innerHTML = '';
+                currentQuestion.options.forEach(option => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'quiz-option hvr-grow';
+                    optionDiv.textContent = option;
+                    optionDiv.onclick = () => {
+                        document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                        optionDiv.classList.add('selected');
+                        selectedOption = option;
+                        submitAnswer(); // 選択時に即攻撃
+                    };
+                    optionsDiv.appendChild(optionDiv);
+                });
+                updateDialog('sansDialog', 'よお、キッド。この問題、骨が折れるぜ！');
+                selectedOption = null;
+                document.getElementById('quizModal').classList.remove('correct', 'wrong'); // エフェクトのリセット
+            }
+        }
+
+        function submitAnswer() {
+            if (!selectedOption) {
+                updateDialog('sansDialog', '答えを選べよ、キッド！');
+                return;
+            }
+            clearInterval(timerInterval);
+            if (selectedOption === currentQuestion.answer) {
+                exp += 2;
+                gold += 5;
+                currentMonster.hp -= 5;
+                updateDialog('sansDialog', 'グサッ！やるじゃねえか、キッド！敵にダメージだ！');
+                document.getElementById('quizModal').classList.add('correct');
+                // 全画面「〇」エフェクト
+                const overlay = document.getElementById('effectOverlay');
+                overlay.textContent = '〇';
+                gsap.to(overlay, {
+                    scale: 2,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onStart: () => {
+                        overlay.style.display = 'flex';
+                    }
+                });
+                gsap.to(overlay, {
+                    scale: 3,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: 0.5,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        overlay.style.display = 'none';
+                    }
+                });
+                // 効果音再生
+                correctSound.play();
+                // 紙吹雪（Confetti.js）
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#0f0', '#ff0', '#fff']
+                });
+                if (currentMonster.hp <= 0) {
+                    updateDialog('sansDialog', `${currentMonster.name}を倒したぜ！次の敵だ！`);
+                    spawnMonster();
+                }
+            } else {
+                hp -= damage;
+                updateDialog('sansDialog', 'ぶっぶー！骨折れたな！敵の攻撃だ！');
+                document.getElementById('quizModal').classList.add('wrong');
+                // 全画面「×」エフェクト
+                const overlay = document.getElementById('effectOverlay');
+                overlay.textContent = '×';
+                gsap.to(overlay, {
+                    scale: 2,
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)",
+                    onStart: () => {
+                        overlay.style.display = 'flex';
+                    }
+                });
+                gsap.to(overlay, {
+                    scale: 3,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: 0.5,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        overlay.style.display = 'none';
+                    }
+                });
+                // 効果音再生
+                wrongSound.play();
+            }
+            updateStatus();
+            if (exp >= 10) {
+                updateDialog('sansDialog', 'レベルアップだ、キッド！HP上限が増えたぜ！');
+                exp = 0;
+                maxHp += 5;
+                hp += 5;
+            }
+            if (hp <= 0) {
+                showGameOver();
+            } else {
+                setTimeout(() => {
+                    nextQuestion();
+                    document.getElementById('quizModal').classList.remove('correct', 'wrong'); // エフェクト終了後にリセット
+                }, 1500);
+            }
+        }
+
+        function openShop() {
+            document.getElementById('shopModal').classList.add('active');
+            document.getElementById('shopGold').textContent = gold;
+            updateDialog('shopDialog', `何を買うんだ、キッド？ GOLD: ${gold}`);
+        }
+
+        function buyItem(item) {
+            let message = '';
+            if (item === 'pie' && gold >= 20) {
+                gold -= 20;
+                hp = Math.min(maxHp, hp + 10);
+                message = 'バタースコッチパイだ！HPが回復したぜ！';
+            } else if (item === 'coffee' && gold >= 10) {
+                gold -= 10;
+                timeLeft += 5;
+                message = 'サンズのコーヒーだ！時間が伸びたぜ！';
+            } else {
+                message = 'GOLDが足りねえぜ、キッド！';
+            }
+            updateStatus();
+            document.getElementById('shopGold').textContent = gold;
+            updateDialog('shopDialog', message);
+        }
+
+        function closeShop() {
+            document.getElementById('shopModal').classList.remove('active');
+        }
+
+        function showGameOver() {
+            document.getElementById('quizModal').classList.remove('active');
+            // SweetAlert2でゲームオーバーポップアップ
+            Swal.fire({
+                title: 'ゲームオーバー',
+                text: '骨折れちまったな、キッド。もう一度？',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'もう一度',
+                cancelButtonText: 'やめる',
+                background: '#000',
+                color: '#fff',
+                confirmButtonColor: '#0f0',
+                cancelButtonColor: '#f00'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    retryQuiz();
+                } else {
+                    closeGameOver();
+                }
+            });
+            clearInterval(timerInterval);
+        }
+
+        function retryQuiz() {
+            hp = 20;
+            maxHp = 20;
+            exp = 0;
+            gold = 0;
+            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
+            damage = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 5 : 7;
+            updateStatus();
+            startQuiz(currentCategory);
+        }
+
+        function closeGameOver() {
+            hp = 20;
+            maxHp = 20;
+            exp = 0;
+            gold = 0;
+            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
+            damage = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 5 : 7;
+            updateStatus();
+            clearInterval(timerInterval);
+        }
+
+        // キーボード操作対応
+        document.addEventListener('keydown', (e) => {
+            const quizModal = document.getElementById('quizModal');
+            const categoryModal = document.getElementById('categoryModal');
+            const difficultyModal = document.getElementById('difficultyModal');
+            const shopModal = document.getElementById('shopModal');
+
+            if (quizModal.classList.contains('active')) {
+                const options = document.querySelectorAll('.quiz-option');
+                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
+
+                if (e.key === 'ArrowUp') {
+                    if (selectedIndex > 0) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex - 1].classList.add('selected');
+                        selectedOption = options[selectedIndex - 1].textContent;
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    if (selectedIndex < options.length - 1) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex + 1].classList.add('selected');
+                        selectedOption = options[selectedIndex + 1].textContent;
+                    }
+                } else if (e.key === 'z' || e.key === 'Enter') {
+                    if (selectedOption) submitAnswer();
+                }
+            } else if (categoryModal.classList.contains('active')) {
+                const options = document.querySelectorAll('.category-option');
+                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
+
+                if (e.key === 'ArrowUp') {
+                    if (selectedIndex > 0) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex - 1].classList.add('selected');
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    if (selectedIndex < options.length - 1) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex + 1].classList.add('selected');
+                    }
+                } else if (e.key === 'z' || e.key === 'Enter') {
+                    const selected = options[selectedIndex];
+                    if (selected) {
+                        startQuiz(selected.textContent.toLowerCase());
+                    }
+                }
+            } else if (difficultyModal.classList.contains('active')) {
+                const options = document.querySelectorAll('.difficulty-option');
+                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
+
+                if (e.key === 'ArrowUp') {
+                    if (selectedIndex > 0) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex - 1].classList.add('selected');
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    if (selectedIndex < options.length - 1) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex + 1].classList.add('selected');
+                    }
+                } else if (e.key === 'z' || e.key === 'Enter') {
+                    const selected = options[selectedIndex];
+                    if (selected) {
+                        setDifficulty(selected.textContent.toLowerCase().split('（')[0]);
+                    }
+                }
+            } else if (shopModal.classList.contains('active')) {
+                const options = document.querySelectorAll('.shop-option');
+                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
+
+                if (e.key === 'ArrowUp') {
+                    if (selectedIndex > 0) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex - 1].classList.add('selected');
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    if (selectedIndex < options.length - 1) {
+                        options[selectedIndex].classList.remove('selected');
+                        options[selectedIndex + 1].classList.add('selected');
+                    }
+                } else if (e.key === 'z' || e.key === 'Enter') {
+                    const selected = options[selectedIndex];
+                    if (selected) {
+                        buyItem(selected.textContent.toLowerCase().split('（')[0]);
+                    }
+                }
+            }
+        });
+
+        // ページ読み込み時にデータを取得
+        loadData();
+    </script>
+</body>
+</html>
