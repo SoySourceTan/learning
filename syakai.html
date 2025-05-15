@@ -225,7 +225,8 @@
     </footer>
 
     <script>
-        // JSONファイルのURL（同じディレクトリ）
+        // JSONファイルのURL（GitHub Pages用にリポジトリ名を考慮）
+        // 注意: リポジトリ名が異なる場合、''を実際の名前に変更
         const jsonFiles = {
             geography: 'geography.json',
             history: 'history.json',
@@ -259,14 +260,30 @@
             wrongSound.volume = 0.3;
         } catch (e) {
             console.error('音声ファイルの読み込みエラー:', e);
+            showToast('効果音の読み込みに失敗しました。', 'error');
         }
 
         // JSONを読み込んで表に表示
         async function loadJson(category, tableId) {
             try {
-                const response = await fetch(jsonFiles[category]);
-                if (!response.ok) throw new Error(`${category}の読み込みに失敗: ${response.status}`);
+                console.log(`Fetching ${category} from ${jsonFiles[category]}`);
+                const response = await fetch(jsonFiles[category], {
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    cache: 'no-store' // キャッシュを回避
+                });
+                if (!response.ok) {
+                    throw new Error(`${category}の読み込みに失敗: ${response.status} ${response.statusText}`);
+                }
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    throw new Error(`${category}のMIMEタイプが不正: ${contentType}`);
+                }
                 const data = await response.json();
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error(`${category}のデータが空または無効`);
+                }
                 allData[category] = data;
 
                 const tableBody = document.getElementById(tableId);
@@ -280,8 +297,8 @@
                     tableBody.appendChild(row);
                 });
             } catch (error) {
-                console.error('エラー:', error);
-                document.getElementById(tableId).innerHTML = '<tr><td colspan="2" class="text-center py-4">データの読み込みに失敗しました</td></tr>';
+                console.error(`エラー (${category}):`, error);
+                document.getElementById(tableId).innerHTML = `<tr><td colspan="2" class="text-center py-4">データの読み込みに失敗しました: ${error.message}</td></tr>`;
                 throw error;
             }
         }
@@ -300,6 +317,7 @@
                 speechSynthesis.speak(utterance);
             } catch (e) {
                 console.error('音声読み上げエラー:', e);
+                showToast('音声読み上げに失敗しました。', 'error');
             }
         }
 
@@ -334,21 +352,26 @@
             loading.classList.add('active');
 
             try {
-                // 全てのJSONを確実に読み込む
-                await Promise.all([
-                    loadJson('geography', 'geography-table'),
-                    loadJson('history', 'history-table'),
-                    loadJson('civics', 'civics-table'),
-                    loadJson('regions', 'regions-table')
-                ]);
+                // allDataが空の場合、再度読み込みを試みる
+                if (Object.values(allData).every(arr => arr.length === 0)) {
+                    await Promise.all([
+                        loadJson('geography', 'geography-table'),
+                        loadJson('history', 'history-table'),
+                        loadJson('civics', ' civics-table'),
+                        loadJson('regions', 'regions-table')
+                    ]);
+                }
 
                 quizData = [];
                 for (let category in allData) {
-                    quizData.push(...allData[category].map(item => ({ ...item, category })));
+                    if (allData[category].length > 0) {
+                        quizData.push(...allData[category].map(item => ({ ...item, category })));
+                    }
                 }
 
+                console.log('quizData length:', quizData.length);
                 if (quizData.length < 4) {
-                    showToast('データが不足しています。', 'error');
+                    showToast('データが不足しています（4つ以上の用語が必要です）。', 'error');
                     return;
                 }
 
@@ -359,7 +382,7 @@
                 nextQuestion();
             } catch (error) {
                 console.error('クイズ開始エラー:', error);
-                showToast('クイズの開始に失敗しました。', 'error');
+                showToast(`クイズの開始に失敗しました: ${error.message}`, 'error');
             } finally {
                 loading.classList.remove('active');
             }
@@ -463,9 +486,24 @@
         }
 
         // ページ読み込み時にJSONを読み込む
-        window.onload = () => {
-            // 初期タブ表示
-            showTab('geography');
+        window.onload = async () => {
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            try {
+                await Promise.all([
+                    loadJson('geography', 'geography-table'),
+                    loadJson('history', 'history-table'),
+                    loadJson('civics', 'civics-table'),
+                    loadJson('regions', 'regions-table')
+                ]);
+                showTab('geography');
+            } catch (error) {
+                console.error('初期読み込みエラー:', error);
+                showToast('データの初期読み込みに失敗しました。一部機能が制限されます。', 'error');
+            } finally {
+                loading.classList.remove('active');
+            }
         };
     </script>
 </body>
