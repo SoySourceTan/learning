@@ -259,6 +259,7 @@
                 return;
             }
             currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+            // 同じカテゴリから誤答を選択
             const categoryData = allData[currentQuestion.category].filter(item => item.term !== currentQuestion.term);
             const wrongAnswers = [];
             while (wrongAnswers.length < 3 && categoryData.length > 0) {
