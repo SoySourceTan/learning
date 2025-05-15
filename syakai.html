@@ -4,172 +4,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中学受験 社会 キラキラ学習</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka:wght@400;600&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #bbdefb);
+            min-height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #f0f8ff;
         }
         header {
-            background-color: #ffd700;
-            padding: 20px;
-            text-align: center;
+            background: linear-gradient(45deg, #ffd700, #ffeb3b);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        header h1 {
-            margin: 0;
-            color: #333;
-        }
-        header p {
-            color: #555;
-        }
-        nav {
-            text-align: center;
-            margin: 20px 0;
+        h1 {
+            font-family: 'Comfortaa', cursive;
+            color: #1e40af;
         }
         nav button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 5px;
+            transition: transform 0.2s, background-color 0.3s;
         }
         nav button:hover {
-            background-color: #0056b3;
+            transform: scale(1.1);
+            background-color: #1e40af;
         }
         .tab-content {
-            display: none;
-            margin: 20px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease-in-out;
         }
         .tab-content.active {
-            display: block;
+            opacity: 1;
+        }
+        .tab-content:not(.active) {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
         }
         table {
-            width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
+            width: 100%;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
         }
         th {
-            background-color: #007bff;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background: #3b82f6;
         }
         .quiz-popup {
+            background: white;
+            border-radius: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%); opacity: 0; }
+            to { transform: translate(-50%, -50%); opacity: 1; }
+        }
+        .quiz-options label {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 5px 0;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .quiz-options label:hover {
+            background: #dbeafe;
+        }
+        .quiz-options input:checked + span {
+            font-weight: 600;
+            color: #1e40af;
+        }
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            animation: fadeInOut 3s ease-in-out;
+            z-index: 2000;
+        }
+        .toast.success {
+            background: #10b981;
+        }
+        .toast.error {
+            background: #ef4444;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .star {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: sparkle 1s ease-out forwards;
+        }
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1.5) rotate(180deg); opacity: 0; }
+        }
+        .loading {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
+            background: rgba(0,0,0,0.7);
+            color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            width: 80%;
-            max-width: 500px;
-            z-index: 1000;
+            border-radius: 8px;
+            z-index: 3000;
         }
-        .quiz-popup.active {
+        .loading.active {
             display: block;
-        }
-        .quiz-options label {
-            display: block;
-            margin: 5px 0;
-        }
-        .quiz-popup button {
-            margin: 5px;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>中学受験 社会 キラキラ学習</h1>
-        <p>地理・歴史・公民・地域を楽しく学ぼう！（用語をクリックで発音、検索＆クイズ付き）</p>
+    <header class="py-6">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">中学受験 社会 キラキラ学習</h1>
+            <p class="text-lg mt-2 text-gray-700">地理・歴史・公民・地域を楽しく学ぼう！ <i class="fas fa-star text-yellow-500"></i></p>
+        </div>
     </header>
 
-    <nav>
-        <button onclick="startQuiz()">クイズを始める</button>
+    <nav class="text-center mb-6">
+        <button onclick="startQuiz()" class="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold">
+            <i class="fas fa-rocket mr-2"></i> クイズを始める
+        </button>
     </nav>
 
-    <nav>
-        <button onclick="showTab('geography')">地理</button>
-        <button onclick="showTab('history')">歴史</button>
-        <button onclick="showTab('civics')">公民</button>
-        <button onclick="showTab('regions')">地域</button>
+    <nav class="text-center mb-6">
+        <button onclick="showTab('geography')" class="bg-blue-500 text-white px-4 py-2 rounded-lg mx-2">地理</button>
+        <button onclick="showTab('history')" class="bg-blue-500 text-white px-4 py-2 rounded-lg mx-2">歴史</button>
+        <button onclick="showTab('civics')" class="bg-blue-500 text-white px-4 py-2 rounded-lg mx-2">公民</button>
+        <button onclick="showTab('regions')" class="bg-blue-500 text-white px-4 py-2 rounded-lg mx-2">地域</button>
     </nav>
 
-    <div id="geography" class="tab-content">
-        <h2>地理</h2>
+    <div id="geography" class="tab-content container mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">地理</h2>
         <table>
             <thead>
-                <tr><th>用語</th><th>説明</th></tr>
+                <tr><th class="py-3 px-4 text-left">用語</th><th class="py-3 px-4 text-left">説明</th></tr>
             </thead>
             <tbody id="geography-table"></tbody>
         </table>
-        <p>注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
+        <p class="mt-4 text-sm text-gray-600">注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
     </div>
 
-    <div id="history" class="tab-content">
-        <h2>歴史</h2>
+    <div id="history" class="tab-content container mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">歴史</h2>
         <table>
             <thead>
-                <tr><th>用語</th><th>説明</th></tr>
+                <tr><th class="py-3 px-4 text-left">用語</th><th class="py-3 px-4 text-left">説明</th></tr>
             </thead>
             <tbody id="history-table"></tbody>
         </table>
-        <p>注：中学受験頻出用語を収録。</p>
+        <p class="mt-4 text-sm text-gray-600">注：中学受験頻出用語を収録。</p>
     </div>
 
-    <div id="civics" class="tab-content">
-        <h2>公民</h2>
+    <div id="civics" class="tab-content container mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">公民</h2>
         <table>
             <thead>
-                <tr><th>用語</th><th>説明</th></tr>
+                <tr><th class="py-3 px-4 text-left">用語</th><th class="py-3 px-4 text-left">説明</th></tr>
             </thead>
             <tbody id="civics-table"></tbody>
         </table>
-        <p>注：中学受験頻出用語を収録。</p>
+        <p class="mt-4 text-sm text-gray-600">注：中学受験頻出用語を収録。</p>
     </div>
 
-    <div id="regions" class="tab-content">
-        <h2>地域</h2>
+    <div id="regions" class="tab-content container mx-auto p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">地域</h2>
         <table>
             <thead>
-                <tr><th>用語</th><th>説明</th></tr>
+                <tr><th class="py-3 px-4 text-left">用語</th><th class="py-3 px-4 text-left">説明</th></tr>
             </thead>
             <tbody id="regions-table"></tbody>
         </table>
-        <p>注：中学受験頻出用語を収録。</p>
+        <p class="mt-4 text-sm text-gray-600">注：中学受験頻出用語を収録。</p>
     </div>
 
-    <div id="quiz-popup" class="quiz-popup">
-        <h2>社会キラキラクイズ</h2>
-        <p id="quiz-score">スコア: 0/10</p>
-        <p id="quiz-question"></p>
+    <div id="quiz-popup" class="quiz-popup hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-6 w-11/12 max-w-lg">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">社会キラキラクイズ</h2>
+        <p id="quiz-score" class="text-lg mb-4">スコア: 0/10</p>
+        <p id="quiz-question" class="text-lg mb-4"></p>
         <div id="quiz-options" class="quiz-options"></div>
-        <button onclick="checkAnswer()">回答</button>
-        <button onclick="closeQuiz()">閉じる</button>
-        <button onclick="nextQuestion()">次の問題</button>
+        <div id="quiz-result" class="text-center my-4 hidden">
+            <i id="result-icon" class="text-4xl"></i>
+            <p id="result-text" class="text-lg mt-2"></p>
+        </div>
+        <div class="flex justify-center gap-4">
+            <button onclick="checkAnswer()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">回答</button>
+            <button onclick="closeQuiz()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">閉じる</button>
+            <button onclick="nextQuestion()" class="bg-green-500 text-white px-4 py-2 rounded-lg">次の問題</button>
+        </div>
+        <p id="quiz-timer" class="text-center mt-4 text-gray-600">残り: 30秒</p>
     </div>
 
-    <footer>
+    <div id="loading" class="loading">データ読み込み中...</div>
+
+    <footer class="text-center py-6 text-gray-600">
         <p>© 2025 中学受験 社会 キラキラ学習</p>
     </footer>
 
@@ -195,13 +246,26 @@
         let currentQuestion = null;
         let score = 0;
         let questionCount = 0;
+        let timer = null;
         const maxQuestions = 10;
+        const timeLimit = 30; // 秒
+
+        // サウンド（ローカルファイルに仮置き）
+        let correctSound, wrongSound;
+        try {
+            correctSound = new Audio('./assets/correct.mp3');
+            wrongSound = new Audio('./assets/wrong.mp3');
+            correctSound.volume = 0.3;
+            wrongSound.volume = 0.3;
+        } catch (e) {
+            console.error('音声ファイルの読み込みエラー:', e);
+        }
 
         // JSONを読み込んで表に表示
         async function loadJson(category, tableId) {
             try {
                 const response = await fetch(jsonFiles[category]);
-                if (!response.ok) throw new Error(`${category}の読み込みに失敗`);
+                if (!response.ok) throw new Error(`${category}の読み込みに失敗: ${response.status}`);
                 const data = await response.json();
                 allData[category] = data;
 
@@ -210,14 +274,15 @@
                 data.forEach(item => {
                     const row = document.createElement('tr');
                     row.innerHTML = `
-                        <td onclick="speak('${item.term}')">${item.term}</td>
-                        <td>${item.description}</td>
+                        <td class="py-2 px-4 hover:text-blue-500 cursor-pointer" onclick="speak('${item.term}')">${item.term}</td>
+                        <td class="py-2 px-4">${item.description}</td>
                     `;
                     tableBody.appendChild(row);
                 });
             } catch (error) {
                 console.error('エラー:', error);
-                document.getElementById(tableId).innerHTML = '<tr><td colspan="2">データの読み込みに失敗しました</td></tr>';
+                document.getElementById(tableId).innerHTML = '<tr><td colspan="2" class="text-center py-4">データの読み込みに失敗しました</td></tr>';
+                throw error;
             }
         }
 
@@ -229,37 +294,109 @@
 
         // 音声読み上げ
         function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ja-JP';
-            speechSynthesis.speak(utterance);
+            try {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ja-JP';
+                speechSynthesis.speak(utterance);
+            } catch (e) {
+                console.error('音声読み上げエラー:', e);
+            }
+        }
+
+        // トースト通知
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // キラキラエフェクト
+        function showStars() {
+            const stars = document.createElement('div');
+            stars.className = 'stars';
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.animationDelay = `${Math.random() * 0.5}s`;
+                stars.appendChild(star);
+            }
+            document.getElementById('quiz-popup').appendChild(stars);
+            setTimeout(() => stars.remove(), 1000);
         }
 
         // クイズ開始
-        function startQuiz() {
-            quizData = [];
-            for (let category in allData) {
-                quizData.push(...allData[category].map(item => ({ ...item, category })));
+        async function startQuiz() {
+            const loading = document.getElementById('loading');
+            loading.classList.add('active');
+
+            try {
+                // 全てのJSONを確実に読み込む
+                await Promise.all([
+                    loadJson('geography', 'geography-table'),
+                    loadJson('history', 'history-table'),
+                    loadJson('civics', 'civics-table'),
+                    loadJson('regions', 'regions-table')
+                ]);
+
+                quizData = [];
+                for (let category in allData) {
+                    quizData.push(...allData[category].map(item => ({ ...item, category })));
+                }
+
+                if (quizData.length < 4) {
+                    showToast('データが不足しています。', 'error');
+                    return;
+                }
+
+                score = 0;
+                questionCount = 0;
+                document.getElementById('quiz-score').textContent = `スコア: ${score}/${maxQuestions}`;
+                document.getElementById('quiz-popup').classList.remove('hidden');
+                nextQuestion();
+            } catch (error) {
+                console.error('クイズ開始エラー:', error);
+                showToast('クイズの開始に失敗しました。', 'error');
+            } finally {
+                loading.classList.remove('active');
             }
-            if (quizData.length < 4) {
-                alert('データが不足しています。');
-                return;
-            }
-            score = 0;
-            questionCount = 0;
-            document.getElementById('quiz-score').textContent = `スコア: ${score}/${maxQuestions}`;
-            document.getElementById('quiz-popup').classList.add('active');
-            nextQuestion();
+        }
+
+        // タイマーリセット
+        function resetTimer() {
+            if (timer) clearTimeout(timer);
+            let timeLeft = timeLimit;
+            document.getElementById('quiz-timer').textContent = `残り: ${timeLeft}秒`;
+            const updateTimer = () => {
+                timeLeft--;
+                document.getElementById('quiz-timer').textContent = `残り: ${timeLeft}秒`;
+                if (timeLeft <= 0) {
+                    showToast('時間切れ！', 'error');
+                    try {
+                        wrongSound.play();
+                    } catch (e) {
+                        console.error('不正解音声エラー:', e);
+                    }
+                    nextQuestion();
+                } else {
+                    timer = setTimeout(updateTimer, 1000);
+                }
+            };
+            timer = setTimeout(updateTimer, 1000);
         }
 
         // 次の問題
         function nextQuestion() {
             if (questionCount >= maxQuestions) {
-                alert(`クイズ終了！スコア: ${score}/${maxQuestions}`);
+                const rank = score >= 8 ? '社会マスター！' : score >= 5 ? '社会エキスパート！' : '社会ビギナー！';
+                showToast(`クイズ終了！スコア: ${score}/${maxQuestions} - ${rank}`, 'success');
                 closeQuiz();
                 return;
             }
             currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
-            // 同じカテゴリから誤答を選択
             const categoryData = allData[currentQuestion.category].filter(item => item.term !== currentQuestion.term);
             const wrongAnswers = [];
             while (wrongAnswers.length < 3 && categoryData.length > 0) {
@@ -271,43 +408,63 @@
             document.getElementById('quiz-question').textContent = `(${currentQuestion.category}) ${currentQuestion.description}`;
             const optionsDiv = document.getElementById('quiz-options');
             optionsDiv.innerHTML = options.map(option => `
-                <label>
-                    <input type="radio" name="quiz-option" value="${option}">
-                    ${option}
+                <label class="flex items-center">
+                    <input type="radio" name="quiz-option" value="${option}" class="mr-2">
+                    <span>${option}</span>
                 </label>
             `).join('');
+            document.getElementById('quiz-result').classList.add('hidden');
             questionCount++;
+            resetTimer();
         }
 
         // 回答チェック
         function checkAnswer() {
             const selectedOption = document.querySelector('input[name="quiz-option"]:checked');
             if (!selectedOption) {
-                alert('選択してください。');
+                showToast('選択してください。', 'error');
                 return;
             }
+            clearTimeout(timer);
             const userAnswer = selectedOption.value;
+            const resultDiv = document.getElementById('quiz-result');
+            const resultIcon = document.getElementById('result-icon');
+            const resultText = document.getElementById('result-text');
+            resultDiv.classList.remove('hidden');
+
             if (userAnswer === currentQuestion.term) {
                 score++;
-                alert('正解！');
+                resultIcon.className = 'text-4xl fas fa-check-circle text-green-500';
+                resultText.textContent = '正解！スター獲得！';
+                resultText.className = 'text-lg mt-2 text-green-600';
+                try {
+                    correctSound.play();
+                } catch (e) {
+                    console.error('正解音声エラー:', e);
+                }
+                showStars();
             } else {
-                alert(`不正解。正解は「${currentQuestion.term}」です。`);
+                resultIcon.className = 'text-4xl fas fa-times-circle text-red-500';
+                resultText.textContent = `不正解。正解は「${currentQuestion.term}」`;
+                resultText.className = 'text-lg mt-2 text-red-600';
+                try {
+                    wrongSound.play();
+                } catch (e) {
+                    console.error('不正解音声エラー:', e);
+                }
             }
             document.getElementById('quiz-score').textContent = `スコア: ${score}/${maxQuestions}`;
-            nextQuestion();
         }
 
         // クイズ閉じる
         function closeQuiz() {
-            document.getElementById('quiz-popup').classList.remove('active');
+            document.getElementById('quiz-popup').classList.add('hidden');
+            if (timer) clearTimeout(timer);
         }
 
         // ページ読み込み時にJSONを読み込む
         window.onload = () => {
-            loadJson('geography', 'geography-table');
-            loadJson('history', 'history-table');
-            loadJson('civics', 'civics-table');
-            loadJson('regions', 'regions-table');
+            // 初期タブ表示
             showTab('geography');
         };
     </script>
