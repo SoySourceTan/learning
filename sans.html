@@ -3,22 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中学受験 社会 サンズ学習！</title>
-    <!-- Google Fonts (PixelMplus12代替として日本語対応ピクセルフォント) -->
+    <title>Undertale: 社会学習バトル！</title>
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-    <!-- Howler.js for sound effects -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-    <!-- Anime.js for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <!-- SweetAlert2 for stylish popups -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Confetti.js for celebration -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- GSAP for additional animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <!-- Typed.js for typing animations -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <!-- Hover.css for hover effects -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
     <style>
         body {
@@ -33,594 +25,245 @@
             overflow-x: hidden;
             font-size: 20px;
         }
-
-        h1, h2 {
-            border: 2px solid #fff;
-            padding: 10px;
-            text-align: center;
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, #333, #00f);
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 255, 255, 0.2);
-        }
-
-        p::before {
-            content: '＊ ';
-            color: #0f0;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .tab {
-            border: 2px solid #fff;
-            padding: 8px 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            background: #333;
-            color: #ff0;
-        }
-
-        .tab:hover, .tab.active {
-            background: linear-gradient(45deg, #555, #ff0);
-            color: #000;
-        }
-
-        .tab-content {
-            display: none;
-            width: 80%;
-            max-width: 800px;
-            margin: 20px 0;
-            animation: slideIn 0.5s ease-in-out;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid #00f;
-            padding: 15px;
-            border-radius: 5px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(-50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 2px solid #fff;
-            background: #222;
-        }
-
-        th, td {
-            border: 1px solid #00f;
-            padding: 8px;
-            text-align: left;
-            color: #fff;
-        }
-
-        .quiz-start {
-            border: 2px solid #fff;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #333, #0f0);
-            color: #000;
-            cursor: pointer;
-            font-size: 20px;
-            margin: 20px 0;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
-        }
-
-        .quiz-start:hover {
-            background: linear-gradient(45deg, #0f0, #fff);
-            color: #000;
-            transform: scale(1.05);
-        }
-
-        .quiz-start::before {
-            content: '＊ ';
-            color: #fff;
-        }
-
-        .quiz-modal, .category-modal, .difficulty-modal, .shop-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 90%;
-            max-width: 800px;
-            max-height: 600px;
-            background: #000;
-            border: 4px solid #fff;
-            padding: 20px;
-            text-align: center;
-            z-index: 2000;
-            overflow-y: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-
-        .quiz-modal.active, .category-modal.active, .difficulty-modal.active, .shop-modal.active {
-            display: block;
-        }
-
-        .quiz-header {
-            font-size: 24px;
-            border-bottom: 2px solid #ff0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            color: #0f0;
-            text-shadow: 0 0 5px #0f0;
-        }
-
-        .status {
-            display: flex;
-            justify-content: space-between;
-            border: 2px solid #00f;
-            padding: 10px;
-            margin-bottom: 20px;
-            background: #111;
-            border-radius: 5px;
-        }
-
-        .status span {
-            color: #0f0;
-        }
-
+        body.modal-open { overflow: hidden; }
+        h1 { border: 2px solid #fff; padding: 10px; text-align: center; font-size: 32px; text-transform: uppercase; letter-spacing: 3px; background: linear-gradient(45deg, #333, #00f); color: #fff; box-shadow: 0 6px 12px rgba(0, 255, 255, 0.3); }
+        p::before { content: '＊ '; color: #0f0; }
+        .tabs { display: flex; gap: 15px; margin: 20px 0; }
+        .tab { border: 2px solid #fff; padding: 10px 20px; cursor: pointer; transition: all 0.3s; background: #333; color: #ff0; }
+        .tab:hover, .tab.active { background: linear-gradient(45deg, #555, #ff0); color: #000; transform: scale(1.05); }
+        .tab-content { display: none; width: 85%; max-width: 900px; margin: 20px 0; animation: slideIn 0.5s; background: rgba(0, 0, 0, 0.8); border: 2px solid #00f; padding: 20px; border-radius: 10px; }
+        .tab-content.active { display: block; }
+        @keyframes slideIn { from { transform: translateX(-60px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        table { width: 100%; border-collapse: collapse; border: 2px solid #fff; background: #222; }
+        th, td { border: 1px solid #00f; padding: 10px; text-align: left; color: #fff; }
+        .quiz-start { border: 2px solid #fff; padding: 12px 25px; background: linear-gradient(45deg, #333, #0f0); color: #000; cursor: pointer; font-size: 22px; margin: 20px 0; transition: all 0.3s; box-shadow: 0 6px 12px rgba(0, 255, 0, 0.4); }
+        .quiz-start:hover { background: linear-gradient(45deg, #0f0, #fff); transform: scale(1.1); }
+        .quiz-start::before { content: '＊ '; color: #fff; }
+        .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; max-width: 900px; max-height: 700px; background: #000; border: 4px solid #fff; padding: 25px; text-align: center; z-index: 2000; overflow: auto; border-radius: 15px; box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
+        .modal.active { display: block; }
+        .quiz-header { font-size: 28px; border-bottom: 3px solid #ff0; padding-bottom: 15px; margin-bottom: 25px; color: #0f0; text-shadow: 0 0 8px #0f0; display: flex; align-items: center; justify-content: space-between; }
+        .monster-hp { width: 250px; height: 25px; background: #333; border: 3px solid #fff; border-radius: 8px; overflow: hidden; }
+        .monster-hp-bar { height: 100%; background: #f00; transition: width 0.5s; }
+        .status { display: flex; justify-content: space-between; border: 3px solid #00f; padding: 15px; margin-bottom: 25px; background: #111; border-radius: 8px; }
+        .status span { color: #0f0; }
         .status #hp { color: #0f0; }
         .status #exp { color: #ff0; }
+        .status #level { color: #ff0; }
         .status #gold { color: #ff0; }
-
-        .quiz-question {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #fff;
-            text-shadow: 0 0 3px #00f;
-        }
-
-        .quiz-options, .category-options, .difficulty-options, .shop-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .quiz-option, .category-option, .difficulty-option, .shop-option {
-            border: 2px solid #fff;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: #222;
-            color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .quiz-option:hover, .quiz-option.selected, 
-        .category-option:hover, .category-option.selected,
-        .difficulty-option:hover, .difficulty-option.selected,
-        .shop-option:hover, .shop-option.selected {
-            background: linear-gradient(45deg, #555, #0f0);
-            color: #000;
-            transform: scale(1.02);
-        }
-
-        .quiz-option::before, .category-option::before, .difficulty-option::before, .shop-option::before {
-            content: '＊ ';
-            color: #0f0;
-        }
-
-        .timer {
-            font-size: 18px;
-            margin: 10px 0;
-            color: #00f;
-            text-shadow: 0 0 3px #00f;
-        }
-
-        .sans-dialog {
-            margin-top: 10px;
-            font-style: italic;
-            text-align: left;
-            padding-left: 20px;
-            color: #fff;
-            background: rgba(0, 0, 255, 0.1);
-            border-left: 4px solid #00f;
-        }
-
-        .sans-dialog::before {
-            content: '＊ ';
-            color: #ff0;
-        }
-
-        .quiz-buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .button {
-            border: 2px solid #fff;
-            padding: 8px 16px;
-            cursor: pointer;
-            background: linear-gradient(45deg, #333, #f00);
-            color: #fff;
-            transition: all 0.2s;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(255, 0, 0, 0.3);
-        }
-
-        .button:hover {
-            background: linear-gradient(45deg, #f00, #fff);
-            color: #000;
-            transform: scale(1.05);
-        }
-
-        .game-over {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 90%;
-            max-width: 800px;
-            max-height: 600px;
-            background: #000;
-            border: 4px solid #f00;
-            padding: 20px;
-            text-align: center;
-            z-index: 2000;
-            overflow-y: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-        }
-
-        .game-over.active {
-            display: block;
-        }
-
-        .loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 90%;
-            max-width: 800px;
-            max-height: 600px;
-            background: #000;
-            border: 4px solid #fff;
-            padding: 20px;
-            text-align: center;
-            z-index: 2000;
-            border-radius: 10px;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            font-size: 16px;
-            color: #ff0;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border: 2px solid #00f;
-            border-radius: 5px;
-        }
-
-        footer p::before {
-            content: '＊ ';
-            color: #0f0;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-5px); }
-        }
-
-        @keyframes shrinkCircle {
-            0% { width: 300px; height: 300px; opacity: 0.8; border: 10px solid #0f0; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-            100% { width: 0; height: 0; opacity: 0; border: 0; }
-        }
-
-        @keyframes vibrate {
-            0%, 100% { transform: translateY(0); }
-            25% { transform: translateY(-5px); }
-            50% { transform: translateY(5px); }
-            75% { transform: translateY(-5px); }
-        }
-
-        @keyframes wrongEffect {
-            0% { background-color: #000; }
-            50% { background-color: #f00; }
-            100% { background-color: #000; }
-        }
-
-        @keyframes boneAttack {
-            0% { content: '＊'; position: absolute; top: 0; left: -20px; }
-            100% { content: '＊'; position: absolute; top: 0; left: 100%; }
-        }
-
-        @keyframes buzzerShake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-            20%, 40%, 60%, 80% { transform: translateX(10px); }
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(2); }
-        }
-
-        .effect-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            font-size: 200px;
-            text-shadow: 0 0 20px #fff;
-        }
-
-        .correct .effect-overlay, .wrong .effect-overlay {
-            display: flex;
-        }
-
-        .correct .effect-overlay {
-            color: #0f0;
-        }
-
-        .wrong .effect-overlay {
-            color: #f00;
-        }
-
-        .hvr-grow {
-            display: inline-block;
-            vertical-align: middle;
-            transform: perspective(1px) translateZ(0);
-            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-            transition-duration: 0.3s;
-            transition-property: transform;
-        }
-
-        .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active {
-            transform: scale(1.1);
-        }
+        .quiz-question { font-size: 24px; margin-bottom: 25px; color: #fff; text-shadow: 0 0 5px #00f; }
+        .options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 700px; margin: 0 auto; }
+        .option { border: 2px solid #fff; padding: 12px; cursor: pointer; transition: all 0.3s; background: #222; color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6); text-align: left; }
+        .option:hover, .option.selected { background: linear-gradient(45deg, #555, #0f0); color: #000; transform: scale(1.05); }
+        .timer { font-size: 20px; margin: 15px 0; color: #00f; text-shadow: 0 0 5px #00f; }
+        .dialog { margin-top: 15px; font-style: italic; text-align: left; padding-left: 25px; color: #fff; background: rgba(0, 0, 255, 0.2); border-left: 5px solid #00f; }
+        .dialog::before { content: '＊ '; color: #ff0; }
+        .buttons { margin-top: 25px; display: flex; justify-content: center; gap: 15px; }
+        .button { border: 2px solid #fff; padding: 10px 20px; cursor: pointer; background: linear-gradient(45deg, #333, #f00); color: #fff; transition: all 0.3s; border-radius: 8px; box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4); }
+        .button:hover { background: linear-gradient(45deg, #f00, #fff); color: #000; transform: scale(1.1); }
+        .game-over { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; max-width: 900px; max-height: 700px; background: #000; border: 4px solid #f00; padding: 25px; text-align: center; z-index: 2000; overflow: auto; border-radius: 15px; box-shadow: 0 0 25px rgba(255, 0, 0, 0.6); }
+        .game-over.active { display: block; }
+        .loading { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; max-width: 900px; max-height: 700px; background: #000; border: 4px solid #fff; padding: 25px; text-align: center; z-index: 2000; border-radius: 15px; }
+        .loading.active { display: block; }
+        .stage-clear { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; max-width: 900px; max-height: 700px; background: #000; border: 4px solid #0f0; padding: 25px; text-align: center; z-index: 2000; overflow: auto; border-radius: 15px; box-shadow: 0 0 25px rgba(0, 255, 0, 0.6); }
+        .stage-clear.active { display: block; }
+        footer { margin-top: 50px; text-align: center; font-size: 18px; color: #ff0; background: rgba(0, 0, 0, 0.8); padding: 15px; border: 2px solid #00f; border-radius: 8px; }
+        footer p::before { content: '＊ '; color: #0f0; }
+        .character-image { display: block; margin: 20px auto; max-height: 150px; }
+        .heart { position: absolute; font-size: 25px; z-index: 2500; }
+        .effect-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 3000; justify-content: center; align-items: center; font-size: 250px; text-shadow: 0 0 25px #fff; }
+        .correct .effect-overlay, .wrong .effect-overlay { display: flex; }
+        .correct .effect-overlay { color: #0f0; }
+        .wrong .effect-overlay { color: #f00; }
+        .hvr-grow { display: inline-block; vertical-align: middle; transform: perspective(1px) translateZ(0); box-shadow: 0 0 1px rgba(0, 0, 0, 0); transition-duration: 0.3s; transition-property: transform; }
+        .hvr-grow:hover, .hvr-grow:focus, .hvr-grow:active { transform: scale(1.1); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-6px); } }
+        @keyframes shrinkCircle { 0% { width: 350px; height: 350px; opacity: 0.9; border: 12px solid #0f0; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); } 100% { width: 0; height: 0; opacity: 0; border: 0; } }
+        @keyframes vibrate { 0%, 100% { transform: translateY(0); } 25% { transform: translateY(-6px); } 50% { transform: translateY(6px); } 75% { transform: translateY(-6px); } }
+        @keyframes wrongEffect { 0% { background-color: #000; } 50% { background-color: #f00; } 100% { background-color: #000; } }
+        @keyframes boneAttack { 0% { content: '＊'; position: absolute; top: 0; left: -25px; } 100% { content: '＊'; position: absolute; top: 0; left: 100%; } }
+        @keyframes buzzerShake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-12px); } 20%, 40%, 60%, 80% { transform: translateX(12px); } }
+        @keyframes fadeOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.5); } }
+        @keyframes floatHeart { 0% { transform: translateY(100vh); opacity: 1; } 50% { opacity: 0.9; } 100% { transform: translateY(-100vh); opacity: 0; } }
     </style>
 </head>
 <body>
     <div class="loading" id="loadingModal">
-        <p>サンズがデータを掘り起こしてるぜ...</p>
+        <p>サンズがダンジョンを準備中だぜ...</p>
     </div>
-
-    <header>
-        <h1>中学受験 社会 サンズ学習！</h1>
-        <p>よお、キッド。社会を骨まで学びな！</p>
-    </header>
-
-    <button class="quiz-start hvr-grow" onclick="showDifficultyModal()">クイズを始める！</button>
-
+    <header><h1>Undertale: 社会学習バトル！</h1><p>よお、キッド！社会を骨まで学べ！</p></header>
+    <button class="quiz-start hvr-grow" onclick="showDifficultyModal()">冒険を始めよう！</button>
     <div class="tabs">
         <div class="tab active hvr-grow" onclick="showTab('geography')">地理</div>
         <div class="tab hvr-grow" onclick="showTab('history')">歴史</div>
         <div class="tab hvr-grow" onclick="showTab('civics')">公民</div>
         <div class="tab hvr-grow" onclick="showTab('regions')">地域</div>
     </div>
-
     <div class="tab-content active" id="geography-tab">
-        <h2>地理</h2>
-        <table id="geography-table">
-            <tr><th>用語</th><th>説明</th></tr>
-        </table>
-        <p>サンズ「この骨、掘り起こしてみな！」</p>
+        <h2>地理の書</h2>
+        <table id="geography-table"><tr><th>用語</th><th>説明</th></tr></table>
+        <p>サンズ「この世界地図、掘り起こしてみな！」</p>
         <p>注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
     </div>
-
     <div class="tab-content" id="history-tab">
-        <h2>歴史</h2>
-        <table id="history-table">
-            <tr><th>用語</th><th>説明</th></tr>
-        </table>
-        <p>サンズ「古い骨にもコツがあるぜ」</p>
+        <h2>歴史の書</h2>
+        <table id="history-table"><tr><th>用語</th><th>説明</th></tr></table>
+        <p>サンズ「過去の骨を読み解けよ！」</p>
         <p>注：中学受験頻出用語を収録。</p>
     </div>
-
     <div class="tab-content" id="civics-tab">
-        <h2>公民</h2>
-        <table id="civics-table">
-            <tr><th>用語</th><th>説明</th></tr>
-        </table>
-        <p>サンズ「ソウルをシャープに保てよ」</p>
+        <h2>公民の書</h2>
+        <table id="civics-table"><tr><th>用語</th><th>説明</th></tr></table>
+        <p>サンズ「ソウルを鍛え上げろ！」</p>
         <p>注：中学受験頻出用語を収録。</p>
     </div>
-
     <div class="tab-content" id="regions-tab">
-        <h2>地域</h2>
-        <table id="regions-table">
-            <tr><th>用語</th><th>説明</th></tr>
-        </table>
-        <p>サンズ「この場所、ホコリを払え！」</p>
+        <h2>地域の書</h2>
+        <table id="regions-table"><tr><th>用語</th><th>説明</th></tr></table>
+        <p>サンズ「各地の秘密を暴け！」</p>
         <p>注：中学受験頻出用語を収録。</p>
     </div>
-
-    <div class="difficulty-modal" id="difficultyModal">
-        <div class="quiz-header">難易度を選べ、キッド！</div>
-        <div class="difficulty-options" id="difficultyOptions">
-            <div class="difficulty-option hvr-grow" onclick="setDifficulty('easy')">初級（タイマー40秒、ダメージ-3）</div>
-            <div class="difficulty-option hvr-grow" onclick="setDifficulty('medium')">中級（タイマー30秒、ダメージ-5）</div>
-            <div class="difficulty-option hvr-grow" onclick="setDifficulty('hard')">上級（タイマー20秒、ダメージ-7）</div>
+    <div class="modal difficulty-modal" id="difficultyModal">
+        <div class="quiz-header">難易度を選べ、勇者！</div>
+        <div class="options" id="difficultyOptions">
+            <div class="option hvr-grow" onclick="setDifficulty('easy')">初級（40秒、ダメージ-3）</div>
+            <div class="option hvr-grow" onclick="setDifficulty('medium')">中級（30秒、ダメージ-5）</div>
+            <div class="option hvr-grow" onclick="setDifficulty('hard')">上級（20秒、ダメージ-7）</div>
         </div>
-        <div class="sans-dialog" id="difficultyDialog">どの難易度で骨を折るんだ？ 選べよ！</div>
+        <div class="dialog" id="difficultyDialog">どの道で冒険を始めるんだ？選べよ！</div>
+        <img src="undertale/papi.png" alt="Papyrus" class="character-image">
     </div>
-
-    <div class="category-modal" id="categoryModal">
-        <div class="quiz-header">カテゴリを選べ、キッド！</div>
-        <div class="category-options" id="categoryOptions">
-            <div class="category-option hvr-grow" onclick="startQuiz('geography')">地理</div>
-            <div class="category-option hvr-grow" onclick="startQuiz('history')">歴史</div>
-            <div class="category-option hvr-grow" onclick="startQuiz('civics')">公民</div>
-            <div class="category-option hvr-grow" onclick="startQuiz('regions')">地域</div>
+    <div class="modal category-modal" id="categoryModal">
+        <div class="quiz-header">冒険の書を選べ！我が子よ</div>
+        <div class="options" id="categoryOptions">
+            <div class="option hvr-grow" onclick="startQuest('geography')">地理</div>
+            <div class="option hvr-grow" onclick="startQuest('history')">歴史</div>
+            <div class="option hvr-grow" onclick="startQuest('civics')">公民</div>
+            <div class="option hvr-grow" onclick="startQuest('regions')">地域</div>
         </div>
-        <div class="sans-dialog" id="categoryDialog">どの骨を掘り起こすんだ？ 選べよ！</div>
+        <div class="dialog" id="categoryDialog">どの書を読み解くんだ？選べよ！</div>
+        <img src="undertale/tri.png" alt="Toriel" class="character-image">
     </div>
-
-    <div class="quiz-modal" id="quizModal">
+    <div class="modal quiz-modal" id="quizModal">
         <div class="effect-overlay" id="effectOverlay"></div>
-        <div class="quiz-header">サンズのクイズバトル！ VS <span id="monsterName"></span></div>
+        <div class="quiz-header">バトル！ VS <span id="monsterName"></span>
+            <div class="monster-hp" id="monsterHP">
+                <div class="monster-hp-bar" id="monsterHPBar"></div>
+            </div>
+        </div>
         <div class="status">
             <span>HP: <span id="hp">20/20</span></span>
-            <span>EXP: <span id="exp">0/10</span></span>
+            <span>EXP: <span id="exp">0</span></span>
+            <span>Level: <span id="level">1</span></span>
             <span>GOLD: <span id="gold">0</span></span>
         </div>
         <div class="quiz-question" id="quizQuestion"></div>
-        <div class="quiz-options" id="quizOptions"></div>
+        <div class="options" id="quizOptions"></div>
         <div class="timer">残り: <span id="timer">30</span>秒</div>
-        <div class="sans-dialog" id="sansDialog">よお、キッド。この問題、骨が折れるぜ！</div>
-        <div class="quiz-buttons">
-            <button class="button hvr-grow" onclick="openShop()">アイテム</button>
-            <button class="button hvr-grow" onclick="nextQuestion()">次の敵</button>
-            <button class="button hvr-grow" onclick="closeQuiz()">逃げる</button>
+        <div class="dialog" id="sansDialog">よお、勇者！この試練、乗り越えろ！</div>
+        <div class="buttons">
+            <button class="button hvr-grow" onclick="openShop()">ショップ</button>
+            <button class="button hvr-grow" onclick="useHint()">ヒント</button>
+            <button class="button hvr-grow" onclick="flee()">逃げる</button>
         </div>
+        <img src="undertale/flo.png" alt="Flowey" class="character-image">
     </div>
-
-    <div class="shop-modal" id="shopModal">
-        <div class="quiz-header">サンズのショップだぜ！</div>
-        <div class="shop-options" id="shopOptions">
-            <div class="shop-option hvr-grow" onclick="buyItem('pie')">バタースコッチパイ（HP+10、20G）</div>
-            <div class="shop-option hvr-grow" onclick="buyItem('coffee')">サンズのコーヒー（タイマー+5秒、10G）</div>
+    <div class="modal shop-modal" id="shopModal">
+        <div class="quiz-header">サンズのショップ！</div>
+        <div class="options" id="shopOptions">
+            <div class="option hvr-grow" onclick="buyItem('pie')">パイ（HP+15、30G）</div>
+            <div class="option hvr-grow" onclick="buyItem('coffee')">コーヒー（+10秒、15G）</div>
+            <div class="option hvr-grow" onclick="buyItem('hint')">ヒント券（1回、20G）</div>
         </div>
-        <div class="sans-dialog" id="shopDialog">何を買うんだ、キッド？ GOLD: <span id="shopGold">0</span></div>
-        <div class="quiz-buttons">
-            <button class="button hvr-grow" onclick="closeShop()">戻る</button>
-        </div>
+        <div class="dialog" id="shopDialog">何を買うんだ、勇者？ GOLD: <span id="shopGold">0</span></div>
+        <div class="buttons"><button class="button hvr-grow" onclick="closeShop()">戻る</button></div>
     </div>
-
     <div class="game-over" id="gameOver">
-        <h2>ゲームオーバー</h2>
-        <p>骨折れちまったな、キッド。もう一度？</p>
-        <div>
-            <button class="button hvr-grow" onclick="retryQuiz()">もう一度</button>
-            <button class="button hvr-grow" onclick="closeGameOver()">やめる</button>
-        </div>
+        <h2>ゲームオーバー！</h2>
+        <p>骨折れちまったな、勇者。もう一度挑むか？</p>
+        <div><button class="button hvr-grow" onclick="retryQuest()">再挑戦</button><button class="button hvr-grow" onclick="quit()">やめる</button></div>
     </div>
-
+    <div class="stage-clear" id="stageClear">
+        <h2>ステージクリア！</h2>
+        <p>よくやったぜ、勇者！次のステージへ行くか？</p>
+        <div><button class="button hvr-grow" onclick="nextStage()">次へ</button><button class="button hvr-grow" onclick="rest()">休む</button></div>
+    </div>
     <footer>
-        <p>サンズがロード中...</p>
-        <p>© 2025 サンズ学習 | がんばれよ、キッド。</p>
+        <p>サンズが次の試練を準備中...</p>
+        <p>© 2025 Undertale: 社会学習 | がんばれよ、勇者！</p>
     </footer>
 
     <script>
-        let data = {};
-        let hp = 20;
-        let maxHp = 20;
-        let exp = 0;
-        let gold = 0;
-        let timeLeft = 30;
-        let damage = 5;
-        let timerInterval;
-        let currentQuestion = null;
-        let selectedOption = null;
-        let currentCategory = null;
-        let quizData = [];
-        let difficulty = 'medium';
-        let currentMonster = null;
-        let typed;
-        let questionCount = 0;
-        const maxQuestions = 10;
+        let data = {}, hp = 20, maxHp = 20, exp = 0, level = 1, gold = 0, timeLeft = 30, damage = 5, timerInterval, currentQuestion = null, selectedOption = null, currentCategory = null, quizData = [], difficulty = 'medium', currentMonster = null, typed, questionCount = 0, correctCount = 0, hearts = [], hints = 0, stage = 1, maxQuestions = 10, maxLevel = 40;
+        const correctSound = new Howl({ src: ['correct.mp3'], volume: 0.6 }), wrongSound = new Howl({ src: ['incorrect.mp3'], volume: 0.6 }), levelUpSound = new Howl({ src: ['levelup.mp3'], volume: 0.5 });
+        const monsters = [{ name: 'フロギー', hp: 50 }, { name: 'テミー', hp: 40 }, { name: 'モルデン', hp: 60 }, { name: 'ナプスタブルーク', hp: 75 }, { name: 'ボス・アスゴア', hp: 100 }];
+        const bosses = [3]; // 4ステージごとにボス出現
 
-        // サウンドの初期化
-        const correctSound = new Howl({
-            src: ['correct.mp3'], // 代替音（剣の音）
-            volume: 0.5
-        });
-        const wrongSound = new Howl({
-            src: ['incorrect.mp3'], // 代替音（ブザー音）
-            volume: 0.5
-        });
+        function loadPlayerData() {
+            const saved = localStorage.getItem('playerData');
+            if (saved) ({ hp, maxHp, exp, level, gold, hints, stage } = JSON.parse(saved));
+            updateStatus();
+        }
 
-        const monsters = [
-            { name: 'フロギー', hp: 10 },
-            { name: 'テミー', hp: 8 },
-            { name: 'モルデン', hp: 12 },
-            { name: 'ナプスタブルーク', hp: 15 }
-        ];
+        function savePlayerData() {
+            localStorage.setItem('playerData', JSON.stringify({ hp, maxHp, exp, level, gold, hints, stage }));
+        }
 
-        // JSONファイルの読み込み
         async function loadData() {
             document.getElementById('loadingModal').classList.add('active');
             try {
                 const [civics, geography, history, regions] = await Promise.all([
-                    fetch('civics.json').then(res => res.json()),
-                    fetch('geography.json').then(res => res.json()),
-                    fetch('history.json').then(res => res.json()),
-                    fetch('regions.json').then(res => res.json())
+                    fetch('civics.json').then(res => {
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return res.json();
+                    }),
+                    fetch('geography.json').then(res => {
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return res.json();
+                    }),
+                    fetch('history.json').then(res => {
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return res.json();
+                    }),
+                    fetch('regions.json').then(res => {
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return res.json();
+                    })
                 ]);
                 data = { civics, geography, history, regions };
-                populateTable('geography', 'geography');
-                populateTable('history', 'history');
-                populateTable('civics', 'civics');
-                populateTable('regions', 'regions');
+                ['geography', 'history', 'civics', 'regions'].forEach(cat => populateTable(cat, cat));
                 document.getElementById('loadingModal').classList.remove('active');
-            } catch (error) {
-                document.getElementById('loadingModal').innerHTML = '<p>おっと、骨が折れたぜ...データが読み込めねえ！</p>';
-                console.error('Error loading JSON:', error);
+            } catch (e) {
+                document.getElementById('loadingModal').innerHTML = `<p>おっと、データが読み込めねえ！エラー: ${e.message} サーバーを確認してね！</p>`;
+                console.error('Error loading data:', e);
             }
         }
 
-        // 表の動的生成
-        function populateTable(sectionId, dataKey) {
-            const table = document.getElementById(`${sectionId}-table`);
-            data[dataKey].forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${item.term}</td><td>${item.description}</td>`;
-                table.appendChild(row);
-            });
+        function populateTable(cat, key) {
+            const table = document.getElementById(`${cat}-table`);
+            if (data[key]) {
+                data[key].forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.term}</td><td>${item.description}</td>`;
+                    table.appendChild(row);
+                });
+            } else {
+                console.warn(`No data available for ${key}`);
+            }
         }
 
-        // タブ切り替え
         function showTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
             document.getElementById(`${tabId}-tab`).classList.add('active');
         }
 
-        // クイズデータの生成（10問に制限）
-        function generateQuizData(category) {
-            const allQuestions = data[category].map(item => {
-                const otherOptions = data[category]
-                    .filter(i => i.term !== item.term)
-                    .sort(() => Math.random() - 0.5)
-                    .slice(0, 3)
-                    .map(i => i.term);
-                const options = [...otherOptions, item.term].sort(() => Math.random() - 0.5);
-                return {
-                    question: `${item.description}といえば、次のうちどれ？`,
-                    options,
-                    answer: item.term
-                };
-            });
-            return allQuestions.sort(() => Math.random() - 0.5).slice(0, maxQuestions);
+        function generateQuizData(cat) {
+            if (!data[cat]) return [];
+            return data[cat].map(item => {
+                const others = data[cat].filter(i => i.term !== item.term).sort(() => Math.random() - 0.5).slice(0, 3).map(i => i.term);
+                return { question: `${item.description}とは？`, options: [...others, item.term].sort(() => Math.random() - 0.5), answer: item.term };
+            }).sort(() => Math.random() - 0.5).slice(0, maxQuestions);
         }
 
         function showDifficultyModal() {
@@ -629,397 +272,203 @@
                 return;
             }
             document.getElementById('difficultyModal').classList.add('active');
-            updateDialog('difficultyDialog', 'どの難易度で骨を折るんだ？ 選べよ！');
+            document.body.classList.add('modal-open');
+            updateDialog('difficultyDialog', 'どの難易度で旅立つ？選べよ！');
         }
 
         function setDifficulty(level) {
-            difficulty = level;
-            if (level === 'easy') {
-                timeLeft = 40;
-                damage = 3;
-            } else if (level === 'medium') {
-                timeLeft = 30;
-                damage = 5;
-            } else if (level === 'hard') {
-                timeLeft = 20;
-                damage = 7;
-            }
+            difficulty = level; timeLeft = { easy: 40, medium: 30, hard: 20 }[level]; damage = { easy: 3, medium: 5, hard: 7 }[level];
             document.getElementById('difficultyModal').classList.remove('active');
+            document.body.classList.remove('modal-open');
             showCategoryModal();
         }
 
         function showCategoryModal() {
+            if (Object.keys(data).length === 0) return;
             document.getElementById('categoryModal').classList.add('active');
-            updateDialog('categoryDialog', 'どの骨を掘り起こすんだ？ 選べよ！');
+            document.body.classList.add('modal-open');
+            updateDialog('categoryDialog', 'どの書を開く？選べよ！');
         }
 
-        function startQuiz(category) {
-            currentCategory = category;
-            quizData = generateQuizData(category);
-            questionCount = 0;
+        function startQuest(cat) {
+            if (!data[cat]) {
+                updateDialog('sansDialog', 'この書はまだ開けねえ！データを見直せ！');
+                return;
+            }
+            currentCategory = cat; quizData = generateQuizData(cat); questionCount = 0; correctCount = 0; hearts = [];
+            exp += 5; checkLevelUp(); savePlayerData(); spawnMonster();
             document.getElementById('categoryModal').classList.remove('active');
             document.getElementById('quizModal').classList.add('active');
-            spawnMonster();
-            updateStatus();
-            nextQuestion();
-            startTimer();
+            updateStatus(); nextQuestion(); startTimer();
         }
 
         function spawnMonster() {
-            currentMonster = { ...monsters[Math.floor(Math.random() * monsters.length)] };
-            document.getElementById('monsterName').textContent = currentMonster.name;
+            const isBoss = stage % 4 === 0 && stage > 0;
+            currentMonster = { ...monsters[isBoss ? 4 : Math.floor(Math.random() * 4)] };
+            document.getElementById('monsterName').textContent = `${isBoss ? 'ボス ' : ''}${currentMonster.name}`;
+            updateMonsterHP();
         }
 
-        function closeQuiz() {
-            document.getElementById('quizModal').classList.remove('active');
-            clearInterval(timerInterval);
-            if (typed) typed.destroy();
+        function updateMonsterHP() {
+            const bar = document.getElementById('monsterHPBar');
+            bar.style.width = `${(currentMonster.hp / (monsters.find(m => m.name === currentMonster.name).hp)) * 100}%`;
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.classList.remove('modal-open');
+            clearInterval(timerInterval); if (typed) typed.destroy(); hearts.forEach(h => h.remove());
         }
 
         function startTimer() {
-            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
             document.getElementById('timer').textContent = timeLeft;
-            if (timerInterval) clearInterval(timerInterval); // 既存のタイマーをクリア
+            if (timerInterval) clearInterval(timerInterval);
             timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer').textContent = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    hp -= damage;
-                    updateStatus();
-                    updateDialog('sansDialog', '時間切れだ、キッド。骨折れたな！');
-                    document.getElementById('quizModal').classList.add('wrong');
-                    if (hp <= 0) {
-                        showGameOver();
-                    } else {
-                        setTimeout(nextQuestion, 1500); // 時間切れ後に次の問題へ
-                    }
-                }
+                timeLeft--; document.getElementById('timer').textContent = timeLeft;
+                if (timeLeft <= 0) { clearInterval(timerInterval); hp -= damage; updateStatus(); updateDialog('sansDialog', '時間切れ！敵の攻撃だ！'); showEffect('wrong'); if (hp <= 0) showGameOver(); else nextQuestion(); }
             }, 1000);
         }
 
         function updateStatus() {
             document.getElementById('hp').textContent = `${hp}/${maxHp}`;
-            document.getElementById('exp').textContent = `${exp}/10`;
+            document.getElementById('exp').textContent = exp;
+            document.getElementById('level').textContent = level;
             document.getElementById('gold').textContent = gold;
         }
 
-        function updateDialog(elementId, text) {
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.textContent = '＊ ';
-                if (typed) typed.destroy();
-                typed = new Typed(`#${elementId}`, {
-                    strings: ['＊ ' + text],
-                    typeSpeed: 50,
-                    showCursor: false,
-                    contentType: 'text'
-                });
-            }
+        function checkLevelUp() {
+            const newLevel = Math.min(Math.floor(exp / 50) + 1, maxLevel);
+            if (newLevel > level) { level = newLevel; levelUpSound.play(); updateDialog('sansDialog', `レベルアップ！${level}になったぜ！新たな力だ！`); updateStatus(); savePlayerData(); }
+        }
+
+        function updateDialog(id, text) {
+            const el = document.getElementById(id); if (el) { el.textContent = '＊ '; if (typed) typed.destroy(); typed = new Typed(`#${id}`, { strings: ['＊ ' + text], typeSpeed: 60, showCursor: false }); }
+        }
+
+        function addHeart() {
+            const heart = document.createElement('div'); heart.className = 'heart'; heart.textContent = '💕'; heart.style.left = `${Math.random() * 100}vw`; document.body.appendChild(heart); hearts.push(heart);
+            anime({ targets: heart, translateX: [{ value: 12 * (Math.random() - 0.5), duration: 600 }, { value: -12 * (Math.random() - 0.5), duration: 600 }], loop: true, direction: 'alternate', easing: 'easeInOutSine' });
+            anime({ targets: heart, translateY: -window.innerHeight * 2, opacity: [1, 0], duration: 6000, easing: 'easeOutQuad', complete: () => { heart.remove(); hearts = hearts.filter(h => h !== heart); } });
+        }
+
+        function showEffect(type) {
+            const overlay = document.getElementById('effectOverlay'); overlay.textContent = type === 'correct' ? '〇' : '×'; overlay.className = `${type} effect-overlay`;
+            gsap.to(overlay, { scale: 2.5, opacity: 1, duration: 0.6, ease: "elastic.out(1, 0.3)", onStart: () => { overlay.style.display = 'flex'; } });
+            gsap.to(overlay, { scale: 3.5, opacity: 0, duration: 0.6, delay: 0.6, ease: "power2.in", onComplete: () => { overlay.style.display = 'none'; } });
+            (type === 'correct' ? correctSound : wrongSound).play();
+            if (type === 'correct') confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#0f0', '#ff0', '#fff'] });
         }
 
         function nextQuestion() {
-            if (questionCount >= maxQuestions) {
-                document.getElementById('quizModal').classList.remove('active');
-                clearInterval(timerInterval);
-                Swal.fire({
-                    title: 'クリア！',
-                    text: '10問クリアしたぜ、キッド！よくやったな！',
-                    icon: 'success',
-                    confirmButtonText: 'もう一度',
-                    background: '#000',
-                    color: '#fff',
-                    confirmButtonColor: '#0f0'
-                }).then(() => {
-                    retryQuiz();
-                });
-                return;
-            }
+            if (questionCount >= maxQuestions || currentMonster.hp <= 0) { stageClear(); return; }
+            clearInterval(timerInterval); startTimer(); currentQuestion = quizData[questionCount]; questionCount++;
+            document.getElementById('quizQuestion').textContent = currentQuestion.question;
+            const optionsDiv = document.getElementById('quizOptions'); optionsDiv.innerHTML = '';
+            currentQuestion.options.forEach(opt => {
+                const div = document.createElement('div'); div.className = 'option hvr-grow'; div.textContent = opt;
+                div.onclick = () => { document.querySelectorAll('.option').forEach(o => o.classList.remove('selected')); div.classList.add('selected'); selectedOption = opt; submitAnswer(); };
+                optionsDiv.appendChild(div);
+            });
+            updateDialog('sansDialog', 'よお、勇者！この謎を解け！'); selectedOption = null; document.getElementById('quizModal').classList.remove('correct', 'wrong'); document.getElementById('effectOverlay').style.display = 'none';
+        }
 
-            if (!currentQuestion || (selectedOption !== null && hp > 0)) { // 回答後または時間切れ時のみ進む
-                clearInterval(timerInterval);
-                startTimer();
-                currentQuestion = quizData[questionCount];
-                questionCount++;
-                document.getElementById('quizQuestion').textContent = currentQuestion.question;
-                const optionsDiv = document.getElementById('quizOptions');
-                optionsDiv.innerHTML = '';
-                currentQuestion.options.forEach(option => {
-                    const optionDiv = document.createElement('div');
-                    optionDiv.className = 'quiz-option hvr-grow';
-                    optionDiv.textContent = option;
-                    optionDiv.onclick = () => {
-                        document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-                        optionDiv.classList.add('selected');
-                        selectedOption = option;
-                        submitAnswer(); // 選択時に即攻撃
-                    };
-                    optionsDiv.appendChild(optionDiv);
-                });
-                updateDialog('sansDialog', 'よお、キッド。この問題、骨が折れるぜ！');
-                selectedOption = null;
-                document.getElementById('quizModal').classList.remove('correct', 'wrong'); // エフェクトのリセット
-            }
+        function stageClear() {
+            closeModal('quizModal'); document.getElementById('stageClear').classList.add('active'); document.body.classList.add('modal-open');
+            exp += 20; gold += 50; checkLevelUp(); savePlayerData(); updateDialog('sansDialog', `ステージ${stage}クリア！${exp}EXPと${gold}Gを手に入れたぜ！`);
+            confetti({ particleCount: 200, spread: 90, origin: { y: 0.6 }, colors: ['#0f0', '#ff0', '#fff'] });
         }
 
         function submitAnswer() {
-            if (!selectedOption) {
-                updateDialog('sansDialog', '答えを選べよ、キッド！');
-                return;
-            }
+            if (!selectedOption) { updateDialog('sansDialog', '答えを選べよ、勇者！'); return; }
             clearInterval(timerInterval);
             if (selectedOption === currentQuestion.answer) {
-                exp += 2;
-                gold += 5;
-                currentMonster.hp -= 5;
-                updateDialog('sansDialog', 'グサッ！やるじゃねえか、キッド！敵にダメージだ！');
-                document.getElementById('quizModal').classList.add('correct');
-                // 全画面「〇」エフェクト
-                const overlay = document.getElementById('effectOverlay');
-                overlay.textContent = '〇';
-                gsap.to(overlay, {
-                    scale: 2,
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)",
-                    onStart: () => {
-                        overlay.style.display = 'flex';
-                    }
-                });
-                gsap.to(overlay, {
-                    scale: 3,
-                    opacity: 0,
-                    duration: 0.5,
-                    delay: 0.5,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        overlay.style.display = 'none';
-                    }
-                });
-                // 効果音再生
-                correctSound.play();
-                // 紙吹雪（Confetti.js）
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#0f0', '#ff0', '#fff']
-                });
-                if (currentMonster.hp <= 0) {
-                    updateDialog('sansDialog', `${currentMonster.name}を倒したぜ！次の敵だ！`);
-                    spawnMonster();
-                }
-            } else {
-                hp -= damage;
-                updateDialog('sansDialog', 'ぶっぶー！骨折れたな！敵の攻撃だ！');
-                document.getElementById('quizModal').classList.add('wrong');
-                // 全画面「×」エフェクト
-                const overlay = document.getElementById('effectOverlay');
-                overlay.textContent = '×';
-                gsap.to(overlay, {
-                    scale: 2,
-                    opacity: 1,
-                    duration: 0.5,
-                    ease: "elastic.out(1, 0.3)",
-                    onStart: () => {
-                        overlay.style.display = 'flex';
-                    }
-                });
-                gsap.to(overlay, {
-                    scale: 3,
-                    opacity: 0,
-                    duration: 0.5,
-                    delay: 0.5,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        overlay.style.display = 'none';
-                    }
-                });
-                // 効果音再生
-                wrongSound.play();
-            }
-            updateStatus();
-            if (exp >= 10) {
-                updateDialog('sansDialog', 'レベルアップだ、キッド！HP上限が増えたぜ！');
-                exp = 0;
-                maxHp += 5;
-                hp += 5;
-            }
-            if (hp <= 0) {
-                showGameOver();
-            } else {
-                setTimeout(() => {
-                    nextQuestion();
-                    document.getElementById('quizModal').classList.remove('correct', 'wrong'); // エフェクト終了後にリセット
-                }, 1500);
-            }
+                correctCount++; addHeart(); exp += 15; gold += 10; currentMonster.hp -= 15; if (currentMonster.hp < 0) currentMonster.hp = 0;
+                updateMonsterHP(); updateDialog('sansDialog', 'グサッ！正解だ！敵に大ダメージ！'); showEffect('correct');
+            } else { hp -= damage; updateDialog('sansDialog', 'ぶっぶー！外れた！敵の反撃だ！'); showEffect('wrong'); }
+            updateStatus(); if (hp <= 0) showGameOver(); else setTimeout(nextQuestion, 1800);
+        }
+
+        function useHint() {
+            if (hints <= 0) { updateDialog('sansDialog', 'ヒントがねえぞ！ショップで買え！'); return; }
+            hints--; updateDialog('sansDialog', `ヒント：正解は"${currentQuestion.answer}"だぜ！`); savePlayerData();
         }
 
         function openShop() {
             document.getElementById('shopModal').classList.add('active');
+            document.body.classList.add('modal-open');
             document.getElementById('shopGold').textContent = gold;
-            updateDialog('shopDialog', `何を買うんだ、キッド？ GOLD: ${gold}`);
+            updateDialog('shopDialog', `何を買う？ GOLD: ${gold}`);
         }
 
         function buyItem(item) {
-            let message = '';
-            if (item === 'pie' && gold >= 20) {
-                gold -= 20;
-                hp = Math.min(maxHp, hp + 10);
-                message = 'バタースコッチパイだ！HPが回復したぜ！';
-            } else if (item === 'coffee' && gold >= 10) {
-                gold -= 10;
-                timeLeft += 5;
-                message = 'サンズのコーヒーだ！時間が伸びたぜ！';
-            } else {
-                message = 'GOLDが足りねえぜ、キッド！';
-            }
-            updateStatus();
-            document.getElementById('shopGold').textContent = gold;
-            updateDialog('shopDialog', message);
+            let msg = ''; if (item === 'pie' && gold >= 30) { gold -= 30; hp = Math.min(maxHp, hp + 15); msg = 'パイでHP回復！'; }
+            else if (item === 'coffee' && gold >= 15) { gold -= 15; timeLeft += 10; msg = 'コーヒーで時間延長！'; }
+            else if (item === 'hint' && gold >= 20) { gold -= 20; hints++; msg = 'ヒント券ゲット！'; }
+            else msg = 'GOLDが足りねえ！'; updateStatus(); document.getElementById('shopGold').textContent = gold; updateDialog('shopDialog', msg); savePlayerData();
         }
 
-        function closeShop() {
-            document.getElementById('shopModal').classList.remove('active');
-        }
+        function closeShop() { closeModal('shopModal'); }
+
+        function flee() { hp -= damage * 2; updateStatus(); if (hp <= 0) showGameOver(); else { closeModal('quizModal'); updateDialog('sansDialog', '逃げおおせたが、ダメージだ！'); } }
 
         function showGameOver() {
-            document.getElementById('quizModal').classList.remove('active');
-            // SweetAlert2でゲームオーバーポップアップ
-            Swal.fire({
-                title: 'ゲームオーバー',
-                text: '骨折れちまったな、キッド。もう一度？',
-                icon: 'error',
-                showCancelButton: true,
-                confirmButtonText: 'もう一度',
-                cancelButtonText: 'やめる',
-                background: '#000',
-                color: '#fff',
-                confirmButtonColor: '#0f0',
-                cancelButtonColor: '#f00'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    retryQuiz();
-                } else {
-                    closeGameOver();
-                }
-            });
-            clearInterval(timerInterval);
+            closeModal('quizModal'); document.getElementById('gameOver').classList.add('active'); document.body.classList.add('modal-open');
+            wrongSound.play(); updateDialog('sansDialog', 'ゲームオーバー！骨折れちまったな...');
         }
 
-        function retryQuiz() {
-            hp = 20;
-            maxHp = 20;
-            exp = 0;
-            gold = 0;
-            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
-            damage = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 5 : 7;
-            updateStatus();
-            startQuiz(currentCategory);
+        function retryQuest() {
+            hp = 20; maxHp = 20; gold = Math.max(0, gold - 10); timeLeft = { easy: 40, medium: 30, hard: 20 }[difficulty]; damage = { easy: 3, medium: 5, hard: 7 }[difficulty];
+            correctCount = 0; hearts = []; updateStatus(); startQuest(currentCategory);
+            document.getElementById('gameOver').classList.remove('active');
         }
 
-        function closeGameOver() {
-            hp = 20;
-            maxHp = 20;
-            exp = 0;
-            gold = 0;
-            timeLeft = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 20;
-            damage = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 5 : 7;
-            updateStatus();
-            clearInterval(timerInterval);
+        function quit() { closeModal('gameOver'); hp = 20; maxHp = 20; gold = 0; timeLeft = { easy: 40, medium: 30, hard: 20 }[difficulty]; damage = { easy: 3, medium: 5, hard: 7 }[difficulty]; }
+
+        function nextStage() {
+            stage++; closeModal('stageClear'); startQuest(currentCategory);
         }
 
-        // キーボード操作対応
-        document.addEventListener('keydown', (e) => {
-            const quizModal = document.getElementById('quizModal');
-            const categoryModal = document.getElementById('categoryModal');
-            const difficultyModal = document.getElementById('difficultyModal');
-            const shopModal = document.getElementById('shopModal');
+        function rest() {
+            Swal.fire({ title: 'トリエル', text: 'ゆっくりお休みなさい、息子よ', icon: 'info', confirmButtonText: 'さようなら', background: '#000', color: '#fff', confirmButtonColor: '#0f0' }).then(() => closeModal('stageClear'));
+        }
 
-            if (quizModal.classList.contains('active')) {
-                const options = document.querySelectorAll('.quiz-option');
-                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
-
-                if (e.key === 'ArrowUp') {
-                    if (selectedIndex > 0) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex - 1].classList.add('selected');
-                        selectedOption = options[selectedIndex - 1].textContent;
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    if (selectedIndex < options.length - 1) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex + 1].classList.add('selected');
-                        selectedOption = options[selectedIndex + 1].textContent;
-                    }
-                } else if (e.key === 'z' || e.key === 'Enter') {
-                    if (selectedOption) submitAnswer();
-                }
-            } else if (categoryModal.classList.contains('active')) {
-                const options = document.querySelectorAll('.category-option');
-                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
-
-                if (e.key === 'ArrowUp') {
-                    if (selectedIndex > 0) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex - 1].classList.add('selected');
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    if (selectedIndex < options.length - 1) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex + 1].classList.add('selected');
-                    }
-                } else if (e.key === 'z' || e.key === 'Enter') {
-                    const selected = options[selectedIndex];
-                    if (selected) {
-                        startQuiz(selected.textContent.toLowerCase());
-                    }
-                }
-            } else if (difficultyModal.classList.contains('active')) {
-                const options = document.querySelectorAll('.difficulty-option');
-                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
-
-                if (e.key === 'ArrowUp') {
-                    if (selectedIndex > 0) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex - 1].classList.add('selected');
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    if (selectedIndex < options.length - 1) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex + 1].classList.add('selected');
-                    }
-                } else if (e.key === 'z' || e.key === 'Enter') {
-                    const selected = options[selectedIndex];
-                    if (selected) {
-                        setDifficulty(selected.textContent.toLowerCase().split('（')[0]);
-                    }
-                }
-            } else if (shopModal.classList.contains('active')) {
-                const options = document.querySelectorAll('.shop-option');
-                let selectedIndex = Array.from(options).findIndex(opt => opt.classList.contains('selected'));
-
-                if (e.key === 'ArrowUp') {
-                    if (selectedIndex > 0) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex - 1].classList.add('selected');
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    if (selectedIndex < options.length - 1) {
-                        options[selectedIndex].classList.remove('selected');
-                        options[selectedIndex + 1].classList.add('selected');
-                    }
-                } else if (e.key === 'z' || e.key === 'Enter') {
-                    const selected = options[selectedIndex];
-                    if (selected) {
-                        buyItem(selected.textContent.toLowerCase().split('（')[0]);
-                    }
-                }
+        document.addEventListener('keydown', e => {
+            const quiz = document.getElementById('quizModal'), cat = document.getElementById('categoryModal'), diff = document.getElementById('difficultyModal'), shop = document.getElementById('shopModal');
+            if (quiz.classList.contains('active')) {
+                e.stopPropagation(); const opts = document.querySelectorAll('.option'); let idx = Array.from(opts).findIndex(o => o.classList.contains('selected'));
+                if (e.key === 'ArrowUp' && idx > 1) { opts[idx].classList.remove('selected'); opts[idx - 2].classList.add('selected'); selectedOption = opts[idx - 2].textContent; }
+                else if (e.key === 'ArrowDown' && idx < 2) { opts[idx].classList.remove('selected'); opts[idx + 2].classList.add('selected'); selectedOption = opts[idx + 2].textContent; }
+                else if (e.key === 'ArrowLeft' && idx % 2 === 1) { opts[idx].classList.remove('selected'); opts[idx - 1].classList.add('selected'); selectedOption = opts[idx - 1].textContent; }
+                else if (e.key === 'ArrowRight' && idx % 2 === 0 && idx < 3) { opts[idx].classList.remove('selected'); opts[idx + 1].classList.add('selected'); selectedOption = opts[idx + 1].textContent; }
+                else if (e.key === 'z' || e.key === 'Enter') submitAnswer();
+                else if (e.key === 'h') useHint();
+                else if (e.key === 's') openShop();
+                else if (e.key === 'f') flee();
+            } else if (cat.classList.contains('active')) {
+                e.stopPropagation(); const opts = document.querySelectorAll('.option'); let idx = Array.from(opts).findIndex(o => o.classList.contains('selected'));
+                if (e.key === 'ArrowUp' && idx > 1) { opts[idx].classList.remove('selected'); opts[idx - 2].classList.add('selected'); }
+                else if (e.key === 'ArrowDown' && idx < 2) { opts[idx].classList.remove('selected'); opts[idx + 2].classList.add('selected'); }
+                else if (e.key === 'ArrowLeft' && idx % 2 === 1) { opts[idx].classList.remove('selected'); opts[idx - 1].classList.add('selected'); }
+                else if (e.key === 'ArrowRight' && idx % 2 === 0 && idx < 3) { opts[idx].classList.remove('selected'); opts[idx + 1].classList.add('selected'); }
+                else if (e.key === 'z' || e.key === 'Enter') { const sel = opts[idx]; if (sel) startQuest(sel.textContent.toLowerCase()); }
+            } else if (diff.classList.contains('active')) {
+                e.stopPropagation(); const opts = document.querySelectorAll('.option'); let idx = Array.from(opts).findIndex(o => o.classList.contains('selected'));
+                if (e.key === 'ArrowUp' && idx > 1) { opts[idx].classList.remove('selected'); opts[idx - 2].classList.add('selected'); }
+                else if (e.key === 'ArrowDown' && idx < 1) { opts[idx].classList.remove('selected'); opts[idx + 2].classList.add('selected'); }
+                else if (e.key === 'ArrowLeft' && idx % 2 === 1) { opts[idx].classList.remove('selected'); opts[idx - 1].classList.add('selected'); }
+                else if (e.key === 'ArrowRight' && idx % 2 === 0 && idx < 2) { opts[idx].classList.remove('selected'); opts[idx + 1].classList.add('selected'); }
+                else if (e.key === 'z' || e.key === 'Enter') { const sel = opts[idx]; if (sel) setDifficulty(sel.textContent.toLowerCase().split('（')[0]); }
+            } else if (shop.classList.contains('active')) {
+                e.stopPropagation(); const opts = document.querySelectorAll('.option'); let idx = Array.from(opts).findIndex(o => o.classList.contains('selected'));
+                if (e.key === 'ArrowUp' && idx > 0) { opts[idx].classList.remove('selected'); opts[idx - 1].classList.add('selected'); }
+                else if (e.key === 'ArrowDown' && idx < 2) { opts[idx].classList.remove('selected'); opts[idx + 1].classList.add('selected'); }
+                else if (e.key === 'ArrowLeft' && idx % 2 === 1) { opts[idx].classList.remove('selected'); opts[idx - 1].classList.add('selected'); }
+                else if (e.key === 'ArrowRight' && idx % 2 === 0 && idx < 2) { opts[idx].classList.remove('selected'); opts[idx + 1].classList.add('selected'); }
+                else if (e.key === 'z' || e.key === 'Enter') { const sel = opts[idx]; if (sel) buyItem(sel.textContent.toLowerCase().split('（')[0]); }
             }
         });
 
-        // ページ読み込み時にデータを取得
-        loadData();
+        loadPlayerData(); loadData();
     </script>
 </body>
 </html>
