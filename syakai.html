@@ -3,406 +3,312 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中学受験 社会 重要用語一覧</title>
-    <!-- Bootstrap 5.3.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Google Fonts: M PLUS Rounded 1c -->
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-    <!-- カスタムCSS -->
+    <title>中学受験 社会 キラキラ学習</title>
     <style>
         body {
-            background-color: #cce7ff;
-            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
         }
-        .header {
-            background-color: #ffccde;
-            color: #333;
-            padding: 2rem 0;
+        header {
+            background-color: #ffd700;
+            padding: 20px;
             text-align: center;
-            border-bottom: 4px solid #fff3cd;
         }
-        .header h1 {
-            font-weight: 700;
-            font-size: 2.5rem;
-        }
-        .tab-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-        }
-        .nav-tabs .nav-link {
-            background-color: #fff3cd;
-            color: #333;
-            border-radius: 10px 10px 0 0;
-            margin: 0 5px;
-            transition: transform 0.2s;
-        }
-        .nav-tabs .nav-link:hover, .nav-tabs .nav-link.active {
-            background-color: #ffccde;
-            color: #333;
-            transform: scale(1.05);
-        }
-        .table {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        .table thead {
-            background-color: #ffccde;
+        header h1 {
+            margin: 0;
             color: #333;
         }
-        .term-cell {
-            cursor: pointer;
-            transition: background-color 0.2s;
+        header p {
+            color: #555;
         }
-        .term-cell:hover {
-            background-color: #e6f0fa;
+        nav {
+            text-align: center;
+            margin: 20px 0;
         }
-        .error-message {
-            color: #d9534f;
-            margin: 1rem 0;
-        }
-        .search-container {
-            margin-bottom: 1rem;
-        }
-        .search-container input {
-            border-radius: 20px;
-            padding-left: 40px;
-        }
-        .search-container i {
-            position: absolute;
-            top: 50%;
-            left: 15px;
-            transform: translateY(-50%);
-            color: #666;
-        }
-        .btn-primary {
-            background-color: #ffccde;
-            border-color: #ffccde;
-            color: #333;
-            border-radius: 20px;
-            transition: transform 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #ffb6c1;
-            border-color: #ffb6c1;
-            transform: scale(1.05);
-        }
-        #quiz-feedback {
-            margin-top: 1rem;
-        }
-        .modal-content {
-            border-radius: 15px;
-            background-color: #fff3cd;
-        }
-        .modal-header, .modal-footer {
+        nav button {
+            background-color: #007bff;
+            color: white;
             border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        nav button:hover {
+            background-color: #0056b3;
+        }
+        .tab-content {
+            display: none;
+            margin: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .quiz-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            width: 80%;
+            max-width: 500px;
+            z-index: 1000;
+        }
+        .quiz-popup.active {
+            display: block;
+        }
+        .quiz-options label {
+            display: block;
+            margin: 5px 0;
+        }
+        .quiz-popup button {
+            margin: 5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header class="header">
+    <header>
         <h1>中学受験 社会 キラキラ学習</h1>
         <p>地理・歴史・公民・地域を楽しく学ぼう！（用語をクリックで発音、検索＆クイズ付き）</p>
     </header>
 
-    <!-- メインコンテンツ -->
-    <main class="tab-container">
-        <!-- 検索バー -->
-        <div class="search-container position-relative">
-            <i class="bi bi-search"></i>
-            <input type="text" id="searchInput" class="form-control" placeholder="用語や説明を検索...">
-        </div>
-        <!-- クイズボタン -->
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#quizModal">
-            <i class="bi bi-star-fill me-2"></i>クイズを始める
-        </button>
+    <nav>
+        <button onclick="startQuiz()">クイズを始める</button>
+    </nav>
 
-        <!-- タブナビゲーション -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="geography-tab" data-bs-toggle="tab" data-bs-target="#geography" type="button" role="tab" aria-controls="geography" aria-selected="true">地理</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">歴史</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="civics-tab" data-bs-toggle="tab" data-bs-target="#civics" type="button" role="tab" aria-controls="civics" aria-selected="false">公民</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="regions-tab" data-bs-toggle="tab" data-bs-target="#regions" type="button" role="tab" aria-controls="regions" aria-selected="false">地域</button>
-            </li>
-        </ul>
+    <nav>
+        <button onclick="showTab('geography')">地理</button>
+        <button onclick="showTab('history')">歴史</button>
+        <button onclick="showTab('civics')">公民</button>
+        <button onclick="showTab('regions')">地域</button>
+    </nav>
 
-        <!-- タブコンテンツ -->
-        <div class="tab-content" id="myTabContent">
-            <!-- 地理 -->
-            <div class="tab-pane fade show active" id="geography" role="tabpanel" aria-labelledby="geography-tab">
-                <h2 class="my-4">地理</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">用語</th>
-                            <th scope="col">説明</th>
-                        </tr>
-                    </thead>
-                    <tbody id="geography-table"></tbody>
-                </table>
-                <p class="text-muted">注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
-            </div>
-
-            <!-- 歴史 -->
-            <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-                <h2 class="my-4">歴史</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">用語</th>
-                            <th scope="col">説明</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table"></tbody>
-                </table>
-                <p class="text-muted">注：中学受験頻出用語を収録。</p>
-            </div>
-
-            <!-- 公民 -->
-            <div class="tab-pane fade" id="civics" role="tabpanel" aria-labelledby="civics-tab">
-                <h2 class="my-4">公民</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">用語</th>
-                            <th scope="col">説明</th>
-                        </tr>
-                    </thead>
-                    <tbody id="civics-table"></tbody>
-                </table>
-                <p class="text-muted">注：中学受験頻出用語を収録。</p>
-            </div>
-
-            <!-- 地域 -->
-            <div class="tab-pane fade" id="regions" role="tabpanel" aria-labelledby="regions-tab">
-                <h2 class="my-4">地域</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">用語</th>
-                            <th scope="col">説明</th>
-                        </tr>
-                    </thead>
-                    <tbody id="regions-table"></tbody>
-                </table>
-                <p class="text-muted">注：中学受験頻出用語を収録。</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- クイズモーダル -->
-    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="quizModalLabel">社会キラキラクイズ</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>スコア: <span id="quizScore">0</span>/10</p>
-                    <p id="quizQuestion"></p>
-                    <div id="quizOptions"></div>
-                    <div id="quizFeedback"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                    <button type="button" class="btn btn-primary" id="nextQuestion">次の問題</button>
-                </div>
-            </div>
-        </div>
+    <div id="geography" class="tab-content">
+        <h2>地理</h2>
+        <table>
+            <thead>
+                <tr><th>用語</th><th>説明</th></tr>
+            </thead>
+            <tbody id="geography-table"></tbody>
+        </table>
+        <p>注：中学受験頻出用語を収録。出典：文部科学省、中学受験テキスト。</p>
     </div>
 
-    <!-- フッター -->
-    <footer class="bg-dark text-white text-center py-3">
+    <div id="history" class="tab-content">
+        <h2>歴史</h2>
+        <table>
+            <thead>
+                <tr><th>用語</th><th>説明</th></tr>
+            </thead>
+            <tbody id="history-table"></tbody>
+        </table>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div id="civics" class="tab-content">
+        <h2>公民</h2>
+        <table>
+            <thead>
+                <tr><th>用語</th><th>説明</th></tr>
+            </thead>
+            <tbody id="civics-table"></tbody>
+        </table>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div id="regions" class="tab-content">
+        <h2>地域</h2>
+        <table>
+            <thead>
+                <tr><th>用語</th><th>説明</th></tr>
+            </thead>
+            <tbody id="regions-table"></tbody>
+        </table>
+        <p>注：中学受験頻出用語を収録。</p>
+    </div>
+
+    <div id="quiz-popup" class="quiz-popup">
+        <h2>社会キラキラクイズ</h2>
+        <p id="quiz-score">スコア: 0/10</p>
+        <p id="quiz-question"></p>
+        <div id="quiz-options" class="quiz-options"></div>
+        <button onclick="checkAnswer()">回答</button>
+        <button onclick="closeQuiz()">閉じる</button>
+        <button onclick="nextQuestion()">次の問題</button>
+    </div>
+
+    <footer>
         <p>© 2025 中学受験 社会 キラキラ学習</p>
     </footer>
 
-    <!-- Bootstrap 5.3.3 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- Confetti JS -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    <!-- スクリプト -->
-<!-- 既存のHTMLはそのまま、<script> のみを更新 -->
-<script>
-document.addEventListener('DOMContentLoaded', async () => {
-    let termData = {
-        geography: [],
-        history: [],
-        civics: [],
-        regions: []
-    };
+    <script>
+        // JSONファイルのURL（同じディレクトリ）
+        const jsonFiles = {
+            geography: './geography.json',
+            history: './history.json',
+            civics: './civics.json',
+            regions: './regions.json'
+        };
 
-    // 分割JSONファイルの読み込み
-    const jsonFiles = [
-        { category: 'geography', url: '/shopcart/geography.json' },
-        { category: 'history', url: '/shopcart/history.json' },
-        { category: 'civics', url: '/shopcart/civics.json' },
-        { category: 'regions', url: '/shopcart/regions.json' }
-    ];
+        // 全データを保存
+        let allData = {
+            geography: [],
+            history: [],
+            civics: [],
+            regions: []
+        };
 
-    try {
-        const fetchPromises = jsonFiles.map(async file => {
-            console.log(`Fetching ${file.url}`);
-            const response = await fetch(file.url, { cache: 'no-cache' });
-            if (!response.ok) {
-                throw new Error(`Failed to load ${file.url}: ${response.status} ${response.statusText}`);
-            }
-            const data = await response.json();
-            termData[file.category] = data;
-        });
-        await Promise.all(fetchPromises);
-    } catch (error) {
-        console.error('JSON読み込みエラー:', error);
-        const errorMessage = document.createElement('p');
-        errorMessage.className = 'error-message';
-        errorMessage.textContent = `データの読み込みに失敗しました：${error.message}`;
-        document.querySelector('.tab-container').prepend(errorMessage);
-        return;
-    }
+        // クイズ用の変数
+        let quizData = [];
+        let currentQuestion = null;
+        let score = 0;
+        let questionCount = 0;
+        const maxQuestions = 10;
 
-    // テーブル初期化
-    function renderTable(category, data) {
-        const tableBody = document.getElementById(`${category}-table`);
-        tableBody.innerHTML = '';
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td class="term-cell">${item.term}</td><td>${item.description}</td>`;
-            tableBody.appendChild(row);
-        });
-        tableBody.querySelectorAll('.term-cell').forEach(cell => {
-            cell.addEventListener('click', () => {
-                try {
-                    const utterance = new SpeechSynthesisUtterance(cell.textContent);
-                    utterance.lang = 'ja-JP';
-                    window.speechSynthesis.speak(utterance);
-                } catch (error) {
-                    console.error('音声再生エラー:', error);
-                }
-            });
-        });
-    }
+        // JSONを読み込んで表に表示
+        async function loadJson(category, tableId) {
+            try {
+                const response = await fetch(jsonFiles[category]);
+                if (!response.ok) throw new Error(`${category}の読み込みに失敗`);
+                const data = await response.json();
+                allData[category] = data;
 
-    // 初期テーブル描画
-    Object.keys(termData).forEach(category => {
-        renderTable(category, termData[category]);
-    });
-
-    // 検索機能
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-        const query = searchInput.value.toLowerCase();
-        Object.keys(termData).forEach(category => {
-            const filteredData = termData[category].filter(item =>
-                item.term.toLowerCase().includes(query) || item.description.includes(query)
-            );
-            renderTable(category, filteredData);
-        });
-    });
-
-    // クイズ機能
-    let currentQuestion = 0;
-    let score = 0;
-    let allTerms = [];
-    Object.values(termData).forEach(category => {
-        allTerms = allTerms.concat(category);
-    });
-
-    const quizModal = document.getElementById('quizModal');
-    const quizQuestion = document.getElementById('quizQuestion');
-    const quizOptions = document.getElementById('quizOptions');
-    const quizFeedback = document.getElementById('quizFeedback');
-    const quizScore = document.getElementById('quizScore');
-    const nextQuestionBtn = document.getElementById('nextQuestion');
-
-    function getRandomTerm() {
-        return allTerms[Math.floor(Math.random() * allTerms.length)];
-    }
-
-    function getRandomOptions(correctTerm, count = 4) {
-        const options = [correctTerm];
-        while (options.length < count) {
-            const randomTerm = getRandomTerm();
-            if (!options.includes(randomTerm) && randomTerm.description !== correctTerm.description) {
-                options.push(randomTerm);
+                const tableBody = document.getElementById(tableId);
+                tableBody.innerHTML = '';
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td onclick="speak('${item.term}')">${item.term}</td>
+                        <td>${item.description}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('エラー:', error);
+                document.getElementById(tableId).innerHTML = '<tr><td colspan="2">データの読み込みに失敗しました</td></tr>';
             }
         }
-        return options.sort(() => Math.random() - 0.5);
-    }
 
-    function loadQuestion() {
-        if (currentQuestion >= 10) {
-            quizQuestion.textContent = 'クイズ終了！';
-            quizOptions.innerHTML = '';
-            quizFeedback.textContent = `最終スコア: ${score}/10`;
-            nextQuestionBtn.style.display = 'none';
-            return;
+        // タブ切り替え
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
         }
 
-        const correctTerm = getRandomTerm();
-        const options = getRandomOptions(correctTerm);
-        quizQuestion.textContent = `「${correctTerm.term}」の説明は？`;
-        quizOptions.innerHTML = '';
-        options.forEach(option => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-outline-primary m-2';
-            btn.textContent = option.description;
-            btn.addEventListener('click', () => checkAnswer(option, correctTerm));
-            quizOptions.appendChild(btn);
-        });
-        quizFeedback.textContent = '';
-    }
-
-    function checkAnswer(selected, correct) {
-        if (selected.description === correct.description) {
-            score++;
-            quizFeedback.textContent = '正解！キラキラ！';
-            quizFeedback.className = 'text-success';
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance('正解！');
-                utterance.lang = 'ja-JP';
-                window.speechSynthesis.speak(utterance);
-            }
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-        } else {
-            quizFeedback.textContent = `不正解。正解は「${correct.description}」です。`;
-            quizFeedback.className = 'text-danger';
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance('不正解。');
-                utterance.lang = 'ja-JP';
-                window.speechSynthesis.speak(utterance);
-            }
+        // 音声読み上げ
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ja-JP';
+            speechSynthesis.speak(utterance);
         }
-        quizScore.textContent = score;
-        currentQuestion++;
-    }
 
-    nextQuestionBtn.addEventListener('click', loadQuestion);
+        // クイズ開始
+        function startQuiz() {
+            quizData = [];
+            for (let category in allData) {
+                quizData.push(...allData[category].map(item => ({ ...item, category })));
+            }
+            if (quizData.length < 4) {
+                alert('データが不足しています。');
+                return;
+            }
+            score = 0;
+            questionCount = 0;
+            document.getElementById('quiz-score').textContent = `スコア: ${score}/${maxQuestions}`;
+            document.getElementById('quiz-popup').classList.add('active');
+            nextQuestion();
+        }
 
-    quizModal.addEventListener('shown.bs.modal', () => {
-        currentQuestion = 0;
-        score = 0;
-        quizScore.textContent = score;
-        nextQuestionBtn.style.display = 'block';
-        loadQuestion();
-    });
-});
-</script>
+        // 次の問題
+        function nextQuestion() {
+            if (questionCount >= maxQuestions) {
+                alert(`クイズ終了！スコア: ${score}/${maxQuestions}`);
+                closeQuiz();
+                return;
+            }
+            currentQuestion = quizData[Math.floor(Math.random() * quizData.length)];
+            const categoryData = allData[currentQuestion.category].filter(item => item.term !== currentQuestion.term);
+            const wrongAnswers = [];
+            while (wrongAnswers.length < 3 && categoryData.length > 0) {
+                const index = Math.floor(Math.random() * categoryData.length);
+                wrongAnswers.push(categoryData.splice(index, 1)[0].term);
+            }
+            const options = [currentQuestion.term, ...wrongAnswers].sort(() => Math.random() - 0.5);
+
+            document.getElementById('quiz-question').textContent = `(${currentQuestion.category}) ${currentQuestion.description}`;
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = options.map(option => `
+                <label>
+                    <input type="radio" name="quiz-option" value="${option}">
+                    ${option}
+                </label>
+            `).join('');
+            questionCount++;
+        }
+
+        // 回答チェック
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="quiz-option"]:checked');
+            if (!selectedOption) {
+                alert('選択してください。');
+                return;
+            }
+            const userAnswer = selectedOption.value;
+            if (userAnswer === currentQuestion.term) {
+                score++;
+                alert('正解！');
+            } else {
+                alert(`不正解。正解は「${currentQuestion.term}」です。`);
+            }
+            document.getElementById('quiz-score').textContent = `スコア: ${score}/${maxQuestions}`;
+            nextQuestion();
+        }
+
+        // クイズ閉じる
+        function closeQuiz() {
+            document.getElementById('quiz-popup').classList.remove('active');
+        }
+
+        // ページ読み込み時にJSONを読み込む
+        window.onload = () => {
+            loadJson('geography', 'geography-table');
+            loadJson('history', 'history-table');
+            loadJson('civics', 'civics-table');
+            loadJson('regions', 'regions-table');
+            showTab('geography');
+        };
+    </script>
 </body>
 </html>
