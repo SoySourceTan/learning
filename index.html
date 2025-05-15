@@ -28,8 +28,21 @@
             background-color: #006400;
             color: white;
         }
+        .word-cell {
+            cursor: pointer;
+        }
         .word-cell:hover {
             background-color: #e9ecef;
+        }
+        .error-message {
+            color: red;
+            margin: 1rem 0;
+        }
+        .search-container {
+            margin-bottom: 1rem;
+        }
+        #quiz-feedback {
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -37,11 +50,18 @@
     <!-- ヘッダー -->
     <header class="header">
         <h1>中学受験 イギリス英語 必須単語とフレーズ一覧</h1>
-        <p>イギリス英語に特化した960～1280語と受験頻出フレーズ（単語をクリックで発音再生）</p>
+        <p>イギリス英語に特化した960～1280語と受験頻出フレーズ（単語をクリックで発音再生、検索・クイズ機能付き）</p>
     </header>
 
     <!-- メインコンテンツ -->
     <main class="tab-container">
+        <!-- 検索バー -->
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control" placeholder="単語または意味を検索...">
+        </div>
+        <!-- クイズボタン -->
+        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#quizModal">クイズを開始</button>
+
         <!-- タブナビゲーション -->
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -76,7 +96,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="nouns-table">
                         <tr><td class="word-cell">apple</td><td>りんご</td></tr>
                         <tr><td class="word-cell">aubergine</td><td>ナス</td></tr>
                         <tr><td class="word-cell">book</td><td>本</td></tr>
@@ -112,7 +132,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="verbs-table">
                         <tr><td class="word-cell">be</td><td>である、いる</td></tr>
                         <tr><td class="word-cell">come</td><td>来る</td></tr>
                         <tr><td class="word-cell">do</td><td>する</td></tr>
@@ -148,7 +168,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="adjectives-table">
                         <tr><td class="word-cell">beautiful</td><td>美しい</td></tr>
                         <tr><td class="word-cell">big</td><td>大きい</td></tr>
                         <tr><td class="word-cell">brilliant</td><td>素晴らしい</td></tr>
@@ -184,7 +204,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="adverbs-table">
                         <tr><td class="word-cell">always</td><td>いつも</td></tr>
                         <tr><td class="word-cell">carefully</td><td>注意深く</td></tr>
                         <tr><td class="word-cell">cheerfully</td><td>陽気に</td></tr>
@@ -220,7 +240,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="prepositions-table">
                         <tr><td class="word-cell">about</td><td>～について</td></tr>
                         <tr><td class="word-cell">after</td><td>～の後に</td></tr>
                         <tr><td class="word-cell">against</td><td>～に反対して</td></tr>
@@ -256,7 +276,7 @@
                             <th scope="col">意味</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="phrases-table">
                         <tr><td class="word-cell">Hello!</td><td>こんにちは！</td></tr>
                         <tr><td class="word-cell">Good morning!</td><td>おはよう！</td></tr>
                         <tr><td class="word-cell">Good afternoon!</td><td>こんにちは！（午後）</td></tr>
@@ -284,6 +304,28 @@
         </div>
     </main>
 
+    <!-- クイズモーダル -->
+    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quizModalLabel">英単語クイズ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>スコア: <span id="quizScore">0</span>/10</p>
+                    <p id="quizQuestion"></p>
+                    <div id="quizOptions"></div>
+                    <div id="quizFeedback"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" class="btn btn-primary" id="nextQuestion">次の問題</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- フッター -->
     <footer class="bg-dark text-white text-center py-3">
         <p>© 2025 中学受験 イギリス英語 単語・フレーズ一覧</p>
@@ -291,25 +333,287 @@
 
     <!-- Bootstrap 5.3.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- 音声再生スクリプト -->
+    <!-- スクリプト -->
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // 単語データの定義（サンプル、実際は全リストを展開可能）
+        const wordData = {
+            nouns: [
+                { word: 'apple', meaning: 'りんご' },
+                { word: 'aubergine', meaning: 'ナス' },
+                { word: 'book', meaning: '本' },
+                { word: 'courgette', meaning: 'ズッキーニ' },
+                { word: 'cat', meaning: '猫' },
+                { word: 'dog', meaning: '犬' },
+                { word: 'egg', meaning: '卵' },
+                { word: 'fish', meaning: '魚' },
+                { word: 'girl', meaning: '女の子' },
+                { word: 'hedgerow', meaning: '生け垣' },
+                { word: 'house', meaning: '家' },
+                { word: 'ladybird', meaning: 'てんとう虫' },
+                { word: 'lemon', meaning: 'レモン' },
+                { word: 'meadow', meaning: '牧草地' },
+                { word: 'mother', meaning: '母' },
+                { word: 'river', meaning: '川' },
+                { word: 'school', meaning: '学校' },
+                { word: 'swede', meaning: 'カブ（野菜）' },
+                { word: 'tree', meaning: '木' },
+                { word: 'woodland', meaning: '林' }
+            ],
+            verbs: [
+                { word: 'be', meaning: 'である、いる' },
+                { word: 'come', meaning: '来る' },
+                { word: 'do', meaning: 'する' },
+                { word: 'eat', meaning: '食べる' },
+                { word: 'go', meaning: '行く' },
+                { word: 'grow', meaning: '育つ' },
+                { word: 'have', meaning: '持つ' },
+                { word: 'like', meaning: '好きである' },
+                { word: 'look', meaning: '見る' },
+                { word: 'play', meaning: '遊ぶ、演奏する' },
+                { word: 'run', meaning: '走る' },
+                { word: 'see', meaning: '見る' },
+                { word: 'sing', meaning: '歌う' },
+                { word: 'sit', meaning: '座る' },
+                { word: 'sow', meaning: '種をまく' },
+                { word: 'study', meaning: '勉強する' },
+                { word: 'swim', meaning: '泳ぐ' },
+                { word: 'talk', meaning: '話す' },
+                { word: 'walk', meaning: '歩く' },
+                { word: 'write', meaning: '書く' }
+            ],
+            adjectives: [
+                { word: 'beautiful', meaning: '美しい' },
+                { word: 'big', meaning: '大きい' },
+                { word: 'brilliant', meaning: '素晴らしい' },
+                { word: 'colourful', meaning: '色鮮やかな' },
+                { word: 'cold', meaning: '寒い' },
+                { word: 'fresh', meaning: '新鮮な' },
+                { word: 'good', meaning: '良い' },
+                { word: 'green', meaning: '緑の' },
+                { word: 'happy', meaning: '幸せな' },
+                { word: 'hot', meaning: '暑い' },
+                { word: 'kind', meaning: '親切な' },
+                { word: 'long', meaning: '長い' },
+                { word: 'lovely', meaning: '愛らしい' },
+                { word: 'new', meaning: '新しい' },
+                { word: 'ripe', meaning: '熟した' },
+                { word: 'short', meaning: '短い' },
+                { word: 'small', meaning: '小さい' },
+                { word: 'strong', meaning: '強い' },
+                { word: 'tall', meaning: '背が高い' },
+                { word: 'young', meaning: '若い' }
+            ],
+            adverbs: [
+                { word: 'always', meaning: 'いつも' },
+                { word: 'carefully', meaning: '注意深く' },
+                { word: 'cheerfully', meaning: '陽気に' },
+                { word: 'early', meaning: '早く' },
+                { word: 'here', meaning: 'ここ' },
+                { word: 'late', meaning: '遅く' },
+                { word: 'never', meaning: '決して～ない' },
+                { word: 'now', meaning: '今' },
+                { word: 'often', meaning: 'しばしば' },
+                { word: 'quietly', meaning: '静かに' },
+                { word: 'quickly', meaning: '素早く' },
+                { word: 'slowly', meaning: 'ゆっくり' },
+                { word: 'sometimes', meaning: '時々' },
+                { word: 'soon', meaning: 'すぐに' },
+                { word: 'then', meaning: 'それから' },
+                { word: 'there', meaning: 'そこ' },
+                { word: 'today', meaning: '今日' },
+                { word: 'tomorrow', meaning: '明日' },
+                { word: 'very', meaning: 'とても' },
+                { word: 'yesterday', meaning: '昨日' }
+            ],
+            prepositions: [
+                { word: 'about', meaning: '～について' },
+                { word: 'after', meaning: '～の後に' },
+                { word: 'against', meaning: '～に反対して' },
+                { word: 'at', meaning: '～で（場所・時間）' },
+                { word: 'before', meaning: '～の前に' },
+                { word: 'behind', meaning: '～の後ろに' },
+                { word: 'between', meaning: '～の間に' },
+                { word: 'by', meaning: '～のそばに、～までに' },
+                { word: 'during', meaning: '～の間に' },
+                { word: 'for', meaning: '～のために' },
+                { word: 'from', meaning: '～から' },
+                { word: 'in', meaning: '～の中に' },
+                { word: 'in front of', meaning: '～の前に' },
+                { word: 'next to', meaning: '～の隣に' },
+                { word: 'of', meaning: '～の' },
+                { word: 'on', meaning: '～の上に' },
+                { word: 'over', meaning: '～の上を' },
+                { word: 'to', meaning: '～へ' },
+                { word: 'under', meaning: '～の下に' },
+                { word: 'upon', meaning: '～の上に（フォーマル）' }
+            ],
+            phrases: [
+                { word: 'Hello!', meaning: 'こんにちは！' },
+                { word: 'Good morning!', meaning: 'おはよう！' },
+                { word: 'Good afternoon!', meaning: 'こんにちは！（午後）' },
+                { word: 'Good evening!', meaning: 'こんばんは！' },
+                { word: 'How do you do?', meaning: 'はじめまして（フォーマル）' },
+                { word: 'How are you?', meaning: '元気？' },
+                { word: 'I\'m fine, thank you.', meaning: '元気です、ありがとう。' },
+                { word: 'What\'s your name?', meaning: '名前は？' },
+                { word: 'My name is...', meaning: '私の名前は…' },
+                { word: 'Pleased to meet you.', meaning: 'はじめまして。' },
+                { word: 'Thank you very much!', meaning: 'どうもありがとう！' },
+                { word: 'You\'re welcome.', meaning: 'どういたしまして。' },
+                { word: 'Sorry!', meaning: 'ごめんなさい！' },
+                { word: 'Excuse me.', meaning: 'すみません。' },
+                { word: 'Let\'s go!', meaning: '行こう！' },
+                { word: 'Have a nice day!', meaning: '良い一日を！' },
+                { word: 'Take care!', meaning: '気をつけて！' },
+                { word: 'Cheerio!', meaning: 'じゃあね！（イギリス英語）' },
+                { word: 'I like gardening.', meaning: 'ガーデニングが好きです。' },
+                { word: 'I want to grow vegetables.', meaning: '野菜を育てたい。' }
+            ]
+        };
+
+        // 音声再生機能
         if ('speechSynthesis' in window) {
-            document.querySelectorAll('table.table-striped tbody tr td.word-cell').forEach(cell => {
-                cell.style.cursor = 'pointer';
+            const cells = document.querySelectorAll('.word-cell');
+            cells.forEach(cell => {
                 cell.addEventListener('click', () => {
-                    const utterance = new SpeechSynthesisUtterance(cell.textContent);
-                    utterance.lang = 'en-GB';
-                    window.speechSynthesis.speak(utterance);
+                    try {
+                        const utterance = new SpeechSynthesisUtterance(cell.textContent);
+                        utterance.lang = 'en-GB';
+                        utterance.volume = 1.0;
+                        utterance.rate = 1.0;
+                        utterance.pitch = 1.0;
+                        window.speechSynthesis.speak(utterance);
+                    } catch (error) {
+                        console.error('音声再生エラー:', error);
+                        const errorMessage = document.createElement('p');
+                        errorMessage.className = 'error-message';
+                        errorMessage.textContent = '音声再生に失敗しました。ブラウザ設定を確認してください。';
+                        cell.parentElement.append(cell.parentElement.appendChild(errorMessage));
+                    }
                 });
             });
         } else {
-            console.log('Speech synthesis is not supported in this browser.');
-            const message = document.createElement('p');
-            message.style.color = 'red';
-            message.textContent = 'このブラウザは音声再生をサポートしていません。ChromeまたはFirefoxをご利用ください。';
-            document.querySelector('.tab-container').prepend(message);
+            const errorMessage = document.createElement('p');
+            errorMessage.className = 'error-message';
+            errorMessage.textContent = 'このブラウザは音声再生をサポートしていません。ChromeまたはFirefoxを試してください。';
+            document.querySelector('.tab-container').prepend(errorMessage);
         }
+
+        // 検索機能
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            Object.keys(wordData).forEach(category => {
+                const tableBody = document.getElementById(`${category}-table`);
+                tableBody.innerHTML = '';
+                wordData[category].forEach(item => {
+                    if (item.word.toLowerCase().includes(query) || item.meaning.includes(query)) {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `<td class="word-cell">${item.word}</td><td>${item.meaning}</td>`;
+                        tableBody.appendChild(row);
+                    }
+                });
+                // 音声再生イベントを再設定
+                tableBody.querySelectorAll('.word-cell').forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        try {
+                            const utterance = new SpeechSynthesisUtterance(cell.textContent);
+                            utterance.lang = 'en-GB';
+                            window.speechSynthesis.speak(utterance);
+                        } catch (error) {
+                            console.error('音声再生エラー:', error);
+                        }
+                    });
+                });
+            });
+        });
+
+        // クイズ機能
+        let currentQuestion = 0;
+        let score = 0;
+        let allWords = [];
+        Object.values(wordData).forEach(category => {
+            allWords = allWords.concat(category);
+        });
+
+        const quizModal = document.getElementById('quizModal');
+        const quizQuestion = document.getElementById('quizQuestion');
+        const quizOptions = document.getElementById('quizOptions');
+        const quizFeedback = document.getElementById('quizFeedback');
+        const quizScore = document.getElementById('quizScore');
+        const nextQuestionBtn = document.getElementById('nextQuestion');
+
+        function getRandomWord() {
+            return allWords[Math.floor(Math.random() * allWords.length)];
+        }
+
+        function getRandomOptions(correctWord, count = 4) {
+            const options = [correctWord];
+            while (options.length < count) {
+                const randomWord = getRandomWord();
+                if (!options.includes(randomWord) && randomWord.meaning !== correctWord.meaning) {
+                    options.push(randomWord);
+                }
+            }
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= 10) {
+                quizQuestion.textContent = 'クイズ終了！';
+                quizOptions.innerHTML = '';
+                quizFeedback.textContent = `最終スコア: ${score}/10`;
+                nextQuestionBtn.style.display = 'none';
+                return;
+            }
+
+            const correctWord = getRandomWord();
+            const options = getRandomOptions(correctWord);
+            quizQuestion.textContent = `「${correctWord.word}」の意味は？`;
+            quizOptions.innerHTML = '';
+            options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-outline-primary m-2';
+                btn.textContent = option.meaning;
+                btn.addEventListener('click', () => checkAnswer(option, correctWord));
+                quizOptions.appendChild(btn);
+            });
+            quizFeedback.textContent = '';
+        }
+
+        function checkAnswer(selected, correct) {
+            if (selected.meaning === correct.meaning) {
+                score++;
+                quizFeedback.textContent = '正解！';
+                quizFeedback.className = 'text-success';
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance('Correct!');
+                    utterance.lang = 'en-GB';
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                quizFeedback.textContent = `不正解。正解は「${correct.meaning}」です。`;
+                quizFeedback.className = 'text-danger';
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance('Incorrect.');
+                    utterance.lang = 'en-GB';
+                    window.speechSynthesis.speak(utterance);
+                }
+            }
+            quizScore.textContent = score;
+            currentQuestion++;
+        }
+
+        nextQuestionBtn.addEventListener('click', loadQuestion);
+
+        quizModal.addEventListener('shown.bs.modal', () => {
+            currentQuestion = 0;
+            score = 0;
+            quizScore.textContent = score;
+            nextQuestionBtn.style.display = 'block';
+            loadQuestion();
+        });
     });
     </script>
 </body>
