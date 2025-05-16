@@ -14,31 +14,82 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
-        h1 { font-size: 24px; }
-        p { font-size: 16px; }
+        h1 { font-size: 26px; }
+        p { font-size: 18px; }
         .search-container { margin: 20px 0; }
         .search-container input { padding: 8px; width: 300px; font-size: 16px; }
+        .voice-select-container { margin: 15px 0; }
+        .voice-select-container label { font-size: 16px; margin-right: 10px; }
+        .voice-select-container .form-check { display: inline-block; margin: 0 10px 10px 0; }
+        @media (max-width: 767px) {
+            .voice-select-container .form-check { display: block; }
+        }
         .nav-tabs { justify-content: center; margin: 20px 0; }
         .nav-link { font-size: 18px; }
-        table { width: 80%; margin: 10px auto; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 16px; }
         th { background-color: #f2f2f2; }
         td:hover { background-color: #f9f9f9; cursor: pointer; }
-        .quiz-container { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000; width: 400px; }
-        .quiz-container.active { display: block; }
-        .quiz-container p { font-size: 18px; margin-bottom: 20px; }
-        .quiz-option { margin: 5px; padding: 10px; font-size: 16px; width: 100%; }
+        .tab-pane { max-height: 600px; overflow-y: auto; }
+        .btn { font-size: 16px; }
+        /* Responsive table layout */
+        .table-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .table-container table { margin: 10px; }
+        @media (max-width: 767px) {
+            .table-container table { width: 80%; }
+        }
+        @media (min-width: 768px) and (max-width: 991px) {
+            .table-container table { width: 45%; }
+        }
+        @media (min-width: 992px) {
+            .table-container table { width: 30%; }
+        }
+        /* Fullscreen quiz and results modal */
+        .quiz-container, .results-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; }
+        .quiz-container.active, .results-container.active { display: flex; align-items: center; justify-content: center; }
+        .quiz-content, .results-content { background: white; padding: 3vw; border-radius: 10px; width: 90%; max-height: 90vh; text-align: center; }
+        .quiz-content h2 { font-size: 2.8vw; }
+        .quiz-content p#quiz-question { font-size: 2.5vw; margin-bottom: 3vw; }
+        .quiz-feedback { font-size: 2vw; font-weight: bold; margin: 2vw 0; }
+        .quiz-option { margin: 1vw; padding: 2vw; font-size: 2vw; width: 100%; }
         .quiz-option.correct { background-color: #d4edda; }
         .quiz-option.incorrect { background-color: #f8d7da; }
         .quiz-option.selected { background-color: #e0e0e0; }
-        .quiz-feedback { font-size: 16px; font-weight: bold; margin: 10px 0; }
-        .effect-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 80px; z-index: 2000; }
+        #quiz-score { font-size: 2vw; margin: 2vw 0; }
+        .quiz-content .btn { font-size: 1.8vw; margin: 0.5vw; }
+        .results-content h2 { font-size: 2.8vw; }
+        .results-table { width: 100%; margin: 2vw 0; }
+        .results-table th, .results-table td { padding: 1vw; font-size: 1.8vw; }
+        .results-content .btn { font-size: 1.8vw; }
+        /* Responsive font sizes */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .quiz-content h2 { font-size: 2.5vw; }
+            .quiz-content p#quiz-question { font-size: 2.2vw; }
+            .quiz-feedback { font-size: 1.8vw; }
+            .quiz-option { font-size: 1.8vw; }
+            #quiz-score { font-size: 1.8vw; }
+            .quiz-content .btn { font-size: 1.6vw; }
+            .results-content h2 { font-size: 2.5vw; }
+            .results-table th, .results-table td { font-size: 1.6vw; }
+            .results-content .btn { font-size: 1.6vw; }
+        }
+        @media (min-width: 992px) {
+            .quiz-content h2 { font-size: 2.2vw; }
+            .quiz-content p#quiz-question { font-size: 2vw; }
+            .quiz-feedback { font-size: 1.6vw; }
+            .quiz-option { font-size: 1.6vw; }
+            #quiz-score { font-size: 1.6vw; }
+            .quiz-content .btn { font-size: 1.4vw; }
+            .results-content h2 { font-size: 2.2vw; }
+            .results-table th, .results-table td { font-size: 1.4vw; }
+            .results-content .btn { font-size: 1.4vw; }
+        }
+        .effect-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10vw; z-index: 2000; }
         .effect-overlay.correct { color: green; }
         .effect-overlay.wrong { color: red; }
-        .heart { position: fixed; font-size: 24px; z-index: 1500; }
-        .bone-attack { position: absolute; font-size: 30px; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1500; }
-        footer { margin-top: 20px; font-size: 14px; }
-        .tab-pane { max-height: 600px; overflow-y: auto; }
+        .heart { position: fixed; font-size: 3vw; z-index: 1500; }
+        .bone-attack { position: absolute; font-size: 4vw; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1500; }
+        footer { margin-top: 20px; font-size: 16px; }
         #loadingModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000; }
         #loadingModal.active { display: block; }
     </style>
@@ -53,6 +104,11 @@
 
     <div class="search-container">
         <input type="text" id="search" class="form-control mx-auto" placeholder="単語やフレーズを検索..." oninput="searchWords()">
+    </div>
+
+    <div class="voice-select-container">
+        <label>音声選択: </label>
+        <div id="voiceRadios" class="d-inline"></div>
     </div>
 
     <button class="btn btn-primary" onclick="startQuiz()">クイズを開始</button>
@@ -82,61 +138,61 @@
     <div class="tab-content" id="wordTabsContent">
         <div class="tab-pane fade show active" id="nouns" role="tabpanel" aria-labelledby="nouns-tab">
             <h2>名詞（900語）</h2>
-            <table id="nouns-table">
-                <tr><th>英単語</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="nouns-tables"></div>
             <p>注：全900語（指導要領488語＋自然・野菜関連244語＋追加168語）。出典：文部科学省、英単語検定。</p>
         </div>
         <div class="tab-pane fade" id="verbs" role="tabpanel" aria-labelledby="verbs-tab">
             <h2>動詞（150語）</h2>
-            <table id="verbs-table">
-                <tr><th>英単語</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="verbs-tables"></div>
             <p>注：全150語（指導要領41語＋追加109語）。</p>
         </div>
         <div class="tab-pane fade" id="adjectives" role="tabpanel" aria-labelledby="adjectives-tab">
             <h2>形容詞（200語）</h2>
-            <table id="adjectives-table">
-                <tr><th>英単語</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="adjectives-tables"></div>
             <p>注：全200語（指導要領60語＋追加140語）。</p>
         </div>
         <div class="tab-pane fade" id="adverbs" role="tabpanel" aria-labelledby="adverbs-tab">
             <h2>副詞（80語）</h2>
-            <table id="adverbs-table">
-                <tr><th>英単語</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="adverbs-tables"></div>
             <p>注：全80語（指導要領20語＋追加60語）。</p>
         </div>
         <div class="tab-pane fade" id="prepositions" role="tabpanel" aria-labelledby="prepositions-tab">
             <h2>前置詞（50語）</h2>
-            <table id="prepositions-table">
-                <tr><th>英単語</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="prepositions-tables"></div>
             <p>注：全50語（指導要領20語＋追加30語）。</p>
         </div>
         <div class="tab-pane fade" id="phrases" role="tabpanel" aria-labelledby="phrases-tab">
             <h2>熟語・フレーズ（175個）</h2>
-            <table id="phrases-table">
-                <tr><th>フレーズ</th><th>意味</th></tr>
-            </table>
+            <div class="table-container" id="phrases-tables"></div>
             <p>注：全175フレーズ（指導要領50＋追加125）。イギリス英語の挨拶や自然関連フレーズを追加。</p>
         </div>
     </div>
 
     <div id="quiz" class="quiz-container">
-        <h2>英単語クイズ</h2>
-        <p id="quiz-question"></p>
-        <div id="quiz-feedback" class="quiz-feedback"></div>
-        <div id="quiz-options" class="row">
-            <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(0)"></button></div>
-            <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(1)"></button></div>
-            <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(2)"></button></div>
-            <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(3)"></button></div>
+        <div class="quiz-content">
+            <h2>英単語クイズ</h2>
+            <p id="quiz-question"></p>
+            <div id="quiz-feedback" class="quiz-feedback"></div>
+            <div id="quiz-options" class="row">
+                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(0)"></button></div>
+                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(1)"></button></div>
+                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(2)"></button></div>
+                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(3)"></button></div>
+            </div>
+            <p id="quiz-score">スコア: 0/10</p>
+            <button class="btn btn-secondary" onclick="closeQuiz()">閉じる</button>
+            <button class="btn btn-primary" onclick="nextQuestion()">次の問題</button>
         </div>
-        <p id="quiz-score">スコア: 0/10</p>
-        <button class="btn btn-secondary" onclick="closeQuiz()">閉じる</button>
-        <button class="btn btn-primary" onclick="nextQuestion()">次の問題</button>
+    </div>
+
+    <div id="results" class="results-container">
+        <div class="results-content">
+            <h2>クイズ結果</h2>
+            <table class="results-table">
+                <tr><th>問題</th><th>正解</th><th>あなたの回答</th><th>結果</th></tr>
+            </table>
+            <button class="btn btn-primary" onclick="closeResults()">閉じる</button>
+        </div>
     </div>
 
     <div id="effectOverlay" class="effect-overlay"></div>
@@ -147,252 +203,7 @@
 
     <!-- Bootstrap 5.3.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        let wordData = {};
-        let quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0 };
-        const correctSound = new Howl({ src: ['correct.mp3'], volume: 0.6 });
-        const wrongSound = new Howl({ src: ['incorrect.mp3'], volume: 0.6 });
-
-        // Load words from words.json
-        async function loadData() {
-            document.getElementById('loadingModal').classList.add('active');
-            try {
-                const response = await fetch('words.json');
-                if (!response.ok) throw new Error('単語データの読み込みに失敗しました');
-                wordData = await response.json();
-                populateTables();
-                document.getElementById('loadingModal').classList.remove('active');
-            } catch (error) {
-                console.error('Error loading words:', error);
-                document.getElementById('loadingModal').innerHTML = `<p>単語データの読み込みに失敗しました。words.jsonを確認してください。エラー: ${error.message}</p>`;
-            }
-        }
-
-        // Populate tables with word data
-        function populateTables(filter = '') {
-            const categories = [
-                { id: 'nouns-table', data: wordData.nouns, key: 'word' },
-                { id: 'verbs-table', data: wordData.verbs, key: 'word' },
-                { id: 'adjectives-table', data: wordData.adjectives, key: 'word' },
-                { id: 'adverbs-table', data: wordData.adverbs, key: 'word' },
-                { id: 'prepositions-table', data: wordData.prepositions, key: 'word' },
-                { id: 'phrases-table', data: wordData.phrases, key: 'phrase' }
-            ];
-
-            categories.forEach(category => {
-                const table = document.getElementById(category.id);
-                // Clear table except header
-                while (table.rows.length > 1) table.deleteRow(1);
-                const filteredData = category.data ? category.data.filter(item =>
-                    item[category.key].toLowerCase().includes(filter.toLowerCase()) ||
-                    item.meaning.toLowerCase().includes(filter.toLowerCase())
-                ) : [];
-                filteredData.forEach(item => {
-                    const row = table.insertRow();
-                    const cell1 = row.insertCell(0);
-                    const cell2 = row.insertCell(1);
-                    cell1.textContent = item[category.key];
-                    cell2.textContent = item.meaning;
-                    cell1.onclick = () => speak(item[category.key]);
-                });
-            });
-        }
-
-        // Text-to-speech
-        function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-GB';
-            speechSynthesis.speak(utterance);
-        }
-
-        // Search functionality
-        function searchWords() {
-            const query = document.getElementById('search').value;
-            populateTables(query);
-        }
-
-        // Quiz functionality
-        function startQuiz() {
-            if (!wordData.nouns) {
-                alert('単語データが読み込まれていません。ページをリロードしてください。');
-                return;
-            }
-            quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0 };
-            document.getElementById('quiz-score').textContent = `スコア: ${quizState.score}/${quizState.total}`;
-            document.getElementById('quiz-feedback').textContent = '';
-            document.getElementById('quiz').classList.add('active');
-            nextQuestion();
-        }
-
-        function nextQuestion() {
-            // Reset previous option styles
-            const optionButtons = document.querySelectorAll('.quiz-option');
-            optionButtons.forEach(btn => {
-                btn.classList.remove('correct', 'incorrect', 'selected');
-                btn.disabled = false;
-            });
-            document.getElementById('effectOverlay').style.display = 'none';
-            document.getElementById('quiz-feedback').textContent = '';
-
-            if (quizState.currentIndex >= quizState.total) {
-                closeQuiz();
-                alert(`クイズ終了！スコア: ${quizState.score}/${quizState.total}`);
-                return;
-            }
-
-            const categories = ['nouns', 'verbs', 'adjectives', 'adverbs', 'prepositions', 'phrases'];
-            const category = categories[Math.floor(Math.random() * categories.length)];
-            const key = category === 'phrases' ? 'phrase' : 'word';
-            const items = wordData[category];
-            if (!items || items.length < 4) {
-                alert('選択したカテゴリのデータが不足しています。');
-                closeQuiz();
-                return;
-            }
-
-            // Select correct answer
-            const correctItem = items[Math.floor(Math.random() * items.length)];
-            quizState.current = { category, item: correctItem, key, index: (quizState.currentIndex || 0) + 1 };
-            quizState.currentIndex = quizState.current.index;
-
-            // Generate 3 incorrect options
-            const options = [correctItem];
-            const otherItems = items.filter(item => item[key] !== correctItem[key]);
-            while (options.length < 4 && otherItems.length > 0) {
-                const randomIndex = Math.floor(Math.random() * otherItems.length);
-                options.push(otherItems.splice(randomIndex, 1)[0]);
-            }
-
-            // Shuffle options
-            for (let i = options.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [options[i], options[j]] = [options[j], options[i]];
-            }
-            quizState.options = options;
-
-            // Update UI
-            document.getElementById('quiz-question').textContent = `${correctItem.meaning} の英語は？`;
-            optionButtons.forEach((btn, index) => {
-                btn.textContent = options[index][key];
-            });
-        }
-
-        function checkAnswer(index) {
-            const selectedOption = quizState.options[index];
-            const correctAnswer = quizState.current.item[quizState.current.key];
-            const optionButtons = document.querySelectorAll('.quiz-option');
-
-            // Disable all buttons after selection
-            optionButtons.forEach(btn => btn.disabled = true);
-
-            // Highlight correct and incorrect answers
-            optionButtons.forEach((btn, i) => {
-                if (quizState.options[i][quizState.current.key] === correctAnswer) {
-                    btn.classList.add('correct');
-                } else if (i === index) {
-                    btn.classList.add('incorrect');
-                }
-            });
-
-            // Show feedback and effects
-            const isCorrect = selectedOption[quizState.current.key] === correctAnswer;
-            if (isCorrect) {
-                quizState.score++;
-                document.getElementById('quiz-score').textContent = `スコア: ${quizState.score}/${quizState.total}`;
-                document.getElementById('quiz-feedback').textContent = '正解！';
-                correctSound.play();
-                addHeart();
-                showEffect('correct');
-                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#0f0', '#ff0', '#fff'] });
-            } else {
-                document.getElementById('quiz-feedback').textContent = '不正解！';
-                wrongSound.play();
-                showEffect('wrong');
-                showBoneAttack();
-            }
-
-            // Brief delay before next question to show feedback
-            setTimeout(nextQuestion, 1800);
-        }
-
-        function showEffect(type) {
-            const overlay = document.getElementById('effectOverlay');
-            overlay.textContent = type === 'correct' ? '〇' : '×';
-            overlay.className = `effect-overlay ${type}`;
-            gsap.to(overlay, { scale: 2.5, opacity: 1, duration: 0.6, ease: "elastic.out(1, 0.3)", onStart: () => overlay.style.display = 'flex' });
-            gsap.to(overlay, { scale: 3.5, opacity: 0, duration: 0.6, delay: 0.6, ease: "power2.in", onComplete: () => overlay.style.display = 'none' });
-        }
-
-        function addHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.textContent = '💕';
-            heart.style.left = `${Math.random() * 100}vw`;
-            document.body.appendChild(heart);
-            gsap.to(heart, {
-                y: -window.innerHeight * 2,
-                opacity: 0,
-                duration: 6,
-                ease: "power1.out",
-                onComplete: () => heart.remove()
-            });
-            gsap.to(heart, {
-                x: 12 * (Math.random() - 0.5),
-                duration: 0.6,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
-        }
-
-        function showBoneAttack() {
-            const bone = document.createElement('div');
-            bone.className = 'bone-attack';
-            bone.textContent = '🦴';
-            document.getElementById('quiz').appendChild(bone);
-            setTimeout(() => bone.remove(), 1000);
-        }
-
-        function handleKeydown(e) {
-            const quiz = document.getElementById('quiz');
-            if (!quiz.classList.contains('active')) return;
-
-            const optionButtons = document.querySelectorAll('.quiz-option');
-            let selectedIndex = Array.from(optionButtons).findIndex(btn => btn.classList.contains('selected'));
-
-            // Navigate options with arrow keys
-            if (e.key === 'ArrowUp' && selectedIndex > 1) {
-                optionButtons[selectedIndex].classList.remove('selected');
-                selectedIndex -= 2;
-                optionButtons[selectedIndex].classList.add('selected');
-            } else if (e.key === 'ArrowDown' && selectedIndex < 2) {
-                optionButtons[selectedIndex].classList.remove('selected');
-                selectedIndex += 2;
-                optionButtons[selectedIndex].classList.add('selected');
-            } else if (e.key === 'ArrowLeft' && selectedIndex % 2 === 1) {
-                optionButtons[selectedIndex].classList.remove('selected');
-                selectedIndex -= 1;
-                optionButtons[selectedIndex].classList.add('selected');
-            } else if (e.key === 'ArrowRight' && selectedIndex % 2 === 0 && selectedIndex < optionButtons.length - 1) {
-                optionButtons[selectedIndex].classList.remove('selected');
-                selectedIndex += 1;
-                optionButtons[selectedIndex].classList.add('selected');
-            } else if (e.key === 'z' || e.key === 'Enter') {
-                if (selectedIndex >= 0) {
-                    checkAnswer(selectedIndex);
-                }
-            }
-        }
-
-        function closeQuiz() {
-            document.getElementById('quiz').classList.remove('active');
-            document.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('selected'));
-            document.removeEventListener('keydown', handleKeydown);
-        }
-
-        // Initialize
-        document.addEventListener('keydown', handleKeydown);
-        loadData();
-    </script>
+    <!-- External JavaScript -->
+    <script src="equiz.js"></script>
 </body>
 </html>
