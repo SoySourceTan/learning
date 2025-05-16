@@ -112,7 +112,7 @@ function populateTables(filter = '') {
                 const row = table.insertRow();
                 const cell1 = row.insertCell(0);
                 const cell2 = row.insertCell(1);
-                cell1.textContent = item[category.key];
+                cell1.textContent = `🔉 ${item[category.key]}`;
                 cell2.textContent = item.meaning;
                 cell1.onclick = () => speak(item[category.key]);
             }
@@ -419,4 +419,7 @@ window.addEventListener('load', () => {
     // Add event listeners for voice selection
     document.getElementById('voiceRadios').addEventListener('change', setVoice);
     document.getElementById('voiceRadiosModal').addEventListener('change', setVoice);
+    
+    
 });
+
