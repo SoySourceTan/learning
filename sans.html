@@ -84,21 +84,36 @@
         @keyframes buzzerShake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-12px); } 20%, 40%, 60%, 80% { transform: translateX(12px); } }
         @keyframes fadeOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.5); } }
         @keyframes floatHeart { 0% { transform: translateY(100vh); opacity: 1; } 50% { opacity: 0.9; } 100% { transform: translateY(-100vh); opacity: 0; } }
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .sound-toggle span {
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
     <div class="loading" id="loadingModal">
         <p>サンズがダンジョンを準備中だぜ...</p>
     </div>
-    <header><h1>Undertale: 学習バトル！</h1><p>よお、キッド！知識を骨まで学べ！</p></header>
+    <header>
+        <h1>Undertale: 学習バトル！</h1>
+        <p>よお、キッド！知識を骨まで学べ！</p>
+    </header>
     <button class="quiz-start hvr-grow" onclick="showDifficultyModal()">冒険を始めよう！</button>
     <div class="tabs" id="categoryTabs"></div>
     <div id="tabContents"></div>
     <div class="modal difficulty-modal" id="difficultyModal">
         <div class="quiz-header">難易度を選べ、勇者！
-        <img src="undertale/papi.png" alt="Papyrus" class="character-image">
-
-       </div>
+            <img src="undertale/papi.png" alt="Papyrus" class="character-image">
+        </div>
         <div class="options" id="difficultyOptions">
             <div class="option hvr-grow" onclick="setDifficulty('easy')">初級（40秒、ダメージ-3）</div>
             <div class="option hvr-grow" onclick="setDifficulty('medium')">中級（30秒、ダメージ-5）</div>
@@ -111,16 +126,14 @@
     </div>
     <div class="modal category-modal" id="categoryModal">
         <div class="quiz-header">冒険の書を選べ！我が子よ
-        <img src="undertale/tri.png" alt="Toriel" class="character-image">
-
+            <img src="undertale/tri.png" alt="Toriel" class="character-image">
         </div>
         <div class="options" id="categoryOptions"></div>
         <div class="dialog" id="categoryDialog">どの書を読み解くんだ？選べよ！</div>
     </div>
     <div class="modal quiz-modal" id="quizModal">
         <div class="effect-overlay" id="effectOverlay"></div>
-                <img src="undertale/flo.png" alt="Flowey" class="character-image">
-
+        <img src="undertale/wiggle-swaying.webp" alt="Flowey" class="character-image">
         <div class="quiz-header">バトル！ VS <span id="monsterName"></span><br>
             <div class="monster-hp" id="monsterHP">
                 <div class="monster-hp-bar" id="monsterHPBar"></div>
@@ -150,22 +163,42 @@
             <div class="option hvr-grow" onclick="buyItem('hint')">ヒント券（1回、20G）</div>
         </div>
         <div class="dialog" id="shopDialog">何を買うんだ、勇者？ GOLD: <span id="shopGold">0</span></div>
-        <div class="buttons"><button class="button hvr-grow" onclick="closeShop()">戻る</button></div>
+        <div class="buttons">
+            <button class="button hvr-grow" onclick="closeShop()">戻る</button>
+        </div>
     </div>
     <div class="game-over" id="gameOver">
         <h2>ゲームオーバー！</h2>
         <p>骨折れちまったな、勇者。もう一度挑むか？</p>
-        <div><button class="button hvr-grow" onclick="retryQuest()">再挑戦</button><button class="button hvr-grow" onclick="quit()">やめる</button></div>
+        <div>
+            <button class="button hvr-grow" onclick="retryQuest()">再挑戦</button>
+            <button class="button hvr-grow" onclick="quit()">やめる</button>
+        </div>
     </div>
     <div class="stage-clear" id="stageClear">
         <h2>ステージクリア！</h2>
         <p>よくやったぜ、勇者！次のステージへ行くか？</p>
-        <div><button class="button hvr-grow" onclick="nextStage()">次へ</button><button class="button hvr-grow" onclick="rest()">休む</button></div>
+        <div>
+            <button class="button hvr-grow" onclick="nextStage()">次へ</button>
+            <button class="button hvr-grow" onclick="rest()">休む</button>
+        </div>
     </div>
     <footer>
         <p>サンズが次の試練を準備中...</p>
         <p>© 2025 Undertale: 学習 | がんばれよ、勇者！</p>
     </footer>
-    <script src="syakai.js"></script>
+    <div id="soundToggle" class="sound-toggle">
+        <span id="soundIcon">🔊</span>
+    </div>
+    <script src="syakai.js" defer></script>
+    <!-- デバッグ用スクリプト -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingModal = document.getElementById('loadingModal');
+            const soundToggle = document.getElementById('soundToggle');
+            console.log('loadingModal:', loadingModal ? '見つかりました' : '見つかりません');
+            console.log('soundToggle:', soundToggle ? '見つかりました' : '見つかりません');
+        });
+    </script>
 </body>
 </html>

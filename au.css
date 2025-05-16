@@ -1,0 +1,397 @@
+/* Undertale風の全体スタイル */
+body {
+    font-family: 'VT323', monospace;
+    background: linear-gradient(135deg, #000, #001f3f);
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    font-size: 20px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* ヘッダー */
+h1 {
+    border: 2px solid #fff;
+    padding: 10px;
+    font-size: 32px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, #333, #00f);
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 255, 255, 0.3);
+}
+
+p::before {
+    content: '＊ ';
+    color: #0f0;
+}
+
+/* タブ */
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tab {
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #333;
+    color: #ff0;
+    transition: all 0.3s;
+}
+
+.tab:hover,
+.tab.active {
+    background: linear-gradient(45deg, #555, #ff0);
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* タブコンテンツ */
+.tab-content {
+    display: none;
+    margin: 20px 0;
+    animation: slideIn 0.5s;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00f;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* アニメーション */
+@keyframes slideIn {
+    from { transform: translateX(-60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+table {
+    border: 2px solid #fff;
+    background: #222;
+}
+
+th, td {
+    border: 1px solid #00f;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+}
+
+/* クイズ開始ボタン */
+.quiz-start {
+    padding: 12px 25px;
+    background: linear-gradient(45deg, #333, #0f0);
+    color: #000;
+    font-size: 22px;
+    box-shadow: 0 6px 12px rgba(0, 255, 0, 0.4);
+}
+
+.quiz-start:hover {
+    background: linear-gradient(45deg, #0f0, #fff);
+    transform: scale(1.1);
+}
+
+.quiz-start::before {
+    content: '＊ ';
+    color: #fff;
+}
+
+/* モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 900px;
+    max-height: 700px;
+    background: #000;
+    border: 4px solid #fff;
+    padding: 25px;
+    text-align: center;
+    z-index: 2000;
+    overflow: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+}
+
+.modal.active {
+    display: block;
+}
+
+.modal-content {
+    background: transparent;
+    border: none;
+}
+
+.quiz-header {
+    font-size: 28px;
+    border-bottom: 3px solid #ff0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    color: #0f0;
+    text-shadow: 0 0 8px #0f0;
+}
+
+/* モンスターHP */
+.monster-hp {
+    width: 250px;
+    height: 25px;
+    background: #333;
+    border: 3px solid #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.monster-hp-bar {
+    height: 100%;
+    background: #f00;
+    transition: width 0.5s;
+}
+
+/* ステータス */
+.status {
+    border: 3px solid #00f;
+    background: #111;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+.status span {
+    color: #0f0;
+}
+
+.status #hp { color: #0f0; }
+.status #exp { color: #ff0; }
+.status #level { color: #ff0; }
+.status #gold { color: #ff0; }
+
+/* クイズ質問 */
+.quiz-question {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #fff;
+    text-shadow: 0 0 5px #00f;
+}
+
+/* オプション */
+.option {
+    padding: 12px;
+    cursor: pointer;
+    background: #222;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+    text-align: left;
+}
+
+.option:hover,
+.option.selected {
+    background: linear-gradient(45deg, #555, #0f0);
+    color: #000;
+    transform: scale(1.05);
+}
+
+/* タイマー */
+.timer {
+    font-size: 20px;
+    margin: 15px 0;
+    color: #00f;
+    text-shadow: 0 0 5px #00f;
+}
+
+/* ダイアログ */
+.dialog {
+    margin-top: 15px;
+    font-style: italic;
+    text-align: left;
+    padding-left: 25px;
+    color: #fff;
+    background: rgba(0, 0, 255, 0.2);
+    border-left: 5px solid #00f;
+}
+
+.dialog::before {
+    content: '＊ ';
+    color: #ff0;
+}
+
+/* ボタン */
+.button {
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #333, #f00);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.4);
+}
+
+.button:hover {
+    background: linear-gradient(45deg, #f00, #fff);
+    color: #000;
+    transform: scale(1.1);
+}
+
+/* ゲームオーバーとステージクリア */
+.game-over,
+.stage-clear {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 900px;
+    max-height: 700px;
+    background: #000;
+    padding: 25px;
+    text-align: center;
+    z-index: 2000;
+    overflow: auto;
+    border-radius: 15px;
+}
+
+.game-over.active,
+.stage-clear.active {
+    display: block;
+}
+
+.game-over {
+    border: 4px solid #f00;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+}
+
+.stage-clear {
+    border: 4px solid #0f0;
+    box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
+}
+
+/* フッター */
+footer {
+    font-size: 18px;
+    color: #ff0;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border: 2px solid #00f;
+    border-radius: 8px;
+}
+
+/* キャラクタ画像 */
+.character-image {
+    max-height: 150px;
+}
+
+/* ハートとエフェクト */
+.heart {
+    position: absolute;
+    font-size: 25px;
+    z-index: 2500;
+}
+
+.effect-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+    font-size: 250px;
+    text-shadow: 0 0 25px #fff;
+}
+
+.correct .effect-overlay,
+.wrong .effect-overlay {
+    display: flex;
+}
+
+.correct .effect-overlay {
+    color: #0f0;
+}
+
+.wrong .effect-overlay {
+    color: #f00;
+}
+
+/* ボーンアタック */
+.bone-attack {
+    position: absolute;
+    top: 50%;
+    left: -50px;
+    color: #fff;
+    font-size: 40px;
+    z-index: 2500;
+    animation: boneMove 1s linear forwards;
+}
+
+@keyframes boneMove {
+    0% { left: -50px; }
+    100% { left: 100%; }
+}
+
+/* その他のアニメーション */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-6px); }
+}
+
+@keyframes shrinkCircle {
+    0% { width: 350px; height: 350px; opacity: 0.9; border: 12px solid #0f0; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    100% { width: 0; height: 0; opacity: 0; border: 0; }
+}
+
+@keyframes vibrate {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-6px); }
+    50% { transform: translateY(6px); }
+    75% { transform: translateY(-6px); }
+}
+
+@keyframes wrongEffect {
+    0% { background-color: #000; }
+    50% { background-color: #f00; }
+    100% { background-color: #000; }
+}
+
+@keyframes buzzerShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-12px); }
+    20%, 40%, 60%, 80% { transform: translateX(12px); }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2.5); }
+}
+
+@keyframes floatHeart {
+    0% { transform: translateY(100vh); opacity: 1; }
+    50% { opacity: 0.9; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* サウンドトグル */
+.sound-toggle {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.sound-toggle span {
+    font-size: 24px;
+}
