@@ -1,13 +1,15 @@
 let wordData = {};
 let quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0, results: [] };
 let selectedVoice = null;
+let voiceModal = null;
+let quizModal = null;
 const correctSound = new Howl({ src: ['correct.mp3'], volume: 0.6 });
 const wrongSound = new Howl({ src: ['incorrect.mp3'], volume: 0.6 });
 
 // Load voices for text-to-speech
-function loadVoices() {
+function loadVoices(target = 'inline') {
     const voices = window.speechSynthesis.getVoices();
-    const voiceRadios = document.getElementById('voiceRadios');
+    const voiceRadios = target === 'inline' ? document.getElementById('voiceRadios') : document.getElementById('voiceRadiosModal');
     voiceRadios.innerHTML = '';
     if (voices.length === 0) {
         console.warn('No voices loaded yet, waiting for onvoiceschanged');
@@ -39,13 +41,13 @@ function loadVoices() {
             const div = document.createElement('div');
             div.className = 'form-check';
             div.innerHTML = `
-                <input class="form-check-input" type="radio" name="voiceSelect" id="voice${index}" value="${index}" ${index === defaultVoiceIndex ? 'checked' : ''}>
-                <label class="form-check-label" for="voice${index}">${voice.name} (${voice.lang})</label>
+                <input class="form-check-input" type="radio" name="voiceSelect" id="voice${index}_${target}" value="${index}" ${index === defaultVoiceIndex ? 'checked' : ''}>
+                <label class="form-check-label" for="voice${index}_${target}">${voice.name} (${voice.lang})</label>
             `;
             voiceRadios.appendChild(div);
         }
     });
-    console.log('Voices loaded:', voices.filter(v => v.lang.includes('en')));
+    console.log('Voices loaded for', target, ':', voices.filter(v => v.lang.includes('en')));
 }
 
 // Set selected voice
@@ -54,6 +56,9 @@ function setVoice(event) {
     const voices = window.speechSynthesis.getVoices();
     selectedVoice = index ? voices[parseInt(index)] : null;
     console.log('Selected voice:', selectedVoice ? selectedVoice.name : 'Default');
+    // Update both inline and modal radios
+    const allRadios = document.querySelectorAll(`input[name="voiceSelect"][value="${index}"]`);
+    allRadios.forEach(radio => radio.checked = true);
 }
 
 // Load words from words.json
@@ -119,6 +124,8 @@ function populateTables(filter = '') {
 // Text-to-speech
 function speak(text) {
     try {
+        // Cancel previous speech to prevent overlap
+        window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'en-GB'; // Align with default voice
         if (selectedVoice) {
@@ -128,6 +135,29 @@ function speak(text) {
         console.log('Speaking with voice:', selectedVoice ? selectedVoice.name : 'Default', 'Text:', text);
     } catch (error) {
         console.error('Speech error:', error);
+    }
+}
+
+// Speak quiz option
+function speakOption(index, event) {
+    if (event) {
+        event.stopPropagation(); // Prevent bubbling to parent button
+    }
+    if (!quizState.options || !quizState.options[index] || !quizState.current) {
+        console.error('Invalid quiz state for speakOption:', quizState);
+        return;
+    }
+    const key = quizState.current.key;
+    const text = quizState.options[index][key];
+    speak(text);
+}
+
+// Handle speaker keydown
+function handleSpeakerKeydown(index, event) {
+    if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.stopPropagation(); // Prevent bubbling to parent button
+        speakOption(index);
     }
 }
 
@@ -143,10 +173,20 @@ function startQuiz() {
         alert('単語データが読み込まれていません。ページをリロードしてください。');
         return;
     }
+    // Reset quiz state
     quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0, results: [] };
     document.getElementById('quiz-score').textContent = `スコア: ${quizState.score}/${quizState.total}`;
     document.getElementById('quiz-feedback').textContent = '';
-    document.getElementById('quiz').classList.add('active');
+    // Disable option buttons until question is loaded
+    const optionButtons = document.querySelectorAll('.quiz-option');
+    optionButtons.forEach(btn => {
+        btn.disabled = true;
+        btn.querySelector('.option-text').textContent = '';
+    });
+    quizModal.show();
+    // Move focus to quiz modal title
+    document.getElementById('quizLabel').focus();
+    // Load first question
     nextQuestion();
 }
 
@@ -155,10 +195,12 @@ function nextQuestion() {
     const optionButtons = document.querySelectorAll('.quiz-option');
     optionButtons.forEach(btn => {
         btn.classList.remove('correct', 'incorrect', 'selected');
-        btn.disabled = false;
+        btn.disabled = true; // Disable until question is loaded
+        btn.querySelector('.option-text').textContent = ''; // Clear text
     });
     document.getElementById('effectOverlay').style.display = 'none';
     document.getElementById('quiz-feedback').textContent = '';
+    document.getElementById('quiz-question').textContent = '';
 
     if (quizState.currentIndex >= quizState.total) {
         closeQuiz();
@@ -180,6 +222,7 @@ function nextQuestion() {
     const correctItem = items[Math.floor(Math.random() * items.length)];
     quizState.current = { category, item: correctItem, key, index: (quizState.currentIndex || 0) + 1 };
     quizState.currentIndex = quizState.current.index;
+    console.log('Next question set:', quizState.current);
 
     // Generate 3 incorrect options
     const options = [correctItem];
@@ -199,11 +242,20 @@ function nextQuestion() {
     // Update UI
     document.getElementById('quiz-question').textContent = `${correctItem.meaning} の英語は？`;
     optionButtons.forEach((btn, index) => {
-        btn.textContent = options[index][key];
+        btn.querySelector('.option-text').textContent = options[index][key];
+        btn.disabled = false; // Enable buttons after question is loaded
     });
 }
 
 function checkAnswer(index) {
+    // Guard against invalid state
+    if (!quizState.current || !quizState.current.item) {
+        console.error('Quiz state is invalid:', quizState);
+        alert('クイズの状態が無効です。もう一度開始してください。');
+        closeQuiz();
+        return;
+    }
+
     const selectedOption = quizState.options[index];
     const correctAnswer = quizState.current.item[quizState.current.key];
     const optionButtons = document.querySelectorAll('.quiz-option');
@@ -228,6 +280,7 @@ function checkAnswer(index) {
         selected: selectedOption[quizState.current.key],
         isCorrect: isCorrect
     });
+    console.log('Answer checked:', { selected: selectedOption[quizState.current.key], correct: correctAnswer, isCorrect });
 
     // Show feedback and effects
     if (isCorrect) {
@@ -305,26 +358,17 @@ function closeResults() {
 }
 
 function handleKeydown(e) {
-    const quiz = document.getElementById('quiz');
-    if (!quiz.classList.contains('active')) return;
+    if (!quizModal._isShown) return;
 
     const optionButtons = document.querySelectorAll('.quiz-option');
     let selectedIndex = Array.from(optionButtons).findIndex(btn => btn.classList.contains('selected'));
 
     // Navigate options with arrow keys
-    if (e.key === 'ArrowUp' && selectedIndex > 1) {
-        optionButtons[selectedIndex].classList.remove('selected');
-        selectedIndex -= 2;
-        optionButtons[selectedIndex].classList.add('selected');
-    } else if (e.key === 'ArrowDown' && selectedIndex < 2) {
-        optionButtons[selectedIndex].classList.remove('selected');
-        selectedIndex += 2;
-        optionButtons[selectedIndex].classList.add('selected');
-    } else if (e.key === 'ArrowLeft' && selectedIndex % 2 === 1) {
+    if (e.key === 'ArrowUp' && selectedIndex > 0) {
         optionButtons[selectedIndex].classList.remove('selected');
         selectedIndex -= 1;
         optionButtons[selectedIndex].classList.add('selected');
-    } else if (e.key === 'ArrowRight' && selectedIndex % 2 === 0 && selectedIndex < optionButtons.length - 1) {
+    } else if (e.key === 'ArrowDown' && selectedIndex < optionButtons.length - 1) {
         optionButtons[selectedIndex].classList.remove('selected');
         selectedIndex += 1;
         optionButtons[selectedIndex].classList.add('selected');
@@ -336,27 +380,43 @@ function handleKeydown(e) {
 }
 
 function closeQuiz() {
-    document.getElementById('quiz').classList.remove('active');
-    document.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('selected'));
+    quizModal.hide();
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.classList.remove('selected');
+        btn.disabled = true;
+        btn.querySelector('.option-text').textContent = '';
+    });
+    // Move focus back to "Start Quiz" button
+    document.querySelector('.btn-primary[onclick="startQuiz()"]').focus();
     document.removeEventListener('keydown', handleKeydown);
 }
 
 // Initialize
 document.addEventListener('keydown', handleKeydown);
 window.speechSynthesis.onvoiceschanged = () => {
-    loadVoices();
+    loadVoices('inline');
+    loadVoices('modal');
     console.log('onvoiceschanged triggered');
 };
 window.addEventListener('load', () => {
-    loadVoices();
+    // Initialize modals
+    voiceModal = new bootstrap.Modal(document.getElementById('voiceModal'), { keyboard: true });
+    quizModal = new bootstrap.Modal(document.getElementById('quiz'), { keyboard: true });
+    loadVoices('inline');
+    loadVoices('modal');
     // Fallback: retry loading voices after 1s if empty
     setTimeout(() => {
         if (document.querySelectorAll('#voiceRadios .form-check').length === 0) {
-            console.log('Retrying voice load');
-            loadVoices();
+            console.log('Retrying voice load for inline');
+            loadVoices('inline');
+        }
+        if (document.querySelectorAll('#voiceRadiosModal .form-check').length === 0) {
+            console.log('Retrying voice load for modal');
+            loadVoices('modal');
         }
     }, 1000);
     loadData();
-    // Add event listener for voice selection
+    // Add event listeners for voice selection
     document.getElementById('voiceRadios').addEventListener('change', setVoice);
+    document.getElementById('voiceRadiosModal').addEventListener('change', setVoice);
 });

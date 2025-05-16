@@ -18,11 +18,67 @@
         p { font-size: 18px; }
         .search-container { margin: 20px 0; }
         .search-container input { padding: 8px; width: 300px; font-size: 16px; }
-        .voice-select-container { margin: 15px 0; }
+        .voice-select-container { margin: 10px 0; }
         .voice-select-container label { font-size: 16px; margin-right: 10px; }
         .voice-select-container .form-check { display: inline-block; margin: 0 10px 10px 0; }
+        .voice-select-btn { display: none; }
+        /* Speaker button styling */
+        .quiz-option { position: relative; text-align: left; }
+        .speaker { position: absolute; left: 0.5rem; top: 50%; transform: translateY(-50%); font-size: 1.2em; cursor: pointer; color: #000000; }
+        .speaker:hover { color: #0d6efd; }
+        .option-text { margin-left: 1.5rem; }
+        /* Mobile: Show voice button, hide inline radios, style quiz modal */
         @media (max-width: 767px) {
-            .voice-select-container .form-check { display: block; }
+            .voice-select-container .inline-voice-select { display: none; }
+            .voice-select-btn { display: inline-block; font-size: 14px; }
+            .modal-fullscreen .modal-content { padding: 15px; }
+            .modal-fullscreen .form-check { margin: 5px 0; }
+            .modal-fullscreen .form-check-label { font-size: 14px; }
+            .modal-fullscreen .form-check-input { margin-top: 0.3rem; }
+            .modal-fullscreen .modal-header h5 { font-size: 16px; }
+            /* Quiz modal: Vertical layout, larger fonts */
+            #quiz .modal-content { padding: 1rem; }
+            #quiz .quiz-option { font-size: 14px; margin: 0.5rem 0; padding: 0.75rem; padding-left: 2rem; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 18px; }
+            #quiz #quiz-question { font-size: 16px; margin-bottom: 1rem; }
+            #quiz #quiz-feedback { font-size: 14px; margin: 0.5rem 0; }
+            #quiz #quiz-score { font-size: 14px; margin: 0.5rem 0; }
+            #quiz .btn { font-size: 14px; margin: 0.25rem; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
+        }
+        /* Desktop: Show inline radios, hide voice button */
+        @media (min-width: 768px) {
+            .voice-select-container .modal-voice-select { display: none; }
+            /* Quiz modal: Keep grid layout, scalable fonts */
+            #quiz .quiz-option { font-size: 1.6vw; margin: 1vw; padding: 2vw; padding-left: 2.5vw; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 2.2vw; }
+            #quiz #quiz-question { font-size: 2vw; margin-bottom: 3vw; }
+            #quiz #quiz-feedback { font-size: 1.6vw; margin: 2vw 0; }
+            #quiz #quiz-score { font-size: 1.6vw; margin: 2vw 0; }
+            #quiz .btn { font-size: 1.4vw; margin: 0.5vw; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
+        }
+        /* Mid-range devices: Adjust quiz fonts */
+        @media (min-width: 768px) and (max-width: 991px) {
+            #quiz .quiz-option { font-size: 1.8vw; margin: 1vw; padding: 2vw; padding-left: 2.5vw; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 2.5vw; }
+            #quiz #quiz-question { font-size: 2.2vw; margin-bottom: 3vw; }
+            #quiz #quiz-feedback { font-size: 1.8vw; margin: 2vw 0; }
+            #quiz #quiz-score { font-size: 1.8vw; margin: 2vw 0; }
+            #quiz .btn { font-size: 1.6vw; margin: 0.5vw; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
         }
         .nav-tabs { justify-content: center; margin: 20px 0; }
         .nav-link { font-size: 18px; }
@@ -44,45 +100,24 @@
         @media (min-width: 992px) {
             .table-container table { width: 30%; }
         }
-        /* Fullscreen quiz and results modal */
-        .quiz-container, .results-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; }
-        .quiz-container.active, .results-container.active { display: flex; align-items: center; justify-content: center; }
-        .quiz-content, .results-content { background: white; padding: 3vw; border-radius: 10px; width: 90%; max-height: 90vh; text-align: center; }
-        .quiz-content h2 { font-size: 2.8vw; }
-        .quiz-content p#quiz-question { font-size: 2.5vw; margin-bottom: 3vw; }
-        .quiz-feedback { font-size: 2vw; font-weight: bold; margin: 2vw 0; }
-        .quiz-option { margin: 1vw; padding: 2vw; font-size: 2vw; width: 100%; }
-        .quiz-option.correct { background-color: #d4edda; }
-        .quiz-option.incorrect { background-color: #f8d7da; }
-        .quiz-option.selected { background-color: #e0e0e0; }
-        #quiz-score { font-size: 2vw; margin: 2vw 0; }
-        .quiz-content .btn { font-size: 1.8vw; margin: 0.5vw; }
-        .results-content h2 { font-size: 2.8vw; }
+        /* Results modal */
+        .results-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; }
+        .results-container.active { display: flex; align-items: center; justify-content: center; }
+        .results-content { background: white; padding: 3vw; border-radius: 10px; width: 90%; max-height: 90vh; text-align: center; }
+        .results-content h2 { font-size: 2.2vw; }
         .results-table { width: 100%; margin: 2vw 0; }
-        .results-table th, .results-table td { padding: 1vw; font-size: 1.8vw; }
-        .results-content .btn { font-size: 1.8vw; }
-        /* Responsive font sizes */
+        .results-table th, .results-table td { padding: 1vw; font-size: 1.4vw; }
+        .results-content .btn { font-size: 1.4vw; }
         @media (min-width: 768px) and (max-width: 991px) {
-            .quiz-content h2 { font-size: 2.5vw; }
-            .quiz-content p#quiz-question { font-size: 2.2vw; }
-            .quiz-feedback { font-size: 1.8vw; }
-            .quiz-option { font-size: 1.8vw; }
-            #quiz-score { font-size: 1.8vw; }
-            .quiz-content .btn { font-size: 1.6vw; }
             .results-content h2 { font-size: 2.5vw; }
             .results-table th, .results-table td { font-size: 1.6vw; }
             .results-content .btn { font-size: 1.6vw; }
         }
-        @media (min-width: 992px) {
-            .quiz-content h2 { font-size: 2.2vw; }
-            .quiz-content p#quiz-question { font-size: 2vw; }
-            .quiz-feedback { font-size: 1.6vw; }
-            .quiz-option { font-size: 1.6vw; }
-            #quiz-score { font-size: 1.6vw; }
-            .quiz-content .btn { font-size: 1.4vw; }
-            .results-content h2 { font-size: 2.2vw; }
-            .results-table th, .results-table td { font-size: 1.4vw; }
-            .results-content .btn { font-size: 1.4vw; }
+        @media (max-width: 767px) {
+            .results-content { padding: 1rem; }
+            .results-content h2 { font-size: 18px; }
+            .results-table th, .results-table td { font-size: 14px; padding: 0.5rem; }
+            .results-content .btn { font-size: 14px; }
         }
         .effect-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10vw; z-index: 2000; }
         .effect-overlay.correct { color: green; }
@@ -107,8 +142,31 @@
     </div>
 
     <div class="voice-select-container">
-        <label>音声選択: </label>
-        <div id="voiceRadios" class="d-inline"></div>
+        <!-- Inline voice selection for desktop -->
+        <div class="inline-voice-select">
+            <label>音声選択: </label>
+            <div id="voiceRadios" class="d-inline"></div>
+        </div>
+        <!-- Button to trigger modal for mobile -->
+        <button type="button" class="btn btn-secondary voice-select-btn" data-bs-toggle="modal" data-bs-target="#voiceModal">音声選択</button>
+    </div>
+
+    <!-- Voice selection modal for mobile -->
+    <div class="modal fade modal-voice-select" id="voiceModal" tabindex="-1" aria-labelledby="voiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="voiceModalLabel">音声選択</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="voiceRadiosModal"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <button class="btn btn-primary" onclick="startQuiz()">クイズを開始</button>
@@ -168,20 +226,28 @@
         </div>
     </div>
 
-    <div id="quiz" class="quiz-container">
-        <div class="quiz-content">
-            <h2>英単語クイズ</h2>
-            <p id="quiz-question"></p>
-            <div id="quiz-feedback" class="quiz-feedback"></div>
-            <div id="quiz-options" class="row">
-                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(0)"></button></div>
-                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(1)"></button></div>
-                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(2)"></button></div>
-                <div class="col-6"><button class="btn btn-outline-primary quiz-option" onclick="checkAnswer(3)"></button></div>
+    <!-- Quiz modal -->
+    <div class="modal fade modal-fullscreen" id="quiz" tabindex="-1" aria-labelledby="quizLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="quizLabel">英単語クイズ</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる" onclick="closeQuiz()"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="quiz-question"></p>
+                    <div id="quiz-feedback" class="quiz-feedback"></div>
+                    <div id="quiz-options" class="row">
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(0)"><span class="speaker" onclick="speakOption(0, event)" onkeydown="handleSpeakerKeydown(0, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(1)"><span class="speaker" onclick="speakOption(1, event)" onkeydown="handleSpeakerKeydown(1, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(2)"><span class="speaker" onclick="speakOption(2, event)" onkeydown="handleSpeakerKeydown(2, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(3)"><span class="speaker" onclick="speakOption(3, event)" onkeydown="handleSpeakerKeydown(3, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                    </div>
+                    <p id="quiz-score">スコア: 0/10</p>
+                    <button class="btn btn-secondary" onclick="closeQuiz()">閉じる</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">次の問題</button>
+                </div>
             </div>
-            <p id="quiz-score">スコア: 0/10</p>
-            <button class="btn btn-secondary" onclick="closeQuiz()">閉じる</button>
-            <button class="btn btn-primary" onclick="nextQuestion()">次の問題</button>
         </div>
     </div>
 
