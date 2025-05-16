@@ -3,618 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中学受験 イギリス英語 必須単語とフレーズ一覧</title>
+    <title>中学レベル 必須単語とフレーズ一覧</title>
     <!-- Bootstrap 5.3.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- カスタムCSS -->
+    <!-- Howler.js for sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- canvas-confetti for confetti effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
     <style>
-        body {
-            background-color: #f8f9fa;
+        body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+        h1 { font-size: 26px; }
+        p { font-size: 18px; }
+        .search-container { margin: 20px 0; }
+        .search-container input { padding: 8px; width: 300px; font-size: 16px; }
+        .voice-select-container { margin: 10px 0; }
+        .voice-select-container label { font-size: 16px; margin-right: 10px; }
+        .voice-select-container .form-check { display: inline-block; margin: 0 10px 10px 0; }
+        .voice-select-btn { display: none; }
+        /* Speaker button styling */
+        .quiz-option { position: relative; text-align: left; }
+        .speaker { position: absolute; left: 0.5rem; top: 50%; transform: translateY(-50%); font-size: 1.2em; cursor: pointer; color: #000000; }
+        .speaker:hover { color: #0d6efd; }
+        .option-text { margin-left: 1.5rem; }
+        /* Mobile: Show voice button, hide inline radios, style quiz modal */
+        @media (max-width: 767px) {
+            .voice-select-container .inline-voice-select { display: none; }
+            .voice-select-btn { display: inline-block; font-size: 14px; }
+            .modal-fullscreen .modal-content { padding: 15px; }
+            .modal-fullscreen .form-check { margin: 5px 0; }
+            .modal-fullscreen .form-check-label { font-size: 14px; }
+            .modal-fullscreen .form-check-input { margin-top: 0.3rem; }
+            .modal-fullscreen .modal-header h5 { font-size: 16px; }
+            /* Quiz modal: Vertical layout, larger fonts */
+            #quiz .modal-content { padding: 1rem; }
+            #quiz .quiz-option { font-size: 14px; margin: 0.5rem 0; padding: 0.75rem; padding-left: 2rem; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 18px; }
+            #quiz #quiz-question { font-size: 16px; margin-bottom: 1rem; }
+            #quiz #quiz-feedback { font-size: 14px; margin: 0.5rem 0; }
+            #quiz #quiz-score { font-size: 14px; margin: 0.5rem 0; }
+            #quiz .btn { font-size: 14px; margin: 0.25rem; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
         }
-        .header {
-            background-color: #006400;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+        /* Desktop: Show inline radios, hide voice button */
+        @media (min-width: 768px) {
+            .voice-select-container .modal-voice-select { display: none; }
+            /* Quiz modal: Keep grid layout, scalable fonts */
+            #quiz .quiz-option { font-size: 1.6vw; margin: 1vw; padding: 2vw; padding-left: 2.5vw; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 2.2vw; }
+            #quiz #quiz-question { font-size: 2vw; margin-bottom: 3vw; }
+            #quiz #quiz-feedback { font-size: 1.6vw; margin: 2vw 0; }
+            #quiz #quiz-score { font-size: 1.6vw; margin: 2vw 0; }
+            #quiz .btn { font-size: 1.4vw; margin: 0.5vw; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
         }
-        .tab-container {
-            max-width: 1200px;
-            margin: 2rem auto;
+        /* Mid-range devices: Adjust quiz fonts */
+        @media (min-width: 768px) and (max-width: 991px) {
+            #quiz .quiz-option { font-size: 1.8vw; margin: 1vw; padding: 2vw; padding-left: 2.5vw; color: #000000 !important; }
+            #quiz .quiz-option:hover { color: white; }
+            #quiz .quiz-option.correct { background: #28a745; color: white !important; }
+            #quiz .quiz-option.incorrect { background: #dc3545; color: white !important; }
+            #quiz h2 { font-size: 2.5vw; }
+            #quiz #quiz-question { font-size: 2.2vw; margin-bottom: 3vw; }
+            #quiz #quiz-feedback { font-size: 1.8vw; margin: 2vw 0; }
+            #quiz #quiz-score { font-size: 1.8vw; margin: 2vw 0; }
+            #quiz .btn { font-size: 1.6vw; margin: 0.5vw; }
+            #quiz .btn-primary { background: #0d6efd; color: white; }
+            #quiz .btn-secondary { background: #6c757d; color: white; }
         }
-        .table th, .table td {
-            vertical-align: middle;
+        .nav-tabs { justify-content: center; margin: 20px 0; }
+        .nav-link { font-size: 18px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 16px; }
+        th { background-color: #f2f2f2; }
+        td:hover { background-color: #f9f9f9; cursor: pointer; }
+        .tab-pane { max-height: 600px; overflow-y: auto; }
+        .btn { font-size: 16px; }
+        /* Responsive table layout */
+        .table-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .table-container table { margin: 10px; }
+        @media (max-width: 767px) {
+            .table-container table { width: 80%; }
         }
-        .table thead {
-            background-color: #006400;
-            color: white;
+        @media (min-width: 768px) and (max-width: 991px) {
+            .table-container table { width: 45%; }
         }
-        .word-cell {
-            cursor: pointer;
+        @media (min-width: 992px) {
+            .table-container table { width: 30%; }
         }
-        .word-cell:hover {
-            background-color: #e9ecef;
+        /* Results modal */
+        .results-container { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; }
+        .results-container.active { display: flex; align-items: center; justify-content: center; }
+        .results-content { background: white; padding: 3vw; border-radius: 10px; width: 90%; max-height: 90vh; text-align: center; }
+        .results-content h2 { font-size: 2.2vw; }
+        .results-table { width: 100%; margin: 2vw 0; }
+        .results-table th, .results-table td { padding: 1vw; font-size: 1.4vw; }
+        .results-content .btn { font-size: 1.4vw; }
+        @media (min-width: 768px) and (max-width: 991px) {
+            .results-content h2 { font-size: 2.5vw; }
+            .results-table th, .results-table td { font-size: 1.6vw; }
+            .results-content .btn { font-size: 1.6vw; }
         }
-        .error-message {
-            color: red;
-            margin: 1rem 0;
+        @media (max-width: 767px) {
+            .results-content { padding: 1rem; }
+            .results-content h2 { font-size: 18px; }
+            .results-table th, .results-table td { font-size: 14px; padding: 0.5rem; }
+            .results-content .btn { font-size: 14px; }
         }
-        .search-container {
-            margin-bottom: 1rem;
-        }
-        #quiz-feedback {
-            margin-top: 1rem;
-        }
+        .effect-overlay { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10vw; z-index: 2000; }
+        .effect-overlay.correct { color: green; }
+        .effect-overlay.wrong { color: red; }
+        .heart { position: fixed; font-size: 3vw; z-index: 1500; }
+        .bone-attack { position: absolute; font-size: 4vw; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1500; }
+        footer { margin-top: 20px; font-size: 16px; }
+        #loadingModal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000; }
+        #loadingModal.active { display: block; }
     </style>
 </head>
 <body>
-    <!-- ヘッダー -->
-    <header class="header">
-        <h1>中学受験 イギリス英語 必須単語とフレーズ一覧</h1>
-        <p>イギリス英語に特化した960～1280語と受験頻出フレーズ（単語をクリックで発音再生、検索・クイズ機能付き）</p>
-    </header>
+    <h1>中学レベル 必須単語とフレーズ一覧</h1>
+    <p>中学レベルに特化した1555語/フレーズ（単語をクリックで発音再生、検索・クイズ機能付き）</p>
 
-    <!-- メインコンテンツ -->
-    <main class="tab-container">
-        <!-- 検索バー -->
-        <div class="search-container">
-            <input type="text" id="searchInput" class="form-control" placeholder="単語または意味を検索...">
+    <div id="loadingModal" class="active">
+        <p>Loading...</p>
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="search" class="form-control mx-auto" placeholder="単語やフレーズを検索..." oninput="searchWords()">
+    </div>
+
+    <div class="voice-select-container">
+        <!-- Inline voice selection for desktop -->
+        <div class="inline-voice-select">
+            <label>音声選択: </label>
+            <div id="voiceRadios" class="d-inline"></div>
         </div>
-        <!-- クイズボタン -->
-        <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#quizModal">クイズを開始</button>
+        <!-- Button to trigger modal for mobile -->
+        <button type="button" class="btn btn-secondary voice-select-btn" data-bs-toggle="modal" data-bs-target="#voiceModal">音声選択</button>
+    </div>
 
-        <!-- タブナビゲーション -->
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="nouns-tab" data-bs-toggle="tab" data-bs-target="#nouns" type="button" role="tab" aria-controls="nouns" aria-selected="true">名詞</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="verbs-tab" data-bs-toggle="tab" data-bs-target="#verbs" type="button" role="tab" aria-controls="verbs" aria-selected="false">動詞</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="adjectives-tab" data-bs-toggle="tab" data-bs-target="#adjectives" type="button" role="tab" aria-controls="adjectives" aria-selected="false">形容詞</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="adverbs-tab" data-bs-toggle="tab" data-bs-target="#adverbs" type="button" role="tab" aria-controls="adverbs" aria-selected="false">副詞</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="prepositions-tab" data-bs-toggle="tab" data-bs-target="#prepositions" type="button" role="tab" aria-controls="prepositions" aria-selected="false">前置詞</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="phrases-tab" data-bs-toggle="tab" data-bs-target="#phrases" type="button" role="tab" aria-controls="phrases" aria-selected="false">熟語・フレーズ</button>
-            </li>
-        </ul>
-
-        <!-- タブコンテンツ -->
-        <div class="tab-content" id="myTabContent">
-            <!-- 名詞 -->
-            <div class="tab-pane fade show active" id="nouns" role="tabpanel" aria-labelledby="nouns-tab">
-                <h2 class="my-4">名詞（732語の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">英単語</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="nouns-table">
-                        <tr><td class="word-cell">apple</td><td>りんご</td></tr>
-                        <tr><td class="word-cell">aubergine</td><td>ナス</td></tr>
-                        <tr><td class="word-cell">book</td><td>本</td></tr>
-                        <tr><td class="word-cell">courgette</td><td>ズッキーニ</td></tr>
-                        <tr><td class="word-cell">cat</td><td>猫</td></tr>
-                        <tr><td class="word-cell">dog</td><td>犬</td></tr>
-                        <tr><td class="word-cell">egg</td><td>卵</td></tr>
-                        <tr><td class="word-cell">fish</td><td>魚</td></tr>
-                        <tr><td class="word-cell">girl</td><td>女の子</td></tr>
-                        <tr><td class="word-cell">hedgerow</td><td>生け垣</td></tr>
-                        <tr><td class="word-cell">house</td><td>家</td></tr>
-                        <tr><td class="word-cell">ladybird</td><td>てんとう虫</td></tr>
-                        <tr><td class="word-cell">lemon</td><td>レモン</td></tr>
-                        <tr><td class="word-cell">meadow</td><td>牧草地</td></tr>
-                        <tr><td class="word-cell">mother</td><td>母</td></tr>
-                        <tr><td class="word-cell">river</td><td>川</td></tr>
-                        <tr><td class="word-cell">school</td><td>学校</td></tr>
-                        <tr><td class="word-cell">swede</td><td>カブ（野菜）</td></tr>
-                        <tr><td class="word-cell">tree</td><td>木</td></tr>
-                        <tr><td class="word-cell">woodland</td><td>林</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全732語（指導要領488語＋自然・野菜関連244語）。例として20語を表示。出典：文部科学省、英単語検定。</p>
-            </div>
-
-            <!-- 動詞 -->
-            <div class="tab-pane fade" id="verbs" role="tabpanel" aria-labelledby="verbs-tab">
-                <h2 class="my-4">動詞（62語の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">英単語</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="verbs-table">
-                        <tr><td class="word-cell">be</td><td>である、いる</td></tr>
-                        <tr><td class="word-cell">come</td><td>来る</td></tr>
-                        <tr><td class="word-cell">do</td><td>する</td></tr>
-                        <tr><td class="word-cell">eat</td><td>食べる</td></tr>
-                        <tr><td class="word-cell">go</td><td>行く</td></tr>
-                        <tr><td class="word-cell">grow</td><td>育つ</td></tr>
-                        <tr><td class="word-cell">have</td><td>持つ</td></tr>
-                        <tr><td class="word-cell">like</td><td>好きである</td></tr>
-                        <tr><td class="word-cell">look</td><td>見る</td></tr>
-                        <tr><td class="word-cell">play</td><td>遊ぶ、演奏する</td></tr>
-                        <tr><td class="word-cell">run</td><td>走る</td></tr>
-                        <tr><td class="word-cell">see</td><td>見る</td></tr>
-                        <tr><td class="word-cell">sing</td><td>歌う</td></tr>
-                        <tr><td class="word-cell">sit</td><td>座る</td></tr>
-                        <tr><td class="word-cell">sow</td><td>種をまく</td></tr>
-                        <tr><td class="word-cell">study</td><td>勉強する</td></tr>
-                        <tr><td class="word-cell">swim</td><td>泳ぐ</td></tr>
-                        <tr><td class="word-cell">talk</td><td>話す</td></tr>
-                        <tr><td class="word-cell">walk</td><td>歩く</td></tr>
-                        <tr><td class="word-cell">write</td><td>書く</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全62語（指導要領41語＋追加21語）。例として20語を表示。</p>
-            </div>
-
-            <!-- 形容詞 -->
-            <div class="tab-pane fade" id="adjectives" role="tabpanel" aria-labelledby="adjectives-tab">
-                <h2 class="my-4">形容詞（90語の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">英単語</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adjectives-table">
-                        <tr><td class="word-cell">beautiful</td><td>美しい</td></tr>
-                        <tr><td class="word-cell">big</td><td>大きい</td></tr>
-                        <tr><td class="word-cell">brilliant</td><td>素晴らしい</td></tr>
-                        <tr><td class="word-cell">colourful</td><td>色鮮やかな</td></tr>
-                        <tr><td class="word-cell">cold</td><td>寒い</td></tr>
-                        <tr><td class="word-cell">fresh</td><td>新鮮な</td></tr>
-                        <tr><td class="word-cell">good</td><td>良い</td></tr>
-                        <tr><td class="word-cell">green</td><td>緑の</td></tr>
-                        <tr><td class="word-cell">happy</td><td>幸せな</td></tr>
-                        <tr><td class="word-cell">hot</td><td>暑い</td></tr>
-                        <tr><td class="word-cell">kind</td><td>親切な</td></tr>
-                        <tr><td class="word-cell">long</td><td>長い</td></tr>
-                        <tr><td class="word-cell">lovely</td><td>愛らしい</td></tr>
-                        <tr><td class="word-cell">new</td><td>新しい</td></tr>
-                        <tr><td class="word-cell">ripe</td><td>熟した</td></tr>
-                        <tr><td class="word-cell">short</td><td>短い</td></tr>
-                        <tr><td class="word-cell">small</td><td>小さい</td></tr>
-                        <tr><td class="word-cell">strong</td><td>強い</td></tr>
-                        <tr><td class="word-cell">tall</td><td>背が高い</td></tr>
-                        <tr><td class="word-cell">young</td><td>若い</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全90語（指導要領60語＋追加30語）。例として20語を表示。</p>
-            </div>
-
-            <!-- 副詞 -->
-            <div class="tab-pane fade" id="adverbs" role="tabpanel" aria-labelledby="adverbs-tab">
-                <h2 class="my-4">副詞（30語の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">英単語</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adverbs-table">
-                        <tr><td class="word-cell">always</td><td>いつも</td></tr>
-                        <tr><td class="word-cell">carefully</td><td>注意深く</td></tr>
-                        <tr><td class="word-cell">cheerfully</td><td>陽気に</td></tr>
-                        <tr><td class="word-cell">early</td><td>早く</td></tr>
-                        <tr><td class="word-cell">here</td><td>ここ</td></tr>
-                        <tr><td class="word-cell">late</td><td>遅く</td></tr>
-                        <tr><td class="word-cell">never</td><td>決して～ない</td></tr>
-                        <tr><td class="word-cell">now</td><td>今</td></tr>
-                        <tr><td class="word-cell">often</td><td>しばしば</td></tr>
-                        <tr><td class="word-cell">quietly</td><td>静かに</td></tr>
-                        <tr><td class="word-cell">quickly</td><td>素早く</td></tr>
-                        <tr><td class="word-cell">slowly</td><td>ゆっくり</td></tr>
-                        <tr><td class="word-cell">sometimes</td><td>時々</td></tr>
-                        <tr><td class="word-cell">soon</td><td>すぐに</td></tr>
-                        <tr><td class="word-cell">then</td><td>それから</td></tr>
-                        <tr><td class="word-cell">there</td><td>そこ</td></tr>
-                        <tr><td class="word-cell">today</td><td>今日</td></tr>
-                        <tr><td class="word-cell">tomorrow</td><td>明日</td></tr>
-                        <tr><td class="word-cell">very</td><td>とても</td></tr>
-                        <tr><td class="word-cell">yesterday</td><td>昨日</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全30語（指導要領20語＋追加10語）。例として20語を表示。</p>
-            </div>
-
-            <!-- 前置詞 -->
-            <div class="tab-pane fade" id="prepositions" role="tabpanel" aria-labelledby="prepositions-tab">
-                <h2 class="my-4">前置詞（30語の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">英単語</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prepositions-table">
-                        <tr><td class="word-cell">about</td><td>～について</td></tr>
-                        <tr><td class="word-cell">after</td><td>～の後に</td></tr>
-                        <tr><td class="word-cell">against</td><td>～に反対して</td></tr>
-                        <tr><td class="word-cell">at</td><td>～で（場所・時間）</td></tr>
-                        <tr><td class="word-cell">before</td><td>～の前に</td></tr>
-                        <tr><td class="word-cell">behind</td><td>～の後ろに</td></tr>
-                        <tr><td class="word-cell">between</td><td>～の間に</td></tr>
-                        <tr><td class="word-cell">by</td><td>～のそばに、～までに</td></tr>
-                        <tr><td class="word-cell">during</td><td>～の間に</td></tr>
-                        <tr><td class="word-cell">for</td><td>～のために</td></tr>
-                        <tr><td class="word-cell">from</td><td>～から</td></tr>
-                        <tr><td class="word-cell">in</td><td>～の中に</td></tr>
-                        <tr><td class="word-cell">in front of</td><td>～の前に</td></tr>
-                        <tr><td class="word-cell">next to</td><td>～の隣に</td></tr>
-                        <tr><td class="word-cell">of</td><td>～の</td></tr>
-                        <tr><td class="word-cell">on</td><td>～の上に</td></tr>
-                        <tr><td class="word-cell">over</td><td>～の上を</td></tr>
-                        <tr><td class="word-cell">to</td><td>～へ</td></tr>
-                        <tr><td class="word-cell">under</td><td>～の下に</td></tr>
-                        <tr><td class="word-cell">upon</td><td>～の上に（フォーマル）</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全30語（指導要領20語＋追加10語）。例として20語を表示。</p>
-            </div>
-
-            <!-- 熟語・フレーズ -->
-            <div class="tab-pane fade" id="phrases" role="tabpanel" aria-labelledby="phrases-tab">
-                <h2 class="my-4">熟語・フレーズ（75の例）</h2>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">フレーズ</th>
-                            <th scope="col">意味</th>
-                        </tr>
-                    </thead>
-                    <tbody id="phrases-table">
-                        <tr><td class="word-cell">Hello!</td><td>こんにちは！</td></tr>
-                        <tr><td class="word-cell">Good morning!</td><td>おはよう！</td></tr>
-                        <tr><td class="word-cell">Good afternoon!</td><td>こんにちは！（午後）</td></tr>
-                        <tr><td class="word-cell">Good evening!</td><td>こんばんは！</td></tr>
-                        <tr><td class="word-cell">How do you do?</td><td>はじめまして（フォーマル）</td></tr>
-                        <tr><td class="word-cell">How are you?</td><td>元気？</td></tr>
-                        <tr><td class="word-cell">I'm fine, thank you.</td><td>元気です、ありがとう。</td></tr>
-                        <tr><td class="word-cell">What's your name?</td><td>名前は？</td></tr>
-                        <tr><td class="word-cell">My name is...</td><td>私の名前は…</td></tr>
-                        <tr><td class="word-cell">Pleased to meet you.</td><td>はじめまして。</td></tr>
-                        <tr><td class="word-cell">Thank you very much!</td><td>どうもありがとう！</td></tr>
-                        <tr><td class="word-cell">You're welcome.</td><td>どういたしまして。</td></tr>
-                        <tr><td class="word-cell">Sorry!</td><td>ごめんなさい！</td></tr>
-                        <tr><td class="word-cell">Excuse me.</td><td>すみません。</td></tr>
-                        <tr><td class="word-cell">Let's go!</td><td>行こう！</td></tr>
-                        <tr><td class="word-cell">Have a nice day!</td><td>良い一日を！</td></tr>
-                        <tr><td class="word-cell">Take care!</td><td>気をつけて！</td></tr>
-                        <tr><td class="word-cell">Cheerio!</td><td>じゃあね！（イギリス英語）</td></tr>
-                        <tr><td class="word-cell">I like gardening.</td><td>ガーデニングが好きです。</td></tr>
-                        <tr><td class="word-cell">I want to grow vegetables.</td><td>野菜を育てたい。</td></tr>
-                    </tbody>
-                </table>
-                <p class="text-muted">注：全75フレーズ（指導要領50＋追加25）。イギリス英語の挨拶（例：Cheerio!）や自然関連フレーズを追加。例として20フレーズを表示。</p>
-            </div>
-        </div>
-    </main>
-
-    <!-- クイズモーダル -->
-    <div class="modal fade" id="quizModal" tabindex="-1" aria-labelledby="quizModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Voice selection modal for mobile -->
+    <div class="modal fade modal-voice-select" id="voiceModal" tabindex="-1" aria-labelledby="voiceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="quizModalLabel">英単語クイズ</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="voiceModalLabel">音声選択</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
                 </div>
                 <div class="modal-body">
-                    <p>スコア: <span id="quizScore">0</span>/10</p>
-                    <p id="quizQuestion"></p>
-                    <div id="quizOptions"></div>
-                    <div id="quizFeedback"></div>
+                    <div id="voiceRadiosModal"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
-                    <button type="button" class="btn btn-primary" id="nextQuestion">次の問題</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- フッター -->
-    <footer class="bg-dark text-white text-center py-3">
-        <p>© 2025 中学受験 イギリス英語 単語・フレーズ一覧</p>
+    <button class="btn btn-primary" onclick="startQuiz()">クイズを開始</button>
+
+    <!-- Bootstrap Tabs -->
+    <ul class="nav nav-tabs" id="wordTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="nouns-tab" data-bs-toggle="tab" data-bs-target="#nouns" type="button" role="tab" aria-controls="nouns" aria-selected="true">名詞</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="verbs-tab" data-bs-toggle="tab" data-bs-target="#verbs" type="button" role="tab" aria-controls="verbs" aria-selected="false">動詞</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="adjectives-tab" data-bs-toggle="tab" data-bs-target="#adjectives" type="button" role="tab" aria-controls="adjectives" aria-selected="false">形容詞</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="adverbs-tab" data-bs-toggle="tab" data-bs-target="#adverbs" type="button" role="tab" aria-controls="adverbs" aria-selected="false">副詞</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="prepositions-tab" data-bs-toggle="tab" data-bs-target="#prepositions" type="button" role="tab" aria-controls="prepositions" aria-selected="false">前置詞</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="phrases-tab" data-bs-toggle="tab" data-bs-target="#phrases" type="button" role="tab" aria-controls="phrases" aria-selected="false">熟語・フレーズ</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="wordTabsContent">
+        <div class="tab-pane fade show active" id="nouns" role="tabpanel" aria-labelledby="nouns-tab">
+            <h2>名詞（900語）</h2>
+            <div class="table-container" id="nouns-tables"></div>
+            <p>注：全900語（指導要領488語＋自然・野菜関連244語＋追加168語）。出典：文部科学省、英単語検定。</p>
+        </div>
+        <div class="tab-pane fade" id="verbs" role="tabpanel" aria-labelledby="verbs-tab">
+            <h2>動詞（150語）</h2>
+            <div class="table-container" id="verbs-tables"></div>
+            <p>注：全150語（指導要領41語＋追加109語）。</p>
+        </div>
+        <div class="tab-pane fade" id="adjectives" role="tabpanel" aria-labelledby="adjectives-tab">
+            <h2>形容詞（200語）</h2>
+            <div class="table-container" id="adjectives-tables"></div>
+            <p>注：全200語（指導要領60語＋追加140語）。</p>
+        </div>
+        <div class="tab-pane fade" id="adverbs" role="tabpanel" aria-labelledby="adverbs-tab">
+            <h2>副詞（80語）</h2>
+            <div class="table-container" id="adverbs-tables"></div>
+            <p>注：全80語（指導要領20語＋追加60語）。</p>
+        </div>
+        <div class="tab-pane fade" id="prepositions" role="tabpanel" aria-labelledby="prepositions-tab">
+            <h2>前置詞（50語）</h2>
+            <div class="table-container" id="prepositions-tables"></div>
+            <p>注：全50語（指導要領20語＋追加30語）。</p>
+        </div>
+        <div class="tab-pane fade" id="phrases" role="tabpanel" aria-labelledby="phrases-tab">
+            <h2>熟語・フレーズ（175個）</h2>
+            <div class="table-container" id="phrases-tables"></div>
+            <p>注：全175フレーズ（指導要領50＋追加125）。イギリス英語の挨拶や自然関連フレーズを追加。</p>
+        </div>
+    </div>
+
+    <!-- Quiz modal -->
+    <div class="modal fade modal-fullscreen" id="quiz" tabindex="-1" aria-labelledby="quizLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content p-3">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="quizLabel">英単語クイズ</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる" onclick="closeQuiz()"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="quiz-question"></p>
+                    <div id="quiz-feedback" class="quiz-feedback"></div>
+                    <div id="quiz-options" class="row">
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(0)"><span class="speaker" onclick="speakOption(0, event)" onkeydown="handleSpeakerKeydown(0, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(1)"><span class="speaker" onclick="speakOption(1, event)" onkeydown="handleSpeakerKeydown(1, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(2)"><span class="speaker" onclick="speakOption(2, event)" onkeydown="handleSpeakerKeydown(2, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                        <div class="col-12 col-md-6"><button disabled class="btn btn-outline-primary quiz-option w-100" onclick="checkAnswer(3)"><span class="speaker" onclick="speakOption(3, event)" onkeydown="handleSpeakerKeydown(3, event)" aria-label="選択肢の単語を再生" tabindex="0" role="button">🔊</span><span class="option-text"></span></button></div>
+                    </div>
+                    <p id="quiz-score">スコア: 0/10</p>
+                    <button class="btn btn-secondary" onclick="closeQuiz()">閉じる</button>
+                    <button class="btn btn-primary" onclick="nextQuestion()">次の問題</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results" class="results-container">
+        <div class="results-content">
+            <h2>クイズ結果</h2>
+            <table class="results-table">
+                <tr><th>問題</th><th>正解</th><th>あなたの回答</th><th>結果</th></tr>
+            </table>
+            <button class="btn btn-primary" onclick="closeResults()">閉じる</button>
+        </div>
+    </div>
+
+    <div id="effectOverlay" class="effect-overlay"></div>
+
+    <footer>
+        <p>© 2025 中学英語 単語・フレーズ一覧</p>
     </footer>
 
     <!-- Bootstrap 5.3.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <!-- スクリプト -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // 単語データの定義（サンプル、実際は全リストを展開可能）
-        const wordData = {
-            nouns: [
-                { word: 'apple', meaning: 'りんご' },
-                { word: 'aubergine', meaning: 'ナス' },
-                { word: 'book', meaning: '本' },
-                { word: 'courgette', meaning: 'ズッキーニ' },
-                { word: 'cat', meaning: '猫' },
-                { word: 'dog', meaning: '犬' },
-                { word: 'egg', meaning: '卵' },
-                { word: 'fish', meaning: '魚' },
-                { word: 'girl', meaning: '女の子' },
-                { word: 'hedgerow', meaning: '生け垣' },
-                { word: 'house', meaning: '家' },
-                { word: 'ladybird', meaning: 'てんとう虫' },
-                { word: 'lemon', meaning: 'レモン' },
-                { word: 'meadow', meaning: '牧草地' },
-                { word: 'mother', meaning: '母' },
-                { word: 'river', meaning: '川' },
-                { word: 'school', meaning: '学校' },
-                { word: 'swede', meaning: 'カブ（野菜）' },
-                { word: 'tree', meaning: '木' },
-                { word: 'woodland', meaning: '林' }
-            ],
-            verbs: [
-                { word: 'be', meaning: 'である、いる' },
-                { word: 'come', meaning: '来る' },
-                { word: 'do', meaning: 'する' },
-                { word: 'eat', meaning: '食べる' },
-                { word: 'go', meaning: '行く' },
-                { word: 'grow', meaning: '育つ' },
-                { word: 'have', meaning: '持つ' },
-                { word: 'like', meaning: '好きである' },
-                { word: 'look', meaning: '見る' },
-                { word: 'play', meaning: '遊ぶ、演奏する' },
-                { word: 'run', meaning: '走る' },
-                { word: 'see', meaning: '見る' },
-                { word: 'sing', meaning: '歌う' },
-                { word: 'sit', meaning: '座る' },
-                { word: 'sow', meaning: '種をまく' },
-                { word: 'study', meaning: '勉強する' },
-                { word: 'swim', meaning: '泳ぐ' },
-                { word: 'talk', meaning: '話す' },
-                { word: 'walk', meaning: '歩く' },
-                { word: 'write', meaning: '書く' }
-            ],
-            adjectives: [
-                { word: 'beautiful', meaning: '美しい' },
-                { word: 'big', meaning: '大きい' },
-                { word: 'brilliant', meaning: '素晴らしい' },
-                { word: 'colourful', meaning: '色鮮やかな' },
-                { word: 'cold', meaning: '寒い' },
-                { word: 'fresh', meaning: '新鮮な' },
-                { word: 'good', meaning: '良い' },
-                { word: 'green', meaning: '緑の' },
-                { word: 'happy', meaning: '幸せな' },
-                { word: 'hot', meaning: '暑い' },
-                { word: 'kind', meaning: '親切な' },
-                { word: 'long', meaning: '長い' },
-                { word: 'lovely', meaning: '愛らしい' },
-                { word: 'new', meaning: '新しい' },
-                { word: 'ripe', meaning: '熟した' },
-                { word: 'short', meaning: '短い' },
-                { word: 'small', meaning: '小さい' },
-                { word: 'strong', meaning: '強い' },
-                { word: 'tall', meaning: '背が高い' },
-                { word: 'young', meaning: '若い' }
-            ],
-            adverbs: [
-                { word: 'always', meaning: 'いつも' },
-                { word: 'carefully', meaning: '注意深く' },
-                { word: 'cheerfully', meaning: '陽気に' },
-                { word: 'early', meaning: '早く' },
-                { word: 'here', meaning: 'ここ' },
-                { word: 'late', meaning: '遅く' },
-                { word: 'never', meaning: '決して～ない' },
-                { word: 'now', meaning: '今' },
-                { word: 'often', meaning: 'しばしば' },
-                { word: 'quietly', meaning: '静かに' },
-                { word: 'quickly', meaning: '素早く' },
-                { word: 'slowly', meaning: 'ゆっくり' },
-                { word: 'sometimes', meaning: '時々' },
-                { word: 'soon', meaning: 'すぐに' },
-                { word: 'then', meaning: 'それから' },
-                { word: 'there', meaning: 'そこ' },
-                { word: 'today', meaning: '今日' },
-                { word: 'tomorrow', meaning: '明日' },
-                { word: 'very', meaning: 'とても' },
-                { word: 'yesterday', meaning: '昨日' }
-            ],
-            prepositions: [
-                { word: 'about', meaning: '～について' },
-                { word: 'after', meaning: '～の後に' },
-                { word: 'against', meaning: '～に反対して' },
-                { word: 'at', meaning: '～で（場所・時間）' },
-                { word: 'before', meaning: '～の前に' },
-                { word: 'behind', meaning: '～の後ろに' },
-                { word: 'between', meaning: '～の間に' },
-                { word: 'by', meaning: '～のそばに、～までに' },
-                { word: 'during', meaning: '～の間に' },
-                { word: 'for', meaning: '～のために' },
-                { word: 'from', meaning: '～から' },
-                { word: 'in', meaning: '～の中に' },
-                { word: 'in front of', meaning: '～の前に' },
-                { word: 'next to', meaning: '～の隣に' },
-                { word: 'of', meaning: '～の' },
-                { word: 'on', meaning: '～の上に' },
-                { word: 'over', meaning: '～の上を' },
-                { word: 'to', meaning: '～へ' },
-                { word: 'under', meaning: '～の下に' },
-                { word: 'upon', meaning: '～の上に（フォーマル）' }
-            ],
-            phrases: [
-                { word: 'Hello!', meaning: 'こんにちは！' },
-                { word: 'Good morning!', meaning: 'おはよう！' },
-                { word: 'Good afternoon!', meaning: 'こんにちは！（午後）' },
-                { word: 'Good evening!', meaning: 'こんばんは！' },
-                { word: 'How do you do?', meaning: 'はじめまして（フォーマル）' },
-                { word: 'How are you?', meaning: '元気？' },
-                { word: 'I\'m fine, thank you.', meaning: '元気です、ありがとう。' },
-                { word: 'What\'s your name?', meaning: '名前は？' },
-                { word: 'My name is...', meaning: '私の名前は…' },
-                { word: 'Pleased to meet you.', meaning: 'はじめまして。' },
-                { word: 'Thank you very much!', meaning: 'どうもありがとう！' },
-                { word: 'You\'re welcome.', meaning: 'どういたしまして。' },
-                { word: 'Sorry!', meaning: 'ごめんなさい！' },
-                { word: 'Excuse me.', meaning: 'すみません。' },
-                { word: 'Let\'s go!', meaning: '行こう！' },
-                { word: 'Have a nice day!', meaning: '良い一日を！' },
-                { word: 'Take care!', meaning: '気をつけて！' },
-                { word: 'Cheerio!', meaning: 'じゃあね！（イギリス英語）' },
-                { word: 'I like gardening.', meaning: 'ガーデニングが好きです。' },
-                { word: 'I want to grow vegetables.', meaning: '野菜を育てたい。' }
-            ]
-        };
-
-        // 音声再生機能
-        if ('speechSynthesis' in window) {
-            const cells = document.querySelectorAll('.word-cell');
-            cells.forEach(cell => {
-                cell.addEventListener('click', () => {
-                    try {
-                        const utterance = new SpeechSynthesisUtterance(cell.textContent);
-                        utterance.lang = 'en-GB';
-                        utterance.volume = 1.0;
-                        utterance.rate = 1.0;
-                        utterance.pitch = 1.0;
-                        window.speechSynthesis.speak(utterance);
-                    } catch (error) {
-                        console.error('音声再生エラー:', error);
-                        const errorMessage = document.createElement('p');
-                        errorMessage.className = 'error-message';
-                        errorMessage.textContent = '音声再生に失敗しました。ブラウザ設定を確認してください。';
-                        cell.parentElement.append(cell.parentElement.appendChild(errorMessage));
-                    }
-                });
-            });
-        } else {
-            const errorMessage = document.createElement('p');
-            errorMessage.className = 'error-message';
-            errorMessage.textContent = 'このブラウザは音声再生をサポートしていません。ChromeまたはFirefoxを試してください。';
-            document.querySelector('.tab-container').prepend(errorMessage);
-        }
-
-        // 検索機能
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', () => {
-            const query = searchInput.value.toLowerCase();
-            Object.keys(wordData).forEach(category => {
-                const tableBody = document.getElementById(`${category}-table`);
-                tableBody.innerHTML = '';
-                wordData[category].forEach(item => {
-                    if (item.word.toLowerCase().includes(query) || item.meaning.includes(query)) {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `<td class="word-cell">${item.word}</td><td>${item.meaning}</td>`;
-                        tableBody.appendChild(row);
-                    }
-                });
-                // 音声再生イベントを再設定
-                tableBody.querySelectorAll('.word-cell').forEach(cell => {
-                    cell.addEventListener('click', () => {
-                        try {
-                            const utterance = new SpeechSynthesisUtterance(cell.textContent);
-                            utterance.lang = 'en-GB';
-                            window.speechSynthesis.speak(utterance);
-                        } catch (error) {
-                            console.error('音声再生エラー:', error);
-                        }
-                    });
-                });
-            });
-        });
-
-        // クイズ機能
-        let currentQuestion = 0;
-        let score = 0;
-        let allWords = [];
-        Object.values(wordData).forEach(category => {
-            allWords = allWords.concat(category);
-        });
-
-        const quizModal = document.getElementById('quizModal');
-        const quizQuestion = document.getElementById('quizQuestion');
-        const quizOptions = document.getElementById('quizOptions');
-        const quizFeedback = document.getElementById('quizFeedback');
-        const quizScore = document.getElementById('quizScore');
-        const nextQuestionBtn = document.getElementById('nextQuestion');
-
-        function getRandomWord() {
-            return allWords[Math.floor(Math.random() * allWords.length)];
-        }
-
-        function getRandomOptions(correctWord, count = 4) {
-            const options = [correctWord];
-            while (options.length < count) {
-                const randomWord = getRandomWord();
-                if (!options.includes(randomWord) && randomWord.meaning !== correctWord.meaning) {
-                    options.push(randomWord);
-                }
-            }
-            return options.sort(() => Math.random() - 0.5);
-        }
-
-        function loadQuestion() {
-            if (currentQuestion >= 10) {
-                quizQuestion.textContent = 'クイズ終了！';
-                quizOptions.innerHTML = '';
-                quizFeedback.textContent = `最終スコア: ${score}/10`;
-                nextQuestionBtn.style.display = 'none';
-                return;
-            }
-
-            const correctWord = getRandomWord();
-            const options = getRandomOptions(correctWord);
-            quizQuestion.textContent = `「${correctWord.word}」の意味は？`;
-            quizOptions.innerHTML = '';
-            options.forEach(option => {
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-outline-primary m-2';
-                btn.textContent = option.meaning;
-                btn.addEventListener('click', () => checkAnswer(option, correctWord));
-                quizOptions.appendChild(btn);
-            });
-            quizFeedback.textContent = '';
-        }
-
-        function checkAnswer(selected, correct) {
-            if (selected.meaning === correct.meaning) {
-                score++;
-                quizFeedback.textContent = '正解！';
-                quizFeedback.className = 'text-success';
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance('Correct!');
-                    utterance.lang = 'en-GB';
-                    window.speechSynthesis.speak(utterance);
-                }
-            } else {
-                quizFeedback.textContent = `不正解。正解は「${correct.meaning}」です。`;
-                quizFeedback.className = 'text-danger';
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance('Incorrect.');
-                    utterance.lang = 'en-GB';
-                    window.speechSynthesis.speak(utterance);
-                }
-            }
-            quizScore.textContent = score;
-            currentQuestion++;
-        }
-
-        nextQuestionBtn.addEventListener('click', loadQuestion);
-
-        quizModal.addEventListener('shown.bs.modal', () => {
-            currentQuestion = 0;
-            score = 0;
-            quizScore.textContent = score;
-            nextQuestionBtn.style.display = 'block';
-            loadQuestion();
-        });
-    });
-    </script>
+    <!-- External JavaScript -->
+    <script src="equiz.js"></script>
 </body>
 </html>
