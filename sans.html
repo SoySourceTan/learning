@@ -40,7 +40,7 @@
         .quiz-start::before { content: '＊ '; color: #fff; }
         .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; height: 90%; max-width: 900px; max-height: 700px; background: #000; border: 4px solid #fff; padding: 25px; text-align: center; z-index: 2000; overflow: auto; border-radius: 15px; box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); }
         .modal.active { display: block; }
-        .quiz-header { font-size: 28px; border-bottom: 3px solid #ff0; padding-bottom: 15px; margin-bottom: 25px; color: #0f0; text-shadow: 0 0 8px #0f0; display: flex; align-items: center; justify-content: space-between; }
+        .quiz-header { font-size: 28px; border-bottom: 3px solid #ff0; padding-bottom: 15px; margin-bottom: 25px; color: #0f0; text-shadow: 0 0 8px #0f0; align-items: center; justify-content: space-between; }
         .monster-hp { width: 250px; height: 25px; background: #333; border: 3px solid #fff; border-radius: 8px; overflow: hidden; }
         .monster-hp-bar { height: 100%; background: #f00; transition: width 0.5s; }
         .status { display: flex; justify-content: space-between; border: 3px solid #00f; padding: 15px; margin-bottom: 25px; background: #111; border-radius: 8px; font-size: 24px; }
@@ -95,7 +95,10 @@
     <div class="tabs" id="categoryTabs"></div>
     <div id="tabContents"></div>
     <div class="modal difficulty-modal" id="difficultyModal">
-        <div class="quiz-header">難易度を選べ、勇者！</div>
+        <div class="quiz-header">難易度を選べ、勇者！
+        <img src="undertale/papi.png" alt="Papyrus" class="character-image">
+
+       </div>
         <div class="options" id="difficultyOptions">
             <div class="option hvr-grow" onclick="setDifficulty('easy')">初級（40秒、ダメージ-3）</div>
             <div class="option hvr-grow" onclick="setDifficulty('medium')">中級（30秒、ダメージ-5）</div>
@@ -105,17 +108,20 @@
             <button class="button hvr-grow" onclick="resetLevel()">レベルリセット</button>
         </div>
         <div class="dialog" id="difficultyDialog">どの道で冒険を始めるんだ？選べよ！</div>
-        <img src="undertale/papi.png" alt="Papyrus" class="character-image">
     </div>
     <div class="modal category-modal" id="categoryModal">
-        <div class="quiz-header">冒険の書を選べ！我が子よ</div>
+        <div class="quiz-header">冒険の書を選べ！我が子よ
+        <img src="undertale/tri.png" alt="Toriel" class="character-image">
+
+        </div>
         <div class="options" id="categoryOptions"></div>
         <div class="dialog" id="categoryDialog">どの書を読み解くんだ？選べよ！</div>
-        <img src="undertale/tri.png" alt="Toriel" class="character-image">
     </div>
     <div class="modal quiz-modal" id="quizModal">
         <div class="effect-overlay" id="effectOverlay"></div>
-        <div class="quiz-header">バトル！ VS <span id="monsterName"></span>
+                <img src="undertale/flo.png" alt="Flowey" class="character-image">
+
+        <div class="quiz-header">バトル！ VS <span id="monsterName"></span><br>
             <div class="monster-hp" id="monsterHP">
                 <div class="monster-hp-bar" id="monsterHPBar"></div>
             </div>
@@ -135,7 +141,6 @@
             <button class="button hvr-grow" onclick="useHint()">ヒント</button>
             <button class="button hvr-grow" onclick="flee()">逃げる</button>
         </div>
-        <img src="undertale/flo.png" alt="Flowey" class="character-image">
     </div>
     <div class="modal shop-modal" id="shopModal">
         <div class="quiz-header">サンズのショップ！</div>
