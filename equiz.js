@@ -3,6 +3,7 @@ let quizState = { score: 0, total: 10, current: null, options: [], currentIndex:
 let selectedVoice = null;
 let voiceModal = null;
 let quizModal = null;
+const clickSound = new Howl({ src: ['click.mp3'], volume: 0.6 });
 const correctSound = new Howl({ src: ['correct.mp3'], volume: 0.6 });
 const wrongSound = new Howl({ src: ['incorrect.mp3'], volume: 0.6 });
 
