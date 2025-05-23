@@ -17,16 +17,14 @@ function loadVoices(target = 'inline') {
         return;
     }
 
-    // Find default voice (Google UK English Female or fallback)
     let defaultVoiceIndex = null;
     voices.forEach((voice, index) => {
         if (voice.name === 'Google UK English Female' && voice.lang === 'en-GB') {
             defaultVoiceIndex = index;
-            selectedVoice = voice; // Set initial voice
+            selectedVoice = voice;
         }
     });
     if (defaultVoiceIndex === null) {
-        // Fallback to any en-GB voice
         voices.forEach((voice, index) => {
             if (voice.lang === 'en-GB' && defaultVoiceIndex === null) {
                 defaultVoiceIndex = index;
@@ -36,9 +34,8 @@ function loadVoices(target = 'inline') {
     }
     console.log('Default voice set:', selectedVoice ? selectedVoice.name : 'None');
 
-    // Generate radio buttons
     voices.forEach((voice, index) => {
-        if (voice.lang.includes('en')) { // English voices only
+        if (voice.lang.includes('en')) {
             const div = document.createElement('div');
             div.className = 'form-check';
             div.innerHTML = `
@@ -57,7 +54,6 @@ function setVoice(event) {
     const voices = window.speechSynthesis.getVoices();
     selectedVoice = index ? voices[parseInt(index)] : null;
     console.log('Selected voice:', selectedVoice ? selectedVoice.name : 'Default');
-    // Update both inline and modal radios
     const allRadios = document.querySelectorAll(`input[name="voiceSelect"][value="${index}"]`);
     allRadios.forEach(radio => radio.checked = true);
 }
@@ -67,9 +63,24 @@ async function loadData() {
     document.getElementById('loadingModal').classList.add('active');
     try {
         const response = await fetch('words.json');
-        if (!response.ok) throw new Error('単語データの読み込みに失敗しました');
+        if (!response.ok) throw new Error(`単語データの読み込みに失敗しました: ${response.statusText}`);
         wordData = await response.json();
+        // Validate wordData structure
+        const validCategories = Object.keys(wordData).filter(key => Array.isArray(wordData[key]) && wordData[key].length > 0);
+        if (validCategories.length === 0) {
+            throw new Error('有効なカテゴリがありません');
+        }
+        // Ensure required properties
+        validCategories.forEach(category => {
+            wordData[category].forEach(item => {
+                if (!item.meaning || (!item.word && !item.phrase)) {
+                    console.warn(`Invalid item in ${category}:`, item);
+                }
+                item.appearanceCount = item.appearanceCount || 0;
+            });
+        });
         populateTables();
+        updateCategoryCounts();
         document.getElementById('loadingModal').classList.remove('active');
     } catch (error) {
         console.error('Error loading words:', error);
@@ -77,31 +88,51 @@ async function loadData() {
     }
 }
 
+// Update category counts in UI
+function updateCategoryCounts() {
+    const categoryCounts = {
+        nouns: wordData.nouns?.length || 0,
+        verbs: wordData.verbs?.length || 0,
+        adjectives: wordData.adjectives?.length || 0,
+        adverbs: wordData.adverbs?.length || 0,
+        prepositions: wordData.prepositions?.length || 0,
+        phrases: wordData.phrases?.length || 0,
+        conjunctions: wordData.conjunctions?.length || 0 // New category example
+    };
+    document.querySelectorAll('[data-category-count]').forEach(el => {
+        const category = el.getAttribute('data-category-count');
+        if (categoryCounts[category]) {
+            el.textContent = `${categoryCounts[category]}語`;
+        } else {
+            el.textContent = '0語';
+        }
+    });
+}
+
 // Populate tables with word data
 function populateTables(filter = '') {
-    const categories = [
-        { id: 'nouns-tables', data: wordData.nouns, key: 'word' },
-        { id: 'verbs-tables', data: wordData.verbs, key: 'word' },
-        { id: 'adjectives-tables', data: wordData.adjectives, key: 'word' },
-        { id: 'adverbs-tables', data: wordData.adverbs, key: 'word' },
-        { id: 'prepositions-tables', data: wordData.prepositions, key: 'word' },
-        { id: 'phrases-tables', data: wordData.phrases, key: 'phrase' }
-    ];
+    const categories = Object.keys(wordData).map(category => ({
+        id: `${category}-tables`,
+        data: wordData[category],
+        key: category === 'phrases' ? 'phrase' : 'word'
+    }));
 
     categories.forEach(category => {
         const container = document.getElementById(category.id);
+        if (!container) {
+            console.warn(`Container for ${category.id} not found`);
+            return;
+        }
         container.innerHTML = '';
         const filteredData = category.data ? category.data.filter(item =>
-            item[category.key].toLowerCase().includes(filter.toLowerCase()) ||
-            item.meaning.toLowerCase().includes(filter.toLowerCase())
+            (item[category.key] || '').toLowerCase().includes(filter.toLowerCase()) ||
+            (item.meaning || '').toLowerCase().includes(filter.toLowerCase())
         ) : [];
 
-        // Determine number of columns based on screen width
         let columns = 1;
         if (window.innerWidth >= 992) columns = 3;
         else if (window.innerWidth >= 768) columns = 2;
 
-        // Split data into columns
         const itemsPerColumn = Math.ceil(filteredData.length / columns);
         for (let i = 0; i < columns; i++) {
             const table = document.createElement('table');
@@ -113,9 +144,9 @@ function populateTables(filter = '') {
                 const row = table.insertRow();
                 const cell1 = row.insertCell(0);
                 const cell2 = row.insertCell(1);
-                cell1.textContent = `🔉 ${item[category.key]}`;
-                cell2.textContent = item.meaning;
-                cell1.onclick = () => speak(item[category.key]);
+                cell1.textContent = `🔉 ${item[category.key] || ''}`;
+                cell2.textContent = item.meaning || '';
+                cell1.onclick = () => speak(item[category.key] || '');
             }
             container.appendChild(table);
         }
@@ -125,10 +156,9 @@ function populateTables(filter = '') {
 // Text-to-speech
 function speak(text) {
     try {
-        // Cancel previous speech to prevent overlap
         window.speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-GB'; // Align with default voice
+        utterance.lang = 'en-GB';
         if (selectedVoice) {
             utterance.voice = selectedVoice;
         }
@@ -142,7 +172,7 @@ function speak(text) {
 // Speak quiz option
 function speakOption(index, event) {
     if (event) {
-        event.stopPropagation(); // Prevent bubbling to parent button
+        event.stopPropagation();
     }
     if (!quizState.options || !quizState.options[index] || !quizState.current) {
         console.error('Invalid quiz state for speakOption:', quizState);
@@ -157,7 +187,7 @@ function speakOption(index, event) {
 function handleSpeakerKeydown(index, event) {
     if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        event.stopPropagation(); // Prevent bubbling to parent button
+        event.stopPropagation();
         speakOption(index);
     }
 }
@@ -170,34 +200,29 @@ function searchWords() {
 
 // Quiz functionality
 function startQuiz() {
-    if (!wordData.nouns) {
+    if (!wordData || Object.keys(wordData).length === 0) {
         alert('単語データが読み込まれていません。ページをリロードしてください。');
         return;
     }
-    // Reset quiz state
-    quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0, results: [] };
+    quizState = { score: 0, total: 10, current: null, options: [], currentIndex: 0, results: [], recentWords: [] };
     document.getElementById('quiz-score').textContent = `スコア: ${quizState.score}/${quizState.total}`;
     document.getElementById('quiz-feedback').textContent = '';
-    // Disable option buttons until question is loaded
     const optionButtons = document.querySelectorAll('.quiz-option');
     optionButtons.forEach(btn => {
         btn.disabled = true;
         btn.querySelector('.option-text').textContent = '';
     });
     quizModal.show();
-    // Move focus to quiz modal title
     document.getElementById('quizLabel').focus();
-    // Load first question
     nextQuestion();
 }
 
 function nextQuestion() {
-    // Reset previous option styles
     const optionButtons = document.querySelectorAll('.quiz-option');
     optionButtons.forEach(btn => {
         btn.classList.remove('correct', 'incorrect', 'selected');
-        btn.disabled = true; // Disable until question is loaded
-        btn.querySelector('.option-text').textContent = ''; // Clear text
+        btn.disabled = true;
+        btn.querySelector('.option-text').textContent = '';
     });
     document.getElementById('effectOverlay').style.display = 'none';
     document.getElementById('quiz-feedback').textContent = '';
@@ -209,7 +234,13 @@ function nextQuestion() {
         return;
     }
 
-    const categories = ['nouns', 'verbs', 'adjectives', 'adverbs', 'prepositions', 'phrases'];
+    const categories = Object.keys(wordData).filter(key => Array.isArray(wordData[key]) && wordData[key].length >= 4);
+    if (categories.length === 0) {
+        alert('クイズに必要なデータが不足しています。');
+        closeQuiz();
+        return;
+    }
+
     const category = categories[Math.floor(Math.random() * categories.length)];
     const key = category === 'phrases' ? 'phrase' : 'word';
     const items = wordData[category];
@@ -219,18 +250,58 @@ function nextQuestion() {
         return;
     }
 
-    // Select correct answer
-    const correctItem = items[Math.floor(Math.random() * items.length)];
-    quizState.current = { category, item: correctItem, key, index: (quizState.currentIndex || 0) + 1 };
-    quizState.currentIndex = quizState.current.index;
-    console.log('Next question set:', quizState.current);
+    // Select correct answer (avoid recent words)
+    let correctItem;
+    const availableItems = items.filter(item => !quizState.recentWords.includes(item[key]));
+    if (availableItems.length === 0) {
+        quizState.recentWords = [];
+        correctItem = items[Math.floor(Math.random() * items.length)];
+    } else {
+        correctItem = availableItems[Math.floor(Math.random() * availableItems.length)];
+    }
+    correctItem.appearanceCount = (correctItem.appearanceCount || 0) + 1;
 
-    // Generate 3 incorrect options
+    quizState.current = { category, item: correctItem, key, index: (quizState.currentIndex || 0) + 1, questionType: 'meaning' };
+    quizState.recentWords.push(correctItem[key]);
+    if (quizState.recentWords.length > 10) {
+        quizState.recentWords.shift();
+    }
+
+    // Determine question type (33.33% chance for antonym if available)
+    const questionTypes = correctItem.questionTypes || ['meaning'];
+    const randType = Math.random();
+    const antonymProb = 0.333;
+    if (questionTypes.includes('antonym') && correctItem.antonym && randType < antonymProb) {
+        quizState.current.questionType = 'antonym';
+    }
+
+    console.log('Next question set:', quizState.current, 'Question type:', quizState.current.questionType);
+
+    // Generate options
     const options = [correctItem];
     const otherItems = items.filter(item => item[key] !== correctItem[key]);
     while (options.length < 4 && otherItems.length > 0) {
         const randomIndex = Math.floor(Math.random() * otherItems.length);
-        options.push(otherItems.splice(randomIndex, 1)[0]);
+        const otherItem = otherItems[randomIndex];
+        if (quizState.current.questionType === 'antonym' && options.length === 1 && otherItem.antonym) {
+            // Prefer antonym for distractors in antonym questions
+            options.push(otherItem);
+        } else {
+            options.push(otherItem);
+        }
+        otherItems.splice(randomIndex, 1);
+    }
+
+    // For antonym questions, ensure correct answer is the antonym
+    if (quizState.current.questionType === 'antonym') {
+        const antonymItem = items.find(item => item[key] === correctItem.antonym);
+        if (antonymItem) {
+            options[0] = antonymItem; // Replace correct answer with antonym
+            quizState.current.item = antonymItem;
+        } else {
+            console.warn(`Antonym not found for ${correctItem[key]}, falling back to meaning`);
+            quizState.current.questionType = 'meaning';
+        }
     }
 
     // Shuffle options
@@ -241,15 +312,16 @@ function nextQuestion() {
     quizState.options = options;
 
     // Update UI
-    document.getElementById('quiz-question').textContent = `${correctItem.meaning} の英語は？`;
+    document.getElementById('quiz-question').textContent = quizState.current.questionType === 'antonym'
+        ? `「${correctItem[key]}」の反対語は？`
+        : `${correctItem.meaning} の英語は？`;
     optionButtons.forEach((btn, index) => {
         btn.querySelector('.option-text').textContent = options[index][key];
-        btn.disabled = false; // Enable buttons after question is loaded
+        btn.disabled = false;
     });
 }
 
 function checkAnswer(index) {
-    // Guard against invalid state
     if (!quizState.current || !quizState.current.item) {
         console.error('Quiz state is invalid:', quizState);
         alert('クイズの状態が無効です。もう一度開始してください。');
@@ -261,10 +333,8 @@ function checkAnswer(index) {
     const correctAnswer = quizState.current.item[quizState.current.key];
     const optionButtons = document.querySelectorAll('.quiz-option');
 
-    // Disable all buttons after selection
     optionButtons.forEach(btn => btn.disabled = true);
 
-    // Highlight correct and incorrect answers
     optionButtons.forEach((btn, i) => {
         if (quizState.options[i][quizState.current.key] === correctAnswer) {
             btn.classList.add('correct');
@@ -273,17 +343,15 @@ function checkAnswer(index) {
         }
     });
 
-    // Save result
     const isCorrect = selectedOption[quizState.current.key] === correctAnswer;
     quizState.results.push({
-        question: quizState.current.item.meaning,
+        question: quizState.current.questionType === 'antonym' ? `「${quizState.current.item[quizState.current.key]}」の反対語` : quizState.current.item.meaning,
         correct: correctAnswer,
         selected: selectedOption[quizState.current.key],
         isCorrect: isCorrect
     });
     console.log('Answer checked:', { selected: selectedOption[quizState.current.key], correct: correctAnswer, isCorrect });
 
-    // Show feedback and effects
     if (isCorrect) {
         quizState.score++;
         document.getElementById('quiz-score').textContent = `スコア: ${quizState.score}/${quizState.total}`;
@@ -299,7 +367,6 @@ function checkAnswer(index) {
         showBoneAttack();
     }
 
-    // Brief delay before next question to show feedback
     setTimeout(nextQuestion, 1800);
 }
 
@@ -364,7 +431,6 @@ function handleKeydown(e) {
     const optionButtons = document.querySelectorAll('.quiz-option');
     let selectedIndex = Array.from(optionButtons).findIndex(btn => btn.classList.contains('selected'));
 
-    // Navigate options with arrow keys
     if (e.key === 'ArrowUp' && selectedIndex > 0) {
         optionButtons[selectedIndex].classList.remove('selected');
         selectedIndex -= 1;
@@ -387,7 +453,6 @@ function closeQuiz() {
         btn.disabled = true;
         btn.querySelector('.option-text').textContent = '';
     });
-    // Move focus back to "Start Quiz" button
     document.querySelector('.btn-primary[onclick="startQuiz()"]').focus();
     document.removeEventListener('keydown', handleKeydown);
 }
@@ -400,12 +465,10 @@ window.speechSynthesis.onvoiceschanged = () => {
     console.log('onvoiceschanged triggered');
 };
 window.addEventListener('load', () => {
-    // Initialize modals
     voiceModal = new bootstrap.Modal(document.getElementById('voiceModal'), { keyboard: true });
     quizModal = new bootstrap.Modal(document.getElementById('quiz'), { keyboard: true });
     loadVoices('inline');
     loadVoices('modal');
-    // Fallback: retry loading voices after 1s if empty
     setTimeout(() => {
         if (document.querySelectorAll('#voiceRadios .form-check').length === 0) {
             console.log('Retrying voice load for inline');
@@ -417,10 +480,6 @@ window.addEventListener('load', () => {
         }
     }, 1000);
     loadData();
-    // Add event listeners for voice selection
     document.getElementById('voiceRadios').addEventListener('change', setVoice);
     document.getElementById('voiceRadiosModal').addEventListener('change', setVoice);
-    
-    
 });
-
