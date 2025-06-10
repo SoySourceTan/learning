@@ -1,0 +1,9 @@
+{
+  "fieldMessages": {
+    "endGame": "おつかれさまでした。本体の電源は切らずにウインドウを閉じてください",
+    "continueAdventure": "冒険をつづけますか？",
+    "endGameConfirm": "ゲームを おわりますか？",
+    "revivePrayer": "ふっかつのいのりを ささげますか？",
+    "revived": "{name}は ふっかつしました。"
+  }
+}

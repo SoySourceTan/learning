@@ -1,0 +1,27 @@
+project/
+├── index.html
+├── css/
+│   └── styles.css
+├── js/
+│   ├── equiz.js  (互換性のために残す、空ファイル)
+│   ├── main.js
+│   ├── state.js
+│   ├── monsters.js
+│   ├── jobs.js
+│   ├── spells.js
+│   ├── categories.js
+│   ├── ui.js
+│   ├── messages.js
+│   ├── battle.js
+├── images/
+│   └── zoma.png
+├── sounds/
+│   ├── field.mp3
+│   ├── battle.mp3
+│   ├── click.mp3
+│   ├── correct.mp3
+│   ├── incorrect.mp3
+│   ├── magic.mp3
+│   ├── levelup.mp3
+│   ├── castle.mp3
+├── words.json

@@ -1,0 +1,9 @@
+{
+  "nouns": [
+    {"word": "apple", "meaning": "りんご", "difficulty": 1, "frequency": 0},
+    {"word": "aubergine", "meaning": "ナス", "difficulty": 2, "frequency": 0},
+    // ...
+  ],
+  // その他のカテゴリ
+}
+
