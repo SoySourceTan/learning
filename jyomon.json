@@ -1,0 +1,297 @@
+{
+  "eras": [
+    {
+      "id": "jomon_soso",
+      "name": "草創期",
+      "western": "BC16500～BC10000",
+      "japanese": "縄文草創期",
+      "events": [
+        {
+          "year": "BC16500",
+          "keyword": "最古の土器",
+          "description": "青森県の大平山元I遺跡で日本最古の土器が出土。煮炊きが可能。",
+          "region": "日本",
+          "theme": "土器"
+        },
+        {
+          "year": "BC14000",
+          "keyword": "温暖化",
+          "description": "完新世の温暖化開始。落葉広葉樹の森が日本列島に広がる。",
+          "region": "日本",
+          "theme": "環境"
+        },
+        {
+          "year": "BC12500",
+          "keyword": "ナトゥーフ文化",
+          "description": "西アジアでナトゥーフ文化が定住開始。穀物収穫用の石鎌が出土。",
+          "region": "ユーラシア",
+          "theme": "定住"
+        },
+        {
+          "year": "BC15000",
+          "keyword": "ホアビニアン文化",
+          "description": "東南アジア（タイ、ラオス）で狩猟採集民が暮らす。縄文人の祖先とされる（NHK, 2023）。",
+          "region": "東南アジア",
+          "theme": "移住"
+        },
+        {
+          "year": "BC15000",
+          "keyword": "ホアビニアンDNA",
+          "description": "ホアビニアンのゲノム解析で縄文人との遺伝的つながり確認（NHK, 2023）。",
+          "region": "東南アジア",
+          "theme": "DNA"
+        },
+        {
+          "year": "BC13000",
+          "keyword": "クローヴィス文化",
+          "description": "北アメリカで大型動物を狩る狩猟採集民。尖頭器を使用。",
+          "region": "北米",
+          "theme": "狩猟"
+        }
+      ]
+    },
+    {
+      "id": "jomon_early",
+      "name": "早期",
+      "western": "BC10000～BC6000",
+      "japanese": "縄文早期",
+      "events": [
+        {
+          "year": "BC9000",
+          "keyword": "漆器",
+          "description": "福井県の鳥浜貝塚で世界最古の漆器（赤漆塗り）が出土。ウルシの栽培を示す。",
+          "region": "日本",
+          "theme": "工芸"
+        },
+        {
+          "year": "BC7000",
+          "keyword": "縄文海進",
+          "description": "海面が2～3m上昇（有楽町海進）。貝塚や漁労が盛んに。",
+          "region": "日本",
+          "theme": "環境"
+        },
+        {
+          "year": "BC7000",
+          "keyword": "定住開始",
+          "description": "竪穴住居が普及し、定住集落が形成。堅果類と水産資源を利用。",
+          "region": "日本",
+          "theme": "定住"
+        },
+        {
+          "year": "BC7000",
+          "keyword": "裴李崗文化",
+          "description": "中国黄河流域で農耕と土器製作が始まる（中国科学院）。",
+          "region": "ユーラシア",
+          "theme": "農耕"
+        },
+        {
+          "year": "BC7000",
+          "keyword": "ハワイ漁労遺跡",
+          "description": "ハワイのオアフ島で漁労遺跡が発見。縄文の貝塚と類似。",
+          "region": "環太平洋",
+          "theme": "漁労"
+        },
+        {
+          "year": "BC7000",
+          "keyword": "ジュルムン土器時代",
+          "description": "韓国で縄文似の土器が作られ、交流の可能性を示す。",
+          "region": "ユーラシア",
+          "theme": "土器"
+        }
+      ]
+    },
+    {
+      "id": "jomon_pre",
+      "name": "前期",
+      "western": "BC6000～BC5000",
+      "japanese": "縄文前期",
+      "events": [
+        {
+          "year": "BC5500",
+          "keyword": "三内丸山遺跡",
+          "description": "青森県の三内丸山遺跡が繁栄。大型掘立柱建物とクリ栽培。",
+          "region": "日本",
+          "theme": "定住"
+        },
+        {
+          "year": "BC5500",
+          "keyword": "クリ栽培",
+          "description": "クリ林の管理が本格化。200年以上の長期管理で食料確保。",
+          "region": "日本",
+          "theme": "農耕"
+        },
+        {
+          "year": "BC5500",
+          "keyword": "クラビス文化",
+          "description": "北米でクラビス文化が狩猟生活。尖頭器で大型動物を狩る。",
+          "region": "北米",
+          "theme": "狩猟"
+        },
+        {
+          "year": "BC6000",
+          "keyword": "アボリジニ岩絵",
+          "description": "オーストラリアでアボリジニが岩絵を本格化。儀式文化を発展。",
+          "region": "オセアニア",
+          "theme": "儀式文化"
+        },
+        {
+          "year": "BC5500",
+          "keyword": "オーストラリアDNA",
+          "description": "アボリジニのDNA解析で移住史が判明（Nature, 2020）。",
+          "region": "オセアニア",
+          "theme": "DNA"
+        },
+        {
+          "year": "BC5500",
+          "keyword": "バン・チャイ文化",
+          "description": "タイで農耕と定住開始。縄文の定住と並行。",
+          "region": "東南アジア",
+          "theme": "農耕"
+        }
+      ]
+    },
+    {
+      "id": "jomon_middle",
+      "name": "中期",
+      "western": "BC5000～BC4000",
+      "japanese": "縄文中期",
+      "events": [
+        {
+          "year": "BC4500",
+          "keyword": "火焔型土器",
+          "description": "東日本で華麗な火焔型土器が製作。祭祀や儀式に使用。",
+          "region": "日本",
+          "theme": "土器"
+        },
+        {
+          "year": "BC4500",
+          "keyword": "土偶",
+          "description": "女性を模した土偶が普及。豊穣や治癒の祈りに使用。",
+          "region": "日本",
+          "theme": "儀式文化"
+        },
+        {
+          "year": "BC4500",
+          "keyword": "環状列石",
+          "description": "秋田県の大湯環状列石が築造。夏至/冬至の観測や祭祀の場。",
+          "region": "日本",
+          "theme": "儀式文化"
+        },
+        {
+          "year": "BC4500",
+          "keyword": "ハワイ定住",
+          "description": "ハワイ諸島で初期定住開始。漁労とタロイモ栽培。",
+          "region": "環太平洋",
+          "theme": "定住"
+        },
+        {
+          "year": "BC4500",
+          "keyword": "ラピタ交易萌芽",
+          "description": "環太平洋で航海技術と交易が始まる（Archaeology, 2021）。",
+          "region": "環太平洋",
+          "theme": "交易"
+        },
+        {
+          "year": "BC4000",
+          "keyword": "バイカル湖土器",
+          "description": "シベリアのバイカル湖周辺で儀式用土器が製作。",
+          "region": "ユーラシア",
+          "theme": "土器"
+        }
+      ]
+    },
+    {
+      "id": "jomon_late",
+      "name": "後期",
+      "western": "BC4000～BC3000",
+      "japanese": "縄文後期",
+      "events": [
+        {
+          "year": "BC3500",
+          "keyword": "階層化",
+          "description": "副葬品の多い墓が出土。階層社会の萌芽。",
+          "region": "日本",
+          "theme": "社会"
+        },
+        {
+          "year": "BC3500",
+          "keyword": "対馬交流",
+          "description": "対馬縄文人が朝鮮半島と交流。ヒスイや土器の交易。",
+          "region": "日本",
+          "theme": "交易"
+        },
+        {
+          "year": "BC3500",
+          "keyword": "アンデス農耕",
+          "description": "南米アンデスでトウモロコシやジャガイモの栽培開始。",
+          "region": "南米",
+          "theme": "農耕"
+        },
+        {
+          "year": "BC3500",
+          "keyword": "バルドビア文化",
+          "description": "エクアドルで土器を使用。縄文土器との類似性が議論される（ResearchGate）。",
+          "region": "南米",
+          "theme": "土器"
+        },
+        {
+          "year": "BC3500",
+          "keyword": "裴李崗土器進化",
+          "description": "中国の裴李崗文化で土器が多様化（中国科学院）。",
+          "region": "ユーラシア",
+          "theme": "土器"
+        },
+        {
+          "year": "BC3000",
+          "keyword": "バナナ栽培",
+          "description": "東南アジア（ニューギニア）でバナナ栽培開始。",
+          "region": "東南アジア",
+          "theme": "農耕"
+        }
+      ]
+    },
+    {
+      "id": "jomon_final",
+      "name": "晩期",
+      "western": "BC3000～BC2400",
+      "japanese": "縄文晩期",
+      "events": [
+        {
+          "year": "BC3000",
+          "keyword": "稲作萌芽",
+          "description": "西日本（岡山など）で陸稲の栽培開始。弥生への移行。",
+          "region": "日本",
+          "theme": "農耕"
+        },
+        {
+          "year": "BC2800",
+          "keyword": "亀ヶ岡式土器",
+          "description": "東北で精巧な亀ヶ岡式土器が製作。祭祀用と日常用に分化。",
+          "region": "日本",
+          "theme": "土器"
+        },
+        {
+          "year": "BC2500",
+          "keyword": "弥生移行",
+          "description": "北九州に渡来人が流入し、弥生文化が開始。",
+          "region": "日本",
+          "theme": "社会"
+        },
+        {
+          "year": "BC2700",
+          "keyword": "櫛目文土器交流",
+          "description": "朝鮮半島の櫛目文土器が対馬経由で影響（Korea Archaeology）。",
+          "region": "ユーラシア",
+          "theme": "交易"
+        },
+        {
+          "year": "BC2600",
+          "keyword": "ラピタ文化",
+          "description": "オセアニアで航海民が土器を製作。太平洋の文化交流（Archaeology, 2021）。",
+          "region": "環太平洋",
+          "theme": "交易"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>縄文浪漫</title>
+    <style>
+        body {
+            font-family: 'Arial', 'Hiragino Sans', sans-serif;
+            background: linear-gradient(to bottom, #e8f0e8, #d9e2d9);
+            margin: 0;
+            padding: 0;
+            overflow-y: auto;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+        }
+        .content {
+            flex: 3;
+            padding: 20px;
+        }
+        .minimap {
+            flex: 1;
+            background: #e9ecef;
+            padding: 10px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            border-left: 1px solid #ccc;
+            width: 200px;
+            font-size: 14px;
+        }
+        h1 {
+            text-align: center;
+            color: #4a2c0e;
+            margin-bottom: 20px;
+        }
+        .nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            padding: 10px;
+            z-index: 100;
+            border-bottom: 1px solid #ccc;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #6b4e31;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .nav a:hover, .nav a.active {
+            background: #6b4e31;
+            color: #fff;
+        }
+        .search {
+            margin-bottom: 20px;
+        }
+        .search input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .era {
+            margin-bottom: 40px;
+            min-height: 100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .era.visible {
+            opacity: 1;
+        }
+        .era h2 {
+            color: #6b4e31;
+            margin-bottom: 10px;
+        }
+        .era p {
+            margin: 5px 0;
+        }
+        .events {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .event {
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            border-left: 4px solid #6b4e31;
+            border-radius: 4px;
+        }
+        .event.japan { border-left: 4px solid #6b4e31; }
+        .event.eastasia { border-left: 4px solid #2e7d32; }
+        .event.pacific { border-left: 4px solid #0288d1; }
+        .event.eurasia { border-left: 4px solid #f57c00; }
+        .event.northsouthamerica { border-left: 4px solid #d81b60; }
+        .event.oceania { border-left: 4px solid #8e24aa; }
+        .minimap-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+            transition: background 0.3s;
+            line-height: 1.4;
+        }
+        .minimap-item:hover {
+            background: #d1d4d8;
+        }
+        .minimap-item.active {
+            background: #6b4e31;
+            color: #fff;
+        }
+        .no-results {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .content {
+                padding: 10px;
+            }
+            .minimap {
+                position: static;
+                margin-top: 20px;
+                width: 100%;
+                font-size: 12px;
+            }
+            .event {
+                font-size: 14px;
+            }
+            .era h2 {
+                font-size: 20px;
+            }
+            .search input {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>縄文浪漫</h1>
+            <div class="nav">
+                <a href="index.html">年表モード</a>
+                <a href="quiz.html">学習モード</a>
+                <a href="#jomon" class="active">縄文浪漫</a>
+                <a href="story.html" class="active">物語モード</a>
+            </div>
+            <div class="search">
+                <input type="text" id="search" placeholder="キーワードで検索（例：土偶、稲作、ラピタ）">
+            </div>
+            <div id="timeline"></div>
+            <div id="no-results" class="no-results">検索結果が見つかりませんでした。</div>
+        </div>
+        <div class="minimap" id="minimap"></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const timeline = document.getElementById('timeline');
+            const minimap = document.getElementById('minimap');
+            const search = document.getElementById('search');
+            const noResults = document.getElementById('no-results');
+
+            // HTMLエスケープ
+            function escapeHTML(str) {
+                if (typeof str !== 'string') return str;
+                return str.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"').replace(/'/g, '');
+            }
+
+            // JSON読み込み
+            fetch('./jyomon.json', { cache: 'no-store' })
+                .then(response => {
+                    console.log(`Fetch status: ${response.status}, URL: ${response.url}`);
+                    if (!response.ok) throw new Error(`jyomon.json読み込み失敗: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('jyomon.json読み込み成功');
+                    const eras = data.eras;
+                    let searchIndex = [];
+
+                    // 検索インデックス構築
+                    function buildSearchIndex() {
+                        searchIndex = [];
+                        eras.forEach(era => {
+                            console.log(`インデックス構築: ${era.name}, イベント数: ${era.events.length}`);
+                            era.events.forEach((event, idx) => {
+                                const key = `${event.year}|${event.keyword}|${event.description}|${event.region}|${event.theme}`.toLowerCase();
+                                searchIndex.push({ eraId: era.id, event, key, index: idx });
+                                if (era.id === 'jomon_final') {
+                                    console.log(`晩期キー: ${key}`);
+                                }
+                            });
+                        });
+                        console.log(`検索インデックス: ${searchIndex.length}件`);
+                    }
+
+                    // 年表レンダリング
+                    function renderTimeline(searchTerm = '') {
+                        const startTime = performance.now();
+                        timeline.innerHTML = '';
+                        minimap.innerHTML = '';
+                        noResults.style.display = 'none';
+                        let hasResults = false;
+                        searchTerm = searchTerm.toLowerCase();
+
+                        try {
+                            eras.forEach(era => {
+                                let eventHTML = '';
+                                let eventCount = 0;
+
+                                era.events.forEach((event, idx) => {
+                                    const eventText = `${event.year}: ${event.description}`;
+                                    const matchesSearch = !searchTerm || searchIndex.some(item => item.eraId === era.id && item.key.includes(searchTerm));
+                                    if (matchesSearch) {
+                                        const regionClass = event.region.replace(/[^a-zA-Z]/g, '').toLowerCase();
+                                        eventHTML += `
+                                            <li class="event ${regionClass}" data-year="${escapeHTML(event.year)}">
+                                                ${escapeHTML(eventText)}
+                                            </li>
+                                        `;
+                                        eventCount++;
+                                        hasResults = true;
+                                        console.log(`  イベント: ${era.name} - ${eventText.substring(0, 50)}...`);
+                                    }
+                                });
+
+                                if (eventHTML) {
+                                    const ulHTML = `<ul class="events">${eventHTML}</ul>`;
+                                    console.log(`時代処理: ${era.name}, 表示イベント: ${eventCount}, <ul>: ${ulHTML.substring(0, 100)}...`);
+                                    const eraHTML = `
+                                        <div class="era" id="era-${era.id}">
+                                            <h2>${escapeHTML(era.name)}</h2>
+                                            <p><strong>期間:</strong> ${escapeHTML(era.western)} (${escapeHTML(era.japanese)})</p>
+                                            ${ulHTML}
+                                        </div>
+                                    `;
+                                    timeline.insertAdjacentHTML('beforeend', eraHTML);
+
+                                    // ミニマップ
+                                    const minimapItem = document.createElement('div');
+                                    minimapItem.className = 'minimap-item';
+                                    minimapItem.dataset.eraId = era.id;
+                                    minimapItem.innerHTML = `${escapeHTML(era.name)} (${eventCount}件)<br><small>${escapeHTML(era.western)}</small>`;
+                                    minimapItem.addEventListener('click', () => {
+                                        const eraEl = document.getElementById(`era-${era.id}`);
+                                        if (eraEl) {
+                                            eraEl.scrollIntoView({ behavior: 'smooth' });
+                                            minimap.querySelectorAll('.minimap-item').forEach(item => item.classList.remove('active'));
+                                            minimapItem.classList.add('active');
+                                            console.log(`ミニマップ: ${era.name} にスクロール, eraId: ${era.id}`);
+                                        } else {
+                                            console.warn(`時代ID: ${era.id} が見つかりませんでした`);
+                                        }
+                                    });
+                                    minimap.appendChild(minimapItem);
+                                }
+                            });
+
+                            if (!hasResults && searchTerm) {
+                                noResults.style.display = 'block';
+                            }
+
+                            // 遅延ロード
+                            const observer = new IntersectionObserver((entries) => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        entry.target.classList.add('visible');
+                                        observer.unobserve(entry.target);
+                                    }
+                                });
+                            }, { threshold: 0.1 });
+                            document.querySelectorAll('.era').forEach(el => observer.observe(el));
+
+                            console.log(`レンダリング完了: ${(performance.now() - startTime).toFixed(2)}ms, 検索: "${searchTerm}", 結果: ${hasResults ? 'あり' : 'なし'}`);
+                        } catch (e) {
+                            console.error('レンダリングエラー:', e.message);
+                            alert(`年表の表示に失敗しました: ${e.message}`);
+                        }
+                    }
+
+                    // 検索入力
+                    search.addEventListener('input', () => {
+                        renderTimeline(search.value.trim());
+                    });
+
+                    buildSearchIndex();
+                    renderTimeline();
+                })
+                .catch(error => {
+                    console.error('データエラー:', error.message);
+                    alert(`jyomon.jsonの読み込みに失敗しました: ${error.message}`);
+                });
+        });
+    </script>
+</body>
+</html>

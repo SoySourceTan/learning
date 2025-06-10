@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>縄文浪漫物語</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Arial', 'Hiragino Sans', sans-serif;
+            background: linear-gradient(to bottom, #e8f0e8, #d9e2d9);
+            color: #333;
+        }
+        .navbar-custom {
+            background-color: #6b4e31;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .nav-link {
+            color: #fff;
+        }
+        .navbar-custom .nav-link:hover,
+        .navbar-custom .nav-link.active {
+            background-color: #4a2c0e;
+            border-radius: 4px;
+        }
+        .story {
+            background: #fff;
+            border-left: 4px solid #6b4e31;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .minimap {
+            background: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .minimap-item {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+            transition: background 0.3s;
+            line-height: 1.4;
+        }
+        .minimap-item:hover {
+            background: #d1d4d8;
+        }
+        .minimap-item.active {
+            background: #6b4e31;
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            .story {
+                font-size: 0.9em;
+            }
+            .minimap {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Bootstrap Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top" role="navigation">
+        <div class="container">
+            <a class="navbar-brand" href="story.html">縄文浪漫物語</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">年表モード</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quiz.html">学習モード</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="jyomon.html">縄文浪漫</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="story.html" aria-current="page">物語モード</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4">
+        <div class="row">
+            <!-- Story Content -->
+            <div class="col-lg-8">
+                <h1 class="text-center mb-4" style="color: #4a2c0e;">縄文浪漫物語</h1>
+                <div class="story p-4 mb-4">
+                    <h2>リムルと仲間たちが語る日本列島の冒険</h2>
+                    <!-- Placeholder Image -->
+                    <img src="https://via.placeholder.com/800x400?text=Tensei+Slime+Jomon+Scene" class="img-fluid rounded mb-4" alt="Rimuru, Veldora, Diablo, Milim, Shion, Shuna, and Benimaru in a Jomon-era forest with a volcano, shell middens, and rope pottery">
+                    <div class="story-content">
+                        <p>「よおし、みんな！ 今日のテーマは日本列島の縄文時代だ！ 準備はいいか？」</p>
+                        <p>俺、リムル・テンペスト、元サラリーマンで今はスライム。転スラの世界から飛び出して、今回は縄文時代を旅するストーリーテーラーだ。そばにはいつもの仲間たちが勢ぞろい！ ド派手なドラゴンのヴェルドラ、破壊神ミリム、執事ディアブロ、そしてオーガトリオのシオン、シュナ、ベニマルだ！</p>
+                        <p>「ガハハ！ 縄文時代か！ なんか燃えるぜ、リムル！ どんな冒険が待ってるんだ？」 ヴェルドラが翼をバタつかせて叫ぶ。相変わらずのハイテンションだ。</p>
+                        <p>「リムル様！ このシオン、縄文の戦士たちの魂を感じるため、全力で参ります！」 シオンが拳を握り、紫髪を揺らして気合十分。…ちょっと暴走しそうで怖いな。</p>
+                        <p>「ふふ、リムル様。縄文の自然と文化、きっと美しい調和が見られますね。私も楽しみです」 シュナが微笑む。ピンクの髪が揺れて、癒しオーラ全開だ。</p>
+                        <p>「リムル様、縄文の集落や交易には戦略の匂いがする。俺も分析させてもらうぜ」 ベニマルが赤い髪をかき上げ、冷静にニヤリ。</p>
+                        <p>「落ち着け、みんな！ まずは地理的変化から。縄文時代、紀元前10,000年頃から紀元前300年頃までの約1万年、日本列島はダイナミックに変わったんだ！」</p>
+                        <h3 id="chapter1">第一章：大地の鼓動と縄文海進</h3>
+                        <p>「想像してみたい、ヴェルドラ。氷河期が終わって、地球が暖かくなり始めた頃だ。日本の列島は火山がゴロゴロ噴火して、土地がグニャグニャ動いてた。ワイルドな世界だろ？」</p>
+<p>「ガハハ！ 火山の爆発！ まるで俺の【嵐龍の咆哮】だな！ どんな火山が暴れてたんだ？」 ヴェルドラが目を輝かせる。</p>
+<p>「例えば、九州の鬼界カルデラだ。紀元前7,300年頃、ドカーンと大噴火！ 火砕流と火山灰が南九州を覆い、縄文人の生活をガラッと変えたんだ。地形も変わり、土壌が肥えた地域も出てきたぜ」</p>
+<p>ディアブロがスッと現れ、恭しく。「リムル様、補足です。鬼界カルデラの噴火はVEI7級で、考古学的データでは火山灰層が広範囲に確認されます。南九州の集落は壊滅し、人口移動を誘発した可能性が高いです」</p>
+<p>「おお、ディアブロ、相変わらずキレッキレだな！ でも、データばっかじゃなくて、もっとド派手な話は？」 ヴェルドラが不満そう。</p>
+<p>「ハハ、じゃあ海の話だ！ 縄文海進って知ってるか？ 紀元前6,000年頃、海水面が4～6メートル上がったんだ。関東平野はほぼ海！ 東京湾が内陸までグイグイ入ってきて、俺がスライムでプカプカ浮かぶレベルだぜ！」</p>
+<p>「バーン！ 海が陸を飲み込むなんて、超ワクワクするじゃん！ リムル、泳いで冒険した？」 ミリムがピンク髪を振り乱して割り込む。目がキラキラだ。</p>
+<p>「ミリム、俺が泳ぐわけないだろ！ けど、縄文人はこの海進で新しい土地を探す冒険に出たんだ。シオン、この海の変化、どう思う？」</p>
+<p>「リムル様！ 海が迫ってくるなんて、まるで強敵の進軍！ 縄文の戦士たちは勇敢に立ち向かったはずです！」 シオンが大剣を振り回すジェスチャー。</p>
+<p>「ふふ、シオンさん、戦いじゃなくて適応ですよ。海が近づいたことで、漁労が盛んになったんですよね、リムル様？」 シュナが穏やかにフォロー。</p>
+<p>「その通り、シュナ！ 海進で海岸線が変わり、縄文人は貝や魚をガンガン獲った。ベニマル、この適応力、どう見る？」</p>
+<p>「フン、縄文人の柔軟性は戦場でも通用するな。環境変化に合わせて拠点を移し、資源を確保。戦略の基本だ」 ベニマルが腕を組んでうなずく。</p>
+<h3 id="chapter2">第二章：緑の変貌と森の物語</h3>
+<p>「次は植生だ。縄文時代、気候が暖かくなって、森がガラッと変わった。氷河期の針葉樹、スギやマツが多かったのが、紀元前7,000年頃にはブナやクリの広葉樹が東日本でドーンと増えた。西日本はシイやカシの照葉樹林だ」</p>
+<p>「おお！ 森がジャングルみたいになったのか？ 俺なら木をバサバサ燃やすぜ！？」 ヴェルドラが豪快に笑う。</p>
+<p>「火をつけるなよ、ヴェル！ 縄文人はこの森を大事にしたんだ。ブナやクリの実、ドングリを食べてた。シオン、ドングリってどう思う？」</p>
+<p>「リムル様！ ドングリは戦士の糧！ 私がアク抜きして、最高の戦闘食を作ります！」 シオンが胸を張る。…でも、ヤバい予感しかしねえ。</p>
+<p>「シオンさん、アク抜きは私がお手伝いしますね。ドングリは粥や焼き物にすると美味しいんですよ、リムル様」 シュナが優しく微笑む。</p>
+<p>「シュナ、ナイスフォロー！ 実際、三内丸山遺跡じゃ、紀元前5,500年頃にクリの木を計画的に育ててたって痕跡がある。ディアブロ、データは？」</p>
+<p>「リムル様、完璧なご質問！ 三内丸山では、クリの栽培に加え、ドングリの貯蔵坑が発見されています。縄文人は食料を再生し、冬を乗り越える知恵を持っていました」 ディアブロがニヤリ。</p>
+<p>「バーン！ 木の実集めるの、楽しそう！ ミリムも森でドングリ拾いまくるぜ！」 ミリムが拳を振り上げる。</p>
+<p>「ミリム、拾う前に木を壊すなよ！ ベニマル、この森の活用、どう見る？」</p>
+<p>「森は資源の宝庫だな。食料だけでなく、木材で家や道具も作れる。縄文人の集落配置は、森と海のバランスを計算した戦略の産物だ」 ベニマルが鋭く分析。</p>
+<h3 id="chapter3">第三章：食と土器の革命</h3>
+<p>「さて、食文化だ！ 縄文人は狩猟採集がメイン。鹿やイノシシを狩り、魚や貝を獲った。鳥浜貝塚、紀元前9,000年頃の遺跡で、貝殻が山になってるんだ！」</p>
+<p>「ガハハ！ 貝の山！ まるで俺の宝の山だな！ どんな貝を食ってたんだ？」 ヴェルドラが興味津々。</p>
+<p>「ハマグリ、アサリ、シジミだな。海進で海岸が近くなり、貝塚が急増。で、食の革命は縄文土器だ！ 紀元前16,500年頃から始まり、中期の火焔型土器は芸術的だぜ！」</p>
+<p>ディアブロが補足。「リムル様、火焔型土器は紀元前4,000年頃、新潟県で発展。煮炊きや貯蔵に用いられ、装飾は祭祀的意味合いも持つと推測されます」</p>
+<p>「スープ！ リムル、それ美味そう！ 俺も土器でガブッと飲むぜ！」 ヴェルドラがヨダレ気味。</p>
+<p>「ヴェルドラ、飲み物じゃねえって！ シオン、土器で何作る？」</p>
+<p>「リムル様！ 私が鹿肉と貝の特製スープを！ …あっ、土器が焦げちゃった！」 シオンが慌てる。やっぱりドジっ子だ！</p>
+<p>「ふふ、シオンさん、私が調理を引き継ぎます。土器で魚とドングリのシチュー、きっとリムル様のお口に合いますよ」 シュナがフォロー。</p>
+<p>「バーン！ ミリムも食う！ 土器でドカンと焼いた肉がいい！」 ミリムが乱暴に割り込む。</p>
+<p>「ミリム、肉は焼けるけど、土器を割るなよ！ ベニマル、土器の意義は？」</p>
+<p>「調理の効率化は兵站の強化だ。土器で食料の保存と多様な料理が可能になり、集落の安定性が上がった。文明の基盤だな」 ベニマルがうなずく。</p>
+<h3 id="chapter4">第四章：集落と祭祀の文明</h3>
+<p>「縄文は狩猟採集なのに、定住生活が始まったんだ。三内丸山遺跡、紀元前5,500年頃、数百人が住むデカい集落！ 木造家屋、貯蔵庫、墓まであったぜ！」</p>
+<p>「おお！ 小さな王国だな！ どんな奴らが住んでた？」 ヴェルドラが目を輝かせる。</p>
+<p>「普通の縄文人だけど、組織化されてた集団だ。クリを育て、漁労や狩猟を分担。土偶、遮光器土偶って知ってる？ ゴーグルみたいな目で、祭祀や呪術に使われたんだ！」</p>
+<p>「リムル様！ 土偶は戦士の守護像！ このシオン、土偶に魂を込めて戦場を守ります！」 シオンが燃える。…いや、戦場はねえよ。</p>
+<p>「ふふ、シオンさん、土偶は豊穣や安全を祈るものかもしれません。祭りの光景、素敵ですよね、リムル様？」 シュナが優しく微笑む。</p>
+<p>ディアブロ：「リムル様、遮光器土偶は紀元前2,500年頃、東北で盛ん。三内丸山では交易の痕跡もあり、貝殻や黒曜石が遠方から運ばれました」</p>
+<p>「バーン！ 土偶、めっちゃカッコいい！ 俺も作るぜ、ドカーンなやつ！」 ミリムが興奮。</p>
+<p>「ミリム、壊す前に作れよ！ ベニマル、交易や集落の組織化、どう見る？」</p>
+<p>「黒曜石は武器や道具に最適。交易網は集落間の同盟を強化し、社会階層の萌芽を示す。縄文人は戦略家だな」 ベニマルがニヤリ。</p>
+<h3 id="chapter5">第五章：海と陸のダンス</h3>
+<p>「縄文海進の話、もっと掘り下げよう。紀元前6,000年頃、関東平野は海で、東京湾が内陸まで入ってきた。縄文人は海岸沿いに集落を移し、貝塚が増えたんだ。加曽利貝塚、でかい貝の山だぜ！」</p>
+<p>「ガハハワイ、海が陸を飲み込むなんて、まるで俺の嵐だ！ 縄文人はどうやって戦った？」 ヴェルドラが興奮。</p>
+<p>「戦うじゃねえ！ 適応だよ！ 漁労にシフトして、貝や魚をガッツリ食った。ディアブロ、データは？」</p>
+<p>「リムル様、加曽利貝塚は中期～晩期、直径150メートルの環状貝塚。魚骨や動物骨も出土し、多様な食文化を示す」</p>
+<p>「バーン！ 貝塚で魚パーティー！ ミリムも参加するぜ！」 ミリムが飛び跳ねる。</p>
+<p>「シオン、貝塚の生活ってどう思う？」</p>
+<p>「リムル様！ 貝塚は戦士の食糧庫！ このシオン、貝を山と集めてリムル様に献上！」 シオンが気合。</p>
+<p>「ふふ、シオンさん、貝は料理に使えます。貝スープ、作ってみませんか？」 シュナが提案。</p>
+<p>「シュナ、グッジョブ！ ベニマル、海辺の集落、どう分析？」</p>
+<p>「海は戦略と食料の動脈。集落を海岸に置くのは、資源と防衛の両立を狙った」 ベニマルが冷静に。</p>
+<h3 id="chapter6">第六章：文明の芽と未来</h3>
+<p>「縄文時代はただの呪術集めじゃない。三内丸みたいな集落や、黒曜石・ヒスイの交易で文明が芽生えた。晩年には陸稲栽培も始まり、弥生への道が開かれたんだ！」</p>
+<p>「ガハハ！ 交易！ まるで俺の宝を交換する！」 ヴェルドラ、ニヤニヤ。</p>
+<p>「リムル様！ 黒曜石は最強の武器素材！ 私が槍を作って敵をバッタバッタ！」 シオンが暴走。</p>
+<p>「シオンさん、武器もいいですが、交易は平和の絆でもあります。ヒスイの勾玉、素敵ですよね」 シュナがフォロー。</p>
+<p>「バーン！ ヒスイ、超キラキラ！ ミリム、宝にしたい！」 ミリムが叫ぶ。</p>
+<p>ディアブロ：「リムル様、ヒスイは晩期に長野から東北へ。社会階層の象徴と推測」</p>
+<p>「ベニマル、交易網の意義は？」</p>
+<p>「交易は情報と文化の流通網。縄文人のネットワークは、未来の国家形成の礎だ」 ベニマルが締める。</p>
+<p>「よーし、みんな！ 縄文時代、地理も海も植生も食も文明も、全部がスゴい浪漫だろ？！ ヴェルドラ、シオン、シュナ、ミリム、ディアブロ、ベニマル、感じたか？」</p>
+<p>「ガハハ！ バッチリだぜ、リムル！」 ヴェルドラ。</p>
+<p>「リムル様！ 縄文の魂、私の胸に刻みました！」 シオン。</p>
+<p>「リムル様、自然の力、素晴らしいです！」 シュナ。</p>
+<p>「バーン！ 超楽しかった！ 次もバーンだ！」 ミリム。</p>
+<p>「リムル様、最高の語りでした」 ディアブロ。</p>
+<p>「リムル様、縄文の戦略、勉強になったぜ」 ベニマル。</p>
+<p>「ハハ、みんなノリ最高！ じゃあ、『年表モード』で深掘り、『学習モード』でクイズ、『縄文浪漫』で年表チェックだ！ 縄文の魂、感じろ！」</p>
+</div>
+</div>
+</div>
+<!-- Minimap -->
+<div class="col-lg-3">
+    <div class="minimap p-3 sticky-top" style="top: 100px;">
+        <div class="minimap-item" data-chapter="chapter1" tabindex="0">第一章：大地の鼓動と縄文海進</div>
+        <div class="minimap-item" data-chapter="chapter2" tabindex="0">第二章：緑の変貌と森の物語</div>
+        <div class="minimap-item" data-chapter="chapter3" tabindex="0">第三章：食と土器の革命</div>
+        <div class="minimap-item" data-chapter="chapter4" tabindex="0">第四章：集落と祭祀の文明</div>
+        <div class="minimap-item" data-chapter="chapter5" tabindex="0">第五章：海と土のダンス</div>
+        <div class="minimap-item" data-chapter="chapter6" tabindex="0">第六章：文明の芽と未来</div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Bootstrap 5.3.3 JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT0to5eqruptLy" crossorigin="anonymous"></script>
+<!-- Minimap JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const minimapItems = document.querySelectorAll('.minimap-item');
+    minimapItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const chapterId = item.dataset.chapter;
+            const chapter = document.getElementById(chapterId);
+            if (chapter) {
+                chapter.scrollIntoView({ behavior: 'smooth' });
+                minimapItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            }
+        });
+        // Keyboard support
+        item.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                item.click();
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
