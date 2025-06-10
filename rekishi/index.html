@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>日本の歴史年表</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Noto Sans JP', sans-serif;
@@ -20,9 +23,12 @@
         }
         .content-area {
             flex: 1;
-            overflow-y: auto;
+            overflow: hidden;
             padding-right: 20px;
             scroll-behavior: smooth;
+            max-height: 100vh;
+        }
+        .ps {
             max-height: 100vh;
         }
         .minimap {
@@ -30,18 +36,36 @@
             background-color: #e9ecef;
             border-left: 1px solid #dee2e6;
             overflow-y: auto;
-            position: relative;
-            font-size: 0.85rem;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        .minimap.active {
+            transform: translateX(0);
+        }
+        .minimap-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+            background-color: #0d6efd;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
         }
         .minimap .era-marker {
             padding: 5px 10px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            transition: background-color 0.3s;
             border-bottom: 1px solid #dee2e6;
         }
         .minimap .era-marker:hover {
             background-color: #d1d4d8;
-            transform: translateX(5px);
         }
         .minimap .era-marker.active {
             background-color: #0d6efd;
@@ -51,30 +75,30 @@
             padding: 3px 20px;
             font-size: 0.75rem;
             border-bottom: none;
+            display: none;
+        }
+        .minimap .era-marker.active .sub-marker {
+            display: block;
         }
         .era-section {
             margin-bottom: 40px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        .era-section.visible {
             opacity: 1;
-            transform: translateY(0);
+            display: block;
         }
         .sub-section {
             margin-left: 20px;
             padding: 10px;
             border-left: 2px solid #6c757d;
+            display: block;
         }
         .event-item {
             padding: 10px;
             border-left: 4px solid #0d6efd;
             margin-bottom: 10px;
-            transition: background-color 0.3s;
-        }
-        .event-item:hover {
-            background-color: #f1f3f5;
+            background-color: #fff;
+            border-radius: 5px;
+            opacity: 1;
+            display: block;
         }
         .nav-tabs {
             position: sticky;
@@ -83,9 +107,35 @@
             background-color: #fff;
             border-bottom: 1px solid #dee2e6;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .search-bar {
+            position: sticky;
+            top: 60px;
+            z-index: 1000;
+            background-color: #fff;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .no-results {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+        @media (max-width: 768px) {
+            .timeline-container {
+                padding: 10px;
+            }
+            .content-area {
+                padding-right: 10px;
+            }
+            .event-item {
+                font-size: 0.9rem;
+            }
+            h3 {
+                font-size: 1.5rem;
+            }
+            .ps {
+                overflow-y: auto;
+            }
         }
     </style>
 </head>
@@ -95,137 +145,226 @@
             <h1 class="text-center mb-4">日本の歴史年表</h1>
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#timeline">年表モード</a>
+                    <a class="nav-link active" href="#timeline"><i class="fas fa-timeline"></i> 年表モード</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="quiz.html">学習モード</a>
+                    <a class="nav-link" href="quiz.html"><i class="fas fa-graduation-cap"></i> 学習モード</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="jyomon.html"><i class="fas fa-leaf"></i> 縄文浪漫</a>
+                </li>
+
             </ul>
-            <div id="era-content"></div>
+            <div class="search-bar">
+                <input type="text" id="search-input" class="form-control" placeholder="キーワードで検索（例：ペリー、江戸）">
+            </div>
+            <div id="era-content" class="ps"></div>
+            <div id="no-results" class="no-results" style="display: none;">検索結果が見つかりませんでした。</div>
         </div>
+        <button class="minimap-toggle"><i class="fas fa-bars"></i></button>
         <div class="minimap" id="minimap"></div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/perfect-scrollbar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.touchswipe@1.6.19/jquery.touchSwipe.min.js"></script>
     <script>
-        fetch('data.json')
-            .then(response => response.json())
-            .then(data => {
-                const eras = data.eras;
-                const eraContent = document.getElementById('era-content');
-                const minimap = document.getElementById('minimap');
+        $(document).ready(function() {
+            fetch('data.json')
+                .then(response => {
+                    if (!response.ok) throw new Error('data.jsonの読み込みに失敗しました');
+                    return response.json();
+                })
+                .then(data => {
+                    const eras = data.eras;
+                    const eraContent = $('#era-content');
+                    const minimap = $('#minimap');
+                    const searchInput = $('#search-input');
+                    const noResults = $('#no-results');
+                    let searchIndex = new Map();
 
-                // 江戸時代のイベントをサブセクションに分割
-                function groupEdoEvents(events) {
-                    const groups = {
-                        '政治・制度': [],
-                        '災害・飢饉': [],
-                        '文化・経済': [],
-                        '外交・倒幕': []
-                    };
-                    events.forEach(event => {
-                        if (['江戸幕府', '大坂夏の陣', '禁中並公家諸法度', '徳川家光', '参勤交代', '島原・天草一揆', '生類憐みの令', '享保の改革', '寛政の改革', '天保の改革', '大塩平八郎の乱', '薩長同盟', '大政奉還', '戊辰戦争'].includes(event.keyword)) {
-                            groups['政治・制度'].push(event);
-                        } else if (['明暦の大火', '寛文の大火', '元禄地震', '宝永大地震', '享保の大飢饉', '寛保の洪水', '明和の大火', '天明の大飢饉', '文化の大火', '天保の大飢饉', '安政の大地震'].includes(event.keyword)) {
-                            groups['災害・飢饉'].push(event);
-                        } else if (['元禄文化', '新井白石', '田沼意次'].includes(event.keyword)) {
-                            groups['文化・経済'].push(event);
-                        } else if (['出島', 'ラクスマン', 'フェートン号事件', '異国船打払令', 'ペリー来航', '日米和親条約', '日米修好通商条約', '桜田門外の変', '生麦事件', '天誅組の変', '禁門の変'].includes(event.keyword)) {
-                            groups['外交・倒幕'].push(event);
-                        }
-                    });
-                    return groups;
-                }
+                    new PerfectScrollbar('#era-content', { suppressScrollX: true });
 
-                // 年表モード
-                function renderTimeline() {
-                    eras.forEach(era => {
-                        const eraSection = document.createElement('div');
-                        eraSection.className = 'era-section';
-                        eraSection.id = `era-${era.id}`;
-                        let eraContentHTML = `
-                            <h3>${era.name}</h3>
-                            <p><strong>期間:</strong> ${era.western} (${era.japanese})</p>
-                        `;
+                    function buildSearchIndex() {
+                        eras.forEach(era => {
+                            era.events.forEach(event => {
+                                const key = `${event.year}|${event.keyword}|${event.description}`.toLowerCase();
+                                searchIndex.set(key, { eraId: era.id, event });
+                            });
+                        });
+                    }
 
-                        if (era.id === 'edo') {
-                            const groupedEvents = groupEdoEvents(era.events);
-                            for (const [groupName, events] of Object.entries(groupedEvents)) {
-                                if (events.length > 0) {
-                                    eraContentHTML += `
-                                        <div class="sub-section" id="sub-${era.id}-${groupName}">
-                                            <h4>${groupName}</h4>
-                                            <ul class="list-unstyled">
-                                                ${events.map(event => `
+                    function groupEdoEvents(events) {
+                        const groups = {
+                            '政治-制度': [],
+                            '災害-飢饉': [],
+                            '文化-経済': [],
+                            '外交-倒幕': []
+                        };
+                        events.forEach(event => {
+                            if (['江戸幕府', '大坂夏の陣', '禁中並公家諸法度', '徳川家光', '参勤交代', '島原・天草一揆', '生類憐みの令', '享保の改革', '寛政の改革', '天保の改革', '大塩平八郎の乱', '薩長同盟', '大政奉還', '戊辰戦争'].includes(event.keyword)) {
+                                groups['政治-制度'].push(event);
+                            } else if (['明暦の大火', '寛文の大火', '元禄地震', '宝永大地震', '享保の大飢饉', '寛保の洪水', '明和の大火', '天明の大飢饉', '文化の大火', '天保の大飢饉', '安政の大地震'].includes(event.keyword)) {
+                                groups['災害-飢饉'].push(event);
+                            } else if (['元禄文化', '新井白石', '田沼意次'].includes(event.keyword)) {
+                                groups['文化-経済'].push(event);
+                            } else if (['出島', 'ラクスマン', 'フェートン号事件', '異国船打払令', 'ペリー来航', '日米和親条約', '日米修好通商条約', '桜田門外の変', '生麦事件', '天誅組の変', '禁門の変'].includes(event.keyword)) {
+                                groups['外交-倒幕'].push(event);
+                            }
+                        });
+                        return groups;
+                    }
+
+                    function renderTimeline(searchTerm = '') {
+                        const startTime = performance.now();
+                        eraContent.empty();
+                        noResults.hide();
+                        let hasResults = false;
+                        searchTerm = searchTerm.toLowerCase();
+
+                        eras.forEach(era => {
+                            let eraContentHTML = '';
+                            let eraMatches = false;
+
+                            if (era.id === 'edo') {
+                                const groupedEvents = groupEdoEvents(era.events);
+                                for (const [groupName, events] of Object.entries(groupedEvents)) {
+                                    if (events.length > 0) {
+                                        let subSectionHTML = '<ul class="list-unstyled">';
+                                        events.forEach(event => {
+                                            if (!searchTerm || `${event.year}|${event.keyword}|${event.description}`.toLowerCase().includes(searchTerm)) {
+                                                subSectionHTML += `
                                                     <li class="event-item" data-event-year="${event.year}">${event.year}: ${event.description}</li>
-                                                `).join('')}
-                                            </ul>
-                                        </div>
-                                    `;
+                                                `;
+                                                eraMatches = true;
+                                                hasResults = true;
+                                            }
+                                        });
+                                        subSectionHTML += '</ul>';
+                                        if (subSectionHTML !== '<ul class="list-unstyled"></ul>') {
+                                            eraContentHTML += `
+                                                <div class="sub-section sub-${era.id}-${groupName.replace(/[^a-zA-Z0-9]/g, '-')}" id="sub-${era.id}-${groupName.replace(/[^a-zA-Z0-9]/g, '-')}">
+                                                    <h4>${groupName}</h4>
+                                                    ${subSectionHTML}
+                                                </div>
+                                            `;
+                                        }
+                                    }
+                                }
+                            } else {
+                                let eventHTML = '<ul class="list-unstyled">';
+                                era.events.forEach(event => {
+                                    if (!searchTerm || `${event.year}|${event.keyword}|${event.description}`.toLowerCase().includes(searchTerm)) {
+                                        eventHTML += `
+                                            <li class="event-item" data-event-year="${event.year}">${event.year}: ${event.description}</li>
+                                        `;
+                                        eraMatches = true;
+                                        hasResults = true;
+                                    }
+                                });
+                                eventHTML += '</ul>';
+                                if (eventHTML !== '<ul class="list-unstyled"></ul>') {
+                                    eraContentHTML += eventHTML;
                                 }
                             }
-                        } else {
-                            eraContentHTML += `
-                                <ul class="list-unstyled">
-                                    ${era.events.map(event => `
-                                        <li class="event-item" data-event-year="${event.year}">${event.year}: ${event.description}</li>
-                                    `).join('')}
-                                </ul>
-                            `;
-                        }
-                        eraSection.innerHTML = eraContentHTML;
-                        eraContent.appendChild(eraSection);
 
-                        const eraMarker = document.createElement('div');
-                        eraMarker.className = 'era-marker';
-                        eraMarker.dataset.eraId = era.id;
-                        eraMarker.innerHTML = `${era.name}<br><small>${era.western}</small>`;
-                        minimap.appendChild(eraMarker);
+                            if (eraMatches) {
+                                const eraSection = `
+                                    <div class="era-section" id="era-${era.id}">
+                                        <h3>${era.name}</h3>
+                                        <p><strong>期間:</strong> ${era.western} (${era.japanese})</p>
+                                        ${eraContentHTML}
+                                    </div>
+                                `;
+                                eraContent.append(eraSection);
+                            }
 
-                        if (era.id === 'edo') {
-                            const groupedEvents = groupEdoEvents(era.events);
-                            for (const groupName of Object.keys(groupedEvents)) {
-                                if (groupedEvents[groupName].length > 0) {
-                                    const subMarker = document.createElement('div');
-                                    subMarker.className = 'sub-marker';
-                                    subMarker.dataset.subId = `${era.id}-${groupName}`;
-                                    subMarker.innerHTML = groupName;
-                                    minimap.appendChild(subMarker);
+                            const eraMarker = $(`
+                                <div class="era-marker" data-era-id="${era.id}">
+                                    ${era.name}<br><small>${era.western}</small>
+                                </div>
+                            `);
+                            minimap.append(eraMarker);
+
+                            if (era.id === 'edo') {
+                                const groupedEvents = groupEdoEvents(era.events);
+                                for (const groupName of Object.keys(groupedEvents)) {
+                                    if (groupedEvents[groupName].length > 0) {
+                                        const subMarker = $(`
+                                            <div class="sub-marker" data-sub-id="${era.id}-${groupName.replace(/[^a-zA-Z0-9]/g, '-')}">
+                                                ${groupName}
+                                            </div>
+                                        `);
+                                        eraMarker.append(subMarker);
+                                    }
                                 }
                             }
+                        });
+
+                        if (!hasResults && searchTerm) {
+                            noResults.show();
                         }
-                    });
 
-                    const observer = new IntersectionObserver(entries => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                                const targetId = entry.target.id;
-                                const eraId = targetId.startsWith('era-') ? targetId.replace('era-', '') : targetId.split('-')[1];
-                                document.querySelectorAll('.era-marker').forEach(marker => {
-                                    marker.classList.toggle('active', marker.dataset.eraId === eraId);
-                                });
-                                document.querySelectorAll('.sub-marker').forEach(subMarker => {
-                                    subMarker.classList.toggle('active', subMarker.dataset.subId === targetId.replace('sub-', ''));
-                                });
+                        minimap.on('click', '.era-marker, .sub-marker', function() {
+                            const targetId = $(this).data('era-id') ? `era-${$(this).data('era-id')}` : `sub-${$(this).data('sub-id')}`;
+                            const target = $(`#${targetId}`);
+                            if (target.length) {
+                                target[0].scrollIntoView({ behavior: 'smooth' });
+                                if ($(window).width() < 768) {
+                                    $('.minimap').removeClass('active');
+                                }
+                            } else {
+                                console.warn(`ターゲットID ${targetId} が見つかりません`);
                             }
                         });
-                    }, { threshold: 0.2 });
 
-                    document.querySelectorAll('.era-section, .sub-section').forEach(section => observer.observe(section));
+                        console.log(`年表レンダリング完了: ${(performance.now() - startTime).toFixed(2)}ms`);
+                    }
 
-                    minimap.querySelectorAll('.era-marker, .sub-marker').forEach(marker => {
-                        marker.addEventListener('click', () => {
-                            const targetId = marker.dataset.eraId ? `era-${marker.dataset.eraId}` : `sub-${marker.dataset.subId}`;
-                            const targetSection = document.getElementById(targetId);
-                            if (targetSection) {
-                                targetSection.scrollIntoView({ behavior: 'smooth' });
-                            }
-                        });
+                    $('.minimap-toggle').on('click', function() {
+                        $('.minimap').toggleClass('active');
                     });
-                }
 
-                renderTimeline();
-            });
+                    try {
+                        if ($(window).width() < 768 && $.fn.swipe) {
+                            $('.content-area').swipe({
+                                swipeLeft: function() {
+                                    $('.minimap').addClass('active');
+                                },
+                                swipeRight: function() {
+                                    $('.minimap').removeClass('active');
+                                }
+                            });
+                        }
+                    } catch (e) {
+                        console.warn('スワイプ機能の初期化に失敗しました:', e);
+                        Swal.fire({
+                            title: '警告',
+                            text: 'スワイプ機能が利用できませんが、年表は正常に表示されます。',
+                            icon: 'warning',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+
+                    searchInput.on('input', function() {
+                        const searchTerm = $(this).val().trim();
+                        renderTimeline(searchTerm);
+                    });
+
+                    buildSearchIndex();
+                    renderTimeline();
+                })
+                .catch(error => {
+                    console.error('データ読み込みエラー:', error);
+                    Swal.fire({
+                        title: 'エラー',
+                        text: 'data.jsonの読み込みに失敗しました。ファイルを確認してください。',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        });
     </script>
 </body>
 </html>
