@@ -14,6 +14,33 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .vocab-card {
+            min-height: 120px;
+            max-height: 150px;
+            overflow: hidden;
+        }
+        .vocab-icon {
+            transition: transform 0.3s ease;
+        }
+        .vocab-icon-spin {
+            animation: spin 0.5s ease-in-out;
+        }
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .card-title {
+            font-size: 1rem;
+        }
+        .card-text {
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
@@ -25,7 +52,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active rounded px-3" href="index.html">Home</a>
+                        <a class="nav-link active rounded px-3" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link rounded px-3" href="quiz.html">Quiz</a>
@@ -35,14 +62,14 @@
         </div>
     </nav>
 
-    <div class="container-md my-5">
+    <div class="container-md my-4">
         <h1 class="text-center mb-4 fw-bold">Vocabulary Cards</h1>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="cardContainer"></div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-2" id="cardContainer"></div>
     </div>
 
     <script>
         $(document).ready(function() {
-            // Fallback data (10 words)
+            // Fallback words
             const fallbackWords = [
                 {word: "red", meaning: "赤", category: "color", icon: "fas fa-circle", color: "red", background: "bg-color"},
                 {word: "blue", meaning: "青", category: "color", icon: "fas fa-circle", color: "blue", background: "bg-color"},
@@ -56,76 +83,72 @@
                 {word: "home", meaning: "家", category: "place", icon: "fas fa-home", background: "bg-place"}
             ];
 
-            // Debounce function
-            function debounce(func, wait) {
-                let timeout;
-                return function(...args) {
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(this, args), wait);
-                };
-            }
+            // Default category icons
+            const defaultIcons = {
+                'color': 'fas fa-palette',
+                'vegetable': 'fas fa-carrot',
+                'fruit': 'fas fa-apple-alt',
+                'shape': 'fas fa-shapes',
+                'body': 'fas fa-user',
+                'object': 'fas fa-pencil-alt',
+                'animal': 'fas fa-paw',
+                'weather': 'fas fa-cloud',
+                'number': 'fas fa-sort-numeric-up',
+                'place': 'fas fa-map-marker-alt',
+                'action': 'fas fa-running',
+                'time': 'fas fa-clock',
+                'school': 'fas fa-school',
+                'emotion': 'fas fa-smile',
+                'fish': 'fas fa-fish',
+                'meat': 'fas fa-drumstick-bite',
+                'soy': 'fas fa-seedling'
+            };
 
-            // Filter voices
-            function filterVoices(voices) {
-                const allowedLangs = ['en-US', 'en-GB', 'ja-JP'];
-                return voices.filter(voice => allowedLangs.includes(voice.lang));
-            }
-
-            // Speak word function
-            function speakWord(word, retryCount = 0, maxRetries = 3) {
-                console.log(`Attempting to speak: ${word}, Retry: ${retryCount}`);
-                console.log(`Speech state - Pending: ${speechSynthesis.pending}, Speaking: ${speechSynthesis.speaking}, Paused: ${speechSynthesis.paused}`);
-                
+            // Speak word function (unchanged)
+            function speakWord(word) {
+                console.log(`Attempting to speak: ${word}`);
                 const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-US'; // Chrome/iOSで安定
-                const voices = filterVoices(speechSynthesis.getVoices());
-                console.log(`Filtered voices (${voices.length}):`, voices.map(v => `${v.name} (${v.lang})`));
-                const selectedVoice = voices.find(voice => voice.lang === 'en-US') ||
-                                     voices.find(voice => voice.lang === 'en-GB') ||
+                utterance.lang = 'en-GB';
+                const voices = speechSynthesis.getVoices();
+                const selectedVoice = voices.find(voice => voice.lang === 'en-GB') ||
+                                     voices.find(voice => voice.lang === 'en-US') ||
                                      voices[0];
-                if (!selectedVoice) {
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                    console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+                } else {
                     console.warn('No voices available');
-                    alert('No speech synthesis voices available. Check browser sound settings (e.g., iOS: Settings > Sounds, Windows: Sound Settings, macOS: System Settings > Sound).');
+                    alert('No speech synthesis voices available. Please check your browser settings.');
                     return;
                 }
-                utterance.voice = selectedVoice;
-                console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
-
                 utterance.onstart = () => console.log(`Started speaking: ${word}`);
                 utterance.onend = () => console.log(`Finished speaking: ${word}`);
                 utterance.onerror = (e) => {
-                    console.error(`Speech error: ${e.error}, Message: ${e.error?.message || 'none'}, Word: ${word}`);
-                    if ((e.error === 'interrupted' || e.error === 'canceled') && retryCount < maxRetries) {
-                        console.log(`Retrying (${retryCount + 1}/${maxRetries}) after 300ms`);
-                        setTimeout(() => speakWord(word, retryCount + 1, maxRetries), 300);
-                    } else if (retryCount === maxRetries) {
-                        console.warn(`Max retries reached for: ${word}`);
-                        alert(`Failed to speak "${word}" after ${maxRetries} attempts. Check sound settings (iOS: Settings > Sounds, Windows: chrome://settings/content/sound, macOS: System Settings > Sound) or try another browser.`);
+                    console.error(`Speech error: ${e.error}`);
+                    if (e.error === 'interrupted') {
+                        setTimeout(() => speechSynthesis.speak(utterance), 100);
                     }
                 };
-
-                // Clear queue and resume
                 speechSynthesis.cancel();
-                speechSynthesis.resume();
                 speechSynthesis.speak(utterance);
             }
 
-            // Bind card events with debounce
-            const debouncedSpeak = debounce((word) => {
-                speakWord(word);
-            }, 300);
-
+            // Bind card events
             function bindCardEvents() {
                 $('.vocab-card').off('click touchstart').on('click', function(e) {
                     e.preventDefault();
                     const word = $(this).data('word');
                     console.log(`Click event on card: ${word}`);
-                    debouncedSpeak(word);
+                    $(this).find('.vocab-icon').addClass('vocab-icon-spin');
+                    setTimeout(() => $(this).find('.vocab-icon').removeClass('vocab-icon-spin'), 500);
+                    speakWord(word);
                 }).on('touchstart', function(e) {
                     e.preventDefault();
                     const word = $(this).data('word');
                     console.log(`Touchstart event on card: ${word}`);
-                    debouncedSpeak(word);
+                    $(this).find('.vocab-icon').addClass('vocab-icon-spin');
+                    setTimeout(() => $(this).find('.vocab-icon').removeClass('vocab-icon-spin'), 500);
+                    speakWord(word);
                 });
             }
 
@@ -134,13 +157,14 @@
                 const cardContainer = $('#cardContainer');
                 cardContainer.empty();
                 words.forEach(word => {
+                    const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
                     const iconStyle = word.color ? `style="color: ${word.color}"` : '';
                     const card = `
-                        <div class="col mb-4">
-                            <div class="card vocab-card shadow-sm ${word.background}" data-word="${word.word}">
-                                <div class="card-body text-center">
-                                    <i class="${word.icon} mb-2 fa-2x" ${iconStyle}></i>
-                                    <h5 class="card-title fw-bold">${word.word}</h5>
+                        <div class="col">
+                            <div class="card vocab-card shadow-sm ${word.background || 'bg-light'}" data-word="${word.word}">
+                                <div class="card-body text-center p-2">
+                                    <i class="vocab-icon ${icon} mb-1 fa-lg" ${iconStyle}></i>
+                                    <h6 class="card-title fw-bold mb-1">${word.word}</h6>
                                     <p class="card-text">${word.meaning}</p>
                                 </div>
                             </div>
@@ -158,31 +182,26 @@
                 })
                 .then(data => {
                     renderCards(data);
-                    // Initialize speech synthesis
                     function initializeSpeech() {
-                        const voices = filterVoices(speechSynthesis.getVoices());
-                        console.log(`Filtered voices loaded (${voices.length}):`, voices.map(v => `${v.name} (${v.lang})`));
+                        const voices = speechSynthesis.getVoices();
+                        console.log('Voices loaded:', voices.map(v => `${v.name} (${v.lang})`));
                         if (voices.length) {
                             bindCardEvents();
                         } else {
-                            console.warn('No filtered voices loaded');
-                            alert('Speech synthesis voices not loaded. Try refreshing or check browser settings.');
+                            console.warn('No voices loaded yet');
+                            alert('Speech synthesis voices not available. Please try refreshing the page or check your browser settings.');
                         }
                     }
 
                     if (speechSynthesis.getVoices().length) {
                         initializeSpeech();
                     } else {
-                        speechSynthesis.onvoiceschanged = () => {
-                            console.log('Voices changed event fired');
-                            initializeSpeech();
-                        };
+                        speechSynthesis.onvoiceschanged = initializeSpeech;
                         setTimeout(() => {
-                            console.log('Fallback voice check after 3s');
                             if (speechSynthesis.getVoices().length) {
                                 initializeSpeech();
                             }
-                        }, 3000);
+                        }, 2000);
                     }
                 })
                 .catch(error => {
@@ -190,13 +209,6 @@
                     alert('Failed to load vocabulary data. Using fallback data.');
                     renderCards(fallbackWords);
                 });
-
-            // Ensure speech synthesis is initialized on user interaction
-            document.addEventListener('click', () => {
-                console.log('User interaction detected, resuming speech synthesis');
-                speechSynthesis.cancel();
-                speechSynthesis.resume();
-            }, { once: true });
         });
     </script>
 </body>

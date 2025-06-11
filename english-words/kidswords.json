@@ -31,7 +31,7 @@
     {"word": "pumpkin", "meaning": "かぼちゃ", "category": "vegetable", "icon": "fas fa-seedling", "background": "bg-vegetable"},
     {"word": "apple", "meaning": "りんご", "category": "fruit", "icon": "fas fa-apple-alt", "background": "bg-fruit"},
     {"word": "banana", "meaning": "バナナ", "category": "fruit", "icon": "fas fa-banana", "background": "bg-fruit"},
-    {"word": "grape", "meaning": "ぶどう", "category": "fruit", "icon": "fas fa-wine-bottle", "background": "bg-fruit"},
+    {"word": "grape", "meaning": "ぶどう", "category": "fruit", "icon": "fas fa-seedling", "background": "bg-fruit"},
     {"word": "strawberry", "meaning": "いちご", "category": "fruit", "icon": "fas fa-seedling", "background": "bg-fruit"},
     {"word": "lemon", "meaning": "レモン", "category": "fruit", "icon": "fas fa-lemon", "background": "bg-fruit"},
     {"word": "peach", "meaning": "もも", "category": "fruit", "icon": "fas fa-seedling", "background": "bg-fruit"},
