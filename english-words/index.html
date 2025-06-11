@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Learning Site</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.6.0 -->
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+        <div class="container-md">
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Vocab Fun</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active rounded px-3" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded px-3" href="quiz.html">Quiz</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-md my-5">
+        <h1 class="text-center mb-4 fw-bold">Vocabulary Cards</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="cardContainer"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Category ranges
+            const categories = [
+                { name: 'color', start: 0, end: 11, icon: 'fas fa-palette', bg: 'bg-color' },
+                { name: 'vegetable', start: 12, end: 29, icon: 'fas fa-carrot', bg: 'bg-vegetable' },
+                { name: 'fruit', start: 30, end: 47, icon: 'fas fa-apple-alt', bg: 'bg-fruit' },
+                { name: 'shape', start: 48, end: 57, icon: 'fas fa-shapes', bg: 'bg-shape' },
+                { name: 'body', start: 58, end: 69, icon: 'fas fa-user', bg: 'bg-body' },
+                { name: 'object', start: 70, end: 81, icon: 'fas fa-pencil-alt', bg: 'bg-object' },
+                { name: 'animal', start: 82, end: 93, icon: 'fas fa-paw', bg: 'bg-animal' },
+                { name: 'weather', start: 94, end: 103, icon: 'fas fa-cloud', bg: 'bg-weather' },
+                { name: 'number', start: 104, end: 115, icon: 'fas fa-sort-numeric-up', bg: 'bg-number' },
+                { name: 'place', start: 116, end: 127, icon: 'fas fa-map-marker-alt', bg: 'bg-place' },
+                { name: 'action', start: 128, end: 139, icon: 'fas fa-running', bg: 'bg-action' },
+                { name: 'time', start: 140, end: 151, icon: 'fas fa-clock', bg: 'bg-time' },
+                { name: 'school', start: 152, end: 163, icon: 'fas fa-school', bg: 'bg-school' },
+                { name: 'emotion', start: 164, end: 174, icon: 'fas fa-smile', bg: 'bg-emotion' },
+                { name: 'fish', start: 175, end: 186, icon: 'fas fa-fish', bg: 'bg-fish' },
+                { name: 'meat', start: 187, end: 194, icon: 'fas fa-drumstick-bite', bg: 'bg-meat' },
+                { name: 'soy', start: 195, end: 206, icon: 'fas fa-seedling', bg: 'bg-soy' }
+            ];
+
+            // Word-specific icon mapping
+            const wordIcons = {
+                'red': { icon: 'fas fa-circle', color: 'red' },
+                'blue': { icon: 'fas fa-circle', color: 'blue' },
+                'yellow': { icon: 'fas fa-circle', color: 'yellow' },
+                'green': { icon: 'fas fa-circle', color: 'green' },
+                'black': { icon: 'fas fa-circle', color: 'black' },
+                'white': { icon: 'fas fa-circle', color: 'white' },
+                'purple': { icon: 'fas fa-circle', color: 'purple' },
+                'orange': { icon: 'fas fa-circle', color: 'orange' },
+                'pink': { icon: 'fas fa-circle', color: 'pink' },
+                'brown': { icon: 'fas fa-circle', color: 'brown' },
+                'grey': { icon: 'fas fa-circle', color: 'grey' },
+                'gold': { icon: 'fas fa-circle', color: 'gold' },
+                'carrot': { icon: 'fas fa-carrot' },
+                'potato': { icon: 'fas fa-seedling' },
+                'tomato': { icon: 'fas fa-apple-alt' },
+                'cucumber': { icon: 'fas fa-seedling' },
+                'onion': { icon: 'fas fa-seedling' },
+                'broccoli': { icon: 'fas fa-seedling' },
+                'pea': { icon: 'fas fa-seedling' },
+                'lettuce': { icon: 'fas fa-leaf' },
+                'aubergine': { icon: 'fas fa-seedling' },
+                'courgette': { icon: 'fas fa-seedling' },
+                'cabbage': { icon: 'fas fa-leaf' },
+                'sweetcorn': { icon: 'fas fa-seedling' },
+                'daikon': { icon: 'fas fa-carrot' },
+                'spinach': { icon: 'fas fa-leaf' },
+                'lotus root': { icon: 'fas fa-seedling' },
+                'sweet potato': { icon: 'fas fa-seedling' },
+                'green pepper': { icon: 'fas fa-seedling' },
+                'pumpkin': { icon: 'fas fa-seedling' },
+                'apple': { icon: 'fas fa-apple-alt' },
+                'banana': { icon: 'fas fa-banana' },
+                'grape': { icon: 'fas fa-wine-bottle' },
+                'strawberry': { icon: 'fas fa-seedling' },
+                'lemon': { icon: 'fas fa-lemon' },
+                'peach': { icon: 'fas fa-seedling' },
+                'pear': { icon: 'fas fa-seedling' },
+                'mango': { icon: 'fas fa-seedling' },
+                'raspberry': { icon: 'fas fa-seedling' },
+                'plum': { icon: 'fas fa-seedling' },
+                'kiwi': { icon: 'fas fa-seedling' },
+                'blackberry': { icon: 'fas fa-seedling' },
+                'mikan': { icon: 'fas fa-seedling' },
+                'persimmon': { icon: 'fas fa-seedling' },
+                'melon': { icon: 'fas fa-seedling' },
+                'watermelon': { icon: 'fas fa-seedling' },
+                'cherry': { icon: 'fas fa-seedling' },
+                'pineapple': { icon: 'fas fa-seedling' },
+                'circle': { icon: 'fas fa-circle' },
+                'square': { icon: 'fas fa-square' },
+                'triangle': { icon: 'fas fa-play' },
+                'star': { icon: 'fas fa-star' },
+                'heart': { icon: 'fas fa-heart' },
+                'rectangle': { icon: 'fas fa-square' },
+                'oval': { icon: 'fas fa-circle' },
+                'pentagon': { icon: 'fas fa-star' },
+                'hexagon': { icon: 'fas fa-star' },
+                'diamond': { icon: 'fas fa-gem' },
+                'head': { icon: 'fas fa-head-side' },
+                'hand': { icon: 'fas fa-hand' },
+                'eye': { icon: 'fas fa-eye' },
+                'nose': { icon: 'fas fa-face-smile' },
+                'mouth': { icon: 'fas fa-face-smile' },
+                'ear': { icon: 'fas fa-ear' },
+                'arm': { icon: 'fas fa-user' },
+                'leg': { icon: 'fas fa-user' },
+                'foot': { icon: 'fas fa-shoe-prints' },
+                'finger': { icon: 'fas fa-hand-point-up' },
+                'shoulder': { icon: 'fas fa-user' },
+                'knee': { icon: 'fas fa-user' },
+                'pencil': { icon: 'fas fa-pencil' },
+                'book': { icon: 'fas fa-book' },
+                'chair': { icon: 'fas fa-chair' },
+                'bag': { icon: 'fas fa-shopping-bag' },
+                'ruler': { icon: 'fas fa-ruler' },
+                'paper': { icon: 'fas fa-file' },
+                'clock': { icon: 'fas fa-clock' },
+                'rubbish bin': { icon: 'fas fa-trash' },
+                'glue': { icon: 'fas fa-paste' },
+                'scissors': { icon: 'fas fa-scissors' },
+                'board': { icon: 'fas fa-chalkboard' },
+                'dog': { icon: 'fas fa-dog' },
+                'cat': { icon: 'fas fa-cat' },
+                'bird': { icon: 'fas fa-dove' },
+                'fish': { icon: 'fas fa-fish' },
+                'rabbit': { icon: 'fas fa-paw' },
+                'horse': { icon: 'fas fa-horse' },
+                'sheep': { icon: 'fas fa-sheep' },
+                'cow': { icon: 'fas fa-cow' },
+                'pig': { icon: 'fas fa-pig' },
+                'fox': { icon: 'fas fa-paw' },
+                'deer': { icon: 'fas fa-paw' },
+                'squirrel': { icon: 'fas fa-paw' },
+                'sun': { icon: 'fas fa-sun' },
+                'cloud': { icon: 'fas fa-cloud' },
+                'rain': { icon: 'fas fa-cloud-rain' },
+                'wind': { icon: 'fas fa-wind' },
+                'snow': { icon: 'fas fa-snowflake' },
+                'fog': { icon: 'fas fa-smog' },
+                'storm': { icon: 'fas fa-bolt' },
+                'rainbow': { icon: 'fas fa-rainbow' },
+                'sunshine': { icon: 'fas fa-sun' },
+                'mist': { icon: 'fas fa-smog' },
+                'one': { icon: 'fas fa-1' },
+                'two': { icon: 'fas fa-2' },
+                'three': { icon: 'fas fa-3' },
+                'four': { icon: 'fas fa-4' },
+                'five': { icon: 'fas fa-5' },
+                'six': { icon: 'fas fa-6' },
+                'seven': { icon: 'fas fa-7' },
+                'eight': { icon: 'fas fa-8' },
+                'nine': { icon: 'fas fa-9' },
+                'ten': { icon: 'fas fa-0' },
+                'eleven': { icon: 'fas fa-sort-numeric-up' },
+                'twelve': { icon: 'fas fa-sort-numeric-up' },
+                'home': { icon: 'fas fa-home' },
+                'school': { icon: 'fas fa-school' },
+                'park': { icon: 'fas fa-tree' },
+                'shop': { icon: 'fas fa-store' },
+                'zoo': { icon: 'fas fa-paw' },
+                'beach': { icon: 'fas fa-umbrella-beach' },
+                'library': { icon: 'fas fa-book' },
+                'hospital': { icon: 'fas fa-hospital' },
+                'station': { icon: 'fas fa-train' },
+                'museum': { icon: 'fas fa-landmark' },
+                'garden': { icon: 'fas fa-leaf' },
+                'playground': { icon: 'fas fa-child' },
+                'run': { icon: 'fas fa-running' },
+                'jump': { icon: 'fas fa-person-jumping' },
+                'sing': { icon: 'fas fa-microphone' },
+                'dance': { icon: 'fas fa-person-dancing' },
+                'swim': { icon: 'fas fa-swimming-pool' },
+                'read': { icon: 'fas fa-book-open' },
+                'write': { icon: 'fas fa-pen' },
+                'draw': { icon: 'fas fa-paint-brush' },
+                'eat': { icon: 'fas fa-utensils' },
+                'drink': { icon: 'fas fa-mug-hot' },
+                'sleep': { icon: 'fas fa-bed' },
+                'play': { icon: 'fas fa-gamepad' },
+                'morning': { icon: 'fas fa-sun' },
+                'afternoon': { icon: 'fas fa-sun' },
+                'evening': { icon: 'fas fa-moon' },
+                'night': { icon: 'fas fa-moon' },
+                'today': { icon: 'fas fa-calendar-day' },
+                'tomorrow': { icon: 'fas fa-calendar-plus' },
+                'yesterday': { icon: 'fas fa-calendar-minus' },
+                'week': { icon: 'fas fa-calendar-week' },
+                'month': { icon: 'fas fa-calendar' },
+                'year': { icon: 'fas fa-calendar' },
+                'day': { icon: 'fas fa-calendar-day' },
+                'time': { icon: 'fas fa-clock' },
+                'teacher': { icon: 'fas fa-chalkboard-teacher' },
+                'student': { icon: 'fas fa-user-graduate' },
+                'classroom': { icon: 'fas fa-school' },
+                'lesson': { icon: 'fas fa-book' },
+                'homework': { icon: 'fas fa-file-alt' },
+                'exam': { icon: 'fas fa-file-alt' },
+                'study': { icon: 'fas fa-book-open' },
+                'friend': { icon: 'fas fa-user-friends' },
+                'game': { icon: 'fas fa-gamepad' },
+                'music': { icon: 'fas fa-music' },
+                'art': { icon: 'fas fa-paint-brush' },
+                'sport': { icon: 'fas fa-futbol' },
+                'happy': { icon: 'fas fa-smile' },
+                'sad': { icon: 'fas fa-frown' },
+                'angry': { icon: 'fas fa-angry' },
+                'scared': { icon: 'fas fa-ghost' },
+                'excited': { icon: 'fas fa-star' },
+                'tired': { icon: 'fas fa-bed' },
+                'bored': { icon: 'fas fa-meh' },
+                'surprised': { icon: 'fas fa-surprise' },
+                'shy': { icon: 'fas fa-user' },
+                'proud': { icon: 'fas fa-trophy' },
+                'tuna': { icon: 'fas fa-fish' },
+                'salmon': { icon: 'fas fa-fish' },
+                'mackerel': { icon: 'fas fa-fish' },
+                'sardine': { icon: 'fas fa-fish' },
+                'cod': { icon: 'fas fa-fish' },
+                'trout': { icon: 'fas fa-fish' },
+                'snapper': { icon: 'fas fa-fish' },
+                'herring': { icon: 'fas fa-fish' },
+                'anchovy': { icon: 'fas fa-fish' },
+                'flounder': { icon: 'fas fa-fish' },
+                'eel': { icon: 'fas fa-fish' },
+                'shrimp': { icon: 'fas fa-shrimp' },
+                'chicken': { icon: 'fas fa-drumstick-bite' },
+                'beef': { icon: 'fas fa-drumstick-bite' },
+                'pork': { icon: 'fas fa-drumstick-bite' },
+                'lamb': { icon: 'fas fa-drumstick-bite' },
+                'turkey': { icon: 'fas fa-drumstick-bite' },
+                'duck': { icon: 'fas fa-drumstick-bite' },
+                'goat': { icon: 'fas fa-drumstick-bite' },
+                'venison': { icon: 'fas fa-drumstick-bite' },
+                'soybean': { icon: 'fas fa-seedling' },
+                'tofu': { icon: 'fas fa-seedling' },
+                'miso': { icon: 'fas fa-seedling' },
+                'natto': { icon: 'fas fa-seedling' },
+                'soy sauce': { icon: 'fas fa-seedling' },
+                'edamame': { icon: 'fas fa-seedling' },
+                'tempeh': { icon: 'fas fa-seedling' },
+                'soy milk': { icon: 'fas fa-seedling' },
+                'soy oil': { icon: 'fas fa-seedling' },
+                'soy flour': { icon: 'fas fa-seedling' },
+                'soy paste': { icon: 'fas fa-seedling' },
+                'soy cheese': { icon: 'fas fa-seedling' }
+            };
+
+            // Speak word function
+            function speakWord(word) {
+                console.log(`Attempting to speak: ${word}`);
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-GB';
+                const voices = speechSynthesis.getVoices();
+                // Prioritize en-GB, fallback to en-US or any available voice
+                const selectedVoice = voices.find(voice => voice.lang === 'en-GB') ||
+                                     voices.find(voice => voice.lang === 'en-US') ||
+                                     voices[0];
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                    console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+                } else {
+                    console.warn('No voices available');
+                    alert('No speech synthesis voices available. Please check your browser settings.');
+                    return;
+                }
+                utterance.onstart = () => console.log(`Started speaking: ${word}`);
+                utterance.onend = () => console.log(`Finished speaking: ${word}`);
+                utterance.onerror = (e) => {
+                    console.error(`Speech error: ${e.error}`);
+                    // Retry once if interrupted
+                    if (e.error === 'interrupted') {
+                        setTimeout(() => speechSynthesis.speak(utterance), 100);
+                    }
+                };
+                // Cancel any pending utterances
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+
+            // Bind card events
+            function bindCardEvents() {
+                $('.vocab-card').off('click touchstart').on('click', function(e) {
+                    e.preventDefault();
+                    const word = $(this).data('word');
+                    console.log(`Click event on card: ${word}`);
+                    speakWord(word);
+                }).on('touchstart', function(e) {
+                    e.preventDefault(); // Prevent click event overlap
+                    const word = $(this).data('word');
+                    console.log(`Touchstart event on card: ${word}`);
+                    speakWord(word);
+                });
+            }
+
+            // Load JSON
+            fetch('./kidswords.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`Failed to load kidswords.json: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    const cardContainer = $('#cardContainer');
+                    data.forEach((word, index) => {
+                        const category = categories.find(cat => index >= cat.start && index <= cat.end);
+                        const wordIcon = wordIcons[word.word] || { icon: category.icon };
+                        const iconStyle = wordIcon.color ? `style="color: ${wordIcon.color}"` : '';
+                        const card = `
+                            <div class="col mb-4">
+                                <div class="card vocab-card shadow-sm ${category.bg}" data-word="${word.word}">
+                                    <div class="card-body text-center">
+                                        <i class="${wordIcon.icon} mb-2 fa-2x" ${iconStyle}></i>
+                                        <h5 class="card-title fw-bold">${word.word}</h5>
+                                        <p class="card-text">${word.meaning}</p>
+                                    </div>
+                                </div>
+                            </div>`;
+                        cardContainer.append(card);
+                    });
+
+                    // Initialize speech synthesis
+                    function initializeSpeech() {
+                        const voices = speechSynthesis.getVoices();
+                        console.log('Voices loaded:', voices.map(v => `${v.name} (${v.lang})`));
+                        if (voices.length) {
+                            bindCardEvents();
+                        } else {
+                            console.warn('No voices loaded yet');
+                            alert('Speech synthesis voices are not available. Please try refreshing the page or check your browser settings.');
+                        }
+                    }
+
+                    // Handle voice loading
+                    if (speechSynthesis.getVoices().length) {
+                        initializeSpeech();
+                    } else {
+                        speechSynthesis.onvoiceschanged = initializeSpeech;
+                        // Fallback: retry after 2 seconds
+                        setTimeout(() => {
+                            if (speechSynthesis.getVoices().length) {
+                                initializeSpeech();
+                            }
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading JSON:', error);
+                    alert('Failed to load vocabulary data. Please check if kidswords.json is in the correct directory.');
+                });
+        });
+    </script>
+</body>
+</html>

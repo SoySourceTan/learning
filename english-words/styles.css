@@ -1,0 +1,78 @@
+body {
+    background-color: #f8f9fa;
+    font-size: 1rem;
+}
+.navbar-brand {
+    transition: transform 0.1s;
+}
+.navbar-brand:active {
+    transform: scale(0.95);
+}
+.nav-link.active {
+    background-color: #007bff;
+    color: white !important;
+}
+.vocab-card {
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.1s ease;
+}
+.vocab-card:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+.option-btn {
+    min-height: 48px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    transition: none !important;
+}
+.selected-option {
+    border: 3px solid #007bff !important;
+    background-color: rgba(0, 123, 255, 0.15) !important;
+}
+.stats-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+#progressChart {
+    max-height: 120px;
+}
+/* Category backgrounds */
+.bg-color { background-color: rgba(255, 99, 71, 0.1); }
+.bg-vegetable { background-color: rgba(50, 205, 50, 0.1); }
+.bg-fruit { background-color: rgba(255, 165, 0, 0.1); }
+.bg-shape { background-color: rgba(135, 206, 250, 0.1); }
+.bg-body { background-color: rgba(238, 130, 238, 0.1); }
+.bg-object { background-color: rgba(169, 169, 169, 0.1); }
+.bg-animal { background-color: rgba(139, 69, 19, 0.1); }
+.bg-weather { background-color: rgba(176, 196, 222, 0.1); }
+.bg-number { background-color: rgba(255, 215, 0, 0.1); }
+.bg-place { background-color: rgba(173, 216, 230, 0.1); }
+.bg-action { background-color: rgba(255, 69, 0, 0.1); }
+.bg-time { background-color: rgba(147, 112, 219, 0.1); }
+.bg-school { background-color: rgba(100, 149, 237, 0.1); }
+.bg-emotion { background-color: rgba(255, 105, 180, 0.1); }
+.bg-fish { background-color: rgba(70, 130, 180, 0.1); }
+.bg-meat { background-color: rgba(178, 34, 34, 0.1); }
+.bg-soy { background-color: rgba(107, 142, 35, 0.1); }
+/* SweetAlert2 animation */
+.swal-animate {
+    animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+@media (max-width: 576px) {
+    body {
+        font-size: 0.875rem;
+    }
+    .option-btn {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    .container-md {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
