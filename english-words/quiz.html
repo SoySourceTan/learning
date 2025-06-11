@@ -1,30 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Quiz</title>
+    <title>ボキャブラリークイズ</title>
     <!-- Bootstrap 5.3.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome 6.6.0 -->
     <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/all.min.css" rel="stylesheet">
-    <!-- SweetAlert2 -->
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="styles.css" rel="stylesheet">
-    <!-- Chart.js UMD -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <!-- jQuery -->
+    <!-- jQuery 3.7.1 -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <!-- Bootstrap 5.3.3 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Tone.js -->
-    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.77/build/Tone.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navbar-brand {
+            color: #007bff !important;
+        }
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .quiz-header {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .question-card {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: transform 0.2s ease;
+        }
+        .question-card:hover {
+            transform: scale(1.02);
+        }
+        .vocab-icon {
+            font-size: 3rem; /* アイコンを大きく */
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            padding: 0.5rem; /* タップ領域を広げる */
+        }
+        .vocab-icon:hover {
+            color: #007bff;
+            transform: scale(1.2);
+        }
+        .vocab-icon::after {
+            content: 'タップで発音！';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #007bff;
+            color: #fff;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            opacity: 1; /* 常に表示 */
+        }
+        .vocab-icon-spin {
+            animation: spin 0.5s ease-in-out;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+        .answer-card {
+            background: #ffffff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #333;
+        }
+        .answer-card:hover {
+            background: #f0f0f0;
+            border-color: #007bff;
+            transform: translateY(-2px);
+        }
+        .correct {
+            background: #d4edda !important;
+            border-color: #28a745 !important;
+            animation: sparkle 0.5s ease-in-out;
+        }
+        .incorrect {
+            background: #f8d7da !important;
+            border-color: #dc3545 !important;
+            animation: shake 0.3s ease-in-out;
+        }
+        @keyframes sparkle {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        .next-button {
+            display: block;
+            margin: 1.5rem auto;
+            padding: 0.75rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .next-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .next-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        .progress-section {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .toast {
+            border-radius: 10px;
+            border: 2px solid #007bff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .toast-body {
+            font-weight: bold;
+            color: #333;
+        }
+        @media (max-width: 576px) {
+            .quiz-container {
+                padding: 0.5rem;
+            }
+            .question-card {
+                padding: 0.75rem;
+            }
+            .vocab-icon {
+                font-size: 2.5rem;
+                padding: 0.3rem;
+            }
+            .vocab-icon::after {
+                font-size: 0.6rem;
+                top: -25px;
+            }
+            .answer-card {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            .next-button {
+                padding: 0.5rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-lg">
         <div class="container-md">
             <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Vocab Fun</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -43,267 +208,52 @@
         </div>
     </nav>
 
-    <div class="container-md my-5">
-        <h1 class="text-center mb-4 fw-bold">Vocabulary Quiz</h1>
-        <div id="quizContainer" class="card p-4 mb-4 shadow-sm">
-            <h5 id="question" class="text-center mb-3"></h5>
-            <div id="options" class="row g-2"></div>
-            <div class="text-center mt-4">
-                <button id="nextBtn" class="btn btn-primary btn-lg" disabled>Next</button>
+    <div class="quiz-container">
+        <h1 class="quiz-header">ボキャブラリークイズ</h1>
+        <div id="quizContainer">
+            <div class="text-center">
+                <p>クイズを読み込み中...</p>
             </div>
         </div>
-        <div class="text-center mb-4">
-            <button id="resetProgress" class="btn btn-danger">Reset Progress</button>
-        </div>
-        <div class="stats-container">
-            <h3 class="text-center">Quiz Progress</h3>
-            <canvas id="progressChart"></canvas>
+        <button class="next-button" id="nextButton" disabled>次へ</button>
+    </div>
+
+    <div class="container-md progress-section">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h3>進捗のリセット</h3>
+                <button class="btn btn-outline-secondary" id="resetButton">リセット</button>
+            </div>
+            <div class="col-md-6 mb-3">
+                <h3>音声設定</h3>
+                <button class="btn btn-outline-secondary" id="toggleSpeechButton">音声オフ</button>
+            </div>
+            <div class="col-12">
+                <h3>クイズの進捗</h3>
+                <div class="progress mb-2">
+                    <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p id="scoreText">正解: 0 / 0</p>
+            </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            // Tone.js setup
-            const synth = new Tone.Synth({
-                oscillator: { type: 'sine' },
-                envelope: { attack: 0.01, decay: 0.2, sustain: 0, release: 0.1 }
-            }).toDestination();
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="feedbackModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="feedbackModalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            function playCorrectMelody() {
-                Tone.start().then(() => {
-                    synth.triggerAttackRelease('C4', '8n', Tone.now());
-                    synth.triggerAttackRelease('E4', '8n', Tone.now() + 0.2);
-                    synth.triggerAttackRelease('G4', '8n', Tone.now() + 0.4);
-                });
-            }
-
-            function playIncorrectMelody() {
-                Tone.start().then(() => {
-                    synth.triggerAttackRelease('C4', '8n', Tone.now());
-                    synth.triggerAttackRelease('Db4', '8n', Tone.now() + 0.1);
-                });
-            }
-
-            let words = [];
-            let currentQuestion = 0;
-            let score = 0;
-            let quizQuestions = [];
-            let stats = JSON.parse(localStorage.getItem('vocabStats')) || {
-                totalAttempts: 0,
-                correctAnswers: 0,
-                incorrectWords: {}
-            };
-            let chartInstance = null;
-
-            // Category ranges
-            const categories = [
-                { name: 'color', start: 0, end: 11 },
-                { name: 'vegetable', start: 12, end: 29 },
-                { name: 'fruit', start: 30, end: 47 },
-                { name: 'shape', start: 48, end: 57 },
-                { name: 'body', start: 58, end: 69 },
-                { name: 'object', start: 70, end: 81 },
-                { name: 'animal', start: 82, end: 93 },
-                { name: 'weather', start: 94, end: 103 },
-                { name: 'number', start: 104, end: 115 },
-                { name: 'place', start: 116, end: 127 },
-                { name: 'action', start: 128, end: 139 },
-                { name: 'time', start: 140, end: 151 },
-                { name: 'school', start: 152, end: 163 },
-                { name: 'emotion', start: 164, end: 174 },
-                { name: 'fish', start: 175, end: 186 },
-                { name: 'meat', start: 187, end: 194 },
-                { name: 'soy', start: 195, end: 206 }
-            ];
-
-            // Load JSON
-            fetch('./kidswords.json')
-                .then(response => {
-                    if (!response.ok) throw new Error(`Failed to load kidswords.json: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    words = data;
-                    startQuiz();
-                })
-                .catch(error => {
-                    console.error('Error loading JSON:', error);
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'Failed to load vocabulary data. Please check if kidswords.json is in the correct directory.',
-                        icon: 'error',
-                        customClass: { popup: 'swal-animate' }
-                    });
-                });
-
-            function startQuiz() {
-                currentQuestion = 0;
-                score = 0;
-                quizQuestions = generateQuestions();
-                displayQuestion();
-                updateStatsChart();
-            }
-
-            function generateQuestions() {
-                const questions = [];
-                const wordPool = [...words];
-                for (let i = 0; i < 10; i++) {
-                    const weights = wordPool.map(word => 1 + (stats.incorrectWords[word.word] || 0) * 2);
-                    const totalWeight = weights.reduce((a, b) => a + b, 0);
-                    const rand = Math.random() * totalWeight;
-                    let sum = 0;
-                    let selectedIndex = 0;
-                    for (let j = 0; j < weights.length; j++) {
-                        sum += weights[j];
-                        if (rand <= sum) {
-                            selectedIndex = j;
-                            break;
-                        }
-                    }
-                    const selectedWord = wordPool.splice(selectedIndex, 1)[0];
-                    const category = categories.find(cat => words.indexOf(selectedWord) >= cat.start && words.indexOf(selectedWord) <= cat.end);
-                    const direction = Math.random() < 0.5 ? 'en-to-jp' : 'jp-to-en';
-                    const incorrectOptions = [];
-                    const sameCategoryWords = words.slice(category.start, category.end + 1).filter(w => w !== selectedWord);
-                    while (incorrectOptions.length < 3) {
-                        const randomWord = sameCategoryWords[Math.floor(Math.random() * sameCategoryWords.length)] || words[Math.floor(Math.random() * words.length)];
-                        const option = direction === 'en-to-jp' ? randomWord.meaning : randomWord.word;
-                        if (randomWord !== selectedWord && !incorrectOptions.includes(option)) {
-                            incorrectOptions.push(option);
-                        }
-                    }
-                    const correctOption = direction === 'en-to-jp' ? selectedWord.meaning : selectedWord.word;
-                    const options = [...incorrectOptions, correctOption].sort(() => Math.random() - 0.5);
-                    questions.push({
-                        word: selectedWord,
-                        options,
-                        direction,
-                        questionText: direction === 'en-to-jp' ? selectedWord.word : selectedWord.meaning
-                    });
-                }
-                return questions;
-            }
-
-            function displayQuestion() {
-                if (currentQuestion >= 10) {
-                    endQuiz();
-                    return;
-                }
-                const q = quizQuestions[currentQuestion];
-                $('#question').text(`What is "${q.questionText}"?`);
-                $('#options').empty();
-                q.options.forEach((option, index) => {
-                    $('#options').append(`
-                        <div class="col-12">
-                            <button class="btn btn-outline-primary btn-lg option-btn w-100" data-index="${index}">${option}</button>
-                        </div>
-                    `);
-                });
-                $('#nextBtn').prop('disabled', true);
-                $('.option-btn').off('click touchstart').on('click touchstart', function(e) {
-                    e.preventDefault();
-                    $('.option-btn').prop('disabled', true);
-                    const $this = $(this);
-                    $this.addClass('selected-option');
-                    const selectedOption = $this.text();
-                    const correctOption = q.direction === 'en-to-jp' ? q.word.meaning : q.word.word;
-                    setTimeout(() => {
-                        if (selectedOption === correctOption) {
-                            $this.addClass('btn-success');
-                            score++;
-                            playCorrectMelody();
-                        } else {
-                            $this.addClass('btn-danger');
-                            stats.incorrectWords[q.word.word] = (stats.incorrectWords[q.word.word] || 0) + 1;
-                            playIncorrectMelody();
-                        }
-                        updateStatsChart();
-                        $('#nextBtn').prop('disabled', false);
-                    }, 500);
-                });
-            }
-
-            $('#nextBtn').off('click touchstart').on('click touchstart', function(e) {
-                e.preventDefault();
-                currentQuestion++;
-                displayQuestion();
-            });
-
-            function endQuiz() {
-                stats.totalAttempts += 10;
-                stats.correctAnswers += score;
-                localStorage.setItem('vocabStats', JSON.stringify(stats));
-                Swal.fire({
-                    title: 'Quiz Complete!',
-                    text: `You scored ${score} out of 10!`,
-                    icon: 'success',
-                    confirmButtonText: 'Play Again',
-                    customClass: { popup: 'swal-animate' }
-                }).then(() => startQuiz());
-                updateStatsChart();
-            }
-
-            $('#resetProgress').off('click touchstart').on('click touchstart', function(e) {
-                e.preventDefault();
-                Swal.fire({
-                    title: 'Reset Progress?',
-                    text: 'This will clear all your stats!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    customClass: { popup: 'swal-animate' }
-                }).then(result => {
-                    if (result.isConfirmed) {
-                        stats = { totalAttempts: 0, correctAnswers: 0, incorrectWords: {} };
-                        localStorage.setItem('vocabStats', JSON.stringify(stats));
-                        updateStatsChart();
-                        Swal.fire({
-                            title: 'Reset!',
-                            text: 'Your progress has been reset.',
-                            icon: 'success',
-                            customClass: { popup: 'swal-animate' }
-                        });
-                    }
-                });
-            });
-
-            function updateStatsChart() {
-                const ctx = document.getElementById('progressChart').getContext('2d');
-                if (chartInstance) chartInstance.destroy();
-                chartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Progress'],
-                        datasets: [
-                            {
-                                label: 'Correct',
-                                data: [score],
-                                backgroundColor: '#28a745',
-                                stack: 'Stack 0'
-                            },
-                            {
-                                label: 'Incorrect',
-                                data: [currentQuestion - score],
-                                backgroundColor: '#dc3545',
-                                stack: 'Stack 0'
-                            }
-                        ]
-                    },
-                    options: {
-                        indexAxis: 'y',
-                        responsive: true,
-                        plugins: {
-                            legend: { position: 'top' },
-                            title: { display: true, text: `Score: ${score}/${currentQuestion}` }
-                        },
-                        scales: {
-                            x: { stacked: true, max: 10 },
-                            y: { stacked: true }
-                        },
-                        animation: { duration: 300 }
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="quiz.js"></script>
 </body>
 </html>

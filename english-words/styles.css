@@ -16,18 +16,19 @@
 .bg-meat { background-color: #ffe6cc; }
 .bg-soy { background-color: #e6ffcc; }
 
-.card.vocab-card {
+.card.quiz-card {
     border-radius: 8px;
+    cursor: pointer;
 }
-.card.vocab-card:hover {
+.card.quiz-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 3px 6px rgba(0,0,0,0.15);
     transition: all 0.2s ease;
 }
 
 @media (max-width: 576px) {
-    .card.vocab-card {
-        min-height: 100px;
+    .card.quiz-card {
+        min-height: 90px;
     }
     .card-title {
         font-size: 0.9rem;

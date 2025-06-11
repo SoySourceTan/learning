@@ -69,21 +69,7 @@
 
     <script>
         $(document).ready(function() {
-            // Fallback words
-            const fallbackWords = [
-                {word: "red", meaning: "赤", category: "color", icon: "fas fa-circle", color: "red", background: "bg-color"},
-                {word: "blue", meaning: "青", category: "color", icon: "fas fa-circle", color: "blue", background: "bg-color"},
-                {word: "apple", meaning: "りんご", category: "fruit", icon: "fas fa-apple-alt", background: "bg-fruit"},
-                {word: "dog", meaning: "犬", category: "animal", icon: "fas fa-dog", background: "bg-animal"},
-                {word: "run", meaning: "走る", category: "action", icon: "fas fa-running", background: "bg-action"},
-                {word: "happy", meaning: "幸せ", category: "emotion", icon: "fas fa-smile", background: "bg-emotion"},
-                {word: "school", meaning: "学校", category: "school", icon: "fas fa-school", background: "bg-school"},
-                {word: "sun", meaning: "太陽", category: "weather", icon: "fas fa-sun", background: "bg-weather"},
-                {word: "one", meaning: "一", category: "number", icon: "fas fa-1", background: "bg-number"},
-                {word: "home", meaning: "家", category: "place", icon: "fas fa-home", background: "bg-place"}
-            ];
-
-            // Default category icons
+            // デフォルトアイコン（変更なし）
             const defaultIcons = {
                 'color': 'fas fa-palette',
                 'vegetable': 'fas fa-carrot',
@@ -104,55 +90,69 @@
                 'soy': 'fas fa-seedling'
             };
 
-            // Speak word function (unchanged)
-            function speakWord(word) {
-                console.log(`Attempting to speak: ${word}`);
-                const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-GB';
+            // フォールバック単語（変更なし）
+            const fallbackWords = [
+                {word: "red", meaning: "赤", category: "color", icon: "fas fa-circle", color: "red", background: "bg-color"},
+                {word: "blue", meaning: "青", category: "color", icon: "fas fa-circle", color: "blue", background: "bg-color"},
+                {word: "apple", meaning: "りんご", category: "fruit", icon: "fas fa-apple-alt", background: "bg-fruit"},
+                {word: "dog", meaning: "犬", category: "animal", icon: "fas fa-dog", background: "bg-animal"},
+                {word: "run", meaning: "走る", category: "action", icon: "fas fa-running", background: "bg-action"},
+                {word: "happy", meaning: "幸せ", category: "emotion", icon: "fas fa-smile", background: "bg-emotion"},
+                {word: "school", meaning: "学校", category: "school", icon: "fas fa-school", background: "bg-school"},
+                {word: "sun", meaning: "太陽", category: "weather", icon: "fas fa-sun", background: "bg-weather"},
+                {word: "one", meaning: "一", category: "number", icon: "fas fa-1", background: "bg-number"},
+                {word: "home", meaning: "家", category: "place", icon: "fas fa-home", background: "bg-place"}
+            ];
+
+            // トースト通知（変更なし）
+            function showToast(message) {
+                const toastContainer = $('<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050"></div>');
+                const toast = $(`
+                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body">${message}</div>
+                    </div>
+                `);
+                toastContainer.append(toast);
+                $('body').append(toastContainer);
+                toast.toast({ delay: 3000 }).toast('show');
+                setTimeout(() => toastContainer.remove(), 3500);
+            }
+
+            // 音声読み上げ関数（変更なし）
+            function speakText(text, lang = 'en-GB') {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = lang;
                 const voices = speechSynthesis.getVoices();
-                const selectedVoice = voices.find(voice => voice.lang === 'en-GB') ||
-                                     voices.find(voice => voice.lang === 'en-US') ||
+                const selectedVoice = voices.find(voice => voice.lang === lang) ||
+                                     voices.find(voice => lang === 'en-GB' ? voice.lang === 'en-US' : voice.lang === 'ja-JP') ||
                                      voices[0];
-                if (selectedVoice) {
-                    utterance.voice = selectedVoice;
-                    console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
-                } else {
-                    console.warn('No voices available');
-                    alert('No speech synthesis voices available. Please check your browser settings.');
+                if (!selectedVoice) {
+                    showToast('音声が使えません。ブラウザ設定を確認してください。');
                     return;
                 }
-                utterance.onstart = () => console.log(`Started speaking: ${word}`);
-                utterance.onend = () => console.log(`Finished speaking: ${word}`);
-                utterance.onerror = (e) => {
-                    console.error(`Speech error: ${e.error}`);
-                    if (e.error === 'interrupted') {
-                        setTimeout(() => speechSynthesis.speak(utterance), 100);
-                    }
-                };
+                utterance.voice = selectedVoice;
+                utterance.rate = 1;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                utterance.onerror = (e) => console.error(`音声エラー: ${text} - ${e.error}`);
                 speechSynthesis.cancel();
                 speechSynthesis.speak(utterance);
             }
 
-            // Bind card events
+            // カードイベント（修正！英語だけ読み上げる）
             function bindCardEvents() {
-                $('.vocab-card').off('click touchstart').on('click', function(e) {
-                    e.preventDefault();
-                    const word = $(this).data('word');
-                    console.log(`Click event on card: ${word}`);
-                    $(this).find('.vocab-icon').addClass('vocab-icon-spin');
-                    setTimeout(() => $(this).find('.vocab-icon').removeClass('vocab-icon-spin'), 500);
-                    speakWord(word);
-                }).on('touchstart', function(e) {
-                    e.preventDefault();
-                    const word = $(this).data('word');
-                    console.log(`Touchstart event on card: ${word}`);
-                    $(this).find('.vocab-icon').addClass('vocab-icon-spin');
-                    setTimeout(() => $(this).find('.vocab-icon').removeClass('vocab-icon-spin'), 500);
-                    speakWord(word);
+                $('#cardContainer').off('click touchstart').on('click touchstart', '.vocab-card', function(e) {
+                    e.preventDefault(); // スクロールや誤タップを防ぐ
+                    const $card = $(this);
+                    const word = $card.data('word'); // 英語の単語
+                    const $icon = $card.find('.vocab-icon');
+                    $icon.addClass('vocab-icon-spin'); // アイコン回転
+                    setTimeout(() => $icon.removeClass('vocab-icon-spin'), 500);
+                    speakText(word, 'en-GB'); // 英語だけ読み上げ（日本語は削除）
                 });
             }
 
-            // Render cards
+            // カード表示（変更なし）
             function renderCards(words) {
                 const cardContainer = $('#cardContainer');
                 cardContainer.empty();
@@ -174,39 +174,33 @@
                 bindCardEvents();
             }
 
-            // Load JSON
+            // 音声初期過程（変更なし）
+            function initializeSpeech() {
+                const voices = speechSynthesis.getVoices();
+                if (voices.length) {
+                    bindCardEvents();
+                } else {
+                    showToast('音声が準備できていません。ページをリフレッシュしてください。');
+                }
+            }
+
+            // JSON読み込み（変更なし）
             fetch('./kidswords.json')
                 .then(response => {
-                    if (!response.ok) throw new Error(`Failed to load kidswords.json: ${response.status}`);
+                    if (!response.ok) throw new Error(`JSON読み込み失敗: ${response.status}`);
                     return response.json();
                 })
                 .then(data => {
                     renderCards(data);
-                    function initializeSpeech() {
-                        const voices = speechSynthesis.getVoices();
-                        console.log('Voices loaded:', voices.map(v => `${v.name} (${v.lang})`));
-                        if (voices.length) {
-                            bindCardEvents();
-                        } else {
-                            console.warn('No voices loaded yet');
-                            alert('Speech synthesis voices not available. Please try refreshing the page or check your browser settings.');
-                        }
-                    }
-
                     if (speechSynthesis.getVoices().length) {
                         initializeSpeech();
                     } else {
                         speechSynthesis.onvoiceschanged = initializeSpeech;
-                        setTimeout(() => {
-                            if (speechSynthesis.getVoices().length) {
-                                initializeSpeech();
-                            }
-                        }, 2000);
                     }
                 })
                 .catch(error => {
-                    console.error('Error loading JSON:', error);
-                    alert('Failed to load vocabulary data. Using fallback data.');
+                    console.error('JSON読み込みエラー:', error);
+                    showToast('語彙データの読み込みに失敗しました。デフォルトデータを使用します。');
                     renderCards(fallbackWords);
                 });
         });
