@@ -1,46 +1,10 @@
-// デフォルトの単語リスト
-const fallbackWords = [
-    {word: "red", meaning: "赤", category: "color", icon: "fas fa-circle", color: "red", background: "bg-color"},
-    {word: "blue", meaning: "青", category: "color", icon: "fas fa-circle", color: "blue", background: "bg-color"},
-    {word: "apple", meaning: "りんご", category: "fruit", icon: "fas fa-apple-alt", background: "bg-fruit"},
-    {word: "dog", meaning: "犬", category: "animal", icon: "fas fa-dog", background: "bg-animal"},
-    {word: "run", meaning: "走る", category: "action", icon: "fas fa-running", background: "bg-action"},
-    {word: "happy", meaning: "幸せ", category: "emotion", icon: "fas fa-smile", background: "bg-emotion"},
-    {word: "school", meaning: "学校", category: "school", background: "bg-school"},
-    {word: "sun", meaning: "太陽", category: "weather", icon: "fas fa-star", background: "bg-weather"},
-    {word: "one", meaning: "一", category: "number", icon: "fas fa-1", background: "bg-number"},
-    {word: "home", meaning: "家", category: "house", icon: "fas fa-home", background: "bg-home"},
-    {word: "scissors", meaning: "はさみ", category: "tool", icon: "fas fa-cut"}
-];
-
-// カテゴリーごとのアイコン
-const defaultIcons = {
-    'color': 'fas fa-palette',
-    'vegetable': 'fas fa-carrot',
-    'fruit': 'fas fa-apple-alt',
-    'shape': 'fas fa-square',
-    'body': 'fas fa-user',
-    'sound': 'fas fa-volume-up',
-    'animal': 'fas fa-paw',
-    'weather': 'fas fa-cloud',
-    'number': 'fas fa-1',
-    'house': 'fas fa-home',
-    'action': 'fas fa-running',
-    'time': 'fas fa-clock',
-    'school': 'fas fa-school',
-    'emotion': 'fas fa-smile',
-    'fish': 'fas fa-fish',
-    'meat': 'fas fa-drumstick-bite',
-    'soy': 'fas fa-seedling',
-    'tool': 'fas fa-tools'
-};
-
+// ...（上部のfallbackWords, defaultIconsは変更なし）
 let words = [];
 let audioContext;
 let voicesLoaded = false;
 let speechEnabled = true;
+let isSpeaking = false; // 音声再生中フラグ
 
-// 通知メッセージ
 function showToast(message, type = 'info') {
     const toastContainer = $('<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050"></div>');
     const toast = $(`
@@ -54,7 +18,6 @@ function showToast(message, type = 'info') {
     setTimeout(() => toastContainer.remove(), 4500);
 }
 
-// 音声コンテキスト初期化
 function initAudioContext() {
     if (!window.AudioContext && !window.webkitAudioContext) {
         showToast('このブラウザでは音声再生がサポートされていません。', 'error');
@@ -64,7 +27,6 @@ function initAudioContext() {
     return true;
 }
 
-// 正解音
 function playCorrectSound() {
     console.log('正解音再生開始');
     const audio = new Audio('correct.mp3');
@@ -80,7 +42,6 @@ function playCorrectSound() {
     });
 }
 
-// 不正解音
 function playIncorrectSound() {
     console.log('不正解音再生開始');
     const audio = new Audio('wrong.mp3');
@@ -96,12 +57,12 @@ function playIncorrectSound() {
     });
 }
 
-// 音声読み上げ
 function speakWord(word, caller = 'unknown') {
-    console.log(`speakWord 開始: word=${word}, caller=${caller}, speechEnabled=${speechEnabled}, speechSynthesis=${!!window.speechSynthesis}`);
-    if (!speechEnabled || !window.speechSynthesis) {
-        console.warn('音声無効または非対応');
-        showToast('音声が無効またはブラウザでサポートされていません。', 'error');
+    console.log(`speakWord 開始: word=${word}, caller=${caller}, speechEnabled=${speechEnabled}, isSpeaking=${isSpeaking}`);
+    if (!speechEnabled || !window.speechSynthesis || isSpeaking) {
+        console.warn('音声無効、非対応、または再生中:', { speechEnabled, speechSynthesis: !!window.speechSynthesis, isSpeaking });
+        if (isSpeaking) console.log('音声キュー制限:', word);
+        showToast('単語の読み上げに失敗しました。', 'error');
         return;
     }
     if (!word || typeof word !== 'string') {
@@ -109,6 +70,8 @@ function speakWord(word, caller = 'unknown') {
         showToast('単語の読み上げに失敗しました。', 'error');
         return;
     }
+    isSpeaking = true;
+    speechSynthesis.cancel(); // キューをクリア
     const utterance = new SpeechSynthesisUtterance(word);
     utterance.lang = 'en-GB';
     const voices = speechSynthesis.getVoices();
@@ -119,6 +82,7 @@ function speakWord(word, caller = 'unknown') {
     if (!selectedVoice) {
         console.warn('利用可能な音声が見つかりません');
         showToast('音声が見つかりませんでした。ブラウザ設定を確認してください。', 'error');
+        isSpeaking = false;
         return;
     }
     utterance.voice = selectedVoice;
@@ -127,13 +91,17 @@ function speakWord(word, caller = 'unknown') {
     utterance.volume = 1;
     utterance.onend = () => {
         console.log(`音声再生完了: ${word}`);
+        isSpeaking = false;
+    };
+    utterance.onerror = (event) => {
+        console.error(`音声エラー: ${word} - ${event.error}`);
+        showToast(`単語「${word}」の読み上げに失敗しました: ${event.error}`, 'error');
+        isSpeaking = false;
     };
     console.log(`音声再生開始: ${word}, voice=${selectedVoice.name} (${selectedVoice.lang})`);
-    speechSynthesis.cancel(); // キューをクリア
     speechSynthesis.speak(utterance);
 }
 
-// 音声データ準備
 function waitForVoices() {
     console.log('音声ロード開始');
     return new Promise((resolve) => {
@@ -154,7 +122,6 @@ function waitForVoices() {
     });
 }
 
-// データ読み込み
 function loadData(callback) {
     console.log('データ読み込み開始');
     fetch('./kidswords.json')
@@ -200,7 +167,6 @@ function loadData(callback) {
         });
 }
 
-// 単語データのバリデーション
 function validateWords(data) {
     return Array.isArray(data) && data.every(word => 
         word && typeof word.word === 'string' && typeof word.meaning === 'string'

@@ -1,74 +1,33 @@
 /* 既存のスタイル */
-.bg-color { background-color: #e6f4ea; }
-.bg-vegetable { background-color: #fef4e8; }
-.bg-fruit { background-color: #ffe6e6; }
-.bg-shape { background-color: #e6f2ff; }
-.bg-body { background-color: #f4e6ff; }
-.bg-object { background-color: #fff4e6; }
-.bg-animal { background-color: #e6fff4; }
-.bg-weather { background-color: #e6e6ff; }
-.bg-number { background-color: #ffe6f0; }
-.bg-place { background-color: #e6ffeb; }
-.bg-action { background-color: #fff0e6; }
-.bg-time { background-color: #e6faff; }
-.bg-school { background-color: #f4ffe6; }
-.bg-emotion { background-color: #ffe6e6; }
-.bg-fish { background-color: #e6f4ff; }
-.bg-meat { background-color: #ffe6cc; }
-.bg-soy { background-color: #e6ffcc; }
-
-.card.quiz-card {
-    border-radius: 8px;
-    cursor: pointer;
-}
-.card.quiz-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-    transition: all 0.2s ease;
-}
-
-@media (max-width: 576px) {
-    .card.quiz-card {
-        min-height: 90px;
-    }
-    .card-title {
-        font-size: 0.9rem;
-    }
-    .card-text {
-        font-size: 0.8rem;
-    }
-}
-
-.sound-icon {
-    font-size: 1.5em;
-    color: #007bff !important;
-    cursor: pointer;
-    touch-action: manipulation;
-    padding: 8px;
-    display: inline-block !important;
-    visibility: visible !important;
-}
-.vocab-icon {
-    font-size: 1.5em;
-    margin-right: 8px;
-    touch-action: manipulation;
-}
-.card {
-    touch-action: auto;
-    margin-bottom: 1.5rem !important;
-}
-.card-body {
-    padding: 1rem;
-}
-.d-flex {
-    display: flex !important;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 新規追加 */
-.bg-success {
-    background-color: #28a745 !important;
-    color: white !important;
-}
+   body {
+       font-family: Arial, sans-serif;
+       background-color: #f8f9fa;
+   }
+   .card {
+       border: 1px solid #ddd;
+       border-radius: 8px;
+       transition: transform 0.2s;
+       touch-action: pan-y;
+       max-width: 300px; /* カード幅を制限 */
+       margin: 0 auto; /* 中央揃え */
+   }
+   .card:hover {
+       transform: scale(1.02);
+   }
+   .vocab-icon {
+       font-size: 2rem;
+       cursor: default;
+       touch-action: none;
+   }
+   .sound-icon {
+       font-size: 1.5rem;
+       cursor: pointer;
+       touch-action: manipulation;
+   }
+   .vocab-icon-spin {
+       animation: spin 0.5s linear;
+   }
+   @keyframes spin {
+       from { transform: rotate(0deg); }
+       to { transform: rotate(360deg); }
+   }
