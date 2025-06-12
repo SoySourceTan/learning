@@ -37,3 +37,31 @@
         font-size: 0.8rem;
     }
 }
+
+.sound-icon {
+    font-size: 1.5em;
+    color: #007bff !important;
+    cursor: pointer;
+    touch-action: manipulation;
+    padding: 8px;
+    display: inline-block !important;
+    visibility: visible !important;
+}
+.vocab-icon {
+    font-size: 1.5em;
+    margin-right: 8px;
+    touch-action: manipulation;
+}
+.card {
+    touch-action: auto;
+    margin-bottom: 1.5rem !important;
+}
+.card-body {
+    padding: 1rem;
+}
+.d-flex {
+    display: flex !important;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}

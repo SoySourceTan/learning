@@ -90,14 +90,14 @@ $(document).ready(function() {
         oscillator.type = 'square';
         oscillator.frequency.setValueAtTime(523.25, now); // C5
         const gainNode = audioContext.createGain();
-        gainNode.gain.setValueAtTime(0.3, now);
+        gainNode.gain.setValueAtTime(0.05, now);
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
         oscillator.frequency.setValueAtTime(523.25, now); // C5
         oscillator.frequency.setValueAtTime(659.25, now + 0.2); // E5
         oscillator.frequency.setValueAtTime(783.99, now + 0.4); // G5
-        gainNode.gain.setValueAtTime(0.3, now);
-        gainNode.gain.linearRampToValueAtTime(0, now + 0.6);
+        gainNode.gain.setValueAtTime(0.05, now);
+        gainNode.gain.linearRampToValueAtTime(0.05, now + 0.05);
         oscillator.start(now);
         oscillator.stop(now + 0.6);
     }
@@ -112,13 +112,13 @@ $(document).ready(function() {
         const oscillator = audioContext.createOscillator();
         oscillator.type = 'square';
         const gainNode = audioContext.createGain();
-        gainNode.gain.setValueAtTime(0.3, now);
+        gainNode.gain.setValueAtTime(0.05, now);
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
         oscillator.frequency.setValueAtTime(261.63, now); // C4
         oscillator.frequency.setValueAtTime(196.00, now + 0.3); // G3
-        gainNode.gain.setValueAtTime(0.3, now);
-        gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
+        gainNode.gain.setValueAtTime(0.05, now);
+        gainNode.gain.linearRampToValueAtTime(0.05, now + 0.05);
         oscillator.start(now);
         oscillator.stop(now + 0.5);
     }
@@ -198,29 +198,55 @@ $(document).ready(function() {
     }
 
     // 単語カード生成（index.html用）
-    function generateCards() {
-        console.log('単語カード生成開始');
-        const $container = $('main .container-md');
-        $container.empty();
-        if (words.length === 0) {
-            console.warn('データがありません。デフォルトデータを使用。');
-            showToast('データがありません。デフォルトデータを使います。', 'error');
-            words = fallbackWords;
-        }
-        words.forEach(word => {
-            const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
-            const iconStyle = word.color ? `style="color: ${word.color}"` : '';
-            $container.append(`
-                <div class="card mb-3" data-word="${word.word}">
-                    <div class="card-body text-center">
-                        <i class="vocab-icon ${icon}" ${iconStyle} data-word="${word.word}"></i>
-                        <h5 class="card-title">${word.word}</h5>
-                        <p class="card-text">${word.meaning}</p>
-                    </div>
-                </div>
-            `);
-        });
+
+
+function generateCards() {
+    console.log('単語カード生成開始');
+    const $container = $('main .container-md');
+    $container.empty();
+    if (words.length === 0) {
+        console.warn('データがありません。デフォルトデータを使用。');
+        showToast('データがありません。デフォルトデータを使います。', 'error');
+        words = fallbackWords;
     }
+    words.forEach(word => {
+        const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
+        const iconStyle = word.color ? `style="color: ${word.color}"` : '';
+        $container.append(`
+            <div class="card mb-3" data-word="${word.word}">
+                <div class="card-body text-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <i class="vocab-icon ${icon}" ${iconStyle} data-word="${word.word}"></i>
+                        <i class="fas fa-volume-up sound-icon ms-2" data-word="${word.word}"></i>
+                    </div>
+                    <h5 class="card-title">${word.word}</h5>
+                    <p class="card-text">${word.meaning}</p>
+                </div>
+            </div>
+        `);
+    });
+}
+
+function bindEvents() {
+    console.log('イベントバインド開始');
+$(document).off('click touchend', '.vocab-icon').on('click touchend', '.vocab-icon', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(this).addClass('vocab-icon-spin');
+    setTimeout(() => $(this).removeClass('vocab-icon-spin'), 500);
+});
+$(document).on('click touchend', '.sound-icon', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('音声ボタンタップ');
+    const now = Date.now();
+    if (now - lastClickTime < DEBOUNCE_MS) return;
+    lastClickTime = now;
+    unlockSpeechSynthesis(); // iOS 用
+    const word = $(this).data('word');
+    speakWord(word, 'sound-icon');
+});
+}
 
     // クイズ問題生成（quiz.html用）
     function generateQuestion() {
