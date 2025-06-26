@@ -1,91 +1,139 @@
 $(document).ready(function() {
-    console.log('index.js ロード開始');
-    let lastClickTime = 0;
-    const DEBOUNCE_MS = 300;
-    let isSpeechInitialized = false;
-
-    // 音声初期化（オートプレイ制限回避）
-    function initializeSpeech() {
-        if (isSpeechInitialized || !window.speechSynthesis) return;
-        console.log('音声初期化開始');
-        const utterance = new SpeechSynthesisUtterance('');
-        utterance.volume = 0;
-        speechSynthesis.speak(utterance);
-        isSpeechInitialized = true;
-        console.log('音声初期化完了');
+    // 依存関係の確認
+    if (!window.jQuery) {
+        console.error('jQueryがロードされていません');
+        return;
+    }
+    if (typeof defaultIcons === 'undefined') {
+        console.error('defaultIconsが定義されていません');
+        return;
+    }
+    if (typeof fallbackWords === 'undefined') {
+        console.error('fallbackWordsが定義されていません');
+        return;
     }
 
-    // 単語カード生成
-   function generateCards() {
-       console.log('単語カード生成開始');
-       const $container = $('main .container-md');
-       $container.empty();
-       if (words.length === 0) {
-           console.warn('データがありません。デフォルトデータを使用。');
-           showToast('データがありません。デフォルトデータを使います。', 'error');
-           words = fallbackWords;
-       }
-       words.forEach(word => {
-           const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
-           const iconStyle = word.color ? `style="color: ${word.color}"` : '';
-           $container.append(`
-               <div class="col-10 col-md-8 mb-3"> <!-- Bootstrapの列幅 -->
-                   <div class="card" data-word="${word.word}">
-                       <div class="card-body text-center">
-                           <div class="d-flex justify-content-center align-items-center">
-                               <i class="vocab-icon ${icon}" ${iconStyle} data-word="${word.word}"></i>
-                               <i class="fas fa-volume-up sound-icon ms-2" data-word="${word.word}"></i>
-                           </div>
-                           <h5 class="card-title">${word.word}</h5>
-                           <p class="card-text">${word.meaning}</p>
-                       </div>
-                   </div>
-               </div>
-           `);
-       });
-       console.log('カード生成完了:', $('.card').length, 'sound-icon数:', $('.sound-icon').length);
-   }
+    // 音声合成の初期化
+    let voicesLoaded = false;
+    function initializeSpeechSynthesis() {
+        if (!window.speechSynthesis) {
+            console.error('音声合成がサポートされていません。ブラウザがWeb Speech APIをサポートしているか確認してください。');
+            return false;
+        }
+        const voices = speechSynthesis.getVoices();
+        if (!voices.length) {
+            console.warn('音声リストが空です。音声のロードを待機します。');
+            speechSynthesis.onvoiceschanged = () => {
+                voicesLoaded = true;
+                console.log('音声リストがロードされました:', speechSynthesis.getVoices());
+            };
+        } else {
+            voicesLoaded = true;
+            console.log('利用可能な音声:', voices);
+        }
+        return true;
+    }
 
-    // イベント設定
-    function bindEvents() {
-        console.log('イベントバインド開始');
-        // .cardのタッチ制限
-        $(document).off('touchstart touchmove touchend click', '.card');
-        $(document).on('touchstart touchmove touchend click', '.card', function(e) {
-            if (!$(e.target).hasClass('sound-icon')) {
-                e.stopPropagation();
-                e.preventDefault();
-                console.log('カードタッチ検知: sound-icon以外、イベント停止');
-            }
-        });
+    // 音声読み上げ関数
+    function speakText(text) {
+        if (!initializeSpeechSynthesis()) {
+            return;
+        }
+        // 保留中の音声をキャンセル
+        speechSynthesis.cancel();
+        // 音声リストがロードされるまで待機
+        if (!voicesLoaded) {
+            console.warn('音声リストがまだロードされていません。');
+            speechSynthesis.onvoiceschanged = () => {
+                voicesLoaded = true;
+                console.log('音声リストがロードされました:', speechSynthesis.getVoices());
+                triggerSpeech(text);
+            };
+        } else {
+            triggerSpeech(text);
+        }
+    }
 
-        // .sound-iconのイベント
-        $(document).off('click', '.sound-icon');
-        $(document).on('click', '.sound-icon', function(e) {
+    // 音声再生の内部関数
+    function triggerSpeech(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        const voices = speechSynthesis.getVoices();
+        const enVoice = voices.find(voice => voice.lang === 'en-US') || voices[0];
+        if (enVoice) {
+            utterance.voice = enVoice;
+            console.log(`選択された音声: ${enVoice.name}`);
+        } else {
+            console.warn('en-USの音声が見つかりません。デフォルト音声を使用します。');
+        }
+        utterance.onstart = () => console.log(`音声開始: ${text}`);
+        utterance.onend = () => console.log(`音声完了: ${text}`);
+        utterance.onerror = (e) => console.error(`音声エラー: ${text} - ${e.error}, ${e.message}`);
+        speechSynthesis.speak(utterance);
+    }
+
+    // カードイベント
+    function bindCardEvents() {
+        $('#cardContainer').on('click.sound touchstart.sound', '.sound-icon', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('音声ボタンクリック検知 (click)');
-            const now = Date.now();
-            if (now - lastClickTime < DEBOUNCE_MS) {
-                console.log('デバウンスによりブロック:', now - lastClickTime);
+            const word = $(this).data('word');
+            if (!word) {
+                console.error('単語データが見つかりません', this);
                 return;
             }
-            lastClickTime = now;
-            initializeSpeech();
-            const word = $(this).data('word');
-            console.log('タップされた単語:', word);
-            speakWord(word, 'sound-icon');
+            console.log(`音声アイコンクリック: ${word}`);
+            const $vocabIcon = $(this).closest('.vocab-card').find('.vocab-icon');
+            $vocabIcon.addClass('vocab-icon-spin');
+            setTimeout(() => $vocabIcon.removeClass('vocab-icon-spin'), 500);
+            speakText(word);
         });
     }
 
-    // ページ初期化
-    function initializePage() {
-        console.log('ページ初期化開始');
-        generateCards();
-        bindEvents();
+    // カード表示
+    function renderCards(words) {
+        const $cardContainer = $('#cardContainer');
+        if (!$cardContainer.length) {
+            console.error('カードコンテナが見つかりません');
+            return;
+        }
+        $cardContainer.empty();
+        words.forEach(word => {
+            const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
+            const iconStyle = word.color ? `style="color: ${word.color}"` : '';
+            const card = `
+                <div class="col">
+                    <div class="card vocab-card shadow-sm p-0 ${word.background || 'bg-light'}" data-word="${word.word}">
+                        <div class="card-body text-center p-0">
+                            <i class="vocab-icon ${icon} my-4 fa-lg" ${iconStyle}></i>
+                            <h6 class="card-title fw-bold mb-1">${word.word}</h6>
+                            <p class="card-text p-0 m-0">${word.meaning}</p>
+                            <span class="sound-icon ms-0" data-word="${word.word}">🔊</span>
+                        </div>
+                    </div>
+                </div>`;
+            $cardContainer.append(card);
+        });
+        bindCardEvents();
     }
 
-    // 開始
-    loadData(initializePage);
-    console.log('index.js ロード完了');
+    // データ読み込み
+    fetch('./kidswords.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`JSON読み込み失敗: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('JSONデータ読み込み成功:', data);
+            renderCards(data);
+        })
+        .catch(error => {
+            console.error('データ読み込みエラー:', error);
+            renderCards(fallbackWords);
+        });
+
+    // 音声合成の初期化をページ読み込み時に実行
+    initializeSpeechSynthesis();
 });

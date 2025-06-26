@@ -3,216 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vocabulary Learning Site</title>
-    <!-- Bootstrap 5.3.3 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome 6.6.0 -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Vocab Fun</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="styles.css" rel="stylesheet">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <!-- Bootstrap 5.3.3 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="common.js"></script>
     <style>
-        .vocab-card {
-            min-height: 120px;
-            max-height: 150px;
-            overflow: hidden;
-        }
-        .vocab-icon {
-            transition: transform 0.3s ease;
-        }
-        .vocab-icon-spin {
-            animation: spin 0.5s ease-in-out;
-        }
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .card-title {
-            font-size: 1rem;
-        }
-        .card-text {
-            font-size: 0.9rem;
-        }
-
-.sound-icon {
-        display: inline-block !important;
-        visibility: visible !important;
-    }
-
+        .vocab-card { cursor: pointer; }
+        .vocab-icon-spin { animation: spin 0.5s linear; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container-md">
-            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Vocab Fun</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Vocab Fun</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active rounded px-3" href="index.html">Home</a>
+                        <a class="nav-link active" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link rounded px-3" href="quiz.html">Quiz</a>
+                        <a class="nav-link" href="#">Quiz</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container-md my-4">
-        <h1 class="text-center mb-4 fw-bold">Vocabulary Cards</h1>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-5" id="cardContainer"></div>
+    <div class="container my-5">
+        <h1 class="mb-4 text-center">Vocabulary Cards</h1>
+        <div id="cardContainer" class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- Cards will be dynamically inserted here -->
+        </div>
     </div>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Default Icons and Fallback Words -->
     <script>
-        $(document).ready(function() {
-            // デフォルトアイコン（変更なし）
-            const defaultIcons = {
-                'color': 'fas fa-palette',
-                'vegetable': 'fas fa-carrot',
-                'fruit': 'fas fa-apple-alt',
-                'shape': 'fas fa-shapes',
-                'body': 'fas fa-user',
-                'object': 'fas fa-pencil-alt',
-                'animal': 'fas fa-paw',
-                'weather': 'fas fa-cloud',
-                'number': 'fas fa-sort-numeric-up',
-                'place': 'fas fa-map-marker-alt',
-                'action': 'fas fa-running',
-                'time': 'fas fa-clock',
-                'school': 'fas fa-school',
-                'emotion': 'fas fa-smile',
-                'fish': 'fas fa-fish',
-                'meat': 'fas fa-drumstick-bite',
-                'soy': 'fas fa-seedling'
-            };
-
-            // フォールバック単語（変更なし）
-            const fallbackWords = [
-                {word: "red", meaning: "赤", category: "color", icon: "fas fa-circle", color: "red", background: "bg-color"},
-                {word: "blue", meaning: "青", category: "color", icon: "fas fa-circle", color: "blue", background: "bg-color"},
-                {word: "apple", meaning: "りんご", category: "fruit", icon: "fas fa-apple-alt", background: "bg-fruit"},
-                {word: "dog", meaning: "犬", category: "animal", icon: "fas fa-dog", background: "bg-animal"},
-                {word: "run", meaning: "走る", category: "action", icon: "fas fa-running", background: "bg-action"},
-                {word: "happy", meaning: "幸せ", category: "emotion", icon: "fas fa-smile", background: "bg-emotion"},
-                {word: "school", meaning: "学校", category: "school", icon: "fas fa-school", background: "bg-school"},
-                {word: "sun", meaning: "太陽", category: "weather", icon: "fas fa-sun", background: "bg-weather"},
-                {word: "one", meaning: "一", category: "number", icon: "fas fa-1", background: "bg-number"},
-                {word: "home", meaning: "家", category: "place", icon: "fas fa-home", background: "bg-place"}
-            ];
-
-            // トースト通知（変更なし）
-            function showToast(message) {
-                const toastContainer = $('<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1050"></div>');
-                const toast = $(`
-                    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-body">${message}</div>
-                    </div>
-                `);
-                toastContainer.append(toast);
-                $('body').append(toastContainer);
-                toast.toast({ delay: 3000 }).toast('show');
-                setTimeout(() => toastContainer.remove(), 3500);
-            }
-
-            // 音声読み上げ関数（変更なし）
-            function speakText(text, lang = 'en-GB') {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = lang;
-                const voices = speechSynthesis.getVoices();
-                const selectedVoice = voices.find(voice => voice.lang === lang) ||
-                                     voices.find(voice => lang === 'en-GB' ? voice.lang === 'en-US' : voice.lang === 'ja-JP') ||
-                                     voices[0];
-                if (!selectedVoice) {
-                    showToast('音声が使えません。ブラウザ設定を確認してください。');
-                    return;
-                }
-                utterance.voice = selectedVoice;
-                utterance.rate = 1;
-                utterance.pitch = 1;
-                utterance.volume = 1;
-                utterance.onerror = (e) => console.error(`音声エラー: ${text} - ${e.error}`);
-                speechSynthesis.cancel();
-                speechSynthesis.speak(utterance);
-            }
-
-            // カードイベント（修正！英語だけ読み上げる）
-            function bindCardEvents() {
-                $('#cardContainer').off('click touchstart').on('click touchstart', '.vocab-card', function(e) {
-                    e.preventDefault(); // スクロールや誤タップを防ぐ
-                    const $card = $(this);
-                    const word = $card.data('word'); // 英語の単語
-                    const $icon = $card.find('.vocab-icon');
-                    $icon.addClass('vocab-icon-spin'); // アイコン回転
-                    setTimeout(() => $icon.removeClass('vocab-icon-spin'), 500);
-                    speakText(word, 'en-GB'); // 英語だけ読み上げ（日本語は削除）
-                });
-            }
-
-            // カード表示（変更なし）
-            function renderCards(words) {
-                const cardContainer = $('#cardContainer');
-                cardContainer.empty();
-                words.forEach(word => {
-                    const icon = word.icon || defaultIcons[word.category] || 'fas fa-question';
-                    const iconStyle = word.color ? `style="color: ${word.color}"` : '';
-                    const card = `
-                        <div class="col">
-                            <div class="card vocab-card shadow-sm p-0 ${word.background || 'bg-light'}" data-word="${word.word}">
-                                <div class="card-body text-center p-0">
-                                    <i class="vocab-icon ${icon} my-4 fa-lg" ${iconStyle}></i>
-                                    <h6 class="card-title fw-bold mb-1">${word.word}</h6>
-                                    <p class="card-text p-0 m-0">${word.meaning}</p>
-                                    <span class="sound-icon ms-0" data-word="${word.word}">🔊</span>
-                                </div>
-                            </div>
-                        </div>`;
-                    cardContainer.append(card);
-                });
-                bindCardEvents();
-            }
-
-            // 音声初期過程（変更なし）
-            function initializeSpeech() {
-                const voices = speechSynthesis.getVoices();
-                if (voices.length) {
-                    bindCardEvents();
-                } else {
-                    showToast('音声が準備できていません。ページをリフレッシュしてください。');
-                }
-            }
-
-            // JSON読み込み（変更なし）
-            fetch('./kidswords.json')
-                .then(response => {
-                    if (!response.ok) throw new Error(`JSON読み込み失敗: ${response.status}`);
-                    return response.json();
-                })
-                .then(data => {
-                    renderCards(data);
-                    if (speechSynthesis.getVoices().length) {
-                        initializeSpeech();
-                    } else {
-                        speechSynthesis.onvoiceschanged = initializeSpeech;
-                    }
-                })
-                .catch(error => {
-                    console.error('JSON読み込みエラー:', error);
-                    showToast('語彙データの読み込みに失敗しました。デフォルトデータを使用します。');
-                    renderCards(fallbackWords);
-                });
-        });
+        const defaultIcons = {
+            color: 'fas fa-circle',
+            vegetable: 'fas fa-seedling',
+            fruit: 'fas fa-apple-alt',
+            shape: 'fas fa-shapes',
+            body: 'fas fa-user',
+            object: 'fas fa-cube',
+            animal: 'fas fa-paw',
+            weather: 'fas fa-cloud',
+            number: 'fas fa-sort-numeric-up',
+            place: 'fas fa-map-marker-alt',
+            action: 'fas fa-running',
+            time: 'fas fa-clock',
+            school: 'fas fa-school',
+            emotion: 'fas fa-smile',
+            fish: 'fas fa-fish',
+            meat: 'fas fa-drumstick-bite',
+            soy: 'fas fa-seedling'
+        };
+        const fallbackWords = [
+            {"word": "unknown", "meaning": "不明", "category": "unknown", "icon": "fas fa-question", "background": "bg-light"}
+        ];
     </script>
+    <!-- Main Script -->
+    <script src="index.js"></script>
 </body>
 </html>
