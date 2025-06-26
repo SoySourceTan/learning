@@ -25,11 +25,12 @@ $(document).ready(function() {
             console.warn('音声リストが空です。音声のロードを待機します。');
             speechSynthesis.onvoiceschanged = () => {
                 voicesLoaded = true;
-                console.log('音声リストがロードされました:', speechSynthesis.getVoices());
+                const voices = speechSynthesis.getVoices();
+                console.log('音声リストがロードされました:', voices.map(v => ({ name: v.name, lang: v.lang })));
             };
         } else {
             voicesLoaded = true;
-            console.log('利用可能な音声:', voices);
+            console.log('利用可能な音声:', voices.map(v => ({ name: v.name, lang: v.lang })));
         }
         return true;
     }
@@ -55,7 +56,8 @@ $(document).ready(function() {
             console.warn('音声リストがまだロードされていません。');
             speechSynthesis.onvoiceschanged = () => {
                 voicesLoaded = true;
-                console.log('音声リストがロードされました:', speechSynthesis.getVoices());
+                const voices = speechSynthesis.getVoices();
+                console.log('音声リストがロードされました:', voices.map(v => ({ name: v.name, lang: v.lang })));
                 triggerSpeech(text);
             };
         } else {
@@ -66,14 +68,24 @@ $(document).ready(function() {
     // 音声再生の内部関数
     function triggerSpeech(text) {
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-GB';
+        utterance.lang = 'en-GB'; // イギリス英語をデフォルトに設定
         const voices = speechSynthesis.getVoices();
-        const enVoice = voices.find(voice => voice.lang === 'en-GB') || voices[0];
+        // 音声選択: en-GB > en-US > その他の英語 > デフォルト
+        const enVoice = voices.find(voice => voice.lang === 'en-GB') ||
+                        voices.find(voice => voice.lang === 'en-US') ||
+                        voices.find(voice => voice.lang.includes('en')) ||
+                        voices[0];
         if (enVoice) {
             utterance.voice = enVoice;
-            console.log(`選択された音声: ${enVoice.name}`);
+            console.log(`選択された音声: ${enVoice.name} (${enVoice.lang}) for word: ${text}`);
+            if (!enVoice.lang.includes('en')) {
+                console.warn(`英語音声（en-GB または en-US）が見つかりませんでした。代わりに ${enVoice.name} (${enVoice.lang}) を使用します。OSの音声設定で英語（英国または米国）を追加してください。`);
+            }
+            if (enVoice.lang !== 'en-GB') {
+                console.warn(`イギリス英語（en-GB）が見つかりませんでした。代わりに ${enVoice.name} (${enVoice.lang}) を使用します。OSの音声設定で en-GB 音声を追加してください。`);
+            }
         } else {
-            console.warn('en-GBの音声が見つかりません。デフォルト音声を使用します。');
+            console.warn('音声が見つかりません。デフォルト音声を使用します。');
         }
         utterance.onstart = () => console.log(`音声開始: ${text}`);
         utterance.onend = () => console.log(`音声完了: ${text}`);
@@ -100,9 +112,9 @@ $(document).ready(function() {
             console.log(`音声アイコンクリック: ${word}`);
             const $vocabIcon = $(this).closest('.vocab-card').find('.vocab-icon');
             $vocabIcon.addClass('vocab-icon-spin');
-            setTimeout(() => $vocabIcon.removeClass('vocab-icon-spin'), 300);
+            setTimeout(() => $vocabIcon.removeClass('vocab-icon-spin'), 500);
             speakText(word);
-        }, 10)); // 10msのデバウンス
+        }, 500)); // 500msのデバウンス
     }
 
     // カード表示
