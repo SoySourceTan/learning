@@ -13,6 +13,8 @@
         .vocab-card { cursor: pointer; }
         .vocab-icon-spin { animation: spin 0.5s linear; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .bg-society { background-color: #e6f3fa; }
+        .bg-culture { background-color: #f3e6fa; }
     </style>
 </head>
 <body>
@@ -65,7 +67,9 @@
             emotion: 'fas fa-smile',
             fish: 'fas fa-fish',
             meat: 'fas fa-drumstick-bite',
-            soy: 'fas fa-seedling'
+            soy: 'fas fa-seedling',
+            society: 'fas fa-users',
+            culture: 'fas fa-flag'
         };
         const fallbackWords = [
             {"word": "unknown", "meaning": "不明", "category": "unknown", "icon": "fas fa-question", "background": "bg-light"}

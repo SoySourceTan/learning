@@ -34,6 +34,15 @@ $(document).ready(function() {
         return true;
     }
 
+    // デバウンス関数
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
+
     // 音声読み上げ関数
     function speakText(text) {
         if (!initializeSpeechSynthesis()) {
@@ -57,24 +66,30 @@ $(document).ready(function() {
     // 音声再生の内部関数
     function triggerSpeech(text) {
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'en-US';
+        utterance.lang = 'en-GB';
         const voices = speechSynthesis.getVoices();
-        const enVoice = voices.find(voice => voice.lang === 'en-US') || voices[0];
+        const enVoice = voices.find(voice => voice.lang === 'en-GB') || voices[0];
         if (enVoice) {
             utterance.voice = enVoice;
             console.log(`選択された音声: ${enVoice.name}`);
         } else {
-            console.warn('en-USの音声が見つかりません。デフォルト音声を使用します。');
+            console.warn('en-GBの音声が見つかりません。デフォルト音声を使用します。');
         }
         utterance.onstart = () => console.log(`音声開始: ${text}`);
         utterance.onend = () => console.log(`音声完了: ${text}`);
-        utterance.onerror = (e) => console.error(`音声エラー: ${text} - ${e.error}, ${e.message}`);
+        utterance.onerror = (e) => {
+            if (e.error === 'interrupted') {
+                console.log(`音声中断: ${text} - 次の音声のためにキャンセルされました`);
+            } else {
+                console.error(`音声エラー: ${text} - ${e.error}, ${e.message}`);
+            }
+        };
         speechSynthesis.speak(utterance);
     }
 
     // カードイベント
     function bindCardEvents() {
-        $('#cardContainer').on('click.sound touchstart.sound', '.sound-icon', function(e) {
+        $('#cardContainer').on('click.sound touchstart.sound', '.sound-icon', debounce(function(e) {
             e.preventDefault();
             e.stopPropagation();
             const word = $(this).data('word');
@@ -85,9 +100,9 @@ $(document).ready(function() {
             console.log(`音声アイコンクリック: ${word}`);
             const $vocabIcon = $(this).closest('.vocab-card').find('.vocab-icon');
             $vocabIcon.addClass('vocab-icon-spin');
-            setTimeout(() => $vocabIcon.removeClass('vocab-icon-spin'), 500);
+            setTimeout(() => $vocabIcon.removeClass('vocab-icon-spin'), 300);
             speakText(word);
-        });
+        }, 10)); // 10msのデバウンス
     }
 
     // カード表示
