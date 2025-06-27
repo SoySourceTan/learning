@@ -1,7 +1,7 @@
 if (!window.words) {
     window.words = [];
 }
-let audioContext;
+window.audioContext = null;
 let voicesLoaded = false;
 let speechEnabled = true;
 let isSpeaking = false;
@@ -21,7 +21,7 @@ function initAudioContext() {
         console.error('このブラウザでは音声再生がサポートされていません。');
         return false;
     }
-    audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+    window.audioContext = window.audioContext || new (window.AudioContext || window.webkitAudioContext)();
     return true;
 }
 
@@ -46,7 +46,7 @@ function showToast(message, type = 'info') {
 }
 
 function playCorrectSound() {
-    if (!audioContext) initAudioContext();
+    if (!window.audioContext) initAudioContext();
     console.log('正解音を再生');
     const audio = new Audio('./correct.mp3');
     audio.play().catch(err => {
@@ -56,7 +56,7 @@ function playCorrectSound() {
 }
 
 function playIncorrectSound() {
-    if (!audioContext) initAudioContext();
+    if (!window.audioContext) initAudioContext();
     console.log('不正解音を再生');
     const audio = new Audio('./wrong.mp3');
     audio.play().catch(err => {

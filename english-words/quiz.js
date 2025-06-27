@@ -37,6 +37,18 @@ $(document).ready(function() {
         const correctAnswer = question.meaning;
         const wrongAnswers = [];
         const usedMeanings = new Set([correctAnswer]);
+        // 同じカテゴリから誤答を選択
+        const sameCategoryWords = window.words.filter(w => w.category === question.category && w.meaning !== correctAnswer);
+        while (wrongAnswers.length < 3 && sameCategoryWords.length > 0) {
+            const randomIndex = Math.floor(Math.random() * sameCategoryWords.length);
+            const randomWord = sameCategoryWords[randomIndex];
+            if (!usedMeanings.has(randomWord.meaning)) {
+                wrongAnswers.push(randomWord.meaning);
+                usedMeanings.add(randomWord.meaning);
+                sameCategoryWords.splice(randomIndex, 1);
+            }
+        }
+        // カテゴリ内に十分な単語がない場合、ランダムに他の単語を選択
         while (wrongAnswers.length < 3 && window.words.length > 1) {
             const randomWord = window.words[Math.floor(Math.random() * window.words.length)];
             if (!usedMeanings.has(randomWord.meaning)) {
@@ -64,6 +76,11 @@ $(document).ready(function() {
                     </div>
                 `).join('')}
             </div>
+            <div class="text-center mt-3" id="nextQuestionContainer" style="display: none;">
+                <button id="nextQuestionButton" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>次へ！
+                </button>
+            </div>
         `);
         console.log('アイコン生成確認:', $('.vocab-icon').length, $('.vocab-icon').data('word'));
     }
@@ -75,12 +92,13 @@ $(document).ready(function() {
         $(document).off('click touchstart', '.vocab-icon');
         $(document).off('click touchstart', '.sound-icon');
         $(document).off('click', '#testSpeechButton');
+        $(document).off('click', '#nextQuestionButton');
 
         $(document).on('click touchstart', '.answer-card', function(e) {
             e.preventDefault();
             e.stopPropagation();
             console.log('回答選択:', $(this).data('answer'));
-            if (!audioContext) initAudioContext();
+            if (!window.audioContext) initAudioContext();
             const selectedAnswer = $(this).data('answer');
             const correctAnswer = window.words[currentQuestion].meaning;
             const $card = $(this);
@@ -103,6 +121,7 @@ $(document).ready(function() {
                 $('#feedbackModalLabel').text('おっと！もう一度挑戦！😉');
                 $('#feedbackModalBody').text(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
                 $('#feedbackModal').modal('show');
+                correctInCurrentSet = 0;
             }
 
             updateProgress();
@@ -146,12 +165,26 @@ $(document).ready(function() {
             speakWord('Hello, welcome to the quiz', 'test-button', 'en-GB');
             showToast('音声テストを実行中: en-GB', 'info');
         });
+
+        $(document).on('click', '#nextQuestionButton', function(e) {
+            e.preventDefault();
+            console.log('次の問題へボタンクリック');
+            $('#nextQuestionContainer').hide();
+            handleNextQuestion();
+        });
+
+        // モーダル閉じ時に「次の問題へ」ボタンを表示
+        $('#feedbackModal').on('hidden.bs.modal', function() {
+            console.log('モーダル閉じ検知');
+            $('#nextQuestionContainer').show();
+        });
     }
 
     // モーダルのOKボタンで次に進む
     $('#feedbackModal .btn-primary').on('click', function() {
         console.log('モーダルOKクリック');
         $('#feedbackModal').modal('hide');
+        $('#nextQuestionContainer').hide(); // OKボタンでは「次へ」ボタンを非表示
         handleNextQuestion();
     });
 
@@ -172,22 +205,14 @@ $(document).ready(function() {
                 score += 2;
                 showToast(`セット${currentSet} クリア！ボーナス +2点！`, 'success');
                 $('#feedbackModalLabel').text(`セット${currentSet} クリア！🎉`);
-                $('#feedbackModalBody').text(`5問全問正解！次のセット${currentSet + 1}へ進みます！`);
+                $('#feedbackModalBody').text(`5問連続正解！次のセット${currentSet + 1}へ進みます！`);
                 $('#feedbackModal').modal('show');
                 currentSet++;
                 correctInCurrentSet = 0;
             } else {
-                score = Math.max(0, score - 1);
-                showToast(`セット${currentSet} 失敗。1問以上間違えたのでリトライ！`, 'error');
-                $('#feedbackModalLabel').text(`セット${currentSet} 失敗 😓`);
-                $('#feedbackModalBody').text(`5問中 ${correctInCurrentSet}問正解。セット${currentSet}をリトライします！`);
-                $('#feedbackModal').modal('show');
-                const setStart = Math.floor(currentQuestion / QUESTIONS_PER_SET) * QUESTIONS_PER_SET;
-                const setWords = window.words.slice(setStart, setStart + QUESTIONS_PER_SET);
-                setWords.sort(() => Math.random() - 0.5);
-                window.words.splice(setStart, QUESTIONS_PER_SET, ...setWords);
-                currentQuestion = setStart;
+                showToast(`セット${currentSet} 終了。${correctInCurrentSet}問正解でした。次のセットへ！`, 'info');
                 correctInCurrentSet = 0;
+                currentSet++;
             }
             updateProgress();
         }
@@ -220,7 +245,7 @@ $(document).ready(function() {
     // リセットボタン
     $('#resetButton').on('click', function() {
         console.log('リセットボタンクリック');
-        if (!audioContext) initAudioContext();
+        if (!window.audioContext) initAudioContext();
         currentQuestion = 0;
         score = 0;
         totalQuestions = 0;
@@ -260,7 +285,7 @@ $(document).ready(function() {
             }
             $(document).one('click touchstart', function() {
                 console.log('初回クリック検知');
-                if (!audioContext) initAudioContext();
+                if (!window.audioContext) initAudioContext();
                 generateQuestion();
                 bindEvents();
             });
@@ -269,7 +294,7 @@ $(document).ready(function() {
             showToast('音声の初期化に失敗しました。', 'error');
             $(document).one('click touchstart', function() {
                 console.log('初回クリック検知');
-                if (!audioContext) initAudioContext();
+                if (!window.audioContext) initAudioContext();
                 generateQuestion();
                 bindEvents();
             });
