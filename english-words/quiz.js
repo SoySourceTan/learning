@@ -39,15 +39,15 @@ $(document).ready(function() {
             return;
         }
 
-        const correctAnswer = question.meaning;
+        const correctAnswer = question.ruby || question.meaning;
         const wrongAnswers = [];
-        const usedMeanings = new Set([correctAnswer]);
-        const sameCategoryWords = window.words.filter(w => w.category === question.category && w.meaning !== correctAnswer);
+        const usedMeanings = new Set([question.meaning]);
+        const sameCategoryWords = window.words.filter(w => w.category === question.category && w.meaning !== question.meaning);
         while (wrongAnswers.length < 3 && sameCategoryWords.length > 0) {
             const randomIndex = Math.floor(Math.random() * sameCategoryWords.length);
             const randomWord = sameCategoryWords[randomIndex];
             if (!usedMeanings.has(randomWord.meaning)) {
-                wrongAnswers.push(randomWord.meaning);
+                wrongAnswers.push(randomWord.ruby || randomWord.meaning);
                 usedMeanings.add(randomWord.meaning);
                 sameCategoryWords.splice(randomIndex, 1);
             }
@@ -55,7 +55,7 @@ $(document).ready(function() {
         while (wrongAnswers.length < 3 && window.words.length > 1) {
             const randomWord = window.words[Math.floor(Math.random() * window.words.length)];
             if (!usedMeanings.has(randomWord.meaning)) {
-                wrongAnswers.push(randomWord.meaning);
+                wrongAnswers.push(randomWord.ruby || randomWord.meaning);
                 usedMeanings.add(randomWord.meaning);
             }
         }
@@ -102,7 +102,7 @@ $(document).ready(function() {
             console.log('回答選択:', $(this).data('answer'));
             if (!window.audioContext) initAudioContext();
             const selectedAnswer = $(this).data('answer');
-            const correctAnswer = window.words[currentQuestion].meaning;
+            const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
             const $card = $(this);
 
             $('.answer-card').off('click touchstart');
@@ -114,14 +114,14 @@ $(document).ready(function() {
                 playCorrectSound();
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
                 $('#feedbackModalLabel').text('素晴らしい！🎉');
-                $('#feedbackModalBody').text(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です！`);
+                $('#feedbackModalBody').html(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です！`);
                 $('#feedbackModal').modal('show');
             } else {
                 $card.addClass('incorrect');
                 playIncorrectSound();
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
                 $('#feedbackModalLabel').text('おっと！もう一度挑戦！😉');
-                $('#feedbackModalBody').text(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
+                $('#feedbackModalBody').html(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
                 $('#feedbackModal').modal('show');
                 correctInCurrentSet = 0;
             }
@@ -170,7 +170,7 @@ $(document).ready(function() {
         $('#feedbackModal').on('hidden.bs.modal', function() {
             console.log('モーダル閉じ検知');
             $('#nextQuestionContainer').show();
-            document.activeElement.blur(); // フォーカスをクリア
+            document.activeElement.blur();
         });
     }
 
@@ -196,7 +196,7 @@ $(document).ready(function() {
                 score += 2;
                 showToast(`セット${currentSet} クリア！ボーナス +2点！`, 'success');
                 $('#feedbackModalLabel').text(`セット${currentSet} クリア！🎉`);
-                $('#feedbackModalBody').text(`5問連続正解！次のセット${currentSet + 1}へ進みます！`);
+                $('#feedbackModalBody').html(`5問連続正解！次のセット${currentSet + 1}へ進みます！`);
                 $('#feedbackModal').modal('show');
                 currentSet++;
                 correctInCurrentSet = 0;
@@ -215,7 +215,7 @@ $(document).ready(function() {
             currentLevel = newLevel;
             showToast(`レベルアップ！Level ${currentLevel} 達成！🎉`, 'success');
             $('#feedbackModalLabel').text(`Level Up! 🎉`);
-            $('#feedbackModalBody').text(`おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
+            $('#feedbackModalBody').html(`おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
             $('#feedbackModal').modal('show');
             const bgClasses = ['bg-color', 'bg-fruit', 'bg-animal', 'bg-weather', 'bg-number'];
             const bgClass = bgClasses[(currentLevel - 1) % bgClasses.length];
@@ -257,7 +257,7 @@ $(document).ready(function() {
         console.log('ページ初期化開始');
         $('#quizContainer').html('<div class="text-center"><p>クイズを読み込み中...</p></div>');
         $('#toggleSpeechButton').text(window.speechEnabled ? '音声オフ' : '音声オン');
-        if (!window.audioContext) initAudioContext(); // 即座に初期化
+        if (!window.audioContext) initAudioContext();
         waitForVoices().then(() => {
             console.log('音声初期化完了');
             const selectedVoice = speechSynthesis.getVoices().find(v => v.lang === 'en-GB' && v.name.includes('Google')) || 
@@ -271,12 +271,12 @@ $(document).ready(function() {
             } else if (!selectedVoice.name.includes('Google') && selectedVoice.lang !== 'en-GB') {
                 showToast('en-GB音声が見つかりませんでした。' + selectedVoice.lang + 'を使用します。', 'warning');
             }
-            generateQuestion(); // 即クイズ開始
+            generateQuestion();
             bindEvents();
         }).catch(err => {
             console.error('音声初期化エラー:', err);
             showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-            generateQuestion(); // エラーでもクイズ開始
+            generateQuestion();
             bindEvents();
         });
     }
