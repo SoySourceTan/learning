@@ -34,13 +34,6 @@ function showToast(message, type = 'info') {
     });
 }
 
-function disableSpeech() {
-    window.speechEnabled = false;
-    $('#toggleSpeechButton').text('音声オン');
-    console.log('音声をオフにしました');
-    showToast('音声をオフにしました', 'info');
-}
-
 function playCorrectSound() {
     if (!window.audioContext) initAudioContext();
     console.log('正解音を再生');
@@ -64,64 +57,59 @@ function playIncorrectSound() {
 }
 
 function speakWord(word, caller = 'unknown', lang = 'en-GB') {
-    console.log(`speakWord 開始: word=${word}, caller=${caller}, lang=${lang}, speechEnabled=${window.speechEnabled}, speechSynthesis=${!!window.speechSynthesis}`);
-    if (!window.speechEnabled || !window.speechSynthesis) {
-        console.warn('音声無効または非対応:', { speechEnabled: window.speechEnabled, speechSynthesis: !!window.speechSynthesis });
-        showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-        return;
-    }
-    speechSynthesis.cancel(); // キューをクリア
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = lang;
-    const voices = speechSynthesis.getVoices();
-    console.log('利用可能な音声:', voices.map(v => `${v.name} (${v.lang})`));
-    const selectedVoice = voices.find(voice => voice.lang === 'en-GB' && voice.name.includes('Google')) ||
-                         voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Google')) ||
-                         voices.find(voice => voice.lang === 'en-GB' && voice.name.includes('Microsoft')) ||
-                         voices.find(voice => voice.lang === 'en-US' && voice.name.includes('Microsoft')) ||
-                         voices[0];
-    if (!selectedVoice) {
-        console.warn('利用可能な音声が見つかりません');
-        showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-        return;
-    }
-    utterance.voice = selectedVoice;
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.onstart = () => {
-        console.log(`音声再生開始: ${word}, voice=${selectedVoice.name} (${selectedVoice.lang})`);
-    };
-    utterance.onend = () => {
-        console.log(`音声再生完了: ${word}`);
-    };
-    utterance.onerror = (event) => {
-        if (event.error !== 'interrupted') {
-            console.error(`音声エラー: ${word} - ${event.error}`);
-            showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-        }
-    };
-    speechSynthesis.speak(utterance);
-}
+    const MAX_ATTEMPTS = 3;
+    const RETRY_DELAY_MS = 100;
 
-function waitForVoices() {
-    console.log('音声ロード開始');
-    return new Promise((resolve) => {
-        const voices = speechSynthesis.getVoices();
-        if (voices.length > 0) {
-            window.voicesLoaded = true;
-            console.log('音声即時ロード完了:', voices.map(v => `${v.name} (${v.lang})`));
-            resolve(voices);
-        } else {
-            console.log('音声ロード待機中');
-            speechSynthesis.onvoiceschanged = () => {
-                const voices = speechSynthesis.getVoices();
-                window.voicesLoaded = true;
-                console.log('音声ロード完了:', voices.map(v => `${v.name} (${v.lang})`));
-                resolve(voices);
-            };
+    function attemptToSpeak(attempt = 1) {
+        if (!window.speechEnabled || !window.speechSynthesis) {
+            console.warn('Speech synthesis is disabled or not supported.');
+            return;
         }
-    });
+
+        const voices = speechSynthesis.getVoices();
+
+        // Chromeで拡張機能などにより音声リストの読み込みが遅れる問題への対策
+        // リストが空の場合、少し待ってからリトライする
+        if (voices.length === 0 && attempt <= MAX_ATTEMPTS) {
+            console.warn(`Voice list is empty. Retrying in ${RETRY_DELAY_MS}ms... (Attempt ${attempt}/${MAX_ATTEMPTS})`);
+            setTimeout(() => attemptToSpeak(attempt + 1), RETRY_DELAY_MS);
+            return;
+        }
+
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = lang;
+
+        if (voices.length > 0) {
+            const selectedVoice = voices.find(voice => voice.lang === lang && voice.name.includes('Google')) ||
+                                 voices.find(voice => voice.lang === lang) ||
+                                 voices.find(voice => voice.lang.startsWith('en'));
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+        }
+
+        utterance.rate = 1;
+        utterance.pitch = 1;
+        utterance.volume = 1;
+
+        utterance.onstart = () => {
+            const voiceName = utterance.voice ? `${utterance.voice.name} (${utterance.voice.lang})` : 'default';
+            console.log(`Speech started: "${word}", Voice: ${voiceName}, Caller: ${caller}`);
+        };
+        utterance.onend = () => {
+            console.log(`Speech finished: "${word}"`);
+        };
+        utterance.onerror = (event) => {
+            if (event.error !== 'interrupted') {
+                console.error(`Speech error for "${word}": ${event.error}`);
+                showToast('音声の再生に失敗しました。', 'error');
+            }
+        };
+        speechSynthesis.speak(utterance);
+    }
+
+    attemptToSpeak();
 }
 
 function loadData(callback) {
@@ -141,12 +129,12 @@ function loadData(callback) {
             }
             window.words = data.sort(() => Math.random() - 0.5);
             console.log(`${window.words.length}語を読み込みました`);
-            waitForVoices().then(() => callback()).catch(() => callback());
+            callback();
         })
         .catch(error => {
             console.error('データ読み込みエラー:', error);
             window.words = fallbackWords.sort(() => Math.random() - 0.5);
-            waitForVoices().then(() => callback()).catch(() => callback());
+            callback();
         });
 }
 
@@ -155,3 +143,17 @@ function validateWords(data) {
         word && typeof word.word === 'string' && typeof word.meaning === 'string'
     );
 }
+
+// サイト全体で共通のUIイベントをバインドします
+$(document).ready(function() {
+    // 音声切り替えボタンのイベントハンドラ
+    $('#toggleSpeechButton').on('click', function() {
+        window.speechEnabled = !window.speechEnabled;
+        $(this).text(window.speechEnabled ? '音声オフ' : '音声オン');
+        showToast(window.speechEnabled ? '音声をオンにしました' : '音声をオフにしました', 'info');
+        if (!window.speechEnabled && window.speechSynthesis) {
+            // 音声オフ時に再生中の音声を停止
+            speechSynthesis.cancel();
+        }
+    });
+});

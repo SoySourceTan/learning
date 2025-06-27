@@ -14,6 +14,7 @@ $(document).ready(function() {
     let currentSet = 1;
     let correctInCurrentSet = 0;
     const QUESTIONS_PER_SET = 5;
+    let questionTimer = null;
     let lastClick = 0;
 
     function generateQuestion() {
@@ -66,10 +67,13 @@ $(document).ready(function() {
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
             <div class="question-card" data-word="${question.word}">
+                <div class="progress timer-container mb-3" style="height: 10px;">
+                    <div id="timerBar" class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
+                </div>
                 <div class="text-center">
                     <i class="vocab-icon ${icon}" ${iconStyle} data-word="${question.word}"></i>
                     <i class="fas fa-volume-up sound-icon ms-2" data-word="${question.word}"></i>
-                    <h4>${question.word}</h4>
+                    <h4 class="mt-2">${question.word}</h4>
                 </div>
             </div>
             <div class="answer-grid">
@@ -86,6 +90,46 @@ $(document).ready(function() {
             </div>
         `);
         console.log('アイコン生成確認:', $('.vocab-icon').length, $('.vocab-icon').data('word'));
+        startTimer();
+    }
+
+    function startTimer() {
+        if (questionTimer) {
+            clearInterval(questionTimer);
+        }
+        let timeLeft = 10;
+        const timerBar = $('#timerBar');
+        // タイマーバーのスタイルをリセット
+        timerBar.css('width', '100%').removeClass('bg-danger bg-warning').addClass('bg-success');
+
+        questionTimer = setInterval(() => {
+            timeLeft--;
+            const percentage = (timeLeft / 10) * 100;
+            timerBar.css('width', percentage + '%');
+
+            // 残り時間に応じて色を変更
+            if (timeLeft <= 3) {
+                timerBar.removeClass('bg-success bg-warning').addClass('bg-danger');
+            } else if (timeLeft <= 6) {
+                timerBar.removeClass('bg-success').addClass('bg-warning');
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(questionTimer);
+                handleTimeout();
+            }
+        }, 1000);
+    }
+
+    function handleTimeout() {
+        console.log('時間切れ');
+        $('.answer-card').off('click touchstart').addClass('disabled');
+        playIncorrectSound();
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
+        showFeedback('時間切れ！⏳', `正解は "${correctAnswer}" でした。`);
+        correctInCurrentSet = 0;
+        updateProgress();
     }
 
     function bindEvents() {
@@ -99,13 +143,14 @@ $(document).ready(function() {
         $(document).on('click touchstart', '.answer-card', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            clearInterval(questionTimer); // 回答時にタイマーを停止
             console.log('回答選択:', $(this).data('answer'));
             if (!window.audioContext) initAudioContext();
             const selectedAnswer = $(this).data('answer');
             const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
             const $card = $(this);
 
-            $('.answer-card').off('click touchstart');
+            $('.answer-card').off('click touchstart').addClass('disabled');
 
             if (selectedAnswer === correctAnswer) {
                 score++;
@@ -113,16 +158,15 @@ $(document).ready(function() {
                 $card.addClass('correct');
                 playCorrectSound();
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-                $('#feedbackModalLabel').text('素晴らしい！🎉');
-                $('#feedbackModalBody').html(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です！`);
-                $('#feedbackModal').modal('show');
+                showToast('正解！', 'success');
+                setTimeout(() => {
+                    handleNextQuestion();
+                }, 1500); // 1.5秒後に自動で次の問題へ
             } else {
                 $card.addClass('incorrect');
                 playIncorrectSound();
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-                $('#feedbackModalLabel').text('おっと！もう一度挑戦！😉');
-                $('#feedbackModalBody').html(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
-                $('#feedbackModal').modal('show');
+                showFeedback('おっと！もう一度挑戦！😉', `"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
                 correctInCurrentSet = 0;
             }
 
@@ -174,14 +218,21 @@ $(document).ready(function() {
         });
     }
 
+    function showFeedback(title, body) {
+        $('#feedbackModalLabel').text(title);
+        $('#feedbackModalBody').html(body);
+        // モーダルが既に表示されている場合は内容だけ更新
+        if ($('#feedbackModal').hasClass('show')) return;
+        $('#feedbackModal').modal('show');
+    }
+
     $('#feedbackModal .btn-primary').on('click', function() {
         console.log('モーダルOKクリック');
         $('#feedbackModal').modal('hide');
-        $('#nextQuestionContainer').hide();
-        handleNextQuestion();
     });
 
     function handleNextQuestion() {
+        if (questionTimer) clearInterval(questionTimer);
         currentQuestion++;
         checkSetProgress();
         checkLevelUp();
@@ -195,9 +246,7 @@ $(document).ready(function() {
             if (correctInCurrentSet === QUESTIONS_PER_SET) {
                 score += 2;
                 showToast(`セット${currentSet} クリア！ボーナス +2点！`, 'success');
-                $('#feedbackModalLabel').text(`セット${currentSet} クリア！🎉`);
-                $('#feedbackModalBody').html(`5問連続正解！次のセット${currentSet + 1}へ進みます！`);
-                $('#feedbackModal').modal('show');
+                showFeedback(`セット${currentSet} クリア！🎉`, `5問連続正解！次のセット${currentSet + 1}へ進みます！`);
                 currentSet++;
                 correctInCurrentSet = 0;
             } else {
@@ -214,9 +263,7 @@ $(document).ready(function() {
         if (newLevel > currentLevel) {
             currentLevel = newLevel;
             showToast(`レベルアップ！Level ${currentLevel} 達成！🎉`, 'success');
-            $('#feedbackModalLabel').text(`Level Up! 🎉`);
-            $('#feedbackModalBody').html(`おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
-            $('#feedbackModal').modal('show');
+            showFeedback(`Level Up! 🎉`, `おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
             const bgClasses = ['bg-color', 'bg-fruit', 'bg-animal', 'bg-weather', 'bg-number'];
             const bgClass = bgClasses[(currentLevel - 1) % bgClasses.length];
             $('body').removeClass(bgClasses.join(' ')).addClass(bgClass);
@@ -246,39 +293,15 @@ $(document).ready(function() {
         bindEvents();
     });
 
-    $('#toggleSpeechButton').on('click', function() {
-        console.log('音声トグルクリック');
-        window.speechEnabled = !window.speechEnabled;
-        $(this).text(window.speechEnabled ? '音声オフ' : '音声オン');
-        showToast(window.speechEnabled ? '音声をオンにしました' : '音声をオフにしました', 'info');
-    });
-
     function initializePage() {
         console.log('ページ初期化開始');
         $('#quizContainer').html('<div class="text-center"><p>クイズを読み込み中...</p></div>');
         $('#toggleSpeechButton').text(window.speechEnabled ? '音声オフ' : '音声オン');
+        // AudioContextの初期化はユーザー操作を起点に行うのがベストプラクティスだが、
+        // ここで呼んでおくことで、最初のクリック時の遅延を減らせる可能性がある。
         if (!window.audioContext) initAudioContext();
-        waitForVoices().then(() => {
-            console.log('音声初期化完了');
-            const selectedVoice = speechSynthesis.getVoices().find(v => v.lang === 'en-GB' && v.name.includes('Google')) || 
-                                 speechSynthesis.getVoices().find(v => v.lang === 'en-US' && v.name.includes('Google')) ||
-                                 speechSynthesis.getVoices().find(v => v.lang === 'en-GB') ||
-                                 speechSynthesis.getVoices().find(v => v.lang === 'en-US') || 
-                                 speechSynthesis.getVoices()[0];
-            console.log('選択された音声:', selectedVoice ? `${selectedVoice.name} (${selectedVoice.lang})` : 'なし');
-            if (!selectedVoice) {
-                showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-            } else if (!selectedVoice.name.includes('Google') && selectedVoice.lang !== 'en-GB') {
-                showToast('en-GB音声が見つかりませんでした。' + selectedVoice.lang + 'を使用します。', 'warning');
-            }
-            generateQuestion();
-            bindEvents();
-        }).catch(err => {
-            console.error('音声初期化エラー:', err);
-            showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-            generateQuestion();
-            bindEvents();
-        });
+        generateQuestion();
+        bindEvents();
     }
 
     loadData(initializePage);
