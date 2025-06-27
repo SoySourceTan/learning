@@ -5,6 +5,41 @@ window.audioContext = null;
 window.voicesLoaded = false;
 window.speechEnabled = true;
 
+const defaultIcons = {
+    color: 'fas fa-circle',
+    vegetable: 'fas fa-seedling',
+    fruit: 'fas fa-apple-alt',
+    shape: 'fas fa-shapes',
+    body: 'fas fa-user',
+    object: 'fas fa-cube',
+    animal: 'fas fa-paw',
+    weather: 'fas fa-cloud',
+    number: 'fas fa-sort-numeric-up',
+    place: 'fas fa-map-marker-alt',
+    action: 'fas fa-running',
+    time: 'fas fa-clock',
+    school: 'fas fa-school',
+    emotion: 'fas fa-smile',
+    fish: 'fas fa-fish',
+    meat: 'fas fa-drumstick-bite',
+    soy: 'fas fa-seedling',
+    society: 'fas fa-users',
+    culture: 'fas fa-flag'
+};
+const fallbackWords = [
+    {"word": "unknown", "meaning": "不明", "category": "unknown", "icon": "fas fa-question", "background": "bg-light"}
+];
+
+// 効果音を事前に読み込む
+const soundEffects = {
+    correct: new Audio('./correct.mp3'),
+    incorrect: new Audio('./wrong.mp3')
+};
+Object.values(soundEffects).forEach(sound => {
+    sound.load(); // ファイルのプリロードを開始
+    sound.volume = 1.0;
+});
+
 function initAudioContext() {
     if (!window.AudioContext && !window.webkitAudioContext) {
         console.error('このブラウザでは音声再生がサポートされていません。');
@@ -37,9 +72,8 @@ function showToast(message, type = 'info') {
 function playCorrectSound() {
     if (!window.audioContext) initAudioContext();
     console.log('正解音を再生');
-    const audio = new Audio('./correct.mp3');
-    audio.volume = 1.0;
-    audio.play().catch(err => {
+    soundEffects.correct.currentTime = 0; // 再生位置を最初に戻す
+    soundEffects.correct.play().catch(err => {
         console.error('正解音再生エラー:', err);
         showToast('正解音の再生に失敗しました。', 'error');
     });
@@ -48,9 +82,8 @@ function playCorrectSound() {
 function playIncorrectSound() {
     if (!window.audioContext) initAudioContext();
     console.log('不正解音を再生');
-    const audio = new Audio('./wrong.mp3');
-    audio.volume = 1.0;
-    audio.play().catch(err => {
+    soundEffects.incorrect.currentTime = 0; // 再生位置を最初に戻す
+    soundEffects.incorrect.play().catch(err => {
         console.error('不正解音再生エラー:', err);
         showToast('不正解音の再生に失敗しました。', 'error');
     });
@@ -127,14 +160,11 @@ function loadData(callback) {
             if (!validateWords(data)) {
                 throw new Error('データ形式が正しくありません');
             }
-            window.words = data.sort(() => Math.random() - 0.5);
-            console.log(`${window.words.length}語を読み込みました`);
-            callback();
+            callback(data);
         })
         .catch(error => {
             console.error('データ読み込みエラー:', error);
-            window.words = fallbackWords.sort(() => Math.random() - 0.5);
-            callback();
+            callback(fallbackWords);
         });
 }
 
@@ -156,4 +186,18 @@ $(document).ready(function() {
             speechSynthesis.cancel();
         }
     });
+
+    // 現在のページに基づいてナビゲーションリンクをアクティブにする
+    try {
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        $('.navbar-nav .nav-link').each(function() {
+            const linkPage = $(this).attr('href').split('/').pop();
+            if (linkPage === currentPage) {
+                $(this).addClass('active');
+                $(this).attr('aria-current', 'page');
+            }
+        });
+    } catch (e) {
+        console.error("ナビゲーションのアクティブ化に失敗:", e);
+    }
 });

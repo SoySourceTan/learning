@@ -1,33 +1,96 @@
 /* 既存のスタイル */
-   body {
-       font-family: Arial, sans-serif;
-       background-color: #f8f9fa;
-   }
-   .card {
-       border: 1px solid #ddd;
-       border-radius: 8px;
-       transition: transform 0.2s;
-       touch-action: pan-y;
-       max-width: 300px; /* カード幅を制限 */
-       margin: 0 auto; /* 中央揃え */
-   }
-   .card:hover {
-       transform: scale(1.02);
-   }
-   .vocab-icon {
-       font-size: 2rem;
-       cursor: default;
-       touch-action: none;
-   }
-   .sound-icon {
-       font-size: 1.5rem;
-       cursor: pointer;
-       touch-action: manipulation;
-   }
-   .vocab-icon-spin {
-       animation: spin 0.5s linear;
-   }
-   @keyframes spin {
-       from { transform: rotate(0deg); }
-       to { transform: rotate(360deg); }
-   }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.vocab-icon-spin {
+    animation: spin 0.5s linear;
+}
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* index.htmlから移動したスタイル */
+/* モダンなカードデザイン */
+.vocab-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    cursor: default;
+}
+
+.vocab-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.vocab-card .card-body {
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+}
+
+.vocab-card .vocab-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #495057;
+}
+
+.vocab-card .card-title {
+    font-size: 1.25rem;
+    color: #212529;
+}
+
+.vocab-card .card-text {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.vocab-card .sound-icon {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 1.2rem;
+    color: #adb5bd;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.vocab-card .sound-icon:hover {
+    color: #007bff;
+}
+
+/* カテゴリごとの背景色 */
+.bg-color { background-color: #fff0f0; }
+.bg-vegetable { background-color: #e8f5e9; }
+.bg-fruit { background-color: #fff8e1; }
+.bg-animal { background-color: #fbe9e7; }
+.bg-weather { background-color: #e3f2fd; }
+.bg-number { background-color: #ede7f6; }
+.bg-place { background-color: #e0f2f1; }
+.bg-action { background-color: #fce4ec; }
+.bg-time { background-color: #f1f8e9; }
+.bg-school { background-color: #fffde7; }
+.bg-emotion { background-color: #fff3e0; }
+.bg-fish { background-color: #e0f7fa; }
+.bg-meat { background-color: #fce4ec; }
+.bg-soy { background-color: #f9fbe7; }
+.bg-household { background-color: #eceff1; }
+.bg-shopping { background-color: #e8eaf6; }
+.bg-asking { background-color: #e0f2f1; }
+.bg-utilities { background-color: #f3e5f5; }
+.bg-banking { background-color: #e8f5e9; }
+.bg-roads { background-color: #fafafa; }
+.bg-transport { background-color: #f5f5f5; }
+.bg-daily_life { background-color: #fff9c4; }
+.bg-society { background-color: #e6f3fa; }
+.bg-culture { background-color: #f3e6fa; }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,28 +9,22 @@
     <!-- Font Awesome CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <style>
-        .vocab-card { cursor: pointer; }
-        .vocab-icon-spin { animation: spin 0.5s linear; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .bg-society { background-color: #e6f3fa; }
-        .bg-culture { background-color: #f3e6fa; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Vocab Fun</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-md">
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Vocab Fun</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link rounded px-3" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="quiz.html">Quiz</a>
+                        <a class="nav-link active rounded px-3" href="quiz.html">Quiz</a>
                     </li>
                 </ul>
             </div>
@@ -48,33 +42,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Default Icons and Fallback Words -->
-    <script>
-        const defaultIcons = {
-            color: 'fas fa-circle',
-            vegetable: 'fas fa-seedling',
-            fruit: 'fas fa-apple-alt',
-            shape: 'fas fa-shapes',
-            body: 'fas fa-user',
-            object: 'fas fa-cube',
-            animal: 'fas fa-paw',
-            weather: 'fas fa-cloud',
-            number: 'fas fa-sort-numeric-up',
-            place: 'fas fa-map-marker-alt',
-            action: 'fas fa-running',
-            time: 'fas fa-clock',
-            school: 'fas fa-school',
-            emotion: 'fas fa-smile',
-            fish: 'fas fa-fish',
-            meat: 'fas fa-drumstick-bite',
-            soy: 'fas fa-seedling',
-            society: 'fas fa-users',
-            culture: 'fas fa-flag'
-        };
-        const fallbackWords = [
-            {"word": "unknown", "meaning": "不明", "category": "unknown", "icon": "fas fa-question", "background": "bg-light"}
-        ];
-    </script>
+    <!-- Common scripts and data -->
+    <script src="common.js"></script>
     <!-- Main Script -->
     <script src="index.js"></script>
 </body>

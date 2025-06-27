@@ -304,6 +304,10 @@ $(document).ready(function() {
         bindEvents();
     }
 
-    loadData(initializePage);
+    loadData(function(data) {
+        window.words = data.sort(() => Math.random() - 0.5);
+        console.log(`${window.words.length}語を読み込みました`);
+        initializePage();
+    });
     console.log('quiz.js ロード完了');
 });
