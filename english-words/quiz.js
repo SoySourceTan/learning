@@ -12,19 +12,19 @@ $(document).ready(function() {
 
     // クイズ問題生成
     function generateQuestion() {
-        console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${words.length}`);
-        if (words.length === 0) {
+        console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
+        if (window.words.length === 0) {
             console.warn('データがありません。デフォルトデータを使用。');
             showToast('データがありません。デフォルトデータを使います。', 'error');
-            words = fallbackWords.sort(() => Math.random() - 0.5);
+            window.words = fallbackWords.sort(() => Math.random() - 0.5);
         }
-        if (currentQuestion >= words.length) {
+        if (currentQuestion >= window.words.length) {
             console.log('クイズ終了');
             $('#quizContainer').html(`<h3 class="text-center">クイズが終わりました！最終スコア: ${score}/${totalQuestions} (Level ${currentLevel})</h3>`);
             return;
         }
 
-        const question = words[currentQuestion];
+        const question = window.words[currentQuestion];
         console.log('現在の問題:', question);
         if (!question || !question.word) {
             console.error('無効な問題データ:', question);
@@ -37,8 +37,8 @@ $(document).ready(function() {
         const correctAnswer = question.meaning;
         const wrongAnswers = [];
         const usedMeanings = new Set([correctAnswer]);
-        while (wrongAnswers.length < 3 && words.length > 1) {
-            const randomWord = words[Math.floor(Math.random() * words.length)];
+        while (wrongAnswers.length < 3 && window.words.length > 1) {
+            const randomWord = window.words[Math.floor(Math.random() * window.words.length)];
             if (!usedMeanings.has(randomWord.meaning)) {
                 wrongAnswers.push(randomWord.meaning);
                 usedMeanings.add(randomWord.meaning);
@@ -82,7 +82,7 @@ $(document).ready(function() {
             console.log('回答選択:', $(this).data('answer'));
             if (!audioContext) initAudioContext();
             const selectedAnswer = $(this).data('answer');
-            const correctAnswer = words[currentQuestion].meaning;
+            const correctAnswer = window.words[currentQuestion].meaning;
             const $card = $(this);
 
             $('.answer-card').off('click touchstart');
@@ -94,14 +94,14 @@ $(document).ready(function() {
                 playCorrectSound();
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
                 $('#feedbackModalLabel').text('素晴らしい！🎉');
-                $('#feedbackModalBody').text(`"${words[currentQuestion].word}" は "${correctAnswer}" です！`);
+                $('#feedbackModalBody').text(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です！`);
                 $('#feedbackModal').modal('show');
             } else {
                 $card.addClass('incorrect');
                 playIncorrectSound();
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
                 $('#feedbackModalLabel').text('おっと！もう一度挑戦！😉');
-                $('#feedbackModalBody').text(`"${words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
+                $('#feedbackModalBody').text(`"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
                 $('#feedbackModal').modal('show');
             }
 
@@ -122,7 +122,7 @@ $(document).ready(function() {
             console.log('タップされた単語:', word, 'speechEnabled:', speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
             $(this).addClass('vocab-icon-spin');
             setTimeout(() => $(this).removeClass('vocab-icon-spin'), 500);
-            speakWord(word, 'vocab-icon');
+            speakWord(word, 'vocab-icon', 'en-GB');
         });
 
         $(document).on('click touchstart', '.sound-icon', function(e) {
@@ -137,14 +137,14 @@ $(document).ready(function() {
             lastClickTime = now;
             const word = $(this).data('word');
             console.log('タップされた単語:', word, 'speechEnabled:', speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
-            speakWord(word, 'sound-icon');
+            speakWord(word, 'sound-icon', 'en-GB');
         });
 
         $(document).on('click', '#testSpeechButton', function(e) {
             e.preventDefault();
             console.log('音声テストボタンクリック');
-            speakWord('test', 'test-button');
-            showToast('音声テストを実行中...', 'info');
+            speakWord('Hello, welcome to the quiz', 'test-button', 'en-GB');
+            showToast('音声テストを実行中: en-GB', 'info');
         });
     }
 
@@ -183,9 +183,9 @@ $(document).ready(function() {
                 $('#feedbackModalBody').text(`5問中 ${correctInCurrentSet}問正解。セット${currentSet}をリトライします！`);
                 $('#feedbackModal').modal('show');
                 const setStart = Math.floor(currentQuestion / QUESTIONS_PER_SET) * QUESTIONS_PER_SET;
-                const setWords = words.slice(setStart, setStart + QUESTIONS_PER_SET);
+                const setWords = window.words.slice(setStart, setStart + QUESTIONS_PER_SET);
                 setWords.sort(() => Math.random() - 0.5);
-                words.splice(setStart, QUESTIONS_PER_SET, ...setWords);
+                window.words.splice(setStart, QUESTIONS_PER_SET, ...setWords);
                 currentQuestion = setStart;
                 correctInCurrentSet = 0;
             }
@@ -212,7 +212,7 @@ $(document).ready(function() {
     // 進捗更新
     function updateProgress() {
         totalQuestions = currentQuestion + 1;
-        const progress = (totalQuestions / words.length) * 100;
+        const progress = (totalQuestions / window.words.length) * 100;
         $('#progressBar').css('width', progress + '%').attr('aria-valuenow', progress);
         $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel}, セット${currentSet})`);
     }
@@ -227,7 +227,7 @@ $(document).ready(function() {
         currentLevel = 1;
         currentSet = 1;
         correctInCurrentSet = 0;
-        words.sort(() => Math.random() - 0.5);
+        window.words.sort(() => Math.random() - 0.5);
         updateProgress();
         generateQuestion();
         bindEvents();
@@ -249,6 +249,15 @@ $(document).ready(function() {
         showToast('クイズを始めるには、画面をクリックしてください。', 'info');
         waitForVoices().then(() => {
             console.log('音声初期化完了');
+            const selectedVoice = speechSynthesis.getVoices().find(v => v.lang === 'en-GB') || 
+                                 speechSynthesis.getVoices().find(v => v.lang === 'en-US') || 
+                                 speechSynthesis.getVoices()[0];
+            console.log('選択された音声:', selectedVoice ? `${selectedVoice.name} (${selectedVoice.lang})` : 'なし');
+            if (!selectedVoice) {
+                showToast('音声が見つかりませんでした。デフォルト音声を使用します。', 'warning');
+            } else if (selectedVoice.lang !== 'en-GB') {
+                showToast('en-GB音声が見つかりませんでした。' + selectedVoice.lang + 'を使用します。', 'warning');
+            }
             $(document).one('click touchstart', function() {
                 console.log('初回クリック検知');
                 if (!audioContext) initAudioContext();
