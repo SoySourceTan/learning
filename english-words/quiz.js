@@ -257,7 +257,7 @@ $(document).ready(function() {
         console.log('ページ初期化開始');
         $('#quizContainer').html('<div class="text-center"><p>クイズを読み込み中...</p></div>');
         $('#toggleSpeechButton').text(window.speechEnabled ? '音声オフ' : '音声オン');
-        showToast('クイズを始めるには、画面をクリックしてください。', 'info');
+        if (!window.audioContext) initAudioContext(); // 即座に初期化
         waitForVoices().then(() => {
             console.log('音声初期化完了');
             const selectedVoice = speechSynthesis.getVoices().find(v => v.lang === 'en-GB' && v.name.includes('Google')) || 
@@ -271,21 +271,13 @@ $(document).ready(function() {
             } else if (!selectedVoice.name.includes('Google') && selectedVoice.lang !== 'en-GB') {
                 showToast('en-GB音声が見つかりませんでした。' + selectedVoice.lang + 'を使用します。', 'warning');
             }
-            $(document).one('click touchstart', function() {
-                console.log('初回クリック検知');
-                if (!window.audioContext) initAudioContext();
-                generateQuestion();
-                bindEvents();
-            });
+            generateQuestion(); // 即クイズ開始
+            bindEvents();
         }).catch(err => {
             console.error('音声初期化エラー:', err);
             showToast('音声が再生できませんでした。音声ボタンをオフにしてください。', 'warning');
-            $(document).one('click touchstart', function() {
-                console.log('初回クリック検知');
-                if (!window.audioContext) initAudioContext();
-                generateQuestion();
-                bindEvents();
-            });
+            generateQuestion(); // エラーでもクイズ開始
+            bindEvents();
         });
     }
 
