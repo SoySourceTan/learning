@@ -21,7 +21,8 @@ body {
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
-    cursor: default;
+    cursor: pointer;
+    min-height: 180px;
 }
 
 .vocab-card:hover {
@@ -35,13 +36,18 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 180px;
 }
 
 .vocab-card .vocab-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: #495057;
+    /* for Iconify */
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    vertical-align: -0.125em;
 }
 
 .vocab-card .card-title {
@@ -53,20 +59,6 @@ body {
     font-size: 1rem;
     color: #6c757d;
     margin-bottom: 1rem;
-}
-
-.vocab-card .sound-icon {
-    position: absolute;
-    bottom: 10px;
-    right: 15px;
-    font-size: 1.2rem;
-    color: #adb5bd;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.vocab-card .sound-icon:hover {
-    color: #007bff;
 }
 
 /* カテゴリごとの背景色 */
@@ -94,3 +86,211 @@ body {
 .bg-daily_life { background-color: #fff9c4; }
 .bg-society { background-color: #e6f3fa; }
 .bg-culture { background-color: #f3e6fa; }
+
+/* --- New Styles for index.html --- */
+
+/* Body padding for sticky footer on mobile */
+@media (max-width: 991.98px) {
+    body {
+        padding-bottom: 70px; /* Adjust to match footer height */
+    }
+}
+
+/* Category Section Titles */
+.category-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #343a40;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #007bff;
+    display: inline-block;
+}
+
+/* Sticky Footer Navigation */
+.category-nav-footer {
+    height: 60px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-nav-footer #categoryNavContainer {
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.category-nav-link {
+    color: #6c757d;
+    text-decoration: none;
+    text-align: center;
+    padding: 0.5rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.category-nav-link:hover {
+    color: #007bff;
+}
+
+/* Compact Card Design for Mobile */
+@media (max-width: 576px) {
+    .vocab-card .card-body {
+        min-height: 150px;
+        padding: 1rem 0.75rem;
+    }
+    .vocab-card .vocab-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .vocab-card .card-title {
+        font-size: 1rem;
+    }
+    .vocab-card .card-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* --- Styles moved from quiz.html --- */
+
+/* A specific body style for the quiz page */
+body.quiz-page {
+    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 100px; /* スティッキーフッターの高さ分の余白 */
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    color: #007bff !important;
+}
+
+.quiz-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.quiz-header {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.question-card {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease;
+}
+
+.question-card:hover {
+    transform: scale(1.02);
+}
+
+.question-card .vocab-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem;
+}
+
+.question-card .vocab-icon::after {
+    content: 'タップで発音！';
+    position: absolute;
+    top: 20%;
+    right: 100%;
+    transform: translateY(-50%);
+    background: #007bff;
+    color: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.7rem;
+    opacity: 1;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+.question-card .vocab-icon:hover {
+    color: #007bff;
+    transform: scale(1.2);
+}
+
+.answer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.answer-card {
+    background: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.answer-card:hover {
+    background: #f0f0f0;
+    border-color: #007bff;
+    transform: translateY(-2px);
+}
+
+.correct {
+    background: #d4edda !important;
+    border-color: #28a745 !important;
+    animation: sparkle 0.5s ease-in-out;
+}
+
+.incorrect {
+    background: #f8d7da !important;
+    border-color: #dc3545 !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+@keyframes sparkle {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+.progress-section {
+    background: #ffffff;
+    padding: 0.75rem 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+    border-top: 1px solid #dee2e6;
+}
+
+.toast {
+    border-radius: 10px;
+    border: 2px solid #007bff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toast-body {
+    font-weight: bold;
+    color: #333;
+}

@@ -5,28 +5,37 @@ window.audioContext = null;
 window.voicesLoaded = false;
 window.speechEnabled = true;
 
-const defaultIcons = {
-    color: 'fas fa-circle',
-    vegetable: 'fas fa-seedling',
-    fruit: 'fas fa-apple-alt',
-    shape: 'fas fa-shapes',
-    body: 'fas fa-user',
-    object: 'fas fa-cube',
-    animal: 'fas fa-paw',
-    weather: 'fas fa-cloud',
-    number: 'fas fa-sort-numeric-up',
-    place: 'fas fa-map-marker-alt',
-    action: 'fas fa-running',
-    time: 'fas fa-clock',
-    school: 'fas fa-school',
-    emotion: 'fas fa-smile',
-    fish: 'fas fa-fish',
-    meat: 'fas fa-drumstick-bite',
-    soy: 'fas fa-seedling',
-    society: 'fas fa-users',
-    culture: 'fas fa-flag'
+window.defaultIcons = {
+    action: 'icon-park-solid:running',
+    animal: 'fluent-emoji:paw-prints',
+    asking: 'fluent-emoji:question-mark',
+    banking: 'twemoji:piggy-bank',
+    body: 'noto:man-gesturing-ok',
+    color: 'fluent-emoji:artist-palette',
+    culture: 'emojione:national-park',
+    daily_life: 'emojione:sunrise-over-mountains',
+    emotion: 'twemoji:smiling-face-with-smiling-eyes',
+    fish: 'twemoji:fish',
+    fruit: 'twemoji:cherries',
+    household: 'twemoji:house',
+    meat: 'twemoji:cut-of-meat',
+    number: 'twemoji:input-numbers',
+    object: 'twemoji:package',
+    other: 'twemoji:gear',
+    place: 'twemoji:world-map',
+    roads: 'twemoji:motorway',
+    school: 'twemoji:school',
+    shape: 'twemoji:red-square',
+    shopping: 'twemoji:shopping-cart',
+    society: 'twemoji:cityscape',
+    soy: 'openmoji:soy-sauce',
+    time: 'twemoji:watch',
+    transport: 'twemoji:bus',
+    utilities: 'twemoji:wrench',
+    vegetable: 'twemoji:carrot',
+    weather: 'twemoji:sun-behind-cloud',
 };
-const fallbackWords = [
+window.fallbackWords = [
     {"word": "unknown", "meaning": "不明", "category": "unknown", "icon": "fas fa-question", "background": "bg-light"}
 ];
 
@@ -89,27 +98,27 @@ function playIncorrectSound() {
     });
 }
 
-function speakWord(word, caller = 'unknown', lang = 'en-GB') {
-    const MAX_ATTEMPTS = 3;
-    const RETRY_DELAY_MS = 100;
+function speakWord(word, options = {}) {
+    const {
+        caller = 'unknown',
+        lang = 'en-GB',
+        onStart,
+        onEnd,
+        onError
+    } = options;
 
-    function attemptToSpeak(attempt = 1) {
-        if (!window.speechEnabled || !window.speechSynthesis) {
-            console.warn('Speech synthesis is disabled or not supported.');
-            return;
-        }
+    if (!window.speechEnabled || !window.speechSynthesis) {
+        console.warn('Speech synthesis is disabled or not supported.');
+        if (onError) onError();
+        return;
+    }
 
+    // 常に前の発話をキャンセルしてから新しい発話を開始する
+    speechSynthesis.cancel();
+
+    function startSpeech() {
         const voices = speechSynthesis.getVoices();
 
-        // Chromeで拡張機能などにより音声リストの読み込みが遅れる問題への対策
-        // リストが空の場合、少し待ってからリトライする
-        if (voices.length === 0 && attempt <= MAX_ATTEMPTS) {
-            console.warn(`Voice list is empty. Retrying in ${RETRY_DELAY_MS}ms... (Attempt ${attempt}/${MAX_ATTEMPTS})`);
-            setTimeout(() => attemptToSpeak(attempt + 1), RETRY_DELAY_MS);
-            return;
-        }
-
-        speechSynthesis.cancel();
         const utterance = new SpeechSynthesisUtterance(word);
         utterance.lang = lang;
 
@@ -120,6 +129,8 @@ function speakWord(word, caller = 'unknown', lang = 'en-GB') {
             if (selectedVoice) {
                 utterance.voice = selectedVoice;
             }
+        } else {
+            console.warn('Voice list is empty. Using browser default for the language.');
         }
 
         utterance.rate = 1;
@@ -129,20 +140,23 @@ function speakWord(word, caller = 'unknown', lang = 'en-GB') {
         utterance.onstart = () => {
             const voiceName = utterance.voice ? `${utterance.voice.name} (${utterance.voice.lang})` : 'default';
             console.log(`Speech started: "${word}", Voice: ${voiceName}, Caller: ${caller}`);
+            if (onStart) onStart();
         };
         utterance.onend = () => {
             console.log(`Speech finished: "${word}"`);
+            if (onEnd) onEnd();
         };
         utterance.onerror = (event) => {
             if (event.error !== 'interrupted') {
                 console.error(`Speech error for "${word}": ${event.error}`);
                 showToast('音声の再生に失敗しました。', 'error');
             }
+            // 中断を含むすべてのエラーでUIクリーンアップ用のコールバックを呼ぶ
+            if (onError) onError();
         };
         speechSynthesis.speak(utterance);
     }
-
-    attemptToSpeak();
+    startSpeech();
 }
 
 function loadData(callback) {
@@ -179,7 +193,7 @@ $(document).ready(function() {
     // 音声切り替えボタンのイベントハンドラ
     $('#toggleSpeechButton').on('click', function() {
         window.speechEnabled = !window.speechEnabled;
-        $(this).text(window.speechEnabled ? '音声オフ' : '音声オン');
+        $(this).find('.button-text').text(window.speechEnabled ? '音声オフ' : '音声オン');
         showToast(window.speechEnabled ? '音声をオンにしました' : '音声をオフにしました', 'info');
         if (!window.speechEnabled && window.speechSynthesis) {
             // 音声オフ時に再生中の音声を停止
@@ -187,9 +201,15 @@ $(document).ready(function() {
         }
     });
 
+    // 音声合成エンジンを早期に準備させるための「ウォームアップ」
+    if (window.speechSynthesis) {
+        speechSynthesis.getVoices();
+    }
+
     // 現在のページに基づいてナビゲーションリンクをアクティブにする
     try {
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        $('.navbar-nav .nav-link').removeClass('active').removeAttr('aria-current');
         $('.navbar-nav .nav-link').each(function() {
             const linkPage = $(this).attr('href').split('/').pop();
             if (linkPage === currentPage) {

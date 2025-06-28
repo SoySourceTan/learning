@@ -15,7 +15,6 @@ $(document).ready(function() {
     let correctInCurrentSet = 0;
     const QUESTIONS_PER_SET = 5;
     let questionTimer = null;
-    let lastClick = 0;
 
     function generateQuestion() {
         console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
@@ -63,7 +62,7 @@ $(document).ready(function() {
         const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
 
         $('#quizContainer').empty();
-        const icon = question.icon || defaultIcons[question.category] || 'fas fa-question';
+        const icon = question.icon || defaultIcons[question.category] || 'fas fa-question-circle';
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
             <div class="question-card" data-word="${question.word}">
@@ -71,8 +70,8 @@ $(document).ready(function() {
                     <div id="timerBar" class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
                 </div>
                 <div class="text-center">
-                    <i class="vocab-icon ${icon}" ${iconStyle} data-word="${question.word}"></i>
-                    <i class="fas fa-volume-up sound-icon ms-2" data-word="${question.word}"></i>
+                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} data-word="${question.word}"></span>
+                    <i class="sound-icon fas fa-volume-up ms-2" data-word="${question.word}"></i>
                     <h4 class="mt-2">${question.word}</h4>
                 </div>
             </div>
@@ -103,6 +102,7 @@ $(document).ready(function() {
         timerBar.css('width', '100%').removeClass('bg-danger bg-warning').addClass('bg-success');
 
         questionTimer = setInterval(() => {
+
             timeLeft--;
             const percentage = (timeLeft / 10) * 100;
             timerBar.css('width', percentage + '%');
@@ -134,11 +134,6 @@ $(document).ready(function() {
 
     function bindEvents() {
         console.log('イベントバインド開始');
-        $(document).off('click touchstart', '.answer-card');
-        $(document).off('click touchstart', '.vocab-icon');
-        $(document).off('click touchstart', '.sound-icon');
-        $(document).off('click', '#testSpeechButton');
-        $(document).off('click', '#nextQuestionButton');
 
         $(document).on('click touchstart', '.answer-card', function(e) {
             e.preventDefault();
@@ -176,31 +171,49 @@ $(document).ready(function() {
         $(document).on('click touchstart', '.vocab-icon', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            if (Date.now() - lastClick < 100) return;
-            lastClick = Date.now();
+
+            const $icon = $(this);
+
             console.log('アイコンタップ検知');
             const word = $(this).data('word');
             console.log('タップされた単語:', word, 'speechEnabled:', window.speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
-            $(this).addClass('vocab-icon-spin');
-            setTimeout(() => $(this).removeClass('vocab-icon-spin'), 500);
-            speakWord(word, 'vocab-icon', 'en-GB');
+
+            $icon.addClass('speaking vocab-icon-spin');
+            speakWord(word, {
+                caller: 'vocab-icon',
+                lang: 'en-GB',
+                onEnd: () => $icon.removeClass('speaking vocab-icon-spin'),
+                onError: () => {
+                    $icon.removeClass('speaking vocab-icon-spin');
+                }
+            });
         });
 
         $(document).on('click touchstart', '.sound-icon', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            if (Date.now() - lastClick < 100) return;
-            lastClick = Date.now();
+
+            const $icon = $(this);
+
             console.log('音声ボタンタップ');
             const word = $(this).data('word');
             console.log('タップされた単語:', word, 'speechEnabled:', window.speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
-            speakWord(word, 'sound-icon', 'en-GB');
+
+            $icon.addClass('speaking');
+            speakWord(word, {
+                caller: 'sound-icon',
+                lang: 'en-GB',
+                onEnd: () => $icon.removeClass('speaking'),
+                onError: () => {
+                    $icon.removeClass('speaking');
+                }
+            });
         });
 
         $(document).on('click', '#testSpeechButton', function(e) {
             e.preventDefault();
             console.log('音声テストボタンクリック');
-            speakWord('Hello, welcome to the quiz', 'test-button', 'en-GB');
+            speakWord('Hello, welcome to the quiz', { caller: 'test-button', lang: 'en-GB' });
             showToast('音声テストを実行中: en-GB', 'info');
         });
 
@@ -237,7 +250,6 @@ $(document).ready(function() {
         checkSetProgress();
         checkLevelUp();
         generateQuestion();
-        bindEvents();
     }
 
     function checkSetProgress() {
@@ -290,13 +302,13 @@ $(document).ready(function() {
         window.words.sort(() => Math.random() - 0.5);
         updateProgress();
         generateQuestion();
-        bindEvents();
     });
 
     function initializePage() {
         console.log('ページ初期化開始');
+        $('body').addClass('quiz-page');
         $('#quizContainer').html('<div class="text-center"><p>クイズを読み込み中...</p></div>');
-        $('#toggleSpeechButton').text(window.speechEnabled ? '音声オフ' : '音声オン');
+        $('#toggleSpeechButton').find('.button-text').text(window.speechEnabled ? '音声オフ' : '音声オン');
         // AudioContextの初期化はユーザー操作を起点に行うのがベストプラクティスだが、
         // ここで呼んでおくことで、最初のクリック時の遅延を減らせる可能性がある。
         if (!window.audioContext) initAudioContext();
