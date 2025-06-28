@@ -48,7 +48,7 @@ $(document).ready(function() {
                     <h2 class="category-title">${categoryTitle}</h2>
                     <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 g-3">
                         ${wordsInCategory.map(word => {
-                            const icon = word.icon || defaultIcons[word.category] || 'fas fa-question-circle';
+                            const icon = word.icon || (window.defaultIcons && defaultIcons[word.category]) || 'mdi:help-circle-outline';
                             const iconStyle = word.color ? `style="color: ${word.color}"` : '';
                             return `
                                 <div class="col">
@@ -56,7 +56,7 @@ $(document).ready(function() {
                                         <div class="card-body text-center">
                                             <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle}></span>
                                             <h5 class="card-title fw-bold mt-2">${word.word}</h5>
-                                            <p class="card-text">${word.meaning}</p>
+                                            <p class="card-text">${word.ruby || word.meaning}</p>
                                         </div>
                                     </div>
                                 </div>`;
@@ -74,7 +74,7 @@ $(document).ready(function() {
         const categories = Object.keys(groupedByCategory).sort();
         $navContainer.empty();
         for (const category of categories) {
-            const icon = defaultIcons[category] || 'fas fa-question-circle';
+            const icon = (window.defaultIcons && defaultIcons[category]) || 'mdi:help-circle-outline';
             const navLinkHtml = `
                 <a href="#category-${category}" class="category-nav-link" title="${category}">
                     <span class="iconify" data-icon="${icon}"></span>

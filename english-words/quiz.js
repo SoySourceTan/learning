@@ -62,7 +62,7 @@ $(document).ready(function() {
         const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
 
         $('#quizContainer').empty();
-        const icon = question.icon || defaultIcons[question.category] || 'fas fa-question-circle';
+        const icon = question.icon || (window.defaultIcons && defaultIcons[question.category]) || 'mdi:help-circle-outline';
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
             <div class="question-card" data-word="${question.word}">
