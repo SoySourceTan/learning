@@ -3,346 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>歴史クイズ</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/css/perfect-scrollbar.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: #f8f9fa;
-        }
-        .quiz-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: clamp(10px, 5vw, 20px);
-        }
-        .quiz-question {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .quiz-question.correct {
-            border-color: #28a745;
-            background-color: #e6f4ea;
-        }
-        .quiz-question.incorrect {
-            border-color: #dc3545;
-            background-color: #f8d7da;
-        }
-        .progress {
-            height: 10px;
-            margin-bottom: 20px;
-        }
-        .nav-tabs {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #fff;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .modal-content {
-            border-radius: 10px;
-        }
-        .btn-hint {
-            margin-left: 10px;
-            padding: 8px 12px;
-        }
-        .swal2-popup {
-            width: clamp(200px, 80vw, 400px) !important;
-            padding: 20px !important;
-            font-size: clamp(0.9rem, 4vw, 1rem) !important;
-        }
-        .swal2-title {
-            font-size: clamp(1.2rem, 5vw, 1.5rem) !important;
-            color: #2c3e50 !important;
-        }
-        .swal2-html-container {
-            line-height: 1.6 !important;
-            color: #34495e !important;
-        }
-        .swal2-confirm {
-            padding: 10px 20px !important;
-            font-size: clamp(0.9rem, 4vw, 1rem) !important;
-        }
-        @media (max-width: 768px) {
-            .quiz-question {
-                font-size: clamp(0.9rem, 4vw, 1rem);
-            }
-            .form-select, .btn {
-                font-size: clamp(0.8rem, 3.5vw, 0.9rem);
-            }
-        }
-    </style>
+    <title>Vocab Fun</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="container-fluid quiz-container ps">
-        <h1 class="text-center mb-4 animate__animated animate__fadeIn">日本の歴史クイズ</h1>
-        <ul class="nav nav-tabs mb-4">
-            <li class="nav-item">
-                <a class="nav-link" href="index.html"><i class="fas fa-timeline"></i> 年表モード</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="#quiz"><i class="fas fa-graduation-cap"></i> 学習モード</a>
-            </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="jyomon.html"><i class="fas fa-leaf"></i> 縄文浪漫</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="story.html"><i class="fas fa-leaf"></i> 縄文物語</a>
-                </li>
-
-
-
-
-        </ul>
-        <div class="mb-4 d-flex flex-wrap gap-3">
-            <div>
-                <label for="difficulty" class="form-label"><i class="fas fa-star"></i> 難易度:</label>
-                <select id="difficulty" class="form-select">
-                    <option value="easy">簡単</option>
-                    <option value="normal" selected>普通</option>
-                    <option value="hard">難しい</option>
-                </select>
-            </div>
-            <div>
-                <label for="era-filter" class="form-label"><i class="fas fa-filter"></i> 時代:</label>
-                <select id="era-filter" class="form-select">
-                    <option value="all">すべての時代</option>
-                </select>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-md">
+            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-book-open me-2"></i>Vocab Fun</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link rounded px-3" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active rounded px-3" href="quiz.html">Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded px-3" href="phrase-test.html">Phrase Quiz</a>
+                    </li>
+                </ul>
             </div>
         </div>
-        <div class="progress animate__animated animate__pulse">
-            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </nav>
+
+    <div class="quiz-container">
+        <h1 class="quiz-header">ボキャブラリークイズ</h1>
+        <div id="quizContainer">
+            <div class="text-center">
+                <p>クイズを読み込み中...</p>
+            </div>
         </div>
-        <div id="quiz-questions"></div>
-        <button class="btn btn-primary" id="submit-quiz"><i class="fas fa-check"></i> 回答をチェック</button>
-        <div id="quiz-result" class="mt-3"></div>
-        <div id="score-history" class="mt-3"></div>
     </div>
 
-    <div class="modal fade" id="explanation-modal" tabindex="-1" aria-labelledby="explanation-modal-label" aria-hidden="true">
-        <div class="modal-dialog">
+    <footer class="progress-section fixed-bottom">
+        <div class="container-md">
+            <div class="progress mb-2" style="height: 10px;">
+                <div class="progress-bar bg-success" id="progressBar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                <div id="scoreText" class="small fw-bold me-auto">正解: 0 / 0</div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-secondary" id="resetButton"><i class="fas fa-redo me-1"></i>リセット</button>
+                    <button class="btn btn-sm btn-outline-secondary" id="toggleSpeechButton"><i class="fas fa-volume-up me-1"></i><span class="button-text">音声オフ</span></button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Feedback Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="explanation-modal-label">解説</h5>
+                    <h5 class="modal-title" id="feedbackModalLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body" id="explanation-content"></div>
+                <div class="modal-body" id="feedbackModalBody"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/perfect-scrollbar@1.5.5/dist/perfect-scrollbar.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery.touchswipe@1.6.19/jquery.touchSwipe.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            fetch('data.json')
-                .then(response => {
-                    if (!response.ok) throw new Error('data.jsonの読み込みに失敗しました');
-                    return response.json();
-                })
-                .then(data => {
-                    const eras = data.eras;
-                    const quizQuestions = $('#quiz-questions');
-                    const submitQuiz = $('#submit-quiz');
-                    const quizResult = $('#quiz-result');
-                    const scoreHistory = $('#score-history');
-                    const difficultySelect = $('#difficulty');
-                    const eraFilter = $('#era-filter');
-                    const progressBar = $('#progress-bar');
-
-                    new PerfectScrollbar('.quiz-container');
-
-                    eras.forEach(era => {
-                        const option = $('<option>').val(era.id).text(era.name);
-                        eraFilter.append(option);
-                    });
-
-                    function getHint(event, difficulty) {
-                        if (!event || !event.keyword) {
-                            console.warn('無効なイベントデータ:', event);
-                            return 'ヒントが生成できませんでした。';
-                        }
-                        if (difficulty === 'easy') {
-                            return `キーワードの頭文字は「${event.keyword[0]}」です。`;
-                        } else if (difficulty === 'normal') {
-                            return `この出来事は${event.year}に起こり、${event.description.split('.')[0]}に関連します。`;
-                        }
-                        return 'ヒントはありません！頭をフル回転してください！';
-                    }
-
-                    function getExplanation(event) {
-                        return `${event.description} (キーワード: ${event.keyword})`;
-                    }
-
-                    function generateQuizQuestions() {
-                        const selectedEra = eraFilter.val();
-                        const difficulty = difficultySelect.val();
-                        const filteredEvents = selectedEra === 'all' 
-                            ? eras.flatMap(era => era.events)
-                            : eras.find(era => era.id === selectedEra).events;
-                        
-                        const questions = [];
-                        const shuffledEvents = filteredEvents.sort(() => Math.random() - 0.5);
-                        shuffledEvents.slice(0, 10).forEach(event => {
-                            const question = event.description.replace(event.keyword, '_____');
-                            const hint = getHint(event, difficulty);
-                            console.log('生成されたヒント:', hint); // デバッグ用
-                            questions.push({
-                                question: `${event.year}: ${question}`,
-                                answer: event.keyword,
-                                hint: hint,
-                                explanation: getExplanation(event)
-                            });
-                        });
-                        return questions;
-                    }
-
-                    function renderQuiz() {
-                        quizQuestions.empty();
-                        const questions = generateQuizQuestions();
-                        questions.forEach((q, index) => {
-                            const questionDiv = $(`
-                                <div class="quiz-question animate__animated animate__fadeIn">
-                                    <p><strong>問題 ${index + 1}:</strong> ${q.question}</p>
-                                    <input type="text" class="form-control mb-2" id="answer-${index}" data-answer="${q.answer}" data-explanation="${q.explanation}">
-                                    <button class="btn btn-outline-secondary btn-hint"><i class="fas fa-lightbulb"></i> ヒント</button>
-                                </div>
-                            `);
-                            quizQuestions.append(questionDiv);
-                        });
-                        updateProgress(0, questions.length);
-
-                        $('.btn-hint').on('click', function() {
-                            const hintText = $(this).closest('.quiz-question').find('input').data('hint') || 'ヒントがありません。';
-                            Swal.fire({
-                                title: '<i class="fas fa-lightbulb me-2"></i>ヒント',
-                                html: `<p style="text-align: left; margin: 0;">${hintText}</p>`,
-                                icon: null,
-                                confirmButtonText: 'OK',
-                                animation: true,
-                                customClass: {
-                                    popup: 'animate__animated animate__fadeIn',
-                                    confirmButton: 'btn btn-primary'
-                                }
-                            });
-                        });
-                    }
-
-                    function updateProgress(current, total) {
-                        const percentage = (current / total) * 100;
-                        progressBar.css('width', `${percentage}%`).attr('aria-valuenow', percentage).text(`${current}/${total}`);
-                    }
-
-                    function saveScore(score, total, difficulty, era) {
-                        const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
-                        history.push({
-                            date: new Date().toLocaleString('ja-JP'),
-                            score: score,
-                            total: total,
-                            difficulty: difficulty,
-                            era: era === 'all' ? 'すべての時代' : eras.find(e => e.id === era).name
-                        });
-                        localStorage.setItem('quizHistory', JSON.stringify(history.slice(-5)));
-                        renderScoreHistory();
-                    }
-
-                    function renderScoreHistory() {
-                        const history = JSON.parse(localStorage.getItem('quizHistory') || '[]');
-                        scoreHistory.html('<h4>過去のスコア</h4>' + history.map(h => `
-                            <p>${h.date}: ${h.score}/${h.total} (難易度: ${h.difficulty}, 時代: ${h.era})</p>
-                        `).join(''));
-                    }
-
-                    submitQuiz.on('click', function() {
-                        let score = 0;
-                        const inputs = quizQuestions.find('input');
-                        let explanationHTML = '';
-                        inputs.each(function(index) {
-                            const userAnswer = $(this).val().trim();
-                            const correctAnswer = $(this).data('answer');
-                            const questionDiv = $(this).closest('.quiz-question');
-                            if (userAnswer === correctAnswer) {
-                                score++;
-                                questionDiv.addClass('correct').removeClass('incorrect').addClass('animate__animated animate__flash');
-                            } else {
-                                questionDiv.addClass('incorrect').removeClass('correct').addClass('animate__animated animate__shakeX');
-                            }
-                            explanationHTML += `<p><strong>問題 ${index + 1}:</strong> ${$(this).data('explanation')}</p>`;
-                        });
-                        quizResult.html(`スコア: ${score}/${inputs.length}`);
-                        updateProgress(score, inputs.length);
-                        saveScore(score, inputs.length, difficultySelect.val(), eraFilter.val());
-
-                        Swal.fire({
-                            title: `スコア: ${score}/${inputs.length}`,
-                            text: '解説を確認しますか？',
-                            icon: score === inputs.length ? 'success' : 'info',
-                            showCancelButton: true,
-                            confirmButtonText: '解説を見る',
-                            cancelButtonText: '閉じる',
-                            customClass: {
-                                confirmButton: 'btn btn-primary',
-                                cancelButton: 'btn btn-secondary'
-                            }
-                        }).then(result => {
-                            if (result.isConfirmed) {
-                                $('#explanation-content').html(explanationHTML);
-                                new bootstrap.Modal('#explanation-modal').show();
-                            }
-                        });
-                    });
-
-                    difficultySelect.on('change', renderQuiz);
-                    eraFilter.on('change', renderQuiz);
-
-                    // スワイプ設定
-                    try {
-                        if ($(window).width() < 768 && $.fn.swipe) {
-                            quizQuestions.swipe({
-                                swipeLeft: function() {
-                                    const nextQuestion = quizQuestions.find('.quiz-question').eq(1);
-                                    if (nextQuestion.length) {
-                                        nextQuestion[0].scrollIntoView({ behavior: 'smooth' });
-                                    }
-                                },
-                                swipeRight: function() {
-                                    const prevQuestion = quizQuestions.find('.quiz-question').eq(0);
-                                    if (prevQuestion.length) {
-                                        prevQuestion[0].scrollIntoView({ behavior: 'smooth' });
-                                    }
-                                }
-                            });
-                        }
-                    } catch (e) {
-                        console.warn('スワイプ機能の初期化に失敗しました:', e);
-                    }
-
-                    renderQuiz();
-                    renderScoreHistory();
-                })
-                .catch(error => {
-                    console.error('データ読み込みエラー:', error);
-                    Swal.fire({
-                        title: 'エラー',
-                        text: 'データの読み込みに失敗しました。data.jsonを確認してください。',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                });
-        });
-    </script>
+    <!-- Iconify Script (Required for quiz icons) -->
+    <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+    <script src="common.js"></script>
+    <script src="quiz.js"></script>
 </body>
 </html>
