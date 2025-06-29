@@ -1,401 +1,330 @@
-import { quizState } from './gameState.js';
-import { config } from './config.js';
-import { checkAnswer, soundEffects } from './battle.js';
+window.isInitialized = false;
 
-export let wordData = { nouns: [], verbs: [], adjectives: [], adverbs: [], prepositions: [], phrases: [] };
-
-export async function loadWordData() {
-    try {
-        const response = await fetch('./words.json');
-        if (!response.ok) {
-            throw new Error(`Failed to fetch words.json: ${response.statusText}`);
-        }
-        const loadedData = await response.json();
-        wordData = { ...wordData, ...loadedData };
-        Object.keys(wordData).forEach(category => {
-            wordData[category].forEach(item => {
-                item.appearanceCount = item.appearanceCount || 0;
-            });
-        });
-        const savedState = JSON.parse(localStorage.getItem('gameState') || '{}');
-        if (savedState.wordDataAppearance) {
-            Object.keys(savedState.wordDataAppearance).forEach(category => {
-                if (wordData[category]) {
-                    wordData[category].forEach(item => {
-                        const savedItem = savedState.wordDataAppearance[category].find(saved => saved.word === item.word);
-                        if (savedItem) {
-                            item.appearanceCount = savedItem.appearanceCount || 0;
-                        }
-                    });
-                }
-            });
-        }
-        console.log('Word data loaded and merged:', wordData);
-    } catch (error) {
-        console.error('Error loading word data:', error);
-        wordData.nouns = [
-            { word: 'sword', meaning: '剣', difficulty: 'easy', questionTypes: ['meaning'], appearanceCount: 0 },
-            { word: 'shield', meaning: '盾', difficulty: 'easy', questionTypes: ['meaning'], appearanceCount: 0 },
-            { word: 'armor', meaning: '鎧', difficulty: 'medium', questionTypes: ['meaning'], appearanceCount: 0 },
-            { word: 'potion', meaning: '薬', difficulty: 'easy', questionTypes: ['meaning'], appearanceCount: 0 }
-        ];
-        console.log('Using fallback wordData:', wordData);
-    }
-}
-
-export function saveWordDataAppearance() {
-    const state = JSON.parse(localStorage.getItem('gameState') || '{}');
-    state.wordDataAppearance = {};
-    Object.keys(wordData).forEach(category => {
-        state.wordDataAppearance[category] = wordData[category].map(item => ({
-            word: item.word,
-            appearanceCount: item.appearanceCount || 0
-        }));
-    });
-    localStorage.setItem('gameState', JSON.stringify(state));
-    console.log('Word data appearance saved:', state.wordDataAppearance);
-}
-
-let isTyping = false;
-
-export function typeMessage(text, element, callback, wait = false) {
-    if (!element) return;
-    console.log('Displaying message:', text);
-    element.textContent = '';
-    element.style.pointerEvents = 'auto';
-    element.classList.remove('blinking-cursor');
-    let i = 0;
-
-    function type() {
-        if (i < text.length) {
-            element.textContent += text[i];
-            i++;
-            setTimeout(type, config.messageSpeed);
-        } else if (wait) {
-            element.textContent += '_';
-            element.classList.add('blinking-cursor');
-            const handleClick = () => {
-                console.log('Message clicked');
-                element.classList.remove('blinking-cursor');
-                element.textContent = element.textContent.replace('_', '');
-                element.removeEventListener('click', handleClick);
-                element.style.pointerEvents = 'none';
-                if (callback) callback();
-            };
-            element.addEventListener('click', handleClick, { once: true });
-        } else if (callback) {
-            setTimeout(() => {
-                console.log('Message typing complete, executing callback');
-                callback();
-            }, 500);
-        }
-    }
-    type();
-}
-
-export function showQuizOptions() {
-    const optionsDiv = document.getElementById('quiz-options');
-    const message = document.getElementById('battle-message');
-    const feedback = document.getElementById('battle-feedback');
-    message.textContent = '';
-    feedback.textContent = '';
-
-    console.log('Current wordData:', wordData);
-
-    const levelRanges = {
-        easy: [1, 5],
-        medium: [6, 15],
-        hard: [16, Infinity]
-    };
-    let difficulty = 'easy';
-    for (const [diff, [min, max]] of Object.entries(levelRanges)) {
-        if (quizState.level >= min && quizState.level <= max) {
-            difficulty = diff;
-            break;
-        }
-    }
-
-    // antonym を持つカテゴリを優先（50%の確率）
-    const antonymCategories = Object.keys(wordData).filter(key => {
-        const items = wordData[key];
-        return Array.isArray(items) && items.some(item => item.antonym && item.questionTypes.includes('antonym'));
-    });
-    const allCategories = Object.keys(wordData).filter(key => {
-        const items = wordData[key];
-        return Array.isArray(items) && items.length > 0;
-    });
-
-    let selectedCategory;
-    if (antonymCategories.length > 0 && Math.random() < 0.5) {
-        selectedCategory = antonymCategories[Math.floor(Math.random() * antonymCategories.length)];
-    } else {
-        selectedCategory = allCategories[Math.floor(Math.random() * allCategories.length)];
-    }
-
-    if (!selectedCategory) {
-        console.error('No valid categories found');
-        typeMessage('単語が見つかりません！ 別のモンスターを試してください。', message, () => {
-            setTimeout(() => document.dispatchEvent(new Event('nextBattle')), 1000);
-        });
+$(document).ready(function() {
+    if (window.isInitialized) {
+        console.log('quiz.js 既に初期化済み、スキップ');
         return;
     }
+    window.isInitialized = true;
+    console.log('quiz.js ロード開始');
+    let currentQuestion = 0;
+    let score = 0;
+    let totalQuestions = 0;
+    let currentLevel = 1;
+    let currentSet = 1;
+    let correctInCurrentSet = 0;
+    const QUESTIONS_PER_SET = 5;
+    let questionTimer = null;
 
-    let items = wordData[selectedCategory];
-    const difficultyFallbacks = [difficulty, 'medium', 'easy', 'hard', undefined];
-    let filteredItems = [];
-    for (const diff of difficultyFallbacks) {
-        filteredItems = diff === undefined
-            ? items
-            : items.filter(item => item.difficulty === diff);
-        if (filteredItems.length > 0) {
-            difficulty = diff || 'any';
-            break;
+    function generateQuestion() {
+        console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
+        if (window.words.length === 0) {
+            console.warn('データがありません。デフォルトデータを使用。');
+            showToast('データがありません。デフォルトデータを使います。', 'error');
+            window.words = fallbackWords.sort(() => Math.random() - 0.5);
         }
-    }
+        if (currentQuestion >= window.words.length) {
+            console.log('クイズ終了');
+            $('#quizContainer').html(`<h3 class="text-center">クイズが終わりました！最終スコア: ${score}/${totalQuestions} (Level ${currentLevel})</h3>`);
+            return;
+        }
 
-    if (filteredItems.length == 0) {
-        console.error('No valid items found for any difficulty in category:', selectedCategory);
-        typeMessage('単語が見つかりません！ 別のモンスターを試してください。', message, () => {
-            setTimeout(() => document.dispatchEvent(new Event('nextBattle')), 1000);
-        });
-        return;
-    }
+        const question = window.words[currentQuestion];
+        console.log('現在の問題:', question);
+        if (!question || !question.word) {
+            console.error('無効な問題データ:', question);
+            showToast('問題データの読み込みに失敗しました。次へ進みます。', 'error');
+            currentQuestion++;
+            generateQuestion();
+            return;
+        }
 
-    quizState.recentWords = quizState.recentWords || [];
-    const maxRecent = 10;
-    let correctItem;
-
-    // antonym クイズを優先するため、antonym を持つ単語を高確率で選択
-    const antonymItems = filteredItems.filter(item => item.antonym && item.questionTypes.includes('antonym'));
-    const totalWeight = filteredItems.reduce((sum, item) => sum + 1 / (1 + item.appearanceCount), 0);
-    let rand = Math.random();
-    let weightSum = 0;
-
-    if (antonymItems.length > 0 && rand < 0.5) {
-        const antonymWeight = antonymItems.reduce((sum, item) => sum + 1 / (1 + item.appearanceCount), 0);
-        rand = Math.random() * antonymWeight;
-        weightSum = 0;
-        for (const item of antonymItems) {
-            if (!quizState.recentWords.includes(item.phrase || item.word)) {
-                weightSum += 1 / (1 + item.appearanceCount);
-                if (rand <= weightSum) {
-                    correctItem = item;
-                    break;
-                }
+        const correctAnswer = question.ruby || question.meaning;
+        const wrongAnswers = [];
+        const usedMeanings = new Set([question.meaning]);
+        const sameCategoryWords = window.words.filter(w => w.category === question.category && w.meaning !== question.meaning);
+        while (wrongAnswers.length < 3 && sameCategoryWords.length > 0) {
+            const randomIndex = Math.floor(Math.random() * sameCategoryWords.length);
+            const randomWord = sameCategoryWords[randomIndex];
+            if (!usedMeanings.has(randomWord.meaning)) {
+                wrongAnswers.push(randomWord.ruby || randomWord.meaning);
+                usedMeanings.add(randomWord.meaning);
+                sameCategoryWords.splice(randomIndex, 1);
             }
         }
-    }
-
-    if (!correctItem) {
-        rand = Math.random() * totalWeight;
-        weightSum = 0;
-        for (const item of filteredItems) {
-            if (!quizState.recentWords.includes(item.phrase || item.word)) {
-                weightSum += 1 / (1 + item.appearanceCount);
-                if (rand <= weightSum) {
-                    correctItem = item;
-                    break;
-                }
+        while (wrongAnswers.length < 3 && window.words.length > 1) {
+            const randomWord = window.words[Math.floor(Math.random() * window.words.length)];
+            if (!usedMeanings.has(randomWord.meaning)) {
+                wrongAnswers.push(randomWord.ruby || randomWord.meaning);
+                usedMeanings.add(randomWord.meaning);
             }
         }
-    }
+        const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
 
-    if (!correctItem) {
-        console.warn('No non-recent words available, selecting with weights');
-        rand = Math.random() * totalWeight;
-        weightSum = 0;
-        for (const item of filteredItems) {
-            weightSum += 1 / (1 + item.appearanceCount);
-            if (rand <= weightSum) {
-                correctItem = item;
-                break;
-            }
-        }
-    }
-
-    correctItem.appearanceCount++;
-    console.log(`Selected word: ${correctItem.word}, Appearance count: ${correctItem.appearanceCount}`);
-    saveWordDataAppearance();
-
-    quizState.recentWords.push(correctItem.phrase || correctItem.word);
-    if (quizState.recentWords.length > maxRecent) {
-        quizState.recentWords.shift();
-    }
-    console.log('Recent words:', quizState.recentWords);
-
-    const questionTypes = correctItem.questionTypes || ['meaning'];
-    let questionType;
-    const prevType = quizState.current?.questionType;
-
-    // antonym を最低33.33%の確率で選択
-    const randType = Math.random();
-    const antonymProb = 0.333;
-    const relatedProb = quizState.level >= 6 ? 0.2 : 0.15;
-    const availableTypes = questionTypes.filter(type => type !== prevType);
-
-    if (questionTypes.includes('antonym') && randType < antonymProb) {
-        questionType = 'antonym';
-    } else if (availableTypes.length > 0 && Math.random() < 0.5) {
-        questionType = availableTypes[Math.floor(Math.random() * availableTypes.length)];
-    } else {
-        if (questionTypes.includes('related') && randType < antonymProb + relatedProb) {
-            questionType = 'related';
-        } else {
-            questionType = 'meaning';
-        }
-    }
-    console.log('Selected questionType:', questionType, 'Available types:', questionTypes, 'Previous type:', prevType);
-
-    let correctAnswer;
-    let questionText;
-    let correctAnswers = [];
-
-    if (questionType == 'antonym' && correctItem.antonym) {
-        const antonymItem = wordData[selectedCategory].find(item => (item.phrase || item.word) === correctItem.antonym);
-        if (antonymItem) {
-            correctAnswer = { word: antonymItem.phrase || antonymItem.word, meaning: antonymItem.meaning };
-            correctAnswers = [correctAnswer];
-            questionText = `「${correctItem.phrase || correctItem.word}」の反対語は どれ？`;
-        } else {
-            console.warn(`Antonym not found for ${correctItem.word}, falling back to meaning`);
-            questionType = 'meaning';
-        }
-    }
-
-    if (questionType == 'related' && correctItem.relatedWords) {
-        const relatedItems = wordData[selectedCategory].filter(item => 
-            correctItem.relatedWords.includes(item.phrase || item.word)
-        );
-        if (relatedItems.length > 0) {
-            correctAnswer = relatedItems[Math.floor(Math.random() * relatedItems.length)];
-            correctAnswers = relatedItems.map(item => ({
-                word: item.phrase || item.word,
-                meaning: item.meaning
-            }));
-            questionText = `「${correctItem.phrase || correctItem.word}」に近い意味は どれ？`;
-        } else {
-            console.warn(`Related words not found for ${correctItem.word}, falling back to meaning`);
-            questionType = 'meaning';
-        }
-    }
-
-    if (questionType == 'meaning') {
-        correctAnswer = { word: correctItem.phrase || correctItem.word, meaning: correctItem.meaning };
-        correctAnswers = [correctAnswer];
-        questionText = `「${correctAnswer.meaning}」は どれ？`;
-    }
-
-    quizState.current = { item: correctAnswer, category: selectedCategory, questionType, correctAnswers };
-    const optionsList = [...correctAnswers];
-
-    let otherItems = items.filter(item => 
-        !correctAnswers.some(ans => (item.phrase || item.word) === ans.word)
-    );
-
-    while (optionsList.length < 4 && otherItems.length > 0) {
-        const randomIndex = Math.floor(Math.random() * otherItems.length);
-        const otherItem = otherItems[randomIndex];
-        let otherOption = { word: otherItem.phrase || otherItem.word, meaning: otherItem.meaning };
-
-        if (otherItem.relatedWords && Math.random() < 0.5) {
-            const relatedWord = otherItem.relatedWords[Math.floor(Math.random() * otherItem.relatedWords.length)];
-            const relatedItem = wordData[selectedCategory].find(item => 
-                (item.phrase || item.word) === relatedWord
-            );
-            if (relatedItem && !optionsList.some(opt => opt.word === (relatedItem.phrase || relatedItem.word))) {
-                otherOption = { word: relatedItem.phrase || relatedItem.word, meaning: relatedItem.meaning };
-                console.log(`Added related word: ${otherOption.word} for ${otherItem.word}`);
-            }
-        }
-
-        if (!optionsList.some(opt => opt.word === otherOption.word)) {
-            optionsList.push(otherOption);
-        }
-        otherItems.splice(otherItems.indexOf(otherItem), 1);
-    }
-
-    if (optionsList.length < 4) {
-        const otherCategories = Object.keys(wordData).filter(key => key !== selectedCategory);
-        let allOtherItems = [];
-        for (const cat of otherCategories) {
-            const catItems = difficulty === 'any'
-                ? wordData[cat]
-                : wordData[cat].filter(item => item.difficulty === difficulty);
-            allOtherItems.push(...catItems.filter(item => 
-                !optionsList.some(opt => (item.phrase || item.word) === opt.word)
-            ));
-        }
-
-        while (optionsList.length < 4 && allOtherItems.length > 0) {
-            const randomIndex = Math.floor(Math.random() * allOtherItems.length);
-            const otherItem = allOtherItems[randomIndex];
-            const otherOption = { word: otherItem.phrase || otherItem.word, meaning: otherItem.meaning };
-            if (!optionsList.some(opt => opt.word === otherOption.word)) {
-                optionsList.push(otherOption);
-            }
-            allOtherItems.splice(randomIndex, 1);
-        }
-    }
-
-    if (optionsList.length < 4) {
-        let allItems = [];
-        for (const cat of Object.keys(wordData)) {
-            allItems.push(...wordData[cat].filter(item => 
-                !optionsList.some(opt => (item.phrase || item.word) === opt.word)
-            ));
-        }
-
-        while (optionsList.length < 4 && allItems.length > 0) {
-            const randomIndex = Math.floor(Math.random() * allItems.length);
-            const otherItem = allItems[randomIndex];
-            const otherOption = { word: otherItem.phrase || otherItem.word, meaning: otherItem.meaning };
-            if (!optionsList.some(opt => opt.word === otherOption.word)) {
-                optionsList.push(otherOption);
-            }
-            allItems.splice(randomIndex, 1);
-        }
-    }
-
-    if (optionsList.length < 4) {
-        console.error('Not enough words to fill options');
-        typeMessage('おっと！ 単語の呪文が足りぬ！ 別のモンスターに挑戦だ！', message, () => {
-            setTimeout(() => document.dispatchEvent(new Event('nextBattle')), 1000);
-        });
-        return;
-    }
-
-    optionsList.sort(() => Math.random() - 0.5);
-    quizState.options = optionsList;
-
-    optionsDiv.innerHTML = `
-        <div class="row g-2">
-            ${optionsList.map((option, index) => `
-                <div class="col-6">
-                    <button class="dq3-option btn w-100" data-index="${index}" data-is-correct="${correctAnswers.some(ans => ans.word === option.word)}">
-                        <span class="option-text py-0 fs-5">${option.word}</span>
-                    </button>
+        $('#quizContainer').empty();
+        const icon = question.icon || (window.defaultIcons && defaultIcons[question.category]) || 'mdi:help-circle-outline';
+        const iconStyle = question.color ? `style="color: ${question.color}"` : '';
+        $('#quizContainer').append(`
+            <div class="question-card" data-word="${question.word}">
+                <div class="progress timer-container mb-3" style="height: 10px;">
+                    <div id="timerBar" class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
                 </div>
-            `).join('')}
-        </div>
-    `;
+                <div class="text-center">
+                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} data-word="${question.word}"></span>
+                    <i class="sound-icon fas fa-volume-up ms-2" data-word="${question.word}"></i>
+                    <h4 class="mt-2">${question.word}</h4>
+                </div>
+            </div>
+            <div class="answer-grid">
+                ${answers.map(answer => `
+                    <div class="answer-card" data-answer="${answer}">
+                        ${answer}
+                    </div>
+                `).join('')}
+            </div>
+            <div class="text-center mt-3" id="nextQuestionContainer" style="display: none;">
+                <button id="nextQuestionButton" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i>次へ！
+                </button>
+            </div>
+        `);
+        console.log('アイコン生成確認:', $('.vocab-icon').length, $('.vocab-icon').data('word'));
 
-    optionsDiv.querySelectorAll('button').forEach((button, index) => {
-        button.addEventListener('click', () => {
-            console.log('Quiz option clicked:', index);
-            if (!quizState.isSeMuted) {
-                try {
-                    soundEffects.cursole.play();
-                    console.log('Playing click SE at', new Date().toISOString());
-                } catch (err) {
-                    console.error('Error playing click SE:', err);
-                }
-            } else {
-                console.log('SE muted, skipping click sound');
+        // ★★★ 重要 ★★★
+        // 動的に追加された問題のアイコンをIconifyにスキャンさせる
+        Iconify.scan();
+
+        startTimer();
+    }
+
+    function startTimer() {
+        if (questionTimer) {
+            clearInterval(questionTimer);
+        }
+        let timeLeft = 10;
+        const timerBar = $('#timerBar');
+        // タイマーバーのスタイルをリセット
+        timerBar.css('width', '100%').removeClass('bg-danger bg-warning').addClass('bg-success');
+
+        questionTimer = setInterval(() => {
+
+            timeLeft--;
+            const percentage = (timeLeft / 10) * 100;
+            timerBar.css('width', percentage + '%');
+
+            // 残り時間に応じて色を変更
+            if (timeLeft <= 3) {
+                timerBar.removeClass('bg-success bg-warning').addClass('bg-danger');
+            } else if (timeLeft <= 6) {
+                timerBar.removeClass('bg-success').addClass('bg-warning');
             }
-            checkAnswer(index);
-        }, { once: true });
+
+            if (timeLeft <= 0) {
+                clearInterval(questionTimer);
+                handleTimeout();
+            }
+        }, 1000);
+    }
+
+    function handleTimeout() {
+        console.log('時間切れ');
+        $('.answer-card').off('click touchstart').addClass('disabled');
+        playIncorrectSound();
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
+        showFeedback('時間切れ！⏳', `正解は "${correctAnswer}" でした。`);
+        correctInCurrentSet = 0;
+        updateProgress();
+    }
+
+    function bindEvents() {
+        console.log('イベントバインド開始');
+
+        $(document).on('click touchstart', '.answer-card', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            clearInterval(questionTimer); // 回答時にタイマーを停止
+            console.log('回答選択:', $(this).data('answer'));
+            if (!window.audioContext) initAudioContext();
+            const selectedAnswer = $(this).data('answer');
+            const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
+            const $card = $(this);
+
+            $('.answer-card').off('click touchstart').addClass('disabled');
+
+            if (selectedAnswer === correctAnswer) {
+                score++;
+                correctInCurrentSet++;
+                $card.addClass('correct');
+                playCorrectSound();
+                if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                showToast('正解！', 'success');
+                setTimeout(() => {
+                    handleNextQuestion();
+                }, 1500); // 1.5秒後に自動で次の問題へ
+            } else {
+                $card.addClass('incorrect');
+                playIncorrectSound();
+                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                showFeedback('おっと！もう一度挑戦！😉', `"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
+                correctInCurrentSet = 0;
+            }
+
+            updateProgress();
+        });
+
+        $(document).on('click touchstart', '.vocab-icon', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $icon = $(this);
+
+            console.log('アイコンタップ検知');
+            const word = $(this).data('word');
+            console.log('タップされた単語:', word, 'speechEnabled:', window.speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
+
+            $icon.addClass('speaking vocab-icon-spin');
+            speakWord(word, {
+                caller: 'vocab-icon',
+                lang: 'en-GB',
+                onEnd: () => $icon.removeClass('speaking vocab-icon-spin'),
+                onError: () => {
+                    $icon.removeClass('speaking vocab-icon-spin');
+                }
+            });
+        });
+
+        $(document).on('click touchstart', '.sound-icon', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const $icon = $(this);
+
+            console.log('音声ボタンタップ');
+            const word = $(this).data('word');
+            console.log('タップされた単語:', word, 'speechEnabled:', window.speechEnabled, 'speechSynthesis:', !!window.speechSynthesis);
+
+            $icon.addClass('speaking');
+            speakWord(word, {
+                caller: 'sound-icon',
+                lang: 'en-GB',
+                onEnd: () => $icon.removeClass('speaking'),
+                onError: () => {
+                    $icon.removeClass('speaking');
+                }
+            });
+        });
+
+        $(document).on('click', '#testSpeechButton', function(e) {
+            e.preventDefault();
+            console.log('音声テストボタンクリック');
+            speakWord('Hello, welcome to the quiz', { caller: 'test-button', lang: 'en-GB' });
+            showToast('音声テストを実行中: en-GB', 'info');
+        });
+
+        $(document).on('click', '#nextQuestionButton', function(e) {
+            e.preventDefault();
+            console.log('次の問題へボタンクリック');
+            $('#nextQuestionContainer').hide();
+            handleNextQuestion();
+        });
+
+        $('#feedbackModal').on('hidden.bs.modal', function() {
+            console.log('モーダル閉じ検知');
+            $('#nextQuestionContainer').show();
+            document.activeElement.blur();
+        });
+    }
+
+    function showFeedback(title, body) {
+        $('#feedbackModalLabel').text(title);
+        $('#feedbackModalBody').html(body);
+        // モーダルが既に表示されている場合は内容だけ更新
+        if ($('#feedbackModal').hasClass('show')) return;
+        $('#feedbackModal').modal('show');
+    }
+
+    $('#feedbackModal .btn-primary').on('click', function() {
+        console.log('モーダルOKクリック');
+        $('#feedbackModal').modal('hide');
     });
 
-    typeMessage(`${quizState.monster.name}の こうげき！！\n${questionText}`, message);
-    console.log('Quiz options rendered, Category:', selectedCategory, 'Difficulty:', difficulty, 'Options:', optionsList);
-}
+    function handleNextQuestion() {
+        if (questionTimer) clearInterval(questionTimer);
+        currentQuestion++;
+        checkSetProgress();
+        checkLevelUp();
+        generateQuestion();
+    }
+
+    function checkSetProgress() {
+        const setQuestionIndex = currentQuestion % QUESTIONS_PER_SET;
+        if (setQuestionIndex === 0 && currentQuestion > 0) {
+            if (correctInCurrentSet === QUESTIONS_PER_SET) {
+                score += 2;
+                showToast(`セット${currentSet} クリア！ボーナス +2点！`, 'success');
+                showFeedback(`セット${currentSet} クリア！🎉`, `5問連続正解！次のセット${currentSet + 1}へ進みます！`);
+                currentSet++;
+                correctInCurrentSet = 0;
+            } else {
+                showToast(`セット${currentSet} 終了。${correctInCurrentSet}問正解でした。次のセットへ！`, 'info');
+                correctInCurrentSet = 0;
+                currentSet++;
+            }
+            updateProgress();
+        }
+    }
+
+    function checkLevelUp() {
+        const newLevel = Math.floor(score / 5) + 1;
+        if (newLevel > currentLevel) {
+            currentLevel = newLevel;
+            showToast(`レベルアップ！Level ${currentLevel} 達成！🎉`, 'success');
+            showFeedback(`Level Up! 🎉`, `おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
+            const bgClasses = ['bg-color', 'bg-fruit', 'bg-animal', 'bg-weather', 'bg-number'];
+            const bgClass = bgClasses[(currentLevel - 1) % bgClasses.length];
+            $('body').removeClass(bgClasses.join(' ')).addClass(bgClass);
+        }
+        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel}, セット${currentSet})`);
+    }
+
+    function updateProgress() {
+        totalQuestions = currentQuestion + 1;
+        const progress = (totalQuestions / window.words.length) * 100;
+        $('#progressBar').css('width', progress + '%').attr('aria-valuenow', progress);
+        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel}, セット${currentSet})`);
+    }
+
+    $('#resetButton').on('click', function() {
+        console.log('リセットボタンクリック');
+        if (!window.audioContext) initAudioContext();
+        currentQuestion = 0;
+        score = 0;
+        totalQuestions = 0;
+        currentLevel = 1;
+        currentSet = 1;
+        correctInCurrentSet = 0;
+        window.words.sort(() => Math.random() - 0.5);
+        updateProgress();
+        generateQuestion();
+    });
+
+    function initializePage() {
+        console.log('ページ初期化開始');
+        $('body').addClass('quiz-page');
+        $('#quizContainer').html('<div class="text-center"><p>クイズを読み込み中...</p></div>');
+        $('#toggleSpeechButton').find('.button-text').text(window.speechEnabled ? '音声オフ' : '音声オン');
+        // AudioContextの初期化はユーザー操作を起点に行うのがベストプラクティスだが、
+        // ここで呼んでおくことで、最初のクリック時の遅延を減らせる可能性がある。
+        if (!window.audioContext) initAudioContext();
+        generateQuestion();
+        bindEvents();
+    }
+
+    loadData(function(data) {
+        window.words = data.sort(() => Math.random() - 0.5);
+        console.log(`${window.words.length}語を読み込みました`);
+        initializePage();
+    });
+    console.log('quiz.js ロード完了');
+});
