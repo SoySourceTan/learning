@@ -88,7 +88,7 @@ $(document).ready(function() {
                 `).join('')}
             </div>
             <div class="text-center mt-3" id="nextQuestionContainer" style="display: none;">
-                <button id="nextQuestionButton" class="btn btn-primary btn-lg">
+                <button id="nextQuestionButton" class="btn btn-primary">
                     <i class="fas fa-arrow-right me-2"></i>次へ！
                 </button>
             </div>
@@ -147,7 +147,7 @@ $(document).ready(function() {
                         <div class="text-center mt-5">
                             <h3 class="mb-3">🎉 クイズクリア 🎉</h3>
                             <p class="lead">Level ${currentLevel} になりました！</p>
-                            <button id="nextChallengeButton" class="btn btn-success btn-lg mt-3">
+                            <button id="nextChallengeButton" class="btn btn-success mt-3">
                                 <i class="fas fa-arrow-right me-2"></i>次に挑戦！
                             </button>
                         </div>

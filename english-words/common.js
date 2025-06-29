@@ -2,7 +2,7 @@ if (!window.words) {
     window.words = [];
 }
 window.audioContext = null;
-window.voicesLoaded = false;
+window.speechSynthesisVoices = []; // グローバルな音声リスト
 window.speechEnabled = true;
 
 window.defaultIcons = {
@@ -107,37 +107,44 @@ function speakWord(word, options = {}) {
         onError
     } = options;
 
-    if (!window.speechEnabled || !window.speechSynthesis) {
+    if (!window.speechEnabled) {
+        console.warn('Speech is disabled by user.');
+        if (onError) onError();
+        return;
+    }
+    if (!window.speechSynthesis) {
         console.warn('Speech synthesis is disabled or not supported.');
         if (onError) onError();
         return;
     }
 
-    // 常に前の発話をキャンセルしてから新しい発話を開始する
-    speechSynthesis.cancel();
+    // iOSでのスタッタリング（冒頭の音がダブる）バグを軽減するための対策。
+    // 既に発話中の場合はキャンセルし、少し待ってから新しい発話を開始する。
+    if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+    }
 
-    function startSpeech() {
-        const voices = speechSynthesis.getVoices();
-
+    // 50msの遅延を設けることで、cancel()の処理が完了するのを待ち、バグを回避する。
+    setTimeout(() => {
         const utterance = new SpeechSynthesisUtterance(word);
         utterance.lang = lang;
 
-        if (voices.length > 0) {
+        if (window.speechSynthesisVoices.length > 0) {
             // iOS/macOSの高品質な女性の声(Serena)を最優先
-            const selectedVoice = voices.find(voice => voice.lang === lang && voice.name === 'Serena') ||
+            const selectedVoice = window.speechSynthesisVoices.find(voice => voice.lang === lang && voice.name === 'Serena') ||
                                  // 次に名前に "Female" を含む女性の声を探す
-                                 voices.find(voice => voice.lang === lang && /female/i.test(voice.name)) ||
+                                 window.speechSynthesisVoices.find(voice => voice.lang === lang && /female/i.test(voice.name)) ||
                                  // Google製の高品質な声を探す (Android/Windows向け)
-                                 voices.find(voice => voice.lang === lang && /google/i.test(voice.name)) ||
+                                 window.speechSynthesisVoices.find(voice => voice.lang === lang && /google/i.test(voice.name)) ||
                                  // それでもなければ、指定言語に一致する最初の声（OSのデフォルト）
-                                 voices.find(voice => voice.lang === lang) ||
+                                 window.speechSynthesisVoices.find(voice => voice.lang === lang) ||
                                  // 最終手段として、'en'で始まる言語の最初の声
-                                 voices.find(voice => voice.lang.startsWith('en'));
+                                 window.speechSynthesisVoices.find(voice => voice.lang.startsWith('en'));
             if (selectedVoice) {
                 utterance.voice = selectedVoice;
             }
         } else {
-            console.warn('Voice list is empty. Using browser default for the language.');
+            console.warn('音声リストが空です。ブラウザのデフォルト音声を使用します。');
         }
 
         utterance.rate = 1;
@@ -146,24 +153,23 @@ function speakWord(word, options = {}) {
 
         utterance.onstart = () => {
             const voiceName = utterance.voice ? `${utterance.voice.name} (${utterance.voice.lang})` : 'default';
-            console.log(`Speech started: "${word}", Voice: ${voiceName}, Caller: ${caller}`);
+            console.log(`音声開始: "${word}", 声: ${voiceName}, 呼び出し元: ${caller}`);
             if (onStart) onStart();
         };
         utterance.onend = () => {
-            console.log(`Speech finished: "${word}"`);
+            console.log(`音声終了: "${word}"`);
             if (onEnd) onEnd();
         };
         utterance.onerror = (event) => {
             if (event.error !== 'interrupted') {
-                console.error(`Speech error for "${word}": ${event.error}`);
+                console.error(`音声エラー: "${word}", エラー: ${event.error}`);
                 // showToast('音声の再生に失敗しました。', 'error');
             }
             // 中断を含むすべてのエラーでUIクリーンアップ用のコールバックを呼ぶ
             if (onError) onError();
         };
         speechSynthesis.speak(utterance);
-    }
-    startSpeech();
+    }, 50);
 }
 
 function loadData(callback) {
@@ -210,7 +216,17 @@ $(document).ready(function() {
 
     // 音声合成エンジンを早期に準備させるための「ウォームアップ」
     if (window.speechSynthesis) {
-        speechSynthesis.getVoices();
+        const loadVoices = () => {
+            window.speechSynthesisVoices = speechSynthesis.getVoices();
+            console.log(`音声リストを読み込みました: ${window.speechSynthesisVoices.length}件`);
+        };
+
+        // ブラウザによっては、getVoices()が非同期でリストを返すため、
+        // onvoiceschanged イベントを使って確実にリストを取得する。
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
     }
 
     // 現在のページに基づいてナビゲーションリンクをアクティブにする
