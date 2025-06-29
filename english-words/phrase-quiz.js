@@ -6,7 +6,11 @@ $(document).ready(function() {
     let feedbackModal;
 
     // --- データ読み込みとゲーム開始 ---
-    fetch('./phrase.json')
+    const isGitHub = window.location.hostname.includes('github.io');
+    const repoName = 'english-words'; // ★★★ ご自身のリポジトリ名が違う場合は変更してください ★★★
+    const basePath = isGitHub ? `/${repoName}` : '.';
+
+    fetch(`${basePath}/phrase.json`)
         .then(res => res.json())
         .then(data => {
             if (data && data.length > 3) {

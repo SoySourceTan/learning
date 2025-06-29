@@ -160,8 +160,12 @@ function speakWord(word, options = {}) {
 }
 
 function loadData(callback) {
+    const isGitHub = window.location.hostname.includes('github.io');
+    const repoName = 'english-words'; // ★★★ ご自身のリポジトリ名が違う場合は変更してください ★★★
+    const basePath = isGitHub ? `/${repoName}` : '.';
+
     console.log('データ読み込み開始');
-    fetch('./kidswords.json')
+    fetch(`${basePath}/kidswords.json`)
         .then(response => {
             console.log('読み込み結果:', response);
             if (!response.ok) {
