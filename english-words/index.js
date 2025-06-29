@@ -151,7 +151,7 @@ $(document).ready(function() {
     });
 
     const isGitHub = window.location.hostname.includes('github.io');
-    const repoName = 'english-words'; // ★★★ ご自身のリポジトリ名が違う場合は変更してください ★★★
+    const repoName = 'My-English-Project'; // ★★★ あなたの実際のリポジトリ名に修正してください ★★★
     const basePath = isGitHub ? `/${repoName}` : '.';
 
     // 両方のJSONファイルを読み込む
