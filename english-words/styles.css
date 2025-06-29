@@ -295,3 +295,36 @@ body.quiz-page {
     font-weight: bold;
     color: #333;
 }
+
+/* --- Styles for phrase-quiz.html --- */
+.question-card h3.display-6 {
+    font-weight: 500;
+    color: #0056b3;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+/* --- Back to top button --- */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none; /* Initially hidden */
+    z-index: 1000;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Adjust position on mobile to avoid overlapping with the category nav */
+@media (max-width: 991.98px) {
+    .back-to-top {
+        bottom: 80px; /* 60px (nav height) + 20px (margin) */
+    }
+}

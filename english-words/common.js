@@ -84,7 +84,7 @@ function playCorrectSound() {
     soundEffects.correct.currentTime = 0; // 再生位置を最初に戻す
     soundEffects.correct.play().catch(err => {
         console.error('正解音再生エラー:', err);
-        showToast('正解音の再生に失敗しました。', 'error');
+        // showToast('正解音の再生に失敗しました。', 'error');
     });
 }
 
@@ -94,7 +94,7 @@ function playIncorrectSound() {
     soundEffects.incorrect.currentTime = 0; // 再生位置を最初に戻す
     soundEffects.incorrect.play().catch(err => {
         console.error('不正解音再生エラー:', err);
-        showToast('不正解音の再生に失敗しました。', 'error');
+        // showToast('不正解音の再生に失敗しました。', 'error');
     });
 }
 
@@ -149,7 +149,7 @@ function speakWord(word, options = {}) {
         utterance.onerror = (event) => {
             if (event.error !== 'interrupted') {
                 console.error(`Speech error for "${word}": ${event.error}`);
-                showToast('音声の再生に失敗しました。', 'error');
+                // showToast('音声の再生に失敗しました。', 'error');
             }
             // 中断を含むすべてのエラーでUIクリーンアップ用のコールバックを呼ぶ
             if (onError) onError();

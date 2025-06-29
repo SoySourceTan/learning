@@ -164,4 +164,20 @@ $(document).ready(function() {
         console.error("データ読み込みエラー:", error);
         $('#cardContainer').html('<p class="text-center text-danger">データの読み込みに失敗しました。</p>');
     });
+
+    // --- Back to top button logic ---
+    const backToTopButton = $('.back-to-top');
+
+    $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 200) {
+            backToTopButton.fadeIn();
+        } else {
+            backToTopButton.fadeOut();
+        }
+    });
+
+    backToTopButton.on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: 0 }, 300);
+    });
 });
