@@ -11,10 +11,9 @@ $(document).ready(function() {
     let score = 0;
     let totalQuestions = 0;
     let currentLevel = 1;
-    let currentSet = 1;
-    let correctInCurrentSet = 0;
-    const QUESTIONS_PER_SET = 5;
+    let consecutiveCorrectAnswers = 0;
     let questionTimer = null;
+    const STREAK_FOR_LEVEL_UP = 10;
 
     function generateQuestion() {
         console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
@@ -131,9 +130,8 @@ $(document).ready(function() {
         $('.answer-card').off('click touchstart').addClass('disabled');
         playIncorrectSound();
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-        const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
-        showFeedback('時間切れ！⏳', `正解は "${correctAnswer}" でした。`);
-        correctInCurrentSet = 0;
+        consecutiveCorrectAnswers = 0;
+        showFeedback('時間切れ！⏳', `正解は "${window.words[currentQuestion].ruby || window.words[currentQuestion].meaning}" でした。`);
         updateProgress();
     }
 
@@ -154,20 +152,34 @@ $(document).ready(function() {
 
             if (selectedAnswer === correctAnswer) {
                 score++;
-                correctInCurrentSet++;
+                consecutiveCorrectAnswers++;
                 $card.addClass('correct');
                 playCorrectSound();
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-                showToast('正解！', 'success');
-                setTimeout(() => {
-                    handleNextQuestion();
-                }, 1500); // 1.5秒後に自動で次の問題へ
+
+                if (consecutiveCorrectAnswers === STREAK_FOR_LEVEL_UP) {
+                    currentLevel++;
+                    updateProgress(); // スコア表示を最終更新
+                    showFeedback(`レベルアップ！🎉 Level ${currentLevel}達成！`, `おめでとうございます！<br>${STREAK_FOR_LEVEL_UP}問連続正解でクイズクリアです！<br>最終スコア: ${score}/${totalQuestions}`);
+                    $('#quizContainer').html(`
+                        <div class="text-center mt-5">
+                            <h3 class="mb-3">🎉 クイズクリア 🎉</h3>
+                            <p class="lead">Level ${currentLevel} になりました！</p>
+                            <button id="nextChallengeButton" class="btn btn-success btn-lg mt-3">
+                                <i class="fas fa-arrow-right me-2"></i>次に挑戦！
+                            </button>
+                        </div>
+                    `);
+                } else {
+                    showToast(`正解！ (${consecutiveCorrectAnswers}問連続)`, 'success');
+                    setTimeout(handleNextQuestion, 1500); // 1.5秒後に自動で次の問題へ
+                }
             } else {
+                consecutiveCorrectAnswers = 0;
                 $card.addClass('incorrect');
                 playIncorrectSound();
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
                 showFeedback('おっと！もう一度挑戦！😉', `"${window.words[currentQuestion].word}" は "${correctAnswer}" です、"${selectedAnswer}" ではありません！`);
-                correctInCurrentSet = 0;
             }
 
             updateProgress();
@@ -229,6 +241,12 @@ $(document).ready(function() {
             handleNextQuestion();
         });
 
+        $(document).on('click', '#nextChallengeButton', function(e) {
+            e.preventDefault();
+            console.log('「次に挑戦」ボタンクリック');
+            startNewChallenge();
+        });
+
         $('#feedbackModal').on('hidden.bs.modal', function() {
             console.log('モーダル閉じ検知');
             $('#nextQuestionContainer').show();
@@ -252,61 +270,32 @@ $(document).ready(function() {
     function handleNextQuestion() {
         if (questionTimer) clearInterval(questionTimer);
         currentQuestion++;
-        checkSetProgress();
-        checkLevelUp();
         generateQuestion();
-    }
-
-    function checkSetProgress() {
-        const setQuestionIndex = currentQuestion % QUESTIONS_PER_SET;
-        if (setQuestionIndex === 0 && currentQuestion > 0) {
-            if (correctInCurrentSet === QUESTIONS_PER_SET) {
-                score += 2;
-                showToast(`セット${currentSet} クリア！ボーナス +2点！`, 'success');
-                showFeedback(`セット${currentSet} クリア！🎉`, `5問連続正解！次のセット${currentSet + 1}へ進みます！`);
-                currentSet++;
-                correctInCurrentSet = 0;
-            } else {
-                showToast(`セット${currentSet} 終了。${correctInCurrentSet}問正解でした。次のセットへ！`, 'info');
-                correctInCurrentSet = 0;
-                currentSet++;
-            }
-            updateProgress();
-        }
-    }
-
-    function checkLevelUp() {
-        const newLevel = Math.floor(score / 5) + 1;
-        if (newLevel > currentLevel) {
-            currentLevel = newLevel;
-            showToast(`レベルアップ！Level ${currentLevel} 達成！🎉`, 'success');
-            showFeedback(`Level Up! 🎉`, `おめでとう！Level ${currentLevel} に到達しました！次の挑戦へ！`);
-            const bgClasses = ['bg-color', 'bg-fruit', 'bg-animal', 'bg-weather', 'bg-number'];
-            const bgClass = bgClasses[(currentLevel - 1) % bgClasses.length];
-            $('body').removeClass(bgClasses.join(' ')).addClass(bgClass);
-        }
-        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel}, セット${currentSet})`);
     }
 
     function updateProgress() {
         totalQuestions = currentQuestion + 1;
         const progress = (totalQuestions / window.words.length) * 100;
         $('#progressBar').css('width', progress + '%').attr('aria-valuenow', progress);
-        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel}, セット${currentSet})`);
+        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel})`);
     }
 
-    $('#resetButton').on('click', function() {
-        console.log('リセットボタンクリック');
+    function startNewChallenge() {
+        console.log('新しい挑戦を開始します');
         if (!window.audioContext) initAudioContext();
         currentQuestion = 0;
         score = 0;
         totalQuestions = 0;
-        currentLevel = 1;
-        currentSet = 1;
-        correctInCurrentSet = 0;
+        consecutiveCorrectAnswers = 0;
         window.words.sort(() => Math.random() - 0.5);
         updateProgress();
         generateQuestion();
+    }
+
+    $('#resetButton').on('click', function() {
+        console.log('リセットボタンクリック');
+        currentLevel = 1; // レベルをリセット
+        startNewChallenge();
     });
 
     function initializePage() {
