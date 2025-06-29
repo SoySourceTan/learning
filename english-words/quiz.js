@@ -61,8 +61,8 @@ $(document).ready(function() {
         const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
 
         $('#quizContainer').empty();
-        // 単語固有のアイコンではなく、カテゴリのデフォルトアイコンを常に使用する
-        const icon = (window.defaultIcons && window.defaultIcons[question.category]) || 'mdi:help-circle-outline';
+        // 単語のアイコンがあればそれを使い、なければカテゴリのデフォルトアイコンを使う
+        const icon = question.icon || (window.defaultIcons && window.defaultIcons[question.category]) || 'mdi:help-circle-outline';
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
             <div class="question-card text-center" data-word="${question.word}">
