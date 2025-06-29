@@ -26,6 +26,9 @@
                     <li class="nav-item">
                         <a class="nav-link rounded px-3" href="quiz.html">Quiz</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link rounded px-3" href="phrase-test.html">Phrase Quiz</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -33,6 +36,15 @@
 
     <div class="container my-5">
         <h1 class="mb-4 text-center">Vocabulary Cards</h1>
+        <div class="text-center mb-4">
+            <div class="btn-group" role="group" aria-label="Mode toggle">
+                <input type="radio" class="btn-check" name="mode-toggle" id="mode-words" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="mode-words"><i class="fas fa-font me-1"></i>単語モード</label>
+
+                <input type="radio" class="btn-check" name="mode-toggle" id="mode-phrases" autocomplete="off">
+                <label class="btn btn-outline-primary" for="mode-phrases"><i class="fas fa-comments me-1"></i>フレーズモード</label>
+            </div>
+        </div>
         <div id="cardContainer">
             <!-- Cards will be dynamically inserted here -->
         </div>

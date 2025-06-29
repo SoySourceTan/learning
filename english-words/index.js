@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    function bindCardEvents() {
+    function bindCardEvents(dataAttribute = 'word') {
         // カード全体をクリックまたはタップした時に音声を再生
         $('#cardContainer').on('click', '.vocab-card', function(e) {
             e.preventDefault();
@@ -7,7 +7,7 @@ $(document).ready(function() {
             const $card = $(this);
             const $icon = $card.find('.vocab-icon');
 
-            const word = $(this).data('word');
+            const word = $(this).data(dataAttribute);
             if (!word) {
                 console.error('単語データが見つかりません', this);
                 return;
@@ -25,11 +25,11 @@ $(document).ready(function() {
 
     }
 
-    function groupWordsByCategory(words) {
-        return words.reduce((acc, word) => {
-            const category = word.category || 'other';
+    function groupDataByCategory(dataArray) {
+        return dataArray.reduce((acc, item) => {
+            const category = item.category || 'other';
             if (!acc[category]) acc[category] = [];
-            acc[category].push(word);
+            acc[category].push(item);
             return acc;
         }, {});
     }
@@ -45,7 +45,7 @@ $(document).ready(function() {
             const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
             const sectionHtml = `
             <section id="category-${category}" class="mb-4">
-                <h2 class="category-title h4">${categoryTitle}</h2>
+                <h2 class="category-title h4"><span class="iconify me-2" data-icon="${(window.defaultIcons && defaultIcons[category]) || 'mdi:help-circle-outline'}"></span>${categoryTitle}</h2>
                     <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 g-3">
                         ${wordsInCategory.map(word => {
                             const icon = word.icon || (window.defaultIcons && defaultIcons[word.category]) || 'mdi:help-circle-outline';
@@ -63,6 +63,35 @@ $(document).ready(function() {
                         }).join('')}
                     </div>
                 </section>`;
+            $cardContainer.append(sectionHtml);
+        }
+    }
+
+    function renderPhraseCards(groupedByPhraseCategory) {
+        const $cardContainer = $('#cardContainer');
+        $cardContainer.empty();
+
+        const sortedCategories = Object.keys(groupedByPhraseCategory).sort();
+
+        for (const category of sortedCategories) {
+            const phrasesInCategory = groupedByPhraseCategory[category];
+            const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1).replace(/_/g, ' ');
+            const sectionHtml = `
+            <section id="category-${category}" class="mb-4">
+                <h2 class="category-title h4"><span class="iconify me-2" data-icon="${(window.defaultIcons && defaultIcons[category]) || 'mdi:help-circle-outline'}"></span>${categoryTitle}</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3">
+                    ${phrasesInCategory.map(phrase => `
+                        <div class="col">
+                            <div class="card vocab-card h-100" data-phrase_en="${phrase.phrase_en}">
+                                <div class="card-body p-3">
+                                    <p class="card-title fw-bold mb-1">${phrase.phrase_en}</p>
+                                    <p class="card-text small text-muted mb-2">${phrase.phrase_ja}</p>
+                                    ${phrase.situation ? `<p class="card-text small text-info fst-italic mb-0"><i class="fas fa-info-circle me-1"></i>${phrase.situation}</p>` : ''}
+                                </div>
+                            </div>
+                        </div>`).join('')}
+                </div>
+            </section>`;
             $cardContainer.append(sectionHtml);
         }
     }
@@ -97,16 +126,42 @@ $(document).ready(function() {
         });
     }
 
-    loadData(function(data) {
-        console.log('JSONデータ読み込み成功:', data);
-        const groupedData = groupWordsByCategory(data);
-        renderCategorizedCards(groupedData);
-        renderCategoryNav(groupedData);
-        bindCardEvents();
-        bindNavEvents();
+    let wordsData = [];
+    let phrasesData = [];
 
-        // ★★★ 重要 ★★★
-        // 動的に追加されたすべてのアイコンをIconifyにスキャンさせる
+    function switchMode(mode) {
+        if (mode === 'words') {
+            const groupedData = groupDataByCategory(wordsData);
+            renderCategorizedCards(groupedData);
+            renderCategoryNav(groupedData);
+            bindCardEvents('word');
+        } else { // mode === 'phrases'
+            const groupedData = groupDataByCategory(phrasesData);
+            renderPhraseCards(groupedData);
+            // フレーズモードでも同じカテゴリナビを再利用
+            renderCategoryNav(groupedData);
+            bindCardEvents('phrase_en');
+        }
         Iconify.scan();
+    }
+
+    $('input[name="mode-toggle"]').on('change', function() {
+        const selectedMode = this.id === 'mode-words' ? 'words' : 'phrases';
+        switchMode(selectedMode);
+    });
+
+    // 両方のJSONファイルを読み込む
+    Promise.all([
+        fetch('./kidswords.json').then(res => res.json()),
+        fetch('./phrase.json').then(res => res.json())
+    ]).then(([words, phrases]) => {
+        console.log('単語とフレーズのデータ読み込み成功');
+        wordsData = words;
+        phrasesData = phrases;
+        switchMode('words'); // 初期表示は単語モード
+        bindNavEvents();
+    }).catch(error => {
+        console.error("データ読み込みエラー:", error);
+        $('#cardContainer').html('<p class="text-center text-danger">データの読み込みに失敗しました。</p>');
     });
 });
