@@ -6,11 +6,7 @@ $(document).ready(function() {
     let feedbackModal;
 
     // --- データ読み込みとゲーム開始 ---
-    const isGitHub = window.location.hostname.includes('github.io');
-    const repoName = 'My-English-Project'; // ★★★ あなたの実際のリポジトリ名に修正してください ★★★
-    const basePath = isGitHub ? `/${repoName}` : '.';
-
-    fetch(`${basePath}/phrase.json`)
+    fetch(`phrase.json?v=${new Date().getTime()}`)
         .then(res => res.json())
         .then(data => {
             if (data && data.length > 3) {

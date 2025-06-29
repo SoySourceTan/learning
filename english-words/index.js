@@ -150,14 +150,10 @@ $(document).ready(function() {
         switchMode(selectedMode);
     });
 
-    const isGitHub = window.location.hostname.includes('github.io');
-    const repoName = 'My-English-Project'; // ★★★ あなたの実際のリポジトリ名に修正してください ★★★
-    const basePath = isGitHub ? `/${repoName}` : '.';
-
     // 両方のJSONファイルを読み込む
     Promise.all([
-        fetch(`${basePath}/kidswords.json`).then(res => res.json()),
-        fetch(`${basePath}/phrase.json`).then(res => res.json())
+        fetch(`kidswords.json?v=${new Date().getTime()}`).then(res => res.json()),
+        fetch(`phrase.json?v=${new Date().getTime()}`).then(res => res.json())
     ]).then(([words, phrases]) => {
         console.log('単語とフレーズのデータ読み込み成功');
         wordsData = words;
