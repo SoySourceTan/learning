@@ -104,5 +104,9 @@ $(document).ready(function() {
         renderCategoryNav(groupedData);
         bindCardEvents();
         bindNavEvents();
+
+        // ★★★ 重要 ★★★
+        // 動的に追加されたすべてのアイコンをIconifyにスキャンさせる
+        Iconify.scan();
     });
 });

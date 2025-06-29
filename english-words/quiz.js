@@ -89,6 +89,11 @@ $(document).ready(function() {
             </div>
         `);
         console.log('アイコン生成確認:', $('.vocab-icon').length, $('.vocab-icon').data('word'));
+
+        // ★★★ 重要 ★★★
+        // 動的に追加された問題のアイコンをIconifyにスキャンさせる
+        Iconify.scan();
+
         startTimer();
     }
 
