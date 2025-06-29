@@ -44,19 +44,19 @@ $(document).ready(function() {
             const wordsInCategory = groupedByCategory[category];
             const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
             const sectionHtml = `
-                <section id="category-${category}" class="mb-5">
-                    <h2 class="category-title">${categoryTitle}</h2>
+            <section id="category-${category}" class="mb-4">
+                <h2 class="category-title h4">${categoryTitle}</h2>
                     <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 g-3">
                         ${wordsInCategory.map(word => {
                             const icon = word.icon || (window.defaultIcons && defaultIcons[word.category]) || 'mdi:help-circle-outline';
-                            const iconStyle = word.color ? `style="color: ${word.color}"` : '';
+                        const iconStyle = word.color ? `color: ${word.color};` : '';
                             return `
                                 <div class="col">
                                     <div class="card vocab-card h-100 ${word.background || 'bg-light'}" data-word="${word.word}">
-                                        <div class="card-body text-center">
-                                            <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle}></span>
-                                            <h5 class="card-title fw-bold mt-2">${word.word}</h5>
-                                            <p class="card-text">${word.ruby || word.meaning}</p>
+                                    <div class="card-body text-center p-2 d-flex flex-column justify-content-center">
+                                        <span class="vocab-icon iconify" data-icon="${icon}" style="${iconStyle}"></span>
+                                        <h6 class="card-title fw-bold mt-2 mb-1">${word.word}</h6>
+                                        <p class="card-text small mb-0">${word.ruby || word.meaning}</p>
                                         </div>
                                     </div>
                                 </div>`;

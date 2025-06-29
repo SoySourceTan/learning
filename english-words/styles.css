@@ -22,7 +22,6 @@ body {
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    min-height: 180px;
 }
 
 .vocab-card:hover {
@@ -134,19 +133,21 @@ body {
 
 /* Compact Card Design for Mobile */
 @media (max-width: 576px) {
+    /* The p-2 class in index.js is overridden by more specific CSS, so we adjust it here. */
     .vocab-card .card-body {
-        min-height: 150px;
-        padding: 1rem 0.75rem;
+        padding: 0.75rem 0.5rem;
     }
+
     .vocab-card .vocab-icon {
-        font-size: 2.5rem;
-        margin-bottom: 0.75rem;
+        font-size: 2.25rem;
+        margin-bottom: 0.5rem;
     }
     .vocab-card .card-title {
         font-size: 1rem;
     }
     .vocab-card .card-text {
         font-size: 0.85rem;
+        line-height: 1.2;
     }
 }
 
