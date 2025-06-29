@@ -155,7 +155,7 @@ body {
 
 /* A specific body style for the quiz page */
 body.quiz-page {
-    background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+    background: linear-gradient(135deg, #e3f2fd, #e8eaf6);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -175,6 +175,9 @@ body.quiz-page {
     max-width: 800px;
     margin: 2rem auto;
     padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .quiz-header {
@@ -347,5 +350,62 @@ body.quiz-page {
 @media (max-width: 991.98px) {
     .back-to-top {
         bottom: 80px; /* 60px (nav height) + 20px (margin) */
+    }
+}
+
+/* --- Responsive Quiz Layout for Mobile --- */
+@media (max-width: 767px) {
+    body.quiz-page {
+        /* Ensure the body fills the viewport and doesn't scroll */
+        height: 100vh;
+        overflow: hidden;
+        padding-top: 56px; /* Navbar height */
+        padding-bottom: 85px; /* Footer height */
+    }
+
+    .quiz-container {
+        margin: 0 auto;
+        padding: 0.5rem;
+        justify-content: space-between; /* Distribute space vertically */
+        height: 100%;
+    }
+
+    .quiz-header {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .question-card {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .question-card .lead {
+        font-size: 1rem;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .question-card .sound-icon {
+        font-size: 2.5rem !important;
+    }
+
+    #hint-area {
+        min-height: 6rem !important; /* Reduce space for hint */
+        margin-top: 0 !important;
+    }
+
+    #hint-area .vocab-icon {
+        font-size: 3rem !important;
+    }
+
+    #hint-area h4 {
+        font-size: 1.1rem;
+        margin-top: 0.25rem !important;
+    }
+
+    .answer-grid {
+        gap: 0.5rem;
     }
 }
