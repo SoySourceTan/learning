@@ -12,7 +12,7 @@ $(document).ready(function() {
     let totalQuestions = 0;
     let currentLevel = 1;
     let hintUsed = false;
-    const POINTS_FOR_LEVEL_UP = 10;
+    const POINTS_FOR_LEVEL_UP = 20;
 
     function generateQuestion() {
         console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
@@ -61,16 +61,19 @@ $(document).ready(function() {
         const answers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
 
         $('#quizContainer').empty();
-        const icon = question.icon || (window.defaultIcons && defaultIcons[question.category]) || 'mdi:help-circle-outline';
+        // 単語固有のアイコンではなく、カテゴリのデフォルトアイコンを常に使用する
+        const icon = (window.defaultIcons && window.defaultIcons[question.category]) || 'mdi:help-circle-outline';
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
             <div class="question-card text-center" data-word="${question.word}">
                 <p class="lead">この単語は何でしょう？</p>
-                <div class="my-3 d-flex justify-content-center align-items-center gap-3">
-                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} data-word="${question.word}" style="font-size: 4rem; cursor: pointer;"></span>
-                    <i class="fas fa-volume-up sound-icon" data-word="${question.word}"></i>
+                <div class="my-3">
+                    <i class="fas fa-volume-up sound-icon" data-word="${question.word}" style="font-size: 3rem; cursor: pointer;"></i>
                 </div>
-                <h4 class="mt-2" id="questionWord" style="visibility: hidden; min-height: 1.5em;">${question.word}</h4>
+                <div id="hint-area" style="visibility: hidden; min-height: 7rem;">
+                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} style="font-size: 4rem;"></span>
+                    <h4 class="mt-2" id="questionWord">${question.word}</h4>
+                </div>
                 <div class="mt-3">
                     <button id="hintButton" class="btn btn-outline-secondary">
                         <i class="fas fa-lightbulb me-1"></i> ヒントを見る
@@ -114,7 +117,7 @@ $(document).ready(function() {
         // ヒントボタンのイベント
         $(document).on('click', '#hintButton', function() {
             hintUsed = true;
-            $('#questionWord').css('visibility', 'visible');
+            $('#hint-area').css('visibility', 'visible');
             $(this).prop('disabled', true).addClass('disabled');
             showToast('ヒントを使用しました (正解で+1点)', 'info');
         });
