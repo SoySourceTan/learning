@@ -11,9 +11,8 @@ $(document).ready(function() {
     let score = 0;
     let totalQuestions = 0;
     let currentLevel = 1;
-    let consecutiveCorrectAnswers = 0;
-    let questionTimer = null;
-    const STREAK_FOR_LEVEL_UP = 10;
+    let hintUsed = false;
+    const POINTS_FOR_LEVEL_UP = 10;
 
     function generateQuestion() {
         console.log(`クイズ生成開始: currentQuestion=${currentQuestion}, words.length=${window.words.length}`);
@@ -28,6 +27,7 @@ $(document).ready(function() {
             return;
         }
 
+        hintUsed = false; // 新しい問題が始まるのでヒント使用状況をリセット
         const question = window.words[currentQuestion];
         console.log('現在の問題:', question);
         if (!question || !question.word) {
@@ -64,14 +64,17 @@ $(document).ready(function() {
         const icon = question.icon || (window.defaultIcons && defaultIcons[question.category]) || 'mdi:help-circle-outline';
         const iconStyle = question.color ? `style="color: ${question.color}"` : '';
         $('#quizContainer').append(`
-            <div class="question-card" data-word="${question.word}">
-                <div class="progress timer-container mb-3" style="height: 10px;">
-                    <div id="timerBar" class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="10"></div>
+            <div class="question-card text-center" data-word="${question.word}">
+                <p class="lead">この単語は何でしょう？</p>
+                <div class="my-3 d-flex justify-content-center align-items-center gap-3">
+                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} data-word="${question.word}" style="font-size: 4rem; cursor: pointer;"></span>
+                    <i class="fas fa-volume-up sound-icon" data-word="${question.word}"></i>
                 </div>
-                <div class="text-center">
-                    <span class="vocab-icon iconify" data-icon="${icon}" ${iconStyle} data-word="${question.word}"></span>
-                    <i class="sound-icon fas fa-volume-up ms-2" data-word="${question.word}"></i>
-                    <h4 class="mt-2">${question.word}</h4>
+                <h4 class="mt-2" id="questionWord" style="visibility: hidden; min-height: 1.5em;">${question.word}</h4>
+                <div class="mt-3">
+                    <button id="hintButton" class="btn btn-outline-secondary">
+                        <i class="fas fa-lightbulb me-1"></i> ヒントを見る
+                    </button>
                 </div>
             </div>
             <div class="answer-grid">
@@ -93,74 +96,50 @@ $(document).ready(function() {
         // 動的に追加された問題のアイコンをIconifyにスキャンさせる
         Iconify.scan();
 
-        startTimer();
-    }
-
-    function startTimer() {
-        if (questionTimer) {
-            clearInterval(questionTimer);
-        }
-        let timeLeft = 10;
-        const timerBar = $('#timerBar');
-        // タイマーバーのスタイルをリセット
-        timerBar.css('width', '100%').removeClass('bg-danger bg-warning').addClass('bg-success');
-
-        questionTimer = setInterval(() => {
-
-            timeLeft--;
-            const percentage = (timeLeft / 10) * 100;
-            timerBar.css('width', percentage + '%');
-
-            // 残り時間に応じて色を変更
-            if (timeLeft <= 3) {
-                timerBar.removeClass('bg-success bg-warning').addClass('bg-danger');
-            } else if (timeLeft <= 6) {
-                timerBar.removeClass('bg-success').addClass('bg-warning');
+        // 0.5秒後に音声を自動再生
+        setTimeout(() => {
+            const currentQuestionData = window.words[currentQuestion];
+            if (currentQuestionData && currentQuestionData.word) {
+                speakWord(currentQuestionData.word, {
+                    caller: 'auto-play',
+                    lang: 'en-GB'
+                });
             }
-
-            if (timeLeft <= 0) {
-                clearInterval(questionTimer);
-                handleTimeout();
-            }
-        }, 1000);
-    }
-
-    function handleTimeout() {
-        console.log('時間切れ');
-        $('.answer-card').off('click touchstart').addClass('disabled');
-        playIncorrectSound();
-        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-        consecutiveCorrectAnswers = 0;
-        showFeedback('時間切れ！⏳', `正解は "${window.words[currentQuestion].ruby || window.words[currentQuestion].meaning}" でした。`);
-        updateProgress();
+        }, 500);
     }
 
     function bindEvents() {
         console.log('イベントバインド開始');
 
+        // ヒントボタンのイベント
+        $(document).on('click', '#hintButton', function() {
+            hintUsed = true;
+            $('#questionWord').css('visibility', 'visible');
+            $(this).prop('disabled', true).addClass('disabled');
+            showToast('ヒントを使用しました (正解で+1点)', 'info');
+        });
+
         $(document).on('click touchstart', '.answer-card', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            clearInterval(questionTimer); // 回答時にタイマーを停止
             console.log('回答選択:', $(this).data('answer'));
             if (!window.audioContext) initAudioContext();
             const selectedAnswer = $(this).data('answer');
             const correctAnswer = window.words[currentQuestion].ruby || window.words[currentQuestion].meaning;
             const $card = $(this);
 
-            $('.answer-card').off('click touchstart').addClass('disabled');
+            $('.answer-card, #hintButton').off('click touchstart').addClass('disabled');
 
             if (selectedAnswer === correctAnswer) {
-                score++;
-                consecutiveCorrectAnswers++;
+                const points = hintUsed ? 1 : 2;
+                score += points;
                 $card.addClass('correct');
                 playCorrectSound();
                 if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-
-                if (consecutiveCorrectAnswers === STREAK_FOR_LEVEL_UP) {
+                if (score >= POINTS_FOR_LEVEL_UP) {
                     currentLevel++;
-                    updateProgress(); // スコア表示を最終更新
-                    showFeedback(`レベルアップ！🎉 Level ${currentLevel}達成！`, `おめでとうございます！<br>${STREAK_FOR_LEVEL_UP}問連続正解でクイズクリアです！<br>最終スコア: ${score}/${totalQuestions}`);
+                    updateProgress();
+                    showFeedback(`レベルアップ！🎉 Level ${currentLevel}達成！`, `おめでとうございます！<br>${POINTS_FOR_LEVEL_UP}点獲得でクイズクリアです！`);
                     $('#quizContainer').html(`
                         <div class="text-center mt-5">
                             <h3 class="mb-3">🎉 クイズクリア 🎉</h3>
@@ -171,11 +150,10 @@ $(document).ready(function() {
                         </div>
                     `);
                 } else {
-                    showToast(`正解！ (${consecutiveCorrectAnswers}問連続)`, 'success');
+                    showToast(`正解！ +${points}点`, 'success');
                     setTimeout(handleNextQuestion, 1500); // 1.5秒後に自動で次の問題へ
                 }
             } else {
-                consecutiveCorrectAnswers = 0;
                 $card.addClass('incorrect');
                 playIncorrectSound();
                 if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
@@ -268,16 +246,14 @@ $(document).ready(function() {
     });
 
     function handleNextQuestion() {
-        if (questionTimer) clearInterval(questionTimer);
         currentQuestion++;
         generateQuestion();
     }
 
     function updateProgress() {
-        totalQuestions = currentQuestion + 1;
-        const progress = (totalQuestions / window.words.length) * 100;
+        const progress = Math.min((score / POINTS_FOR_LEVEL_UP) * 100, 100);
         $('#progressBar').css('width', progress + '%').attr('aria-valuenow', progress);
-        $('#scoreText').text(`正解: ${score}/${totalQuestions} (Level ${currentLevel})`);
+        $('#scoreText').text(`スコア: ${score} / ${POINTS_FOR_LEVEL_UP} (Level ${currentLevel})`);
     }
 
     function startNewChallenge() {
@@ -285,8 +261,6 @@ $(document).ready(function() {
         if (!window.audioContext) initAudioContext();
         currentQuestion = 0;
         score = 0;
-        totalQuestions = 0;
-        consecutiveCorrectAnswers = 0;
         window.words.sort(() => Math.random() - 0.5);
         updateProgress();
         generateQuestion();

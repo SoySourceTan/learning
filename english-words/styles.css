@@ -198,6 +198,21 @@ body.quiz-page {
     transform: scale(1.02);
 }
 
+.sound-icon {
+    font-size: 2rem;
+    color: #6c757d;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+.sound-icon:hover {
+    color: #007bff !important;
+    transform: scale(1.1);
+}
+.sound-icon.speaking {
+    color: #0d6efd !important;
+    animation: pulse 0.5s infinite alternate;
+}
+
 .question-card .vocab-icon {
     font-size: 3rem;
     margin-bottom: 0.5rem;
@@ -303,6 +318,12 @@ body.quiz-page {
     background-color: #f8f9fa;
     padding: 1rem;
     border-radius: 10px;
+}
+
+@keyframes pulse {
+    to {
+        transform: scale(1.1);
+    }
 }
 
 /* --- Back to top button --- */
