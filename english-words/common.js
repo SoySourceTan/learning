@@ -123,8 +123,15 @@ function speakWord(word, options = {}) {
         utterance.lang = lang;
 
         if (voices.length > 0) {
-            const selectedVoice = voices.find(voice => voice.lang === lang && voice.name.includes('Google')) ||
+            // iOS/macOSの高品質な女性の声(Serena)を最優先
+            const selectedVoice = voices.find(voice => voice.lang === lang && voice.name === 'Serena') ||
+                                 // 次に名前に "Female" を含む女性の声を探す
+                                 voices.find(voice => voice.lang === lang && /female/i.test(voice.name)) ||
+                                 // Google製の高品質な声を探す (Android/Windows向け)
+                                 voices.find(voice => voice.lang === lang && /google/i.test(voice.name)) ||
+                                 // それでもなければ、指定言語に一致する最初の声（OSのデフォルト）
                                  voices.find(voice => voice.lang === lang) ||
+                                 // 最終手段として、'en'で始まる言語の最初の声
                                  voices.find(voice => voice.lang.startsWith('en'));
             if (selectedVoice) {
                 utterance.voice = selectedVoice;
