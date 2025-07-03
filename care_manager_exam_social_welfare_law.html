@@ -1,0 +1,318 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ケアマネジャー試験対策：社会福祉法の概要と重要条文</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .section-title {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+        .card {
+            margin-bottom: 1.5rem;
+        }
+        .accordion-button {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>ケアマネジャー試験対策</h1>
+        <h2>社会福祉法の概要と重要条文</h2>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- 社会福祉法の概要 -->
+        <section>
+            <h2 class="section-title">社会福祉法の概要</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>社会福祉法（昭和26年法律第45号）は、日本の社会福祉制度の基本的な枠組みを定める法律です。社会福祉事業の実施や、福祉サービスの提供、利用者の権利保護などを目的としており、ケアマネジャーとして業務を行う上で理解が必須です。以下に、主要なポイントをまとめます。</p>
+                    <ul>
+                        <li><strong>目的</strong>: 社会福祉の増進、国民の生活の安定と向上を目指す（第1条）。</li>
+                        <li><strong>対象</strong>: 生活困窮者、高齢者、障害者、児童など、支援が必要な人々を対象とする。</li>
+                        <li><strong>原則</strong>: 利用者の自己決定の尊重、サービスの質の確保、地域福祉の推進。</li>
+                        <li><strong>関連制度</strong>: 社会福祉事業の運営、福祉サービスの提供基準、事業者の指定・監督など。</li>
+                    </ul>
+                    <p>ケアマネジャーとしては、特に利用者の権利擁護やサービス提供の基準に関する条文を理解することが重要です。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 重要条文 -->
+        <section>
+            <h2 class="section-title">ケアマネジャーとして必要な条文</h2>
+            <div class="accordion" id="articlesAccordion">
+                <!-- 第2条: 社会福祉事業の定義 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#article2" aria-expanded="true" aria-controls="article2">
+                            第2条：社会福祉事業の定義
+                        </button>
+                    </h2>
+                    <div id="article2" class="accordion-collapse collapse show" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉事業を「第一種社会福祉事業」と「第二種社会福祉事業」に分類。第一種は施設運営（例: 特別養護老人ホーム）、第二種は在宅サービス（例: 訪問介護）など。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: 居宅介護支援事業は第二種社会福祉事業に該当。ケアマネジャーは、居宅サービス計画の作成やサービス調整を行う上で、この定義を理解する必要がある。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第3条: 社会福祉の原則 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article3" aria-expanded="false" aria-controls="article3">
+                            第3条：社会福祉の原則
+                        </button>
+                    </h2>
+                    <div id="article3" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉は、国民の権利として保障され、利用者の自己決定や尊厳を尊重する。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: ケアプラン作成時に、利用者の意向を尊重し、自己決定を支援する姿勢が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第14条: 利用者の権利擁護 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article14" aria-expanded="false" aria-controls="article14">
+                            第14条：利用者の権利擁護
+                        </button>
+                    </h2>
+                    <div id="article14" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉事業の利用者の権利を保護し、苦情処理体制の整備を義務付ける。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: 利用者や家族からの苦情に対応する際、適切な手続きを踏む必要がある。また、権利侵害がないよう、公正なサービス提供が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第75条: 居宅介護支援事業 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article75" aria-expanded="false" aria-controls="article75">
+                            第75条：居宅介護支援事業
+                        </button>
+                    </h2>
+                    <div id="article75" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 居宅介護支援事業の運営基準や、ケアマネジャーの役割（ケアプラン作成、サービス調整）を規定。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: ケアマネジャーの業務の根拠となる条文。適切なケアプラン作成と、サービス事業者との連携が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 試験対策のポイント -->
+        <section>
+            <h2 class="section-title">試験対策のポイント</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>ケアマネジャー試験では、社会福祉法の理解が問われます。特に以下の点に注意して学習を進めましょう。</p>
+                    <ul>
+                        <li><strong>条文の趣旨</strong>: 各条文の目的や背景を理解する。特に、利用者中心のケアや権利擁護の観点が重要。</li>
+                        <li><strong>実務との関連</strong>: 条文がケアマネジャーの業務（ケアプラン作成、苦情対応、サービス調整）にどう影響するかを考える。</li>
+                        <li><strong>頻出ポイント</strong>: 第2条（事業の定義）、第3条（原則）、第14条（ទ
+
+System: You are Grok 3 built by xAI.
+
+以下は、ご依頼のBootstrap 5.3.3を使用したケアマネジャー試験対策のための社会福祉法の概要と重要条文をまとめたウェブページです。レスポンシブで使いやすいデザインを心がけました。もし特定の修正や追加が必要な場合は、教えてください！
+
+<xaiArtifact artifact_id="4f95c983-ace5-41ee-947e-ee5201b78f67" artifact_version_id="959bcb4d-ea29-4028-82b0-87d83feadf95" title="care_manager_exam_social_welfare_law.html" contentType="text/html">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ケアマネジャー試験対策：社会福祉法の概要と重要条文</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .section-title {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+        .card {
+            margin-bottom: 1.5rem;
+        }
+        .accordion-button {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>ケアマネジャー試験対策</h1>
+        <h2>社会福祉法の概要と重要条文</h2>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- 社会福祉法の概要 -->
+        <section>
+            <h2 class="section-title">社会福祉法の概要</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>社会福祉法（昭和26年法律第45号）は、日本の社会福祉制度の基本的な枠組みを定める法律です。社会福祉事業の実施や、福祉サービスの提供、利用者の権利保護などを目的としており、ケアマネジャーとして業務を行う上で理解が必須です。以下に、主要なポイントをまとめます。</p>
+                    <ul>
+                        <li><strong>目的</strong>: 社会福祉の増進、国民の生活の安定と向上を目指す（第1条）。</li>
+                        <li><strong>対象</strong>: 生活困窮者、高齢者、障害者、児童など、支援が必要な人々を対象とする。</li>
+                        <li><strong>原則</strong>: 利用者の自己決定の尊重、サービスの質の確保、地域福祉の推進。</li>
+                        <li><strong>関連制度</strong>: 社会福祉事業の運営、福祉サービスの提供基準、事業者の指定・監督など。</li>
+                    </ul>
+                    <p>ケアマネジャーとしては、特に利用者の権利擁護やサービス提供の基準に関する条文を理解することが重要です。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 重要条文 -->
+        <section>
+            <h2 class="section-title">ケアマネジャーとして必要な条文</h2>
+            <div class="accordion" id="articlesAccordion">
+                <!-- 第2条: 社会福祉事業の定義 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#article2" aria-expanded="true" aria-controls="article2">
+                            第2条：社会福祉事業の定義
+                        </button>
+                    </h2>
+                    <div id="article2" class="accordion-collapse collapse show" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉事業を「第一種社会福祉事業」と「第二種社会福祉事業」に分類。第一種は施設運営（例: 特別養護老人ホーム）、第二種は在宅サービス（例: 訪問介護）など。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: 居宅介護支援事業は第二種社会福祉事業に該当。ケアマネジャーは、居宅サービス計画の作成やサービス調整を行う上で、この定義を理解する必要がある。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第3条: 社会福祉の原則 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article3" aria-expanded="false" aria-controls="article3">
+                            第3条：社会福祉の原則
+                        </button>
+                    </h2>
+                    <div id="article3" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉は、国民の権利として保障され、利用者の自己決定や尊厳を尊重する。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: ケアプラン作成時に、利用者の意向を尊重し、自己決定を支援する姿勢が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第14条: 利用者の権利擁護 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article14" aria-expanded="false" aria-controls="article14">
+                            第14条：利用者の権利擁護
+                        </button>
+                    </h2>
+                    <div id="article14" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 社会福祉事業の利用者の権利を保護し、苦情処理体制の整備を義務付ける。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: 利用者や家族からの苦情に対応する際、適切な手続きを踏む必要がある。また、権利侵害がないよう、公正なサービス提供が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 第75条: 居宅介護支援事業 -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#article75" aria-expanded="false" aria-controls="article75">
+                            第75条：居宅介護支援事業
+                        </button>
+                    </h2>
+                    <div id="article75" class="accordion-collapse collapse" data-bs-parent="#articlesAccordion">
+                        <div class="accordion-body">
+                            <p><strong>内容</strong>: 居宅介護支援事業の運営基準や、ケアマネジャーの役割（ケアプラン作成、サービス調整）を規定。</p>
+                            <p><strong>ケアマネジャーに関連するポイント</strong>: ケアマネジャーの業務の根拠となる条文。適切なケアプラン作成と、サービス事業者との連携が求められる。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 試験対策のポイント -->
+        <section>
+            <h2 class="section-title">試験対策のポイント</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p>ケアマネジャー試験では、社会福祉法の理解が問われます。特に以下の点に注意して学習を進めましょう。</p>
+                    <ul>
+                        <li><strong>条文の趣旨</strong>: 各条文の目的や背景を理解する。特に、利用者中心のケアや権利擁護の観点が重要。</li>
+                        <li><strong>実務との関連</strong>: 条文がケアマネジャーの業務（ケアプラン作成、苦情対応、サービス調整）にどう影響するかを考える。</li>
+                        <li><strong>頻出ポイント</strong>: 第2条（事業の定義）、第3条（原則）、第14条（権利擁護）、第75条（居宅介護支援事業）は試験でよく出題される。</li>
+                        <li><strong>関連法令との連携</strong>: 介護保険法や障害者総合支援法との関連を理解し、総合的な知識を整理する。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
