@@ -1,0 +1,272 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ケアマネジャー試験対策：暗記カード</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f5f6f5;
+            font-size: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .header {
+            background-color: #4b5e6d;
+            color: #ffffff;
+            padding: 2rem;
+            text-align: center;
+        }
+        .section-title {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .flip-card {
+            width: 100%;
+            max-width: 300px;
+            height: 180px;
+            perspective: 1000px;
+            margin-bottom: 1.5rem;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .flip-card-front {
+            background-color: #6b8299;
+            color: #ffffff;
+        }
+        .flip-card-back {
+            background-color: #ffffff;
+            color: #2c3e50;
+            transform: rotateY(180deg);
+            border: 1px solid #e0e4e8;
+        }
+        @media (max-width: 576px) {
+            .flip-card {
+                max-width: 100%;
+            }
+            body {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>ケアマネジャー試験対策</h1>
+        <h2>暗記カードで合格を掴む！</h2>
+        <p>全100枚！カテゴリー別に整理！ホバー（タップ）で答えを確認！</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- カテゴリー1: 社会福祉法 -->
+        <section>
+            <h2 class="section-title">社会福祉法</h2>
+            <div class="card-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第1条</h5><p>キーワード: 目的</p></div><div class="flip-card-back"><p>社会福祉の増進、国民の生活安定・向上。ケアマネは福祉理念を体現。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第2条</h5><p>キーワード: 社会福祉事業</p></div><div class="flip-card-back"><p>第一種（施設：特養等）、第二種（在宅：訪問介護等）。居宅介護支援は第二種。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第3条</h5><p>キーワード: 原則</p></div><div class="flip-card-back"><p>利用者の自己決定・尊厳を尊重。国民の権利として福祉を保障。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第14条</h5><p>キーワード: 権利擁護</p></div><div class="flip-card-back"><p>利用者の権利保護、苦情処理体制の整備。ケアマネは公正な対応が必須。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第15条</h5><p>キーワード: 苦情解決</p></div><div class="flip-card-back"><p>事業者は苦情解決責任者・第三者委員を設置。ケアマネは手順を把握。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第16条</h5><p>キーワード: 運営適正化</p></div><div class="flip-card-back"><p>透明性・適正運営を確保。ケアマネは法令遵守が重要。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第72条</h5><p>キーワード: 社会福祉協議会</p></div><div class="flip-card-back"><p>地域福祉の推進。ケアマネは地域資源活用時に連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第4条</h5><p>キーワード: 国・地方の責務</p></div><div class="flip-card-back"><p>国・自治体は福祉サービス提供の環境整備。ケアマネは制度を理解。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第17条</h5><p>キーワード: 事業者監督</p></div><div class="flip-card-back"><p>自治体は事業者の指導・監督。ケアマネは基準遵守が求められる。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第73条</h5><p>キーワード: 地域福祉計画</p></div><div class="flip-card-back"><p>地域の福祉ニーズに応じた計画。ケアマネは計画に基づく支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第5条</h5><p>キーワード: 利用者保護</p></div><div class="flip-card-back"><p>福祉サービスの質確保。ケアマネは利用者中心のサービス提供。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第18条</h5><p>キーワード: 報告義務</p></div><div class="flip-card-back"><p>事業者は運営状況を報告。ケアマネは正確な記録管理が必要。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第76条</h5><p>キーワード: 事業者指定</p></div><div class="flip-card-back"><p>居宅介護支援事業者の指定基準。ケアマネは指定要件を理解。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第6条</h5><p>キーワード: 福祉サービス提供</p></div><div class="flip-card-back"><p>利用者に適切なサービス提供。ケアマネはニーズに応じた調整。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第19条</h5><p>キーワード: 事業者義務</p></div><div class="flip-card-back"><p>事業者は法令・基準を遵守。ケアマネは運営基準を把握。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第77条</h5><p>キーワード: 居宅サービス基準</p></div><div class="flip-card-back"><p>居宅サービスの質確保。ケアマネは基準に基づくプラン作成。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第20条</h5><p>キーワード: 利用者契約</p></div><div class="flip-card-back"><p>サービス提供時の契約書。ケアマネは契約内容を説明。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第74条</h5><p>キーワード: 地域連携</p></div><div class="flip-card-back"><p>地域の福祉資源を活用。ケアマネは地域ネットワークを構築。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第7条</h5><p>キーワード: 利用者負担</p></div><div class="flip-card-back"><p>福祉サービスの費用負担原則。ケアマネは負担軽減策を提案。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉法 第71条</h5><p>キーワード: 社会福祉法人</p></div><div class="flip-card-back"><p>福祉事業運営の法人。ケアマネは法人運営事業者と連携。</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- カテゴリー2: 介護保険法 -->
+        <section>
+            <h2 class="section-title">介護保険法</h2>
+            <div class="card-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第7条</h5><p>キーワード: 要介護・要支援</p></div><div class="flip-card-back"><p>要介護：継続的な介護が必要。要支援：介護予防が必要。状態に応じた計画。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第8条</h5><p>キーワード: 居宅サービス</p></div><div class="flip-card-back"><p>訪問介護、訪問看護、通所介護等。ケアマネは適切なサービス選択。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第41条</h5><p>キーワード: 居宅介護支援事業</p></div><div class="flip-card-back"><p>事業者の指定基準。ケアマネはニーズに応じたケアプラン作成。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第46条</h5><p>キーワード: 施設サービス</p></div><div class="flip-card-back"><p>特養、老健、介護医療院。ケアマネは入所者の支援を考慮。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第24条</h5><p>キーワード: 要介護認定</p></div><div class="flip-card-back"><p>申請→一次判定（コンピュータ）→二次判定（審査会）。ケアマネは申請支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第27条</h5><p>キーワード: 認定有効期間</p></div><div class="flip-card-back"><p>要介護：原則12ヶ月、要支援：原則6ヶ月。ケアマネは更新支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第115条の45</h5><p>キーワード: 地域包括支援</p></div><div class="flip-card-back"><p>総合相談、権利擁護、介護予防。ケアマネは地域支援で連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第70条</h5><p>キーワード: 保険給付</p></div><div class="flip-card-back"><p>居宅、施設、地域密着型、介護予防サービス。ケアマネは給付管理を理解。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第8条の2</h5><p>キーワード: 地域密着型サービス</p></div><div class="flip-card-back"><p>小規模多機能、認知症対応型通所等。地域での生活継続支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第32条</h5><p>キーワード: 区分変更</p></div><div class="flip-card-back"><p>状態変化時の認定変更申請。ケアマネは速やかに手続き支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第65条</h5><p>キーワード: サービス利用限度額</p></div><div class="flip-card-back"><p>要介護度に応じた支給限度額。ケアマネは限度内でプラン作成。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第28条</h5><p>キーワード: 認定結果通知</p></div><div class="flip-card-back"><p>認定結果は書面で通知。ケアマネは利用者に説明しプランに反映。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第69条</h5><p>キーワード: 利用者負担</p></div><div class="flip-card-back"><p>原則1～3割負担。ケアマネは負担軽減策を提案。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第115条の46</h5><p>キーワード: 地域支援事業</p></div><div class="flip-card-back"><p>介護予防、生活支援、地域ケア会議。ケアマネは地域資源活用。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第42条</h5><p>キーワード: 事業者指定</p></div><div class="flip-card-back"><p>居宅サービス事業者の指定基準。ケアマネは指定事業者と連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第29条</h5><p>キーワード: 認定審査会</p></div><div class="flip-card-back"><p>要介護認定の二次判定。専門家が状態を審査。ケアマネは情報提供。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第79条</h5><p>キーワード: 指定取消</p></div><div class="flip-card-back"><p>基準違反事業者の指定取消。ケアマネは法令遵守を徹底。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第48条</h5><p>キーワード: 介護医療院</p></div><div class="flip-card-back"><p>医療・介護の両立施設。ケアマネは入所者のニーズに対応。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第23条</h5><p>キーワード: 保険者</p></div><div class="flip-card-back"><p>市町村が保険者。ケアマネは保険者と連携し手続き支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護保険法 第115条の47</h5><p>キーワード: 地域ケア会議</p></div><div class="flip-card-back"><p>地域課題解決の会議。ケアマネは参加し地域支援を強化。</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- カテゴリー3: ケアマネジメント実務 -->
+        <section>
+            <h2 class="section-title">ケアマネジメント実務</h2>
+            <div class="card-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ケアマネジメント</h5><p>キーワード: プロセス</p></div><div class="flip-card-back"><p>インテーク→アセスメント→ケアプラン作成→サービス調整→モニタリング→評価。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>アセスメント</h5><p>キーワード: 課題分析</p></div><div class="flip-card-back"><p>生活・健康・希望を評価。課題を明確化しサービス計画。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ケアプラン</h5><p>キーワード: 作成基準</p></div><div class="flip-card-back"><p>目標・ニーズに基づく。短期・長期目標を設定しサービス明記。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>モニタリング</h5><p>キーワード: 継続評価</p></div><div class="flip-card-back"><p>実施状況を定期確認。変化に応じてプラン修正。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>サービス担当者会議</h5><p>キーワード: 連携</p></div><div class="flip-card-back"><p>ケアプラン作成時に開催。関係職種でニーズを共有・調整。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>インテーク</h5><p>キーワード: 初回面接</p></div><div class="flip-card-back"><p>状況・希望を把握。信頼関係を築きアセスメントの基礎に。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>サービス調整</h5><p>キーワード: 事業者連携</p></div><div class="flip-card-back"><p>ケアプランに基づき事業者と内容・スケジュール調整。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>評価</h5><p>キーワード: 成果確認</p></div><div class="flip-card-back"><p>目標達成度を評価。満足度や課題を再分析。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ニーズ把握</h5><p>キーワード: 利用者中心</p></div><div class="flip-card-back"><p>利用者の希望・生活環境を詳細に把握。プランに反映。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>短期目標</h5><p>キーワード: ケアプラン</p></div><div class="flip-card-back"><p>1～3ヶ月で達成可能な目標。具体的で測定可能に設定。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>長期目標</h5><p>キーワード: ケアプラン</p></div><div class="flip-card-back"><p>6ヶ月以上での目標。生活の質向上を目指す。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>サービス計画書</h5><p>キーワード: 書類作成</p></div><div class="flip-card-back"><p>利用者・家族にサービス内容を明示。同意を得て実施。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>アセスメント項目</h5><p>キーワード: 評価項目</p></div><div class="flip-card-back"><p>健康、ADL、IADL、認知機能、家族状況、経済状況等。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>モニタリング頻度</h5><p>キーワード: 定期確認</p></div><div class="flip-card-back"><p>原則月1回以上。状態変化時は随時実施。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ケアカンファレンス</h5><p>キーワード: 多職種連携</p></div><div class="flip-card-back"><p>関係職種で情報共有。ケアプラン見直しや課題解決。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>サービス提供記録</h5><p>キーワード: 記録管理</p></div><div class="flip-card-back"><p>サービス実施状況を記録。モニタリングの基礎資料。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>利用者同意</h5><p>キーワード: 契約同意</p></div><div class="flip-card-back"><p>ケアプランやサービス内容に利用者の同意を必ず取得。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>家族支援</h5><p>キーワード: 家族連携</p></div><div class="flip-card-back"><p>家族の介護負担軽減や相談対応。情報共有を徹底。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域資源活用</h5><p>キーワード: 地域連携</p></div><div class="flip-card-back"><p>地域のサービス・団体を活用し生活支援を強化。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ケアプラン変更</h5><p>キーワード: 柔軟対応</p></div><div class="flip-card-back"><p>状態変化やニーズ変化に応じ、速やかにプラン修正。</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- カテゴリー4: 倫理・権利擁護 -->
+        <section>
+            <h2 class="section-title">倫理・権利擁護</h2>
+            <div class="card-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>倫理綱領</h5><p>キーワード: ケアマネ倫理</p></div><div class="flip-card-back"><p>利用者本位、公正中立、専門性、プライバシー保護、自己研鑽。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>プライバシー保護</h5><p>キーワード: 個人情報</p></div><div class="flip-card-back"><p>個人情報保護法に基づき、同意なく情報開示禁止。適切管理。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>高齢者虐待防止法</h5><p>キーワード: 虐待対応</p></div><div class="flip-card-back"><p>虐待の早期発見・通報義務。ケアマネは適切な対応・報告。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>インフォームドコンセント</h5><p>キーワード: 説明と同意</p></div><div class="flip-card-back"><p>サービス内容を十分説明し、同意を得る。自己決定を尊重。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>自己決定の支援</h5><p>キーワード: 意思尊重</p></div><div class="flip-card-back"><p>希望・価値観を尊重し、選択肢を提示して決定を支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>公正中立</h5><p>キーワード: 公平性</p></div><div class="flip-card-back"><p>特定の事業者に偏らず、利用者の利益を最優先に調整。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>苦情対応</h5><p>キーワード: 利用者対応</p></div><div class="flip-card-back"><p>不満を丁寧に聞き、適切な手続きで解決。記録を残す。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>権利擁護の役割</h5><p>キーワード: 擁護体制</p></div><div class="flip-card-back"><p>虐待や不当な扱いから保護。地域包括支援センターと連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>倫理的葛藤</h5><p>キーワード: 倫理判断</p></div><div class="flip-card-back"><p>利用者・家族・事業者の利害対立時に倫理綱領に基づく判断。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>秘密保持</h5><p>キーワード: 情報管理</p></div><div class="flip-card-back"><p>利用者の情報を厳格に管理。第三者に漏洩しない。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>利用者尊厳</h5><p>キーワード: 人間尊重</p></div><div class="flip-card-back"><p>個人の価値観・生活習慣を尊重。差別や偏見を排除。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>契約の透明性</h5><p>キーワード: 契約説明</p></div><div class="flip-card-back"><p>サービス契約内容を明確に説明。利用者の理解を確保。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>虐待の種類</h5><p>キーワード: 虐待認識</p></div><div class="flip-card-back"><p>身体的、心理的、経済的、性的、放置。ケアマネは全種類を把握。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>権利侵害防止</h5><p>キーワード: 予防策</p></div><div class="flip-card-back"><p>不当な扱いや差別を防止。ケアマネは監視と啓発を実施。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>自己研鑽</h5><p>キーワード: 専門性向上</p></div><div class="flip-card-back"><p>継続的な学習で知識・技術を更新。ケアマネの責任。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>利用者中心</h5><p>キーワード: ケアの基本</p></div><div class="flip-card-back"><p>利用者のニーズ・希望を最優先。個別対応を徹底。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>苦情処理手順</h5><p>キーワード: 対応フロー</p></div><div class="flip-card-back"><p>受付→事実確認→解決策提案→記録。迅速かつ公正に。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>倫理研修</h5><p>キーワード: 継続教育</p></div><div class="flip-card-back"><p>倫理意識向上のため定期研修。ケアマネは参加義務。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>家族の権利</h5><p>キーワード: 家族支援</p></div><div class="flip-card-back"><p>家族の意見も尊重。情報提供や相談で権利を保護。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>権利擁護機関</h5><p>キーワード: 外部連携</p></div><div class="flip-card-back"><p>地域包括や行政と連携し、利用者の権利を守る。</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- カテゴリー5: 関連法令・制度 -->
+        <section>
+            <h2 class="section-title">関連法令・制度</h2>
+            <div class="card-container">
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>障害者総合支援法</h5><p>キーワード: 障害福祉</p></div><div class="flip-card-back"><p>障害者の自立支援。ケアマネは高齢障害者支援で連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>生活保護法</h5><p>キーワード: 生活支援</p></div><div class="flip-card-back"><p>生活困窮者の最低限の生活保障。経済的支援と連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域支援事業</h5><p>キーワード: 地域包括ケア</p></div><div class="flip-card-back"><p>介護予防、生活支援、地域ケア会議。地域資源を活用。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>成年後見制度</h5><p>キーワード: 意思決定支援</p></div><div class="flip-card-back"><p>認知症等の財産管理・契約支援。ケアマネは制度提案。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>医療連携</h5><p>キーワード: 多職種連携</p></div><div class="flip-card-back"><p>医師・看護師等と連携。健康管理や情報共有を徹底。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域密着型サービス</h5><p>キーワード: 地域サービス</p></div><div class="flip-card-back"><p>小規模多機能、認知症対応型通所等。生活継続支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護予防</h5><p>キーワード: 予防支援</p></div><div class="flip-card-back"><p>要支援者向けに筋力向上や栄養改善等を計画。地域包括連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会資源</h5><p>キーワード: 地域活用</p></div><div class="flip-card-back"><p>ボランティア、NPO、地域団体を活用し生活支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>老人福祉法</h5><p>キーワード: 高齢者福祉</p></div><div class="flip-card-back"><p>高齢者の健康・福祉増進。ケアマネは関連サービスを理解。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>健康保険法</h5><p>キーワード: 医療サービス</p></div><div class="flip-card-back"><p>医療費の保険適用。ケアマネは医療連携時に活用。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域保健法</h5><p>キーワード: 保健サービス</p></div><div class="flip-card-back"><p>地域の保健施策。ケアマネは予防サービスと連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会福祉士</h5><p>キーワード: 資格連携</p></div><div class="flip-card-back"><p>福祉の専門職。ケアマネは相談支援で連携。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護報酬</h5><p>キーワード: 報酬体系</p></div><div class="flip-card-back"><p>サービスごとの報酬単位。ケアマネは報酬基準を把握。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>在宅医療</h5><p>キーワード: 医療連携</p></div><div class="flip-card-back"><p>訪問診療・看護等。在宅ケアで医療と連携強化。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域ケア会議</h5><p>キーワード: 地域課題</p></div><div class="flip-card-back"><p>地域の介護課題解決。ケアマネは積極的に参加。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>生活支援サービス</h5><p>キーワード: 生活援助</p></div><div class="flip-card-back"><p>買い物支援、食事準備等。地域資源を活用。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>介護予防計画</h5><p>キーワード: 予防プラン</p></div><div class="flip-card-back"><p>要支援者向けに運動・栄養改善等を計画。機能維持。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>地域福祉</h5><p>キーワード: 地域連携</p></div><div class="flip-card-back"><p>地域全体での福祉推進。ケアマネは地域活動に参加。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>ボランティア連携</h5><p>キーワード: 地域資源</p></div><div class="flip-card-back"><p>地域ボランティアを活用し、利用者の社会参加を支援。</p></div></div></div>
+                <div class="flip-card"><div class="flip-card-inner"><div class="flip-card-front"><h5>社会保障制度</h5><p>キーワード: 制度概要</p></div><div class="flip-card-back"><p>医療・介護・年金等。ケアマネは全体像を理解。</p></div></div></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap 5.3.3 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
