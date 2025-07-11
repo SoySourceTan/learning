@@ -1,151 +1,417 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>エンジョイ・シンプル・イングリッシュ 2025年4月放送スケジュール</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>シベリア孤児の物語 - 英語学習リソース</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
-        .calendar-day { height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; }
-        .day-header { font-weight: bold; background-color: #f8f9fa; }
-        .weekend { background-color: #f1f1f1; }
+        :root {
+            --bs-primary: #FFD1DC; /* キュアプリズムの淡いピンク */
+            --bs-secondary: #F5F5F5; /* 薄いグレー */
+            --bs-body-bg: #FFFFFF; /* ホワイト */
+            --bs-body-color: #333333; /* 読みやすい黒系テキスト */
+        }
+        .navbar { background-color: var(--bs-primary); }
+        .card { border-color: var(--bs-primary); }
+        .card-header { background-color: var(--bs-secondary); }
+        .accordion-button { background-color: var(--bs-secondary); color: var(--bs-body-color); }
+        .accordion-button:not(.collapsed) { background-color: var(--bs-primary); color: #FFFFFF; }
+        .phrase { color: var(--bs-primary); font-weight: bold; }
         .english-text { font-style: italic; color: #555; }
-        .phrase { font-weight: bold; color: #007bff; }
+        .card { transition: box-shadow 0.2s; }
+        .card:hover { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        @media (max-width: 576px) {
+            .card-body { padding: 1rem; }
+            h5 { font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
+    <!-- ナビゲーションバー -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#">シベリア孤児の物語</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="ナビゲーションを開く">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" aria-current="page" href="#">ホーム</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" data-bs-toggle="modal" data-bs-target="#searchModal">検索</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 検索モーダル -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">コンテンツ検索</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="searchInput" placeholder="キーワードを入力（例: orphan, 孤児）">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+                    <button type="button" class="btn btn-primary">検索</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- メインコンテンツ -->
     <div class="container my-5">
-        <h1 class="text-center mb-4">エンジョイ・シンプル・イングリッシュ 2025年4月放送スケジュール</h1>
-        <p class="text-center">NHKラジオ第2放送「エンジョイ・シンプル・イングリッシュ」の2025年4月の放送内容をカレンダー形式で表示します。監修：Daniel Stewart</p>
-        <div class="row row-cols-7 g-2">
-            <!-- 4月1日 (火) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月1日 (火) - Life in Japan</div>
-                <p><strong>タイトル</strong>: A Day at the Sakura Festival</p>
-                <p><strong>スキット概要</strong>: 留学生のマイクが桜祭りに参加し、地元の人々と交流する物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Cherry blossoms are beautiful!"</span></p>
-                <p class="english-text">"I love the pink petals falling gently."</p>
-                <p><strong>日本語訳</strong>: 桜祭りでマイクが「桜が美しい！」と感動し、ピンクの花びらが優しく落ちる様子を楽しむ。</p>
+        <h1 class="text-center mb-4">シベリア孤児の物語 - 英語学習リソース</h1>
+        <p class="text-center mb-4">1920年代のポーランド孤児救済に関する英語テキストと詳細解説。キュアプリズムのテーマカラーでシンプルに表示。</p>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <!-- 00:37-00:44 -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title">00:37-00:44 - Party in Warsaw</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">In October 2022, a party was held at the Japanese ambassador's home in Warsaw, Poland.</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> 2022年10月、ポーランドのワルシャワにある駐日大使公邸で祝賀会が催されました。</p>
+                        <div class="accordion" id="accordion1">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading1Details">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Details" aria-expanded="false" aria-controls="collapse1Details">
+                                        詳細
+                                    </button>
+                                </h2>
+                                <div id="collapse1Details" class="accordion-collapse collapse" aria-labelledby="heading1Details" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        この祝賀会は、後述される「シベリア孤児」の日本到着100周年を記念して開催されたものです。開催場所が大使の私邸ではなく「ambassador's home（大使公邸）」である点は、この出来事が両国にとって公式かつ重要な意味を持つことを示唆しています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading1Supplement">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Supplement" aria-expanded="false" aria-controls="collapse1Supplement">
+                                        補足
+                                    </button>
+                                </h2>
+                                <div id="collapse1Supplement" class="accordion-collapse collapse" aria-labelledby="heading1Supplement" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        ワルシャワは第二次世界大戦で壊滅的な被害を受けながらも、市民の手で「レンガのひび割れ一つに至るまで」忠実に復元された歴史を持つ都市です。この街で、歴史的な出来事を記念する会が開かれることには象徴的な意味があります。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading1Grammar">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Grammar" aria-expanded="false" aria-controls="collapse1Grammar">
+                                        英文の言い回し解説
+                                    </button>
+                                </h2>
+                                <div id="collapse1Grammar" class="accordion-collapse collapse" aria-labelledby="heading1Grammar" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="フォーマルな出来事を伝える表現">a party was held</span>という受動態が使われています。これは、誰が主催したか（The Japanese ambassador held a party）という行為者よりも、「祝賀会が開催された」という事実そのものを客観的に、そしてフォーマルに伝えるための表現です。報道や公式なアナウンスで頻繁に用いられます。ambassador's homeは「大使公邸」を指す自然な言い方です。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading1Advice">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1Advice" aria-expanded="false" aria-controls="collapse1Advice">
+                                        英語学習者向けアドバイス
+                                    </button>
+                                </h2>
+                                <div id="collapse1Advice" class="accordion-collapse collapse" aria-labelledby="heading1Advice" data-bs-parent="#accordion1">
+                                    <div class="accordion-body">
+                                        能動態と受動態の使い分けを意識しましょう。「何が行われたか」という出来事自体に焦点を当てたい場合、受動態は非常に有効です。また、<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="イベント開催を表現">hold a party</span>（パーティーを開く）、hold a meeting（会議を開く）のように、holdが「（イベントなどを）開催する、催す」という意味で使われることを覚えておくと表現の幅が広がります。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 4月2日 (水) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月2日 (水) - World Stories</div>
-                <p><strong>タイトル</strong>: The Boy and the Star</p>
-                <p><strong>スキット概要</strong>: 少年が夜空の星と会話するファンタジー物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"The stars shine brightly tonight."</span></p>
-                <p class="english-text">"Can you hear the stars talking?"</p>
-                <p><strong>日本語訳</strong>: 少年が星と会話。「今夜、星が明るく輝いているね」と言う。</p>
+            <!-- 00:46-00:55 -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title">00:46-00:55 - Polish Guest's Gratitude</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">At this party, one Polish guest said, "Japan helped my family. If they hadn't, we wouldn't be here."</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> この席で、あるポーランド人の招待客はこう語りました。「日本は私の家族を救ってくれたのです。その御恩がなければ、今の私たちは存在しなかったでしょう。」</p>
+                        <div class="accordion" id="accordion2">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading2Details">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Details" aria-expanded="false" aria-controls="collapse2Details">
+                                        詳細
+                                    </button>
+                                </h2>
+                                <div id="collapse2Details" class="accordion-collapse collapse" aria-labelledby="heading2Details" data-bs-parent="#accordion2">
+                                    <div class="accordion-body">
+                                        この発言者は、100年前に日本に救われたシベリア孤児の子孫です。この一言は、一世紀もの時を超えて、日本の人道支援に対する感謝の念が家族の中で語り継がれてきたことを物語っています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading2Supplement">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Supplement" aria-expanded="false" aria-controls="collapse2Supplement">
+                                        補足
+                                    </button>
+                                </h2>
+                                <div id="collapse2Supplement" class="accordion-collapse collapse" aria-labelledby="heading2Supplement" data-bs-parent="#accordion2">
+                                    <div class="accordion-body">
+                                        ポーランドでは、子供たちに歴史を語り継ぐことを非常に大切にする文化があります。このゲストの発言は、個人的な家族史であると同時に、ポーランド国民が共有する歴史認識の一部でもあります。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading2Grammar">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Grammar" aria-expanded="false" aria-controls="collapse2Grammar">
+                                        英文の言い回し解説
+                                    </button>
+                                </h2>
+                                <div id="collapse2Grammar" class="accordion-collapse collapse" aria-labelledby="heading2Grammar" data-bs-parent="#accordion2">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="過去の影響を表現">If they hadn't, we wouldn't be here.</span>は、仮定法過去完了（If S had p.p.）と仮定法過去（S would do）を組み合わせた混合仮定法です。「もしあの時（過去に）日本が助けてくれていなかったら、私たちは今ここにいないだろう」と、過去の事実が現在の状況に与えている影響を表現しています。theyは文脈上Japanを指しています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading2Advice">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Advice" aria-expanded="false" aria-controls="collapse2Advice">
+                                        英語学習者向けアドバイス
+                                    </button>
+                                </h2>
+                                <div id="collapse2Advice" class="accordion-collapse collapse" aria-labelledby="heading2Advice" data-bs-parent="#accordion2">
+                                    <div class="accordion-body">
+                                        仮定法は英語の重要な文法項目です。特にこの混合仮定法は、過去と現在のつながりを表現するのに非常に便利で、会話やスピーチで使うと表現力が格段に上がります。「If I had studied harder in college, I would have a better job now.（もし大学でもっと勉強していたら、今頃もっと良い仕事に就いているだろうに）」のように、自分の状況に合わせて応用練習をしてみましょう。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 4月3日 (木) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月3日 (木) - Science and Technology</div>
-                <p><strong>タイトル</strong>: The Robot Helper</p>
-                <p><strong>スキット概要</strong>: 家事を手伝うロボットが家族と交流する物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"This robot makes life easier."</span></p>
-                <p class="english-text">"It can clean and cook!"</p>
-                <p><strong>日本語訳</strong>: ロボットが家事を手伝い、「このロボットは生活を楽にするよ」と家族が喜ぶ。</p>
+            <!-- 00:57-01:05 -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title">00:57-01:05 - Polish Orphans in Japan</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">From 1920 to 1922, a total of 765 Polish orphans came to Japan.</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> 1920年から1922年にかけて、総勢765名ものポーランド人孤児が日本へやって来ました。</p>
+                        <div class="accordion" id="accordion3">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading3Details">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Details" aria-expanded="false" aria-controls="collapse3Details">
+                                        詳細
+                                    </button>
+                                </h2>
+                                <div id="collapse3Details" class="accordion-collapse collapse" aria-labelledby="heading3Details" data-bs-parent="#accordion3">
+                                    <div class="accordion-body">
+                                        この孤児たちは、ロシア革命の戦火と混乱から逃れる中で親を失い、極東シベリアのウラジオストクなどで厳しい環境に置かれていました。彼らを救出するため、ポーランド本国に設立された救済委員会が世界各国に助けを求め、最終的に日本が受け入れを決定しました。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading3Supplement">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Supplement" aria-expanded="false" aria-controls="collapse3Supplement">
+                                        補足
+                                    </button>
+                                </h2>
+                                <div id="collapse3Supplement" class="accordion-collapse collapse" aria-labelledby="heading3Supplement" data-bs-parent="#accordion3">
+                                    <div class="accordion-body">
+                                        765名という数字は、2年間に複数回に分けて来日した子供たちの合計人数です。彼らは日本で保護された後、アメリカ経由で無事に祖国ポーランドへと帰還しました。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading3Grammar">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Grammar" aria-expanded="false" aria-controls="collapse3Grammar">
+                                        英文の言い回し解説
+                                    </button>
+                                </h2>
+                                <div id="collapse3Grammar" class="accordion-collapse collapse" aria-labelledby="heading3Grammar" data-bs-parent="#accordion3">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="数量の強調">a total of 765</span>という表現は、単に765と言うよりも「合計で」「総勢」というニュアンスを加え、数字の正確さと重要性を強調します。<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="期間を表す">From 1920 to 1922</span>は「1920年から1922年まで」という期間を明確に示す定型表現です。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading3Advice">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3Advice" aria-expanded="false" aria-controls="collapse3Advice">
+                                        英語学習者向けアドバイス
+                                    </button>
+                                </h2>
+                                <div id="collapse3Advice" class="accordion-collapse collapse" aria-labelledby="heading3Advice" data-bs-parent="#accordion3">
+                                    <div class="accordion-body">
+                                        歴史的な事実やデータを説明する際に、<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="期間を表す">From X to Y</span>（期間）、<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="数量の強調">a total of Z</span>（合計数）といった表現は非常に役立ちます。プレゼンテーションやレポートで数字を提示する際に、approximately（約）、over（〜以上）、nearly（ほぼ）など、他の数量表現と使い分ける練習をすると良いでしょう。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 4月4日 (金) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月4日 (金) - Classics with a Twist</div>
-                <p><strong>タイトル</strong>: Alice in Modern Tokyo</p>
-                <p><strong>スキット概要</strong>: アリスの不思議な国を現代の東京に置き換えた物語（第1話）。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"This city is like a wonderland!"</span></p>
-                <p class="english-text">"Everything is so colorful and strange."</p>
-                <p><strong>日本語訳</strong>: アリスが東京を「まるで不思議な国！」と驚く。</p>
+            <!-- 01:25-01:32 -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title">01:25-01:32 - Poland's Partition</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">In the late 1700s, Poland was taken over by Russia, Austria, and Prussia.</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> 1700年代後半、ポーランドはロシア、オーストリア、そしてプロイセンによって分割されました。</p>
+                        <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">In the late 1700s, Poland was taken over by Russia, Austria, and Prussia.</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> 1700年代後半、ポーランドはロシア、オーストリア、そしてプロイセンによって分割され、その主権を失いました。</p>
+                        <div class="accordion" id="accordion4">
+                            <div class="accordioncad-item">
+                                <h2 class="accordion-header" id="heading4Details">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Details" aria-expanded="false" aria-controls="collapse4Details">
+                                        詳細
+                                    </button>
+                                </h2>
+                                <div id="collapse4Details" class="accordion-collapse collapse" aria-labelledby="heading4Details" data-bs-parent="#accordion4">
+                                    <div class="accordion-body">
+                                        これは歴史上「ポーランド分割」として知られる出来事です。1772年、1793年、1795年の三度にわたる分割により、当時ヨーロッパの大国であったポーランド・リトアニア共和国は地図上から姿を消し、123年間にわたる「消滅の時代」を経験しました。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading4Supplement">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Supplement" aria-expanded="false" aria-controls="collapse4Supplement">
+                                        補足
+                                    </button>
+                                </h2>
+                                <div id="collapse4Supplement" class="accordion-collapse collapse" aria-labelledby="heading4Supplement" data-bs-parent="#accordion4">
+                                    <div class="accordion-body">
+                                        プロイセンは、後にドイツ帝国の中核となった王国です。この分割に関わった三国は、いずれも当時のヨーロッパ列強でした。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading4Grammar">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Grammar" aria-expanded="false" aria-controls="collapse4Grammar">
+                                        英文の言い回し解説
+                                    </button>
+                                </h2>
+                                <div id="collapse4Grammar" class="accordion-collapse collapse" aria-labelledby="heading4Grammar" data-bs-parent="#accordion4">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="支配を表現">was taken over by</span>は、句動詞 take over（乗っ取る、支配権を握る）の受動態です。国が他国に支配されるという、強制的で一方的なニュアンスを効果的に伝えています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading4Advice">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4Advice" aria-expanded="false" aria-controls="collapse4Advice">
+                                        英語学習者向けアドバイス
+                                    </button>
+                                </h2>
+                                <div id="collapse4Advice" class="accordion-collapse collapse" aria-labelledby="heading4Advice" data-bs-parent="#accordion4">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="句動詞の活用">take over</span>のような句動詞は、日常会話からフォーマルな文脈まで幅広く使われます。一つの単語の動詞（例：conquer）よりも、生き生きとしたイメージを伝えることができます。句動詞をセットで覚え、受動態の形でも使えるように練習しましょう。（例：The small company was taken over by a large corporation.）
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 4月5日 (土) -->
-            <div class="col calendar-day weekend">
-                <div class="day-header">4月5日 (土) - 放送なし</div>
-                <p>週末のため放送はありません。</p>
-                <p class="english-text">No broadcast on weekends.</p>
+            <!-- 01:33-01:42 -->
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title">01:33-01:42 - Struggle for Independence</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>English Text:</strong> <span class="english-text">Some Polish people tried to make a new Poland, but they were caught by the Russian government and sent to Siberia.</span></p>
+                        <p class="card-text"><strong>日本語訳:</strong> 一部のポーランド人たちは祖国再興を試みましたが、ロシア政府に捕らえられ、シベリアへと流刑に処されました。</p>
+                        <div class="accordion" id="accordion5">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading5Details">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Details" aria-expanded="false" aria-controls="collapse5Details">
+                                        詳細
+                                    </button>
+                                </h2>
+                                <div id="collapse5Details" class="accordion-collapse collapse" aria-labelledby="heading5Details" data-bs-parent="#accordion5">
+                                    <div class="accordion-body">
+                                        ポーランド分割後、多くのポーランド人が独立を求める武装蜂起（例：11月蜂起、1月蜂起）を起こしました。しかし、これらの試みはロシア帝国によって鎮圧され、参加者やその家族の多くが政治犯としてシベリアへの強制移住を命じられました。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading5Supplement">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Supplement" aria-expanded="false" aria-controls="collapse5Supplement">
+                                        補足
+                                    </button>
+                                </h2>
+                                <div id="collapse5Supplement" class="accordion-collapse collapse" aria-labelledby="heading5Supplement" data-bs-parent="#accordion5">
+                                    <div class="accordion-body">
+                                        シベリアは、帝政ロシア時代からソ連時代にかけて、政治犯の流刑地として利用されてきました。過酷な気候と強制労働で知られています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading5Grammar">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Grammar" aria-expanded="false" aria-controls="collapse5Grammar">
+                                        英文の言い回し解説
+                                    </button>
+                                </h2>
+                                <div id="collapse5Grammar" class="accordion-collapse collapse" aria-labelledby="heading5Grammar" data-bs-parent="#accordion5">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="努力を表現">tried to make a new Poland</span>のtry to doは「〜しようと試みる、努力する」という意味で、結果的に成功したかどうかは含みません。ここでは独立運動の困難さが示唆されます。<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="並列構造">were caught</span>と<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="並列構造">sent</span>は、受動態の動詞がandで並列につながれています。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading5Advice">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5Advice" aria-expanded="false" aria-controls="collapse5Advice">
+                                        英語学習者向けアドバイス
+                                    </button>
+                                </h2>
+                                <div id="collapse5Advice" class="accordion-collapse collapse" aria-labelledby="heading5Advice" data-bs-parent="#accordion5">
+                                    <div class="accordion-body">
+                                        <span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="試行のニュアンス">try to do</span>（〜しようと努力する）と<span class="phrase" data-bs-toggle="tooltip" data-bs-placement="top" title="試行のニュアンス">try doing</span>（試しに〜してみる）のニュアンスの違いを理解しましょう。前者は目標達成への意志が強く、後者は気軽な試行を意味します。文脈によって使い分けることが重要です。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- 4月6日 (日) -->
-            <div class="col calendar-day weekend">
-                <div class="day-header">4月6日 (日) - 放送なし</div>
-                <p>週末のため放送はありません。</p>
-                <p class="english-text">No broadcast on weekends.</p>
-            </div>
-            <!-- 4月7日 (月) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月7日 (月) - Short Stories</div>
-                <p><strong>タイトル</strong>: The Lost Cat</p>
-                <p><strong>スキット概要</strong>: 迷子の猫を探す少女の物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Where is my cat?"</span></p>
-                <p class="english-text">"I miss my fluffy friend."</p>
-                <p><strong>日本語訳</strong>: 少女が「私の猫はどこ？」と探し、ふわふわの友達を恋しがる。</p>
-            </div>
-            <!-- 4月8日 (火) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月8日 (火) - Life in Japan</div>
-                <p><strong>タイトル</strong>: Making Sushi at Home</p>
-                <p><strong>スキット概要</strong>: 外国人が日本の家庭で寿司作りを体験。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Sushi is fun to make!"</span></p>
-                <p class="english-text">"I love rolling the rice."</p>
-                <p><strong>日本語訳</strong>: 「寿司を作るのは楽しい！」と外国人が米を巻くのを楽しむ。</p>
-            </div>
-            <!-- 4月9日 (水) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月9日 (水) - World Stories</div>
-                <p><strong>タイトル</strong>: The Magic Carpet</p>
-                <p><strong>スキット概要</strong>: 魔法の絨毯で世界を旅する物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Fly high in the sky!"</span></p>
-                <p class="english-text">"The world looks small from here."</p>
-                <p><strong>日本語訳</strong>: 「空高く飛ぼう！」と絨毯で旅し、世界が小さく見える。</p>
-            </div>
-            <!-- 4月10日 (木) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月10日 (木) - Science and Technology</div>
-                <p><strong>タイトル</strong>: Virtual Reality World</p>
-                <p><strong>スキット概要</strong>: VRゲームに夢中になる少年の物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"VR is so real!"</span></p>
-                <p class="english-text">"I feel like I'm in another world."</p>
-                <p><strong>日本語訳</strong>: 「VRはめっちゃリアル！」と少年が別世界にいる気分になる。</p>
-            </div>
-            <!-- 4月11日 (金) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月11日 (金) - Classics with a Twist</div>
-                <p><strong>タイトル</strong>: Alice in Modern Tokyo (Part 2)</p>
-                <p><strong>スキット概要</strong>: アリスが東京の地下鉄で冒険を続ける。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"The subway is a maze!"</span></p>
-                <p class="english-text">"So many people, so many lights."</p>
-                <p><strong>日本語訳</strong>: アリスが「地下鉄は迷路みたい！」と驚き、人と光の多さに圧倒される。</p>
-            </div>
-            <!-- 4月12日 (土) -->
-            <div class="col calendar-day weekend">
-                <div class="day-header">4月12日 (土) - 放送なし</div>
-                <p>週末のため放送はありません。</p>
-                <p class="english-text">No broadcast on weekends.</p>
-            </div>
-            <!-- 4月13日 (日) -->
-            <div class="col calendar-day weekend">
-                <div class="day-header">4月13日 (日) - 放送なし</div>
-                <p>週末のため放送はありません。</p>
-                <p class="english-text">No broadcast on weekends.</p>
-            </div>
-            <!-- 4月14日 (月) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月14日 (月) - Short Stories</div>
-                <p><strong>タイトル</strong>: The Singing Bird</p>
-                <p><strong>スキット概要</strong>: 歌う鳥と友達になる少年の物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Your song is beautiful!"</span></p>
-                <p class="english-text">"I want to sing like you."</p>
-                <p><strong>日本語訳</strong>: 少年が「君の歌は美しい！」と言い、鳥のようになりたいと願う。</p>
-            </div>
-            <!-- 4月15日 (火) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月15日 (火) - Life in Japan</div>
-                <p><strong>タイトル</strong>: Tea Ceremony Experience</p>
-                <p><strong>スキット概要</strong>: 茶道を学ぶ外国人の物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"Tea ceremony is so calm."</span></p>
-                <p class="english-text">"I feel peace in my heart."</p>
-                <p><strong>日本語訳</strong>: 「茶道はとても落ち着く」と外国人が心の平穏を感じる。</p>
-            </div>
-            <!-- 4月16日 (水) -->
-            <div class="col calendar-day">
-                <div class="day-header">4月16日 (水) - World Stories</div>
-                <p><strong>タイトル</strong>: The Desert Treasure</p>
-                <p><strong>スキット概要</strong>: 砂漠で宝を探す冒険者の物語。</p>
-                <p><strong>キーフレーズ</strong>: <span class="phrase">"The treasure is near!"</span></p>
-                <p class="english-text">"The sand hides many secrets."</p>
-                <p><strong>日本語訳</strong>: 「宝は近い！」と冒険者が砂に隠
+        </div>
+    </div>
+
+    <!-- フッター -->
+    <footer class="bg-secondary text-white text-center py-3">
+        <p>© 2025 英語学習リソース - シベリア孤児の物語</p>
+        <p>詳細はNHK「エンジョイ・シンプル・イングリッシュ」公式サイトまたは「らじる★らじる」でご確認ください。</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // ツールチップの初期化
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+
+        // 検索機能（簡易実装）
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const text = card.querySelector('.card-text').textContent.toLowerCase();
+                card.style.display = (title.includes(searchTerm) || text.includes(searchTerm)) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
