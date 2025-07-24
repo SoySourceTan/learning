@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哲学者からの答え - 英語学習</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .row-content {
+            display: flex;
+            align-items: flex-start;
+        }
+        .col-english, .col-japanese {
+            flex: 1;
+            padding: 10px;
+        }
+        .col-english {
+            border-right: 1px solid #eee;
+        }
+        .translation-divider {
+            border-bottom: 1px solid #e0e0e0;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .explanation {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .explanation h6 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .highlight-word {
+            position: relative;
+            cursor: pointer;
+            border-bottom: 1px dashed #007bff;
+        }
+        .highlight-word::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            z-index: 1000;
+        }
+        .highlight-word:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">哲学者からの答え - 英語学習</h1>
+        <p class="text-muted text-center">哲学の対話から英語表現を学びましょう。</p>
+
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                <h2 class="h5 mb-0">このコーナーの要点</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>English (Posh British English) Summary:</h6>
+                        <p>The "Answers from Philosophers" segment elucidates Aristotle's profound insights on friendship, asserting that the true essence of a good life lies not in the quantity of one's acquaintances but in the profound quality of genuine friendships, or "philia". These invaluable connections, demanding considerable time and devotion to cultivate, are deemed essential for personal growth, even if they occasionally deliver uncomfortable truths. Ultimately, one is encouraged to judiciously seek and foster a select few authentic bonds, rather than pursue a multitude of superficial ties.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>日本語の要点:</h6>
+                        <p>「哲学者からの答え」のコーナーでは、アリストテレスの哲学に基づき、友情の本質が友人数の多さではなく、真の友情、すなわち「フィリア」の質にあることが語られています。このような真の友人関係は、築くのに時間と努力を要しますが、人生を豊かにし、時には耳にしたくない真実であっても、個人の成長を促す上で不可欠であるとされています。結論として、多くの友人を求めるのではなく、真の友人を見つけ、良い友情を育むことに時間を費やすべきだと強調されています。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card mt-4">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Hello listeners, and welcome to "Answers from <span class="highlight-word" data-tooltip="哲学者">Philosophers</span>." I am Tom, the host of this program.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>やあ、リスナーの皆さん、「哲学者からの答え」へようこそ。私はこの番組の司会のトムです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>番組の始まりの挨拶です。"host" は「司会者」や「主催者」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>My good friend Kobayashi Shohei will help us find <span class="highlight-word" data-tooltip="解決策">solutions</span> to your problems.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>私の親友、コバヤシ・ショウヘイが、皆さんの問題の解決策を見つける手助けをしてくれます。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"solutions to problems" で「問題の解決策」となります。ビジネスシーンでもよく使われる表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Hi everyone.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>皆さん、こんにちは。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>カジュアルな挨拶です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Shohei knows a lot about <span class="highlight-word" data-tooltip="哲学">philosophy</span>. Each week, he will <span class="highlight-word" data-tooltip="紹介する">introduce</span> to us the perfect <span class="highlight-word" data-tooltip="哲学者">philosopher</span> to find an answer to your troubles.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>ショウヘイは哲学についてとても詳しいんです。毎週、皆さんの悩みに答えを見つけるのに最適な哲学者を、彼が紹介してくれます。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"knows a lot about" で「〜についてよく知っている」という意味です。「introduce A to B」で「AをBに紹介する」となります。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Isn't that right, Shohei?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>そうだよね、ショウヘイ？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>文の最後に付け加えることで、「～ですよね？」と相手に同意を求めたり、確認したりする表現です（付加疑問文）。肯定文の後には否定形（例: It's a beautiful day, isn't it?）、否定文の後には肯定形（例: You haven't been there, have you?）が続きます。会話をスムーズに進めるための便利なテクニックです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>That's right. You see, people today and people from long ago aren't very different.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>その通りです。ご存知のように、現代の人間も昔の人間も、そう大きくは違いません。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"You see," は「ご存知のように」「ええとね」「つまりね」という意味で、これから何かを説明し始めるときに、相手の注意を引くための切り出しの言葉です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>We all have <span class="highlight-word" data-tooltip="心配事">worries</span> or something that <span class="highlight-word" data-tooltip="困らせる">troubles</span> us.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>私たちは皆、悩みや、私たちを困らせる何かを抱えています。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"worries" は「心配事、悩み」という意味の複数形です。"troubles us" で「私たちを困らせる」となります。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Mmm, that's so true. By the way, what is <span class="highlight-word" data-tooltip="哲学">philosophy</span>?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>うーん、本当にその通りだね。ところで、哲学とは何ですか？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"By the way" は「ところで」と話題を変えるときに使います。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Philosophy is something that helps people <span class="highlight-word" data-tooltip="理解する">understand</span> life's important <span class="highlight-word" data-tooltip="疑問">questions</span>. For example, "How can I live a better life?"</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>哲学とは、人々が人生の重要な問いを理解するのを助けるものです。例えば、「どうすればより良い人生を生きられるか？」といったことです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"help someone do something" で「誰かが〜するのを助ける」という構文です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>That's deep.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>奥が深いね。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"deep" は「深い」という意味ですが、物理的な深さだけでなく、話の内容や考えが「深遠だ」「示唆に富んでいる」と感じたときの相槌として使えます。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>It is. <span class="highlight-word" data-tooltip="哲学者">Philosophers</span> like <span class="highlight-word" data-tooltip="ソクラテス">Socrates</span>, <span class="highlight-word" data-tooltip="アリストテレス">Aristotle</span>, and <span class="highlight-word" data-tooltip="カント">Kant</span> <span class="highlight-word" data-tooltip="研究した">studied</span> these problems their <span class="highlight-word" data-tooltip="全ての">entire</span> lives.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>そうなんです。ソクラテス、アリストテレス、カントといった哲学者たちは、生涯をかけてこれらの問題を研究しました。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"entire lives" で「生涯を通して」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>It's a <span class="highlight-word" data-tooltip="無駄">waste</span> if we don't use their <span class="highlight-word" data-tooltip="知識">knowledge</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>彼らの知識を使わないのはもったいないですよ。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"It's a waste if..." は「〜するのはもったいない」と言いたいときに非常に便利な表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>I completely <span class="highlight-word" data-tooltip="同意する">agree</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>全く同感だね。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"completely agree" で「全く同意する」という強い同意を示す表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Today we have a message from a <span class="highlight-word" data-tooltip="リスナー">listener</span> named Yuta. Let's listen.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>今日はユウタさんというリスナーからメッセージが届いています。聞いてみましょう。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"named Yuta" で「ユウタという名前の」となります。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Hi.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>こんにちは。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>簡単な挨拶です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>I just started going to high school this month. I'm not really good at making new friends, but people say that it's good to have many friends.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>今月、高校に入学したばかりです。僕は新しい友達を作るのがあまり得意ではありません。でも、周りの人は友達はたくさんいた方がいいと言います。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"good at ~ing" で「〜するのが得意だ」という意味です。否定形は "not good at ~ing" となります。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Is that true? Should I try harder?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>それって本当ですか？ 僕はもっと頑張るべきでしょうか？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"try harder" で「もっと努力する、もっと頑張る」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Oh, I know that <span class="highlight-word" data-tooltip="気持ち">feeling</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>ああ、その気持ちわかるなあ。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"I know that feeling." は、相手の言ったことに対して、自分も同じような経験があり、強く共感することを示すフレーズです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>I felt the <span class="highlight-word" data-tooltip="プレッシャー">pressure</span> to make lots of friends in high school, too. So, Shohei, what do you think?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>私も高校時代、友達をたくさん作らなきゃというプレッシャーを感じたよ。それで、ショウヘイ、君はどう思う？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"feel the pressure to do something" で「〜するプレッシャーを感じる」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Yuta, don't worry. I think you don't have to have many friends.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>ユウタさん、心配いりません。友達はたくさんいなければならない、ということはないと思います。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"don't have to..." は「〜する必要はない」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>True <span class="highlight-word" data-tooltip="友情">friendship</span> is the most important thing for a person to have a good life.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>本当の友情こそが、人が良い人生を送るために最も大切なことなのです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"the most important thing" で「最も大切なこと」という最上級の表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Really? Whose <span class="highlight-word" data-tooltip="哲学">philosophy</span> is that?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>本当かい？それは誰の哲学なんだい？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"Whose" は「誰の」という意味の疑問詞です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>It's from my favorite <span class="highlight-word" data-tooltip="哲学者">philosopher</span>, <span class="highlight-word" data-tooltip="アリストテレス">Aristotle</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>私が一番好きな哲学者、アリストテレスのものです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"favorite" は「お気に入りの」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>I know that name.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>その名前は知ってるよ。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>シンプルな同意の表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>He is the <span class="highlight-word" data-tooltip="スーパースター">superstar</span> of <span class="highlight-word" data-tooltip="哲学">philosophy</span>. He was a great <span class="highlight-word" data-tooltip="思想家">thinker</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>彼は哲学界のスーパースターですよ。偉大な思想家でした。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"superstar" は「超一流の人物、スーパースター」という意味です。"thinker" は「思想家、考える人」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Okay. So why does <span class="highlight-word" data-tooltip="アリストテレス">Aristotle</span> say you don't have to have many friends?</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>なるほど。ではなぜアリストテレスは、友達は多くなくてもいいと言っているんだい？</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>アリストテレスの考えの核心に迫る問いかけです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>First, he said that <span class="highlight-word" data-tooltip="友情">friendship</span> is important. He called it "philia." We especially need friends that <span class="highlight-word" data-tooltip="尊重する">respect</span> us and want us to become better.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>まず、彼は友情は重要だと言いました。彼はそれを「フィリア」と呼びました。私たちは特に、自分を尊重し、もっと良くなってほしいと願ってくれる友達を必要とします。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"respect" は「尊重する」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>These friends are absolutely <span class="highlight-word" data-tooltip="必要な">necessary</span> to live a happy life as a human.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>こうした友人は、人として幸せな人生を送るために絶対に必要なのです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"absolutely necessary" で「絶対に必要な」という強調表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p><span class="highlight-word" data-tooltip="アリストテレス">Aristotle</span> said that these friends aren't easily found. And it takes time and <span class="highlight-word" data-tooltip="努力">effort</span> to <span class="highlight-word" data-tooltip="築く">build</span> such <span class="highlight-word" data-tooltip="関係">relationships</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>アリストテレスは、このような友人は簡単には見つからないと言いました。そして、そうした関係を築くには時間と努力がかかるのです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"It takes [時間/労力/お金など] to do..." で「〜するには（時間などが）かかる」という定番の構文です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>So having a few good friends is important.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>ということは、少数の良い友人を持つことが大切なんだね。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"a few" は「少数の」という意味で、数えられる名詞に使います。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Exactly.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>その通りです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"Exactly." は「その通り」「全くもって」という強い同意を示す一言です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>No one wants to live without friends, even if they have other good things in life.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>たとえ人生で他の良いものを手に入れたとしても、友人なしで生きたい人などいません。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"even if" は「たとえ〜だとしても」という仮定を表す表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>That's true.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>確かにそうだね。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>同意の表現です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Good friends are important because they will help you grow.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>良い友人が大切なのは、彼らがあなたの成長を助けてくれるからです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"because" は「なぜなら」と理由を説明するときに使います。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Sometimes they say things you may not want to hear, but they say them because you need to hear them.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>時には、あなたが聞きたくないようなことを言うかもしれません。しかし、それはあなたが聞く必要があるから言うのです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"may not" は「〜ないかもしれない」と可能性を表します。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>And they will help you <span class="highlight-word" data-tooltip="創造する">create</span> new <span class="highlight-word" data-tooltip="価値観">values</span> that you would not be able to <span class="highlight-word" data-tooltip="発見する">discover</span> by yourself.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>そして彼らは、あなた一人では発見できなかったであろう新しい価値観を、あなたが築く手助けをしてくれるのです。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"by yourself" は「一人で」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Yuta, we found your answer. Aristotle says that you don't have to have many friends.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>ユウタさん、答えが見つかったね。アリストテレスは、友達は多くなくてもいいと言っている。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"found your answer" で「答えが見つかった」という意味です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Instead, find your true friends and spend time building good <span class="highlight-word" data-tooltip="友情">friendships</span>.</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>その代わりに、本当の友達を見つけて、良い友情を築くために時間を使いなさい、とね。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>"Instead" は「その代わりに」という意味です。「spend time ~ing」で「〜することに時間を費やす」という構文です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row row-content">
+                    <div class="col-english">
+                        <p>Find your true "philia."</p>
+                    </div>
+                    <div class="col-japanese">
+                        <p>あなたの真の「フィリア」を見つけてください。</p>
+                    </div>
+                </div>
+                <div class="translation-divider"></div>
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>アリストテレスが提唱する「フィリア」（真の友情）を見つけることの重要性を強調しています。</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-5 mb-3 text-center">英語学習者向けのアドバイス</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>解説:</h6>
+                    <p>この会話には、日常会話で使える便利な表現がたくさん含まれています。いくつかピックアップして解説します。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>Isn't that right, Shohei? (01:15)</h6>
+                    <p>意味: 「そうだよね、ショウヘイ？」</p>
+                    <p>解説: 文の最後に付け加えることで、「～ですよね？」と相手に同意を求めたり、確認したりする表現です（付加疑問文）。肯定文の後には否定形（例: It's a beautiful day, isn't it?）、否定文の後には肯定形（例: You haven't been there, have you?）が続きます。会話をスムーズに進めるための便利なテクニックです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>You see, ... (01:17)</h6>
+                    <p>意味: 「ご存知のように」「ええとね」「つまりね」</p>
+                    <p>解説: これから何かを説明し始めるときに、相手の注意を引くための切り出しの言葉です。少しくだけた、親しみを込めたニュアンスがあります。プレゼンテーションや説明の冒頭で使うと、話がスムーズに入りやすくなります。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>That's deep. (01:45)</h6>
+                    <p>意味: 「（話が）奥が深いね」</p>
+                    <p>解説: deep は「深い」という意味ですが、物理的な深さだけでなく、話の内容や考えが「深遠だ」「示唆に富んでいる」と感じたときの相槌として使えます。相手の話に感心したことを示すのにぴったりの一言です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>It's a waste if we don't use their knowledge. (01:58)</h6>
+                    <p>意味: 「彼らの知識を使わないのはもったいない（無駄だ）」</p>
+                    <p>解説: It's a waste to do ... や It's a waste if ... は、「～するのはもったいない」と言いたいときに非常に便利な表現です。例えば、It's a waste to throw away this food.（この食べ物を捨てるのはもったいない）のように使えます。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>I know that feeling. (02:26)</h6>
+                    <p>意味: 「その気持ち、わかります」</p>
+                    <p>解説: 相手の言ったことに対して、自分も同じような経験があり、強く共感することを示すフレーズです。I understand. よりも個人的な共感のニュアンスが強まります。相手との距離を縮めるのに効果的な一言です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>you don't have to have many friends. (02:38)</h6>
+                    <p>意味: 「友達がたくさんいる必要はない」</p>
+                    <p>解説: don't have to ... は「～する必要はない」という意味です。よく似た must not ...（～してはいけない）という強い禁止とは意味が異なるので注意しましょう。「たくさん友達がいてはいけない」のではなく、「たくさんいる必要はない」というニュアンスです。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <h6>It takes time and effort to build such relationships. (03:36)</h6>
+                    <p>意味: 「そうした関係を築くには時間と努力がかかる」</p>
+                    <p>解説: It takes [時間/労力/お金など] to do ... で「～するには（時間などが）かかる」という定番の構文です。非常に応用範囲が広く、It takes about 10 minutes to walk to the station.（駅まで歩いて10分くらいかかります）のように日常的に使えます。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="explanation">
+                    <p>これらの表現を覚えておくと、あなたの英語でのコミュニケーションがより豊かで自然になりますよ。</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-5 mb-3 text-center">付録：語源で学ぶ英単語</h2>
+
+        <div class="card">
+            <div class="card-body">
+                <h5>ラテン語の語幹 "spect" を持つ単語</h5>
+                <p>この語幹は「見る」という意味を持ちます。接頭辞と組み合わせることで、様々な「見る」に関連する単語が作られます。</p>
+                <ul>
+                    <li><strong>respect</strong> (尊敬する)
+                        <ul>
+                            <li>語源: <strong>re-</strong> (再び、後ろに) + <strong>spect</strong> (見る)</li>
+                            <li>意味: 「再び見る」「見直す」から転じて、尊敬する、重んじる。相手をよく見て評価するというニュアンス。</li>
+                        </ul>
+                    </li>
+                    <li><strong>inspect</strong> (検査する、視察する)
+                        <ul>
+                            <li>語源: <strong>in-</strong> (中に、内側へ) + <strong>spect</strong> (見る)</li>
+                            <li>意味: 「中を見る」「詳しく見る」から、詳細に調べる、検査する。</li>
+                        </ul>
+                    </li>
+                    <li><strong>expect</strong> (期待する、予期する)
+                        <ul>
+                            <li>語源: <strong>ex-</strong> (外へ) + <strong>spect</strong> (見る)</li>
+                            <li>意味: 「外を見る」「前方を見る」から、これから起こることを待ち望む、期待する。</li>
+                        </ul>
+                    </li>
+                    <li><strong>suspect</strong> (疑う、容疑者)
+                        <ul>
+                            <li>語源: <strong>sub-</strong> (下に、こっそり) + <strong>spect</strong> (見る)</li>
+                            <li>意味: 「下から見る」「こっそり見る」から、怪しいと感じる、疑う。</li>
+                        </ul>
+                    </li>
+                    <li><strong>perspective</strong> (視点、見方)
+                        <ul>
+                            <li>語源: <strong>per-</strong> (〜を通して) + <strong>spect</strong> (見る) + <strong>-ive</strong> (形容詞/名詞を作る接尾辞)</li>
+                            <li>意味: 「〜を通して見る」から、物事を見るための特定の視点や考え方。</li>
+                        </ul>
+                    </li>
+                    <li><strong>spectacle</strong> (見せ物、壮観)
+                        <ul>
+                            <li>語源: <strong>spect</strong> (見る) + <strong>-acle</strong> (道具、場所を示す接尾辞)</li>
+                            <li>意味: 「見られるもの」から、公のショー、印象的な光景。眼鏡 (spectacles) の意味もここから。</li>
+                        </ul>
+                    </li>
+                    <li><strong>spectator</strong> (観客、見物人)
+                        <ul>
+                            <li>語源: <strong>spect</strong> (見る) + <strong>-ator</strong> (〜する人を示す接尾辞)</li>
+                            <li>意味: 「見る人」から、イベントなどを傍から見ている人。</li>
+                        </ul>
+                    </li>
+                    <li><strong>aspect</strong> (側面、様相)
+                        <ul>
+                            <li>語源: <strong>ad-</strong> (〜へ) + <strong>spect</strong> (見る)</li>
+                            <li>意味: 「〜の方を見る」から、物事の特定の面や特徴。</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h5>その他の接頭辞と語幹を持つ単語</h5>
+                <ul>
+                    <li><strong>discover</strong> (発見する)
+                        <ul>
+                            <li>語源: <strong>dis-</strong> (〜でない、逆の) + <strong>cover</strong> (覆う)</li>
+                            <li>意味: 「覆いを取り除く」ことから、隠されていたものを見つけ出す。</li>
+                        </ul>
+                    </li>
+                    <li><strong>necessary</strong> (必要な)
+                        <ul>
+                            <li>語源: <strong>ne-</strong> (否定: 〜ない) + <strong>cessare</strong> (立ち止まる、退く)</li>
+                            <li>意味: 「立ち止まることができない」「避けることができない」ことから、避けられない、必要な。</li>
+                        </ul>
+                    </li>
+                    <li><strong>introduce</strong> (紹介する)
+                        <ul>
+                            <li>語源: <strong>intro-</strong> (内へ) + <strong>ducere</strong> (導く)</li>
+                            <li>意味: 「内へ導く」ことから、人や物を初めて対面させる、導入する。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
