@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answers from Philosophers - アリストテレスの教え</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <style>
+        body {
+            /* 英語フォントにRoboto、日本語フォントにNoto Sans JPを指定 */
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+            font-feature-settings: "palt"; /* 文字詰めで見やすく */
+        }
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-family: 'Roboto', sans-serif; /* タイトルは英語フォントを優先 */
+            font-weight: 700;
+        }
+        .card-header {
+            font-weight: bold;
+        }
+        .bg-light-blue {
+            background-color: #e7f5ff;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero mb-4">
+        <div class="container">
+            <h1 class="display-4">Enjoy Simple English!</h1>
+            <p class="lead">Answers from Philosophers: アリストテレス「未来が不安」への答え</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="script-tab" data-bs-toggle="tab" data-bs-target="#script" type="button" role="tab" aria-controls="script" aria-selected="true"><i class="bi bi-file-text me-2"></i>スクリプト＆翻訳</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="vocab-tab" data-bs-toggle="tab" data-bs-target="#vocab" type="button" role="tab" aria-controls="vocab" aria-selected="false"><i class="bi bi-lightbulb me-2"></i>学習者向け補足</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="deep-dive-tab" data-bs-toggle="tab" data-bs-target="#deep-dive" type="button" role="tab" aria-controls="deep-dive" aria-selected="false"><i class="bi bi-search me-2"></i>背景の深掘り</button>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" id="myTabContent">
+            <!-- 1. Script & Translation Tab -->
+            <div class="tab-pane fade show active p-3" id="script" role="tabpanel" aria-labelledby="script-tab">
+                <h2 class="mb-3">1 & 2. 英語スクリプトと日本語翻訳</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                English Script
+                            </div>
+                            <div class="card-body lh-lg"> <!-- 行間を少し広げて読みやすく -->
+                                <p><strong>Tom:</strong> Welcome back to Answers from Philosophers. This is your host, Tom.</p>
+                                <p><strong>Shohei:</strong> And philosophy lover Kobayashi Shohei.</p>
+                                <p><strong>Tom:</strong> We are here to help you find answers.</p>
+                                <p><strong>Shohei:</strong> All right, let's do it.</p>
+                                <p><strong>Tom:</strong> We have a message from Kento. "Hi. I'm in my 30s, and I've worked at the same company for 10 years now. My colleagues are looking for new jobs, and some have even started their own businesses. I worry about my future, but I'm not sure what I want to do. What should I do?"</p>
+                                <p><strong>Tom:</strong> I used to be an office worker, so I totally understand.</p>
+                                <p><strong>Tom:</strong> So, Shohei, what do you think?</p>
+                                <p><strong>Shohei:</strong> Hmm. Enjoy what you do today, and you will find success.</p>
+                                <p><strong>Tom:</strong> That's all? I love that phrase. Who said that?</p>
+                                <p><strong>Shohei:</strong> It was the great philosopher Aristotle.</p>
+                                <p><strong>Tom:</strong> Hmm, him again.</p>
+                                <p><strong>Shohei:</strong> Yes. He separated a person's actions into two ideas, called kinesis and energeia.</p>
+                                <p><strong>Tom:</strong> Pardon me?</p>
+                                <p><strong>Shohei:</strong> Kinesis is something you do because you want to achieve a goal. Energeia is something you do because you love doing it.</p>
+                                <p><strong>Tom:</strong> Energeia sounds important. Can you give us an example?</p>
+                                <p><strong>Shohei:</strong> Sure. Let's think about building a house. It's kinesis if you build a house because you want to have a house. And it's energeia if you build a house because you love to build things. So you got a good result, even though it wasn't your goal.</p>
+                                <p><strong>Tom:</strong> Exactly.</p>
+                                <p><strong>Shohei:</strong> And Aristotle thought enjoying the process was important. If you enjoy what you're doing, you will always do your best, and you should get good results.</p>
+                                <p><strong>Tom:</strong> That's great! But I have a question. I enjoy playing with my friends. So, can I play video games with them every day and become successful?</p>
+                                <p><strong>Shohei:</strong> Hmm. Actually, you may be going about it the wrong way.</p>
+                                <p><strong>Shohei:</strong> Let me introduce an idea from a famous IT company founder. He was greatly influenced by Aristotle.</p>
+                                <p><strong>Tom:</strong> I'm interested.</p>
+                                <p><strong>Shohei:</strong> He thought we should enjoy challenges. But those challenges should be in something we are good at. Then, we can improve what we do. So that will help our career.</p>
+                                <p><strong>Tom:</strong> That sounds amazing, but scary at the same time. What if I make mistakes?</p>
+                                <p><strong>Shohei:</strong> Don't be afraid. Enjoy that scary feeling instead. We have to enjoy it?</p>
+                                <p><strong>Tom:</strong> That's right. Focus more on your challenges and on what you are doing right now. That way, you won't have to worry about the future or the actions of other people.</p>
+                                <p><strong>Shohei:</strong> I get it. Work hard, and people will notice your effort. It might even create the next career chance for you.</p>
+                                <p><strong>Tom:</strong> That's exactly right.</p>
+                                <p><strong>Tom:</strong> Kento, we found your answer. Enjoy your challenges every day. They are sure to help you find the success that you are looking for.</p>
+                                <p><strong>Shohei:</strong> Be brave. Don't let fear stop you.</p>
+                                <p><strong>Tom:</strong> See you!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                日本語翻訳
+                            </div>
+                            <div class="card-body lh-lg"> <!-- 行間を少し広げて読みやすく -->
+                                <p><strong>トム：</strong>「哲学者からの答え」へようこそ。司会のトムです。</p>
+                                <p><strong>ショウヘイ：</strong>そして哲学愛好家の小林ショウヘイです。</p>
+                                <p><strong>トム：</strong>私たちはあなたが答えを見つける手助けをします。</p>
+                                <p><strong>ショウヘイ：</strong>よし、やってみましょう。</p>
+                                <p><strong>トム：</strong>ケントさんからメッセージが届いています。「こんにちは。私は30代で、今の会社で10年働いています。同僚たちは新しい仕事を探しており、中には自分で事業を始めた人もいます。自分の将来が不安ですが、何をしたいのかよく分かりません。どうすればいいでしょうか？」</p>
+                                <p><strong>トム：</strong>私も以前は会社員だったので、とてもよく分かります。</p>
+                                <p><strong>トム：</strong>それで、ショウヘイさん、どう思いますか？</p>
+                                <p><strong>ショウヘイ：</strong>うーん。今日やることを楽しめば、成功は見つかるでしょう。</p>
+                                <p><strong>トム：</strong>それだけですか？その言葉、好きですね。誰が言ったのですか？</p>
+                                <p><strong>ショウヘイ：</strong>偉大な哲学者アリストテレスです。</p>
+                                <p><strong>トム：</strong>ふむ、また彼ですか。</p>
+                                <p><strong>ショウヘイ：</strong>はい。彼は人の行動を「キネーシス」と「エネルゲイア」という2つの考えに分けました。</p>
+                                <p><strong>トム：</strong>なんですって？</p>
+                                <p><strong>ショウヘイ：</strong>キネーシスとは、目標を達成したいがために行うことです。エネルゲイアとは、それを行うことが好きだから行うことです。</p>
+                                <p><strong>トム：</strong>エネルゲイアは重要そうですね。例を挙げてくれますか？</p>
+                                <p><strong>ショウヘイ：</strong>もちろんです。家を建てることを考えてみましょう。家が欲しいから家を建てるなら、それはキネーシスです。そして、物を作ることが好きで家を建てるなら、それはエネルゲイアです。だから、それが目標でなくても良い結果が得られたのです。</p>
+                                <p><strong>トム：</strong>その通りですね。</p>
+                                <p><strong>ショウヘイ：</strong>そしてアリストテレスは、その過程を楽しむことが重要だと考えました。やっていることを楽しめば、常に最善を尽くし、良い結果が得られるはずです。</p>
+                                <p><strong>トム：</strong>それは素晴らしい！でも質問があります。私は友達と遊ぶのが楽しいです。では、毎日彼らとビデオゲームをして、成功できますか？</p>
+                                <p><strong>ショウヘイ：</strong>うーん。実は、そのやり方は間違っているかもしれません。</p>
+                                <p><strong>ショウヘイ：</strong>ある有名なIT企業の創業者の考えを紹介しましょう。彼はアリストテレスに大きな影響を受けました。</p>
+                                <p><strong>トム：</strong>興味があります。</p>
+                                <p><strong>ショウヘイ：</strong>彼は、私たちは挑戦を楽しむべきだと考えました。しかし、その挑戦は私たちが得意な分野であるべきです。そうすれば、私たちは自分のやることを改善できます。それがキャリアの助けになるのです。</p>
+                                <p><strong>トム：</strong>それは素晴らしい響きですが、同時に怖いですね。もし失敗したらどうしますか？</p>
+                                <p><strong>ショウヘイ：</strong>恐れないでください。代わりにその怖い気持ちを楽しんでください。それを楽しまなければならないのですか？</p>
+                                <p><strong>トム：</strong>その通りです。自分の挑戦と、今やっていることにもっと集中してください。そうすれば、将来や他人の行動について心配する必要はなくなります。</p>
+                                <p><strong>ショウヘイ：</strong>分かりました。一生懸命働けば、人々はその努力に気づくでしょう。それが次のキャリアのチャンスを生み出すかもしれません。</p>
+                                <p><strong>トム：</strong>まさにその通りです。</p>
+                                <p><strong>トム：</strong>ケントさん、答えが見つかりましたね。毎日、自分の挑戦を楽しんでください。それらはきっと、あなたが探している成功を見つける手助けをしてくれるでしょう。</p>
+                                <p><strong>ショウヘイ：</strong>勇気を持って。恐怖に止められてはいけません。</p>
+                                <p><strong>トム：</strong>ではまた！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Learner's Supplement Tab -->
+            <div class="tab-pane fade p-3" id="vocab" role="tabpanel" aria-labelledby="vocab-tab">
+                <h2 class="mb-3">3 & 4. 英語学習者向けの補足と単語解説</h2>
+                <div class="accordion" id="learningAccordion">
+                    
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <strong>ピックアップ英単語・フレーズ解説</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#learningAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong>totally understand</strong>: 「完全に理解する」という意味ですが、会話では「すごくよく分かるよ」「その気持ち、めっちゃ分かる」といった強い共感を示す相づちとして非常によく使われます。"totally" は口語で "completely" や "absolutely" のように強調する副詞として頻繁に登場します。</li>
+                                    <li class="list-group-item"><strong>Pardon me?</strong>: 「すみません、もう一度言っていただけますか？」と聞き返すときの丁寧な表現です。相手の言ったことが聞こえなかったり、理解できなかったりした時に使います。少しカジュアルに "Sorry?" や "What was that?" と言うこともできます。</li>
+                                    <li class="list-group-item"><strong>go about it the wrong way</strong>: 「そのやり方は間違っている」「アプローチが正しくない」という意味の表現です。"go about ~" で「〜に取り掛かる、〜を行う」という意味になります。</li>
+                                    <li class="list-group-item"><strong>I get it.</strong>: 「分かった」「理解した」という意味の非常に一般的な口語表現です。"I understand." よりも少しカジュアルな響きがあります。相手の説明を聞いて納得した時などに使います。</li>
+                                    <li class="list-group-item"><strong>be sure to ~</strong>: 「きっと〜する」「間違いなく〜するだろう」と、確信を持って未来の出来事を述べるときに使います。例： "They are sure to help you." (それらはきっとあなたの助けになるでしょう。)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <strong>聞き取りと発音のポイント</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#learningAccordion">
+                            <div class="accordion-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item"><strong>リエゾン（音の連結）</strong>: "let's do it" は「レッツ・ドゥ・イット」ではなく、「レッヅゥイッ」のように音が繋がって聞こえます。また、"an idea" は「アン・アイデア」ではなく「アナイディア」のように聞こえます。子音で終わる単語と母音で始まる単語が続くときに起こる自然な音の変化です。</li>
+                                    <li class="list-group-item"><strong>リダクション（音の脱落）</strong>: "want to" は "wanna"（ワナ）に、"going to" は "gonna"（ゴナ）のように、日常会話では音が省略されて発音されることがよくあります。スクリプト中の "what I want to do" は「ワライワナドゥ」のように聞こえるでしょう。</li>
+                                    <li class="list-group-item"><strong>イントネーション（抑揚）</strong>: 質問文 "Who said that?" では、文末の "that" のイントネーションが上がります。一方、"What do you think?" のようなWH疑問文では、文末は下がり調子になるのが一般的です。感情を込めて話すトムのセリフ "That's great!" では、"great" が強く高く発音され、感嘆の気持ちを表しています。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 3. Deep Dive Tab -->
+            <div class="tab-pane fade p-3" id="deep-dive" role="tabpanel" aria-labelledby="deep-dive-tab">
+                <h2 class="mb-3">5. ストーリーの背景深掘り解説</h2>
+                <div class="card bg-light-blue">
+                    <div class="card-body lh-lg"> <!-- 行間を少し広げて読みやすく -->
+                        <h4 class="card-title"><i class="bi bi-book me-2"></i>アリストテレスの「キネーシス」と「エネルゲイア」</h4>
+                        <p>この対話の中心にあるのは、古代ギリシャの哲学者アリストテレス（紀元前384-322）が提唱した2つの概念です。彼はプラトンの弟子であり、アレクサンドロス大王の家庭教師でもあった「万学の祖」として知られています。</p>
+                        <ul>
+                            <li><strong>キネーシス (Kinesis / 運動)</strong>: この活動は、それ自体の外部に目的やゴールがあります。例えば、「家を建てる」という行為の目的は「家が完成すること」です。建設中はまだ未完了の状態であり、ゴールに到達した時点でその活動は終わります。ダイエットや勉強も、特定の目標（減量、合格など）が達成されれば完了するキネーシス的な活動と言えます。</li>
+                            <li><strong>エネルゲイア (Energeia / 活動)</strong>: この活動は、行為そのものの内に目的が含まれています。つまり、「〜している」という状態そのものが目的であり、完了しています。例えば、美しい音楽を「聴く」という行為は、聴いている瞬間に「聴く」という目的が達成されています。散歩を楽しむ、友人との会話を楽しむといった活動もエネルゲイアです。そこには明確なゴールはなく、そのプロセス自体が価値を持ちます。</li>
+                        </ul>
+                        <p>アリストテレスは、人間が幸福（エウダイモニア）に生きるためには、この<strong>エネルゲイア</strong>的な活動が重要だと考えました。目的のために我慢して何かをする（キネーシス）だけでなく、活動そのものを楽しむこと（エネルゲイア）が、より充実した生につながるというわけです。</p>
+
+                        <h4 class="card-title mt-4"><i class="bi bi-lightbulb-fill me-2"></i>「有名なIT企業の創業者」とは誰か？</h4>
+                        <p>ショウヘイが言及する「アリストテレスに影響を受けた有名なIT企業の創業者」は、特定の個人を指すというより、現代の成功した起業家、特に<strong>スティーブ・ジョブズ（Apple創業者）</strong>のような人物像を想定している可能性が高いです。</p>
+                        <p>ジョブズは「点と点をつなぐ (connecting the dots)」という有名なスピーチで、将来を見越して点をつなぐことはできず、後から振り返って初めて点と点がつながるのだと語りました。これは、未来の目的（キネーシス）のためだけでなく、今、情熱を傾けられること（エネルゲイア）に没頭することの重要性を示唆しています。</p>
+                        <p>番組で語られている「得意な分野で挑戦を楽しむ」という考え方は、まさにこの哲学と通じます。単に好きなことをするのではなく、自分の才能や強みがある領域で、少し背伸びをした挑戦（scary feelingを楽しむ）を続けること。その「エネルゲイア」的な没頭が、結果的に優れた製品やキャリア（良き結果）につながるというメッセージです。</p>
+                        <p>現代のビジネスリーダーの中には、アリストテレスのような古代ギリシャ哲学から、リーダーシップや個人の成長、組織文化の構築に関するヒントを得ている人物も少なくありません。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center p-3 mt-4">
+        <p>&copy; 2025 - Enjoy Simple English Learning Guide</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
