@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インタラクティブ自由研究：赤毛組合の謎</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Vintage Manuscript -->
+    <!-- Application Structure Plan: 「探偵の事件簿」をテーマにした、タブ形式のシングルページアプリケーション。セクション（事件概要、登場人物、ホームズの推理、ヴィクトリア朝のロンドン、君の挑戦）を明確に分け、ユーザーが興味のある項目から自由に探索できるように設計。これにより、小学生が物語の要素を段階的かつ体系的に理解し、受動的な読書から能動的な学習へと移行することを促す。今回の更新では、「君の挑戦！」セクションを大幅に拡張し、より多くの書き込みスペースと大きな描画エリアを提供することで、主体的な創作活動を促進する。 -->
+    <!-- Visualization & Content Choices: 1. ホームズの推理フロー: [目的:整理] 報告書の表をインタラクティブなクリック式アコーディオンに変更。各ステップをクリックすると詳細が表示されるUIで、複雑な推理過程を段階的に学べるようにする。[手法:HTML/Tailwind/JS]。2. ホームズvsワトソン比較: [目的:比較] 静的な表に加え、Chart.jsのドーナツグラフで二人の性格（論理vs感情）を視覚化。抽象的な性格の違いを直感的に理解させる。[手法:Chart.js]。3. 事件現場マップ: [目的:整理] 質屋と銀行の位置関係をHTML/CSSで図解。クリックすると各場所の役割が表示され、地理的な関係性が犯罪計画の鍵であることを示す。[手法:HTML/Tailwind/JS]。4. ワークシート: [目的:エンゲージメント] 報告書の書き込み欄をHTMLの入力フォームに変換し、ユーザーが直接ウェブ上で考察を記録できるように拡張。特に描画エリアを大きくすることで、物語の感想を絵で表現する自由研究に最適化する。[手法:HTML/JS]。 -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FDF6E3; /* Warm Neutral Background */
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Noto Serif JP', serif;
+        }
+        .tab-active {
+            background-color: #D2B48C; /* Tan */
+            color: #3D2B1F; /* Dark Brown */
+            border-bottom: 2px solid #8B4513; /* Saddle Brown */
+        }
+        .tab-inactive {
+            background-color: #F5DEB3; /* Wheat */
+            color: #5D4037; /* Brown */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 300px;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+        
+        <header class="text-center mb-8 border-b-4 border-double border-[#8B4513] pb-4">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#3D2B1F]">探偵の事件簿</h1>
+            <p class="text-lg md:text-2xl text-[#5D4037] mt-2 font-serif">シャーロック・ホームズと『赤毛組合』の謎</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center gap-2 mb-8">
+            <button data-tab="tab1" class="tab tab-active px-4 py-2 rounded-t-lg font-bold text-sm md:text-base transition-colors duration-300">事件の概要</button>
+            <button data-tab="tab2" class="tab tab-inactive px-4 py-2 rounded-t-lg font-bold text-sm md:text-base transition-colors duration-300">登場人物</button>
+            <button data-tab="tab3" class="tab tab-inactive px-4 py-2 rounded-t-lg font-bold text-sm md:text-base transition-colors duration-300">ホームズの推理</button>
+            <button data-tab="tab4" class="tab tab-inactive px-4 py-2 rounded-t-lg font-bold text-sm md:text-base transition-colors duration-300">19世紀のロンドン</button>
+            <button data-tab="tab5" class="tab tab-inactive px-4 py-2 rounded-t-lg font-bold text-sm md:text-base transition-colors duration-300">君の挑戦！</p>
+        </nav>
+
+        <main id="content" class="bg-white/50 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-[#D2B48C]">
+            
+            <!-- Section 1: 事件の概要 -->
+            <section id="tab1" class="content-section active">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">奇妙な仕事の始まり</h2>
+                <p class="mb-4 leading-relaxed">質屋を営むジェイベズ・ウィルソン氏は、ある日「赤毛組合」という不思議な組織のメンバーに選ばれます。仕事の内容は、毎日数時間、事務所で百科事典を書き写すだけ。それなのに、もらえるお給料は週に4ポンドという破格の金額でした。ウィルソン氏はこの幸運に喜びますが、ある日突然、組合は解散してしまいます。いったい何が目的だったのでしょうか？</p>
+                <div class="bg-[#F5DEB3] p-4 rounded-lg border-l-4 border-[#8B4513]">
+                    <h3 class="font-bold text-lg text-[#3D2B1F]">この事件のポイント</h3>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><span class="font-bold">謎の組織：</span>赤毛の人だけがメンバーになれる「赤毛組合」。</li>
+                        <li><span class="font-bold">奇妙な仕事：</span>百科事典をひたすら書き写す。</li>
+                        <li><span class="font-bold">高額な給料：</span>なぜかとても高いお給料が支払われる。</li>
+                        <li><span class="font-bold">突然の解散：</span>理由も告げられず、組合は消えてしまう。</li>
+                    </ul>
+                </div>
+                <p class="mt-4 leading-relaxed">このあまりに奇妙で、どこかおかしい事件の裏には、巧妙に仕組まれた大きな犯罪計画が隠されていました。名探偵シャーロック・ホームズが、この謎に挑みます。</p>
+            </section>
+
+            <!-- Section 2: 登場人物 -->
+            <section id="tab2" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">事件をめぐる人々</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-[#F5DEB3]/50 p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-[#3D2B1F]">シャーロック・ホームズ</h3>
+                        <p class="text-sm text-[#5D4037] mb-2">世界一の名探偵</p>
+                        <p>鋭い観察眼と論理的な思考で、どんな難事件も解決する。常識にとらわれず、物事の本質を見抜く天才。</p>
+                    </div>
+                    <div class="bg-[#F5DEB3]/50 p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-[#3D2B1F]">ジョン・H・ワトソン</h3>
+                        <p class="text-sm text-[#5D4037] mb-2">ホームズの相棒で医師</p>
+                        <p>ホームズの親友であり、彼の活躍を記録する伝記作家。読者と同じ視点で事件に驚き、感動する人間味あふれる人物。</p>
+                    </div>
+                    <div class="bg-[#F5DEB3]/50 p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-[#3D2B1F]">ジェイベズ・ウィルソン</h3>
+                        <p class="text-sm text-[#5D4037] mb-2">事件の依頼人</p>
+                        <p>ロンドンで質屋を営む、立派な赤毛の持ち主。少し欲張りで、お人好しな性格が事件に巻き込まれるきっかけとなる。</p>
+                    </div>
+                    <div class="bg-[#F5DEB3]/50 p-4 rounded-lg shadow">
+                        <h3 class="text-xl font-bold text-[#3D2B1F]">ヴィンセント・スポールディング</h3>
+                        <p class="text-sm text-[#5D4037] mb-2">ウィルソン氏の助手</p>
+                        <p>熱心に働く若者だが、その正体はイギリスで最も悪名高い犯罪者の一人、ジョン・クレイ。写真が趣味で、よく店の地下室にこもっている。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: ホームズの推理 -->
+            <section id="tab3" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">名探偵の思考をたどる</h2>
+                <p class="mb-6">ホームズは、一見バラバラに見える小さな手がかりを繋ぎ合わせ、事件の全体像を明らかにします。彼の推理のステップを一つずつ見ていきましょう。各ステップをクリックすると詳細が表示されます。</p>
+                <div id="accordion" class="space-y-2">
+                    <div class="accordion-item border border-[#D2B48C] rounded-lg">
+                        <button class="accordion-header w-full text-left p-4 bg-[#F5DEB3] hover:bg-[#D2B48C] transition-colors rounded-t-lg font-bold flex justify-between items-center">
+                            <span>ステップ1：問題の提示</span>
+                            <span class="text-xl">▼</span>
+                        </button>
+                        <div class="accordion-content bg-white/80 p-4 rounded-b-lg">
+                            <p>依頼人ウィルソン氏から「赤毛組合」の奇妙な話を聞く。あまりに都合が良すぎる話の中に、何か裏があると直感する。</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-[#D2B48C] rounded-lg">
+                        <button class="accordion-header w-full text-left p-4 bg-[#F5DEB3] hover:bg-[#D2B48C] transition-colors rounded-t-lg font-bold flex justify-between items-center">
+                            <span>ステップ2：情報収集</span>
+                            <span class="text-xl">▼</span>
+                        </button>
+                        <div class="accordion-content bg-white/80 p-4 rounded-b-lg">
+                            <p>助手のスポールディングのズボンの膝が汚れていること、彼が地下室によくこもることに注目。そして、質屋のすぐ近くに大きな銀行があることを確認する。</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-[#D2B48C] rounded-lg">
+                        <button class="accordion-header w-full text-left p-4 bg-[#F5DEB3] hover:bg-[#D2B48C] transition-colors rounded-t-lg font-bold flex justify-between items-center">
+                            <span>ステップ3：仮説を立てる</span>
+                            <span class="text-xl">▼</span>
+                        </button>
+                        <div class="accordion-content bg-white/80 p-4 rounded-b-lg">
+                            <p>「赤毛組合」はウィルソン氏を店から遠ざけるための口実ではないか？ 犯人たちは、その間に質屋の地下から隣の銀行へトンネルを掘っているのではないか？と推理する。</p>
+                        </div>
+                    </div>
+                     <div class="accordion-item border border-[#D2B48C] rounded-lg">
+                        <button class="accordion-header w-full text-left p-4 bg-[#F5DEB3] hover:bg-[#D2B48C] transition-colors rounded-t-lg font-bold flex justify-between items-center">
+                            <span>ステップ4：仮説の検証</span>
+                            <span class="text-xl">▼</span>
+                        </button>
+                        <div class="accordion-content bg-white/80 p-4 rounded-b-lg">
+                            <p>質屋の前で地面を杖で叩き、音の響きから地下に空洞があることを確かめる。これで仮説が正しいと確信する。</p>
+                        </div>
+                    </div>
+                    <div class="accordion-item border border-[#D2B48C] rounded-lg">
+                        <button class="accordion-header w-full text-left p-4 bg-[#F5DEB3] hover:bg-[#D2B48C] transition-colors rounded-t-lg font-bold flex justify-between items-center">
+                            <span>ステップ5：計画の阻止</span>
+                            <span class="text-xl">▼</span>
+                        </button>
+                        <div class="accordion-content bg-white/80 p-4 rounded-b-lg">
+                            <p>警察と協力し、銀行の地下金庫で待ち伏せをする。トンネルから現れた犯人たちを捕まえ、銀行強盗を未然に防ぐ。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: 19世紀のロンドン -->
+            <section id="tab4" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">物語の舞台：ヴィクトリア朝のロンドン</h2>
+                <p class="mb-6">『赤毛組合』が書かれたのは19世紀末、ヴィクトリア女王がイギリスを治めていた時代です。当時のロンドンは、世界で最も活気のある都市でしたが、その華やかさの裏には影もありました。</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">繁栄と犯罪の街</h3>
+                        <p class="mb-4">産業革命によってイギリスは「世界の工場」と呼ばれ、ロンドンは金融の中心地でした。しかし、急激な発展は貧富の差を広げ、巧妙な犯罪が生まれる土壌ともなりました。</p>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">新聞と情報</h3>
+                        <p>この時代、新聞は最も重要な情報源でした。「赤毛組合」の募集も新聞広告で行われました。犯人たちは、多くの人が信頼する新聞を悪用したのです。</p>
+                    </div>
+                    <div class="bg-[#F5DEB3]/50 p-4 rounded-lg shadow border border-[#D2B48C]">
+                        <h3 class="text-lg font-bold text-center mb-2">事件現場の見取り図</h3>
+                        <div id="map" class="relative bg-white p-4 rounded">
+                            <div class="text-center mb-2 font-bold">サクス・コバーグ・スクエア</div>
+                            <div class="flex justify-around items-center h-48">
+                                <div id="pawnshop" class="map-item text-center p-2 border-2 border-dashed border-[#8B4513] rounded cursor-pointer">
+                                    <span class="text-2xl">♇</span>
+                                    <p class="font-bold">ウィルソンの質屋</p>
+                                </div>
+                                <div id="bank" class="map-item text-center p-2 border-2 border-dashed border-[#8B4513] rounded cursor-pointer">
+                                     <span class="text-2xl">🏦</span>
+                                    <p class="font-bold">銀行</p>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-1/2 left-0 right-0 border-t-4 border-dotted border-gray-600 transform translate-y-4"></div>
+                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white px-2 py-1 rounded text-sm">トンネル</div>
+                        </div>
+                        <p id="map-info" class="text-center mt-2 text-sm text-[#5D4037] h-10">※建物をクリックすると説明が表示されます。</p>
+                    </div>
+                </div>
+                 <div class="mt-8">
+                    <h3 class="text-xl font-bold text-[#3D2B1F] mb-4 text-center">ホームズとワトソン：最強のコンビ</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="text-center">
+                            <h4 class="text-lg font-bold">シャーロック・ホームズ</h4>
+                            <div class="chart-container">
+                                <canvas id="holmesChart"></canvas>
+                            </div>
+                            <p class="mt-2 text-sm">論理と観察力で真実を追求する。</p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="text-lg font-bold">ジョン・ワトソン</h4>
+                            <div class="chart-container">
+                                <canvas id="watsonChart"></canvas>
+                            </div>
+                            <p class="mt-2 text-sm">友情と人間性でホームズを支える。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: 君の挑戦！ -->
+            <section id="tab5" class="content-section">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">君も名探偵になろう！</h2>
+                <p class="mb-6 leading-relaxed">物語を読み終えた君が気づいたこと、考えたこと、感じたことを、この事件簿にまとめてみよう。自分だけのオリジナル研究を完成させるんだ！</p>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート1：推理の足あと</h3>
+                        <p class="mb-2 text-sm">もし君がホームズの代わりにこの事件を解決するとしたら、どんな順番で推理を進める？</p>
+                        <textarea class="w-full h-24 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：まず、ウィルソン氏の仕事がどうして「百科事典の書き写し」だったのか考える。次に、なぜ「赤毛組合」が突然解散したのか、その理由を推理する。"></textarea>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート2：人物分析シート</h3>
+                        <p class="mb-2 text-sm">ホームズ、ワトソン、そして犯人のスポールディング（ジョン・クレイ）について、どんな性格だと思う？</p>
+                        <textarea class="w-full h-24 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：ホームズは論理的で少し変わり者だけど、ワトソンには心を許している優しい一面がある。"></textarea>
+                    </div>
+                     <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート3：物語の感想</h3>
+                        <p class="mb-2 text-sm">この物語を読んで一番印象に残ったことや、考えさせられたことは何？</p>
+                        <textarea class="w-full h-24 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：当たり前だと思っていた新聞や広告が、悪いことに使われることもあると知って驚いた。"></textarea>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア：物語の挿絵を描こう！</h3>
+                        <p class="mb-2 text-sm">一番好きなシーン、ワクワクしたシーン、ドキドキしたシーンを自由に描いてみよう！</p>
+                        <div class="w-full h-96 p-4 border-2 border-dashed border-[#D2B48C] rounded-lg flex items-center justify-center text-gray-500 bg-[#FBF9F1] shadow-inner">
+                            <p>ここに、君だけのイラストを描きこもう！</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const contentSections = document.querySelectorAll('.content-section');
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            const mapItems = document.querySelectorAll('.map-item');
+            const mapInfo = document.getElementById('map-info');
+
+            const mapDescriptions = {
+                pawnshop: 'ウィルソン氏が働く質屋。犯人たちはここを拠点にトンネルを掘りました。',
+                bank: '犯人たちの本当の狙い。地下金庫には大量の金貨が保管されていました。'
+            };
+
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => {
+                        t.classList.remove('tab-active');
+                        t.classList.add('tab-inactive');
+                    });
+                    tab.classList.add('tab-active');
+                    tab.classList.remove('tab-inactive');
+
+                    contentSections.forEach(section => {
+                        section.classList.remove('active');
+                    });
+
+                    const activeTabContent = document.getElementById(tab.dataset.tab);
+                    activeTabContent.classList.add('active');
+
+                    // Special handling for charts on tab4
+                    if (tab.dataset.tab === 'tab4') {
+                        renderCharts();
+                    }
+                });
+            });
+
+            // Accordion functionality
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const item = header.parentElement;
+                    
+                    // Close other accordions
+                    document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                            otherItem.querySelector('.accordion-header span:last-child').textContent = '▼';
+                        }
+                    });
+
+                    // Toggle current accordion
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        header.querySelector('span:last-child').textContent = '▼';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        header.querySelector('span:last-child').textContent = '▲';
+                    }
+                });
+            });
+
+            // Map functionality
+            mapItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    mapInfo.textContent = mapDescriptions[item.id];
+                });
+            });
+
+            // Chart rendering
+            let holmesChartInstance, watsonChartInstance;
+
+            function createChart(ctx, data, options) {
+                return new Chart(ctx, {
+                    type: 'doughnut',
+                    data: data,
+                    options: options
+                });
+            }
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            };
+
+            const holmesData = {
+                labels: ['論理的思考', '観察力', '知識'],
+                datasets: [{
+                    label: 'ホームズの能力',
+                    data: [50, 30, 20],
+                    backgroundColor: ['#3D2B1F', '#8B4513', '#D2B48C'],
+                    borderColor: '#FDF6E3',
+                    borderWidth: 3
+                }]
+            };
+
+            const watsonData = {
+                labels: ['人間性・友情', '記録力', '医療知識'],
+                datasets: [{
+                    label: 'ワトソンの能力',
+                    data: [50, 30, 20],
+                    backgroundColor: ['#5D4037', '#A0522D', '#F5DEB3'],
+                    borderColor: '#FDF6E3',
+                    borderWidth: 3
+                }]
+            };
+
+            function renderCharts() {
+                if (!holmesChartInstance) {
+                    const holmesCtx = document.getElementById('holmesChart').getContext('2d');
+                    holmesChartInstance = createChart(holmesCtx, holmesData, chartOptions);
+                }
+                if (!watsonChartInstance) {
+                    const watsonCtx = document.getElementById('watsonChart').getContext('2d');
+                    watsonChartInstance = createChart(watsonCtx, watsonData, chartOptions);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

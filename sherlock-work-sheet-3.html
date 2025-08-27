@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インタラクティブ自由研究：赤毛組合の謎</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FDF6E3; /* Warm Neutral Background */
+            color: #3D2B1F; /* Dark Brown */
+            line-height: 1.6;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Noto Serif JP', serif;
+        }
+        .container {
+            max-width: 210mm; /* A4 width */
+            padding: 20mm 15mm; /* A4-like padding */
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        /* 印刷時に不要な要素を非表示にする */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .container {
+                padding: 0;
+                margin: 0;
+            }
+            /* 入力欄の背景を白くし、罫線を明確にする */
+            textarea {
+                background-color: white !important;
+                border: 1px solid black !important;
+            }
+            /* 画面表示用の余白を削除 */
+            .p-4, .md\:p-8 {
+                padding: 0;
+            }
+        }
+        /* PDFや印刷時に、入力欄が枠線で表示されるようにする */
+        textarea {
+            border: 1px solid #d1d5db;
+        }
+        .illustration-box {
+            background-color: #FBF9F1;
+            border: 2px dashed #D2B48C;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto">
+        
+        <header class="text-center mb-8 border-b-4 border-double border-[#8B4513] pb-4">
+            <h1 class="text-3xl md:text-5xl font-bold text-[#3D2B1F]">探偵の事件簿</h1>
+            <p class="text-lg md:text-2xl text-[#5D4037] mt-2 font-serif">シャーロック・ホームズと『赤毛組合』の謎</p>
+            <p class="mt-4 text-sm md:text-base">このドキュメントは、A4縦での印刷やPDF保存を想定したレイアウトになっています。君も名探偵になって、事件を解決してみよう！</p>
+        </header>
+
+        <main id="content" class="bg-white p-6 rounded-lg shadow-lg border border-[#D2B48C]">
+            
+            <!-- Section 1: 事件の概要 -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">事件の概要：奇妙な仕事の始まり</h2>
+                <p class="mb-4 leading-relaxed text-justify">質屋を営むジェイベズ・ウィルソン氏は、ある日「赤毛組合」という不思議な組織のメンバーに選ばれます。仕事の内容は、毎日数時間、事務所で百科事典を書き写すだけ。それなのに、もらえるお給料は週に4ポンドという破格の金額でした。ウィルソン氏はこの幸運に喜びますが、ある日突然、組合は解散してしまいます。いったい何が目的だったのでしょうか？</p>
+                <div class="bg-[#F5DEB3] p-4 rounded-lg border-l-4 border-[#8B4513]">
+                    <h3 class="font-bold text-lg text-[#3D2B1F]">この事件のポイント</h3>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li><span class="font-bold">謎の組織：</span>赤毛の人だけがメンバーになれる「赤毛組合」。</li>
+                        <li><span class="font-bold">奇妙な仕事：</span>百科事典をひたすら書き写す。</li>
+                        <li><span class="font-bold">高額な給料：</span>なぜかとても高いお給料が支払われる。</li>
+                        <li><span class="font-bold">突然の解散：</span>理由も告げられず、組合は消えてしまう。</li>
+                    </ul>
+                </div>
+                <p class="mt-4 leading-relaxed text-justify">このあまりに奇妙で、どこかおかしい事件の裏には、巧妙に仕組まれた大きな犯罪計画が隠されていました。名探偵シャーロック・ホームズが、この謎に挑みます。</p>
+            </section>
+            
+            <!-- Section 2: ホームズの推理 -->
+            <section class="page-break mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">ホームズの推理：名探偵の思考をたどる</h2>
+                <p class="mb-6 text-justify">ホームズは、一見バラバラに見える小さな手がかりを繋ぎ合わせ、事件の全体像を明らかにします。彼の推理のステップを一つずつ見ていきましょう。</p>
+                <div class="space-y-4">
+                    <div class="border border-[#D2B48C] rounded-lg p-4">
+                        <h3 class="font-bold text-lg text-[#3D2B1F]">ステップ1：問題の提示</h3>
+                        <p class="text-justify">依頼人ウィルソン氏から「赤毛組合」の奇妙な話を聞く。あまりに都合が良すぎる話の中に、何か裏があると直感する。</p>
+                    </div>
+                    <div class="border border-[#D2B48C] rounded-lg p-4">
+                        <h3 class="font-bold text-lg text-[#3D2B1F]">ステップ2：情報収集</h3>
+                        <p class="text-justify">助手のスポールディングのズボンの膝が汚れていること、彼が地下室によくこもることに注目。そして、質屋のすぐ近くに大きな銀行があることを確認する。</p>
+                    </div>
+                    <div class="border border-[#D2B48C] rounded-lg p-4">
+                        <h3 class="font-bold text-lg text-[#3D2B1F]">ステップ3：仮説を立てる</h3>
+                        <p class="text-justify">「赤毛組合」はウィルソン氏を店から遠ざけるための口実ではないか？ 犯人たちは、その間に質屋の地下から隣の銀行へトンネルを掘っているのではないか？と推理する。</p>
+                    </div>
+                     <div class="border border-[#D2B48C] rounded-lg p-4">
+                        <h3 class="font-bold text-lg text-[#3D2B1F]">ステップ4：仮説の検証</h3>
+                        <p class="text-justify">質屋の前で地面を杖で叩き、音の響きから地下に空洞があることを確かめる。これで仮説が正しいと確信する。</p>
+                    </div>
+                    <div class="border border-[#D2B48C] rounded-lg p-4">
+                        <h3 class="font-bold text-lg text-[#3D2B1F]">ステップ5：計画の阻止</h3>
+                        <p class="text-justify">警察と協力し、銀行の地下金庫で待ち伏せをする。トンネルから現れた犯人たちを捕まえ、銀行強盗を未然に防ぐ。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 3: 19世紀のロンドン -->
+            <section class="page-break mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">物語の舞台：ヴィクトリア朝のロンドン</h2>
+                <p class="mb-6 text-justify">『赤毛組合』が書かれたのは19世紀末、ヴィクトリア女王がイギリスを治めていた時代です。当時のロンドンは、世界で最も活気のある都市でしたが、その華やかさの裏には影もありました。</p>
+                <div class="grid md:grid-cols-2 gap-6 items-start">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">繁栄と犯罪の街</h3>
+                        <p class="mb-4 text-justify">産業革命によってイギリスは「世界の工場」と呼ばれ、ロンドンは金融の中心地でした。しかし、急激な発展は貧富の差を広げ、巧妙な犯罪が生まれる土壌ともなりました。</p>
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">新聞と情報</h3>
+                        <p class="text-justify">この時代、新聞は最も重要な情報源でした。「赤毛組合」の募集も新聞広告で行われました。犯人たちは、多くの人が信頼する新聞を悪用したのです。</p>
+                    </div>
+                    <div class="p-4 rounded-lg shadow border border-[#D2B48C]">
+                        <h3 class="text-lg font-bold text-center mb-2">事件現場の見取り図</h3>
+                        <div id="map" class="relative bg-white p-4 rounded">
+                             <div class="text-center mb-2 font-bold">サクス・コバーグ・スクエア</div>
+                            <div class="flex justify-around items-center h-48">
+                                <div class="text-center p-2 border-2 border-dashed border-[#8B4513] rounded">
+                                    <span class="text-2xl">♇</span>
+                                    <p class="font-bold">ウィルソンの質屋</p>
+                                </div>
+                                <div class="text-center p-2 border-2 border-dashed border-[#8B4513] rounded">
+                                     <span class="text-2xl">🏦</span>
+                                    <p class="font-bold">銀行</p>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-1/2 left-0 right-0 border-t-4 border-dotted border-gray-600 transform translate-y-4"></div>
+                             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white px-2 py-1 rounded text-sm">トンネル</div>
+                        </div>
+                        <p class="text-center mt-2 text-sm text-[#5D4037]">質屋と銀行が隣接していることが犯罪計画の鍵でした。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: 君の挑戦！ -->
+            <section class="page-break">
+                <h2 class="text-2xl font-bold mb-4 text-[#3D2B1F] border-b-2 border-[#D2B48C] pb-2">君も名探偵になろう！</h2>
+                <p class="mb-6 leading-relaxed text-justify">物語を読み終えた君が気づいたこと、考えたこと、感じたことを、この事件簿にまとめてみよう。自分だけのオリジナル研究を完成させるんだ！</p>
+                
+                <div class="space-y-6">
+                    <!-- Worksheet 1 on a new page -->
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート1：推理の足あと</h3>
+                        <p class="mb-2 text-sm text-justify">もし君がホームズの代わりにこの事件を解決するとしたら、どんな順番で推理を進める？</p>
+                        <textarea class="w-full h-48 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：まず、ウィルソン氏の仕事がどうして「百科事典の書き写し」だったのか考える。次に、なぜ「赤毛組合」が突然解散したのか、その理由を推理する。"></textarea>
+                    </div>
+                    <!-- Worksheet 2 on a new page -->
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート2：人物分析シート</h3>
+                        <p class="mb-2 text-sm text-justify">ホームズ、ワトソン、そして犯人のスポールディング（ジョン・クレイ）について、どんな性格だと思う？</p>
+                        <textarea class="w-full h-48 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：ホームズは論理的で少し変わり者だけど、ワトソンには心を許している優しい一面がある。"></textarea>
+                    </div>
+                    <!-- Worksheet 3 on a new page -->
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">ワークシート3：物語の感想</h3>
+                        <p class="mb-2 text-sm text-justify">この物語を読んで一番印象に残ったことや、考えさせられたことは何？</p>
+                        <textarea class="w-full h-48 p-2 border border-[#D2B48C] rounded-lg focus:ring-2 focus:ring-[#8B4513] focus:outline-none" placeholder="例：当たり前だと思っていた新聞や広告が、悪いことに使われることもあると知って驚いた。"></textarea>
+                    </div>
+                    
+                    <!-- Illustration section with 6 specific scenes, each on its own page -->
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア1：ウィルソン氏の訪問</h3>
+                        <p class="mb-2 text-sm text-justify">依頼にやってきたウィルソン氏と、彼の赤い髪に注目するホームズとワトソンを描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア2：赤毛組合の仕事場</h3>
+                        <p class="mb-2 text-sm text-justify">ウィルソン氏が百科事典をひたすら書き写している、奇妙な仕事の様子を描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア3：通りでの調査</h3>
+                        <p class="mb-2 text-sm text-justify">質屋の前で杖を地面に叩きつけ、音の響きを確かめるホームズの姿を描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア4：銀行での待ち伏せ</h3>
+                        <p class="mb-2 text-sm text-justify">銀行の地下金庫で、犯人がトンネルから現れるのをじっと待つホームズとワトソンを描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア5：犯人の逮捕</h3>
+                        <p class="mb-2 text-sm text-justify">トンネルから現れた犯人、ジョン・クレイが警察に逮捕されるシーンを描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                    <div class="page-break">
+                        <h3 class="text-xl font-bold text-[#3D2B1F] mb-2">イラストエリア6：事件解決後の会話</h3>
+                        <p class="mb-2 text-sm text-justify">すべてが終わった後、事件の全貌をワトソンに説明するホームズを描いてみよう。</p>
+                        <div class="w-full h-96 p-4 illustration-box shadow-inner flex items-center justify-center text-gray-500">
+                            <p>ここにイラストを描いてみよう！</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
