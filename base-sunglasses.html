@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enjoy Simple English: The Mysterious Sunglasses - Separate Components</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            background-color: #f8f9fa;
+        }
+        .header-section {
+            background-color: #343a40;
+            color: white;
+            padding: 2.5rem 0;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .card {
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .card-header {
+            background-color: #e9ecef;
+            font-weight: bold;
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: 0.75rem;
+            border-top-right-radius: 0.75rem;
+        }
+        .speaker-name {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .narration {
+            font-style: italic;
+            color: #6c757d;
+        }
+        .english-text {
+            color: #495057;
+        }
+        .japanese-translation {
+            color: #28a745;
+        }
+        .commentary-title {
+            font-weight: bold;
+            margin-top: 1rem;
+            color: #6f42c1;
+        }
+        .commentary-item {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #6f42c1;
+            background-color: #f3eafa;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .commentary-item strong {
+            color: #343a40;
+        }
+        .highlight {
+            background-color: #ffeeba;
+            padding: 0.1em 0.3em;
+            border-radius: 0.2em;
+        }
+        .uk-native-comment {
+            color: #dc3545;
+            font-style: italic;
+        }
+        .section-title-custom {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem 1.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1.75rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header-section">
+        <div class="container">
+            <h1>Enjoy Simple English: The Mysterious Sunglasses</h1>
+            <p class="lead">スクリプト、日本語訳、解説、イギリス英語版</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. 英語のスクリプト部分のみ -->
+        <section id="english-script-only">
+            <h2 class="section-title-custom">1. 英語スクリプトのみ (Original)</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p class="narration">Enjoy Simple English. Morisaki Win desu. Maishū kayōbi wa orijinaru no shōto sutōrī o otodoke shimasu. Kyō no ohanashi wa The Mysterious Sunglasses desu. Ninki shirīzu o rensai suru ōgosho no mangaka ni taishi, nyūsha shita bakari no shain ga odoroki no shiteki o shimasu. Sore de wa, I can't wait to listen to the story.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> I am so excited! You are finally going to write some new stories for your famous manga series, Enjoy Detective!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Ha! Well, I'm happy you'll be my editor again, Nakagawa-san. I trust you a lot and I look forward to working with you.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> About that...</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Hmm?</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Well, there's something I have to tell you. Kimura, can you come here please?</p>
+                    <p><span class="speaker-name">Kimura:</span> I am honored to meet you, sir. I'm Kimura Taeko. I just graduated from university and joined this publishing company last week.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> What? This must be a joke, right? Are you telling me that...</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Yes, she will be your new editor.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> You have worked with me before and you have experience. I don't want to be impolite, but is she ready for a big project like this?</p>
+                    <p><span class="speaker-name">Kimura:</span> Sir, I may be young with no experience, but I promise you that I will do my very best.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Do you always speak so loudly?</p>
+                    <p><span class="speaker-name">Kimura:</span> I'm sorry, sir.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> If there are any problems, I promise to help out.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Nakagawa-san!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Well then, Kimura-san, have you read the first draft?</p>
+                    <p><span class="speaker-name">Kimura:</span> Of course, sir!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Okay. What did you think?</p>
+                    <p><span class="speaker-name">Kimura:</span> It was really good. I loved it. Only you could write that. How are they going to find the killer? I can't wait to read the next story.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Hmm.</p>
+                    <p><span class="speaker-name">Kimura:</span> But there is just one thing.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Kimura! What are you talking about? Keep quiet!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> It's all right. What is it?</p>
+                    <p><span class="speaker-name">Kimura:</span> The detective wears sunglasses.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Yes? Why is that a problem?</p>
+                    <p><span class="speaker-name">Kimura:</span> Why did you make him wear sunglasses?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Huh?</p>
+                    <p><span class="speaker-name">Kimura:</span> Do the sunglasses play an important role in the future? Are they connected with the murder?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Uh, what do you mean?</p>
+                    <p><span class="speaker-name">Kimura:</span> For example, are they a special type of sunglasses? Maybe they help you see in the dark and he's the killer?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Uh, no, no. He is not the killer. The real killer is someone different.</p>
+                    <p><span class="speaker-name">Kimura:</span> Oh. Then why is he wearing them?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Do I need a reason? Sunglasses are cool.</p>
+                    <p><span class="speaker-name">Kimura:</span> So, the detective is going to be someone who cares about fashion. Is that right?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Uh, no. I was thinking he is someone who doesn't care about clothes or fashion. He only cares about work.</p>
+                    <p><span class="speaker-name">Kimura:</span> Hmm. It doesn't make sense. People who don't care about fashion probably don't wear sunglasses.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Oh, well, he doesn't like sunlight.</p>
+                    <p><span class="speaker-name">Kimura:</span> Your story takes place inside a room with no windows.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Uh...</p>
+                    <p><span class="speaker-name">Kimura:</span> Sir, is it possible that you just didn't want to draw the eyes of the detective?</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Kimura! You should be careful with your words!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> You are exactly right. I'll take the sunglasses off.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> What? Kimura was right?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Kimura-san, you have a good eye and you weren't scared to tell me your opinion. I like you. We are going to make a good team.</p>
+                    <p><span class="speaker-name">Kimura:</span> Thank you, sir.</p>
+                    <p class="narration">Kimura-san, yarimasu ne! Oogosho no mangaka ni, mou tantei ga kaketeru sangurasu ni imi ga aru no ka to toita dashita tokoro nakatta n desu ne. Ano, jitsu wa sore wa tenuki shitai ga tame tte iu riyū o chanto mitomeru mangaka mo sugoi. Ya, ma sore ni shite mo Kimura-san, she has a good eye. Me no tsukedokoro ga ii desu ne. Sore de wa, see you tomorrow!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 日本語のスクリプトのみ -->
+        <section id="japanese-script-only" class="mt-5">
+            <h2 class="section-title-custom">2. 日本語スクリプトのみ</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p class="narration">エンジョイ・シンプル・イングリッシュ。森崎ウィンです。毎週火曜日はオリジナルのショートストーリーをお届けします。今日のお話は「謎のサングラス」です。人気シリーズを連載する大御所の漫画家に対し、入社したばかりの社員が驚きの指摘をします。それでは、物語を聞くのが待ちきれません。</p>
+                    <p><span class="speaker-name">中川:</span> とても興奮しています！ついに、あなたの有名な漫画シリーズ「エンジョイ探偵」の新しい物語を書いてくださるのですね！</p>
+                    <p><span class="speaker-name">漫画家:</span> ハッ！ああ、またあなたが私の編集者になってくれるのは嬉しいよ、中川さん。君をとても信頼しているし、一緒に仕事をするのを楽しみにしているよ。</p>
+                    <p><span class="speaker-name">中川:</span> それについてなのですが…</p>
+                    <p><span class="speaker-name">漫画家:</span> うん？</p>
+                    <p><span class="speaker-name">中川:</span> あの、お伝えしなければならないことがありまして。木村さん、こちらへ来てください。</p>
+                    <p><span class="speaker-name">木村:</span> はじめまして、先生。木村妙子と申します。先週大学を卒業したばかりで、この出版社に入社いたしました。</p>
+                    <p><span class="speaker-name">漫画家:</span> 何？冗談だろう？まさか…</p>
+                    <p><span class="speaker-name">中川:</span> はい、彼女があなたの新しい編集者になります。</p>
+                    <p><span class="speaker-name">漫画家:</span> 君は以前私と仕事をしたことがあるし、経験もある。無礼にしたくはないが、彼女がこのような大仕事の準備ができているのか？</p>
+                    <p><span class="speaker-name">木村:</span> 先生、私は若く経験もありませんが、全力でやらせていただきますとお約束します。</p>
+                    <p><span class="speaker-name">漫画家:</span> 君はいつもそんなに大声で話すのか？</p>
+                    <p><span class="speaker-name">木村:</span> 申し訳ありません、先生。</p>
+                    <p><span class="speaker-name">中川:</span> もし何か問題があれば、私が手伝うことをお約束します。</p>
+                    <p><span class="speaker-name">漫画家:</span> 中川さん！</p>
+                    <p><span class="speaker-name">漫画家:</span> では、木村さん、最初の原稿は読みましたか？</p>
+                    <p><span class="speaker-name">木村:</span> もちろんです、先生！</p>
+                    <p><span class="speaker-name">漫画家:</span> よし。どう思った？</p>
+                    <p><span class="speaker-name">木村:</span> とても良かったです。大好きです。あなたしか書けません。どうやって犯人を見つけるのでしょうか？次の話を読むのが待ちきれません。</p>
+                    <p><span class="speaker-name">漫画家:</span> ふむ。</p>
+                    <p><span class="speaker-name">木村:</span> しかし、ただ一つだけ。</p>
+                    <p><span class="speaker-name">中川:</span> 木村さん！何を言ってるんですか！黙りなさい！</p>
+                    <p><span class="speaker-name">漫画家:</span> 大丈夫だ。何だ？</p>
+                    <p><span class="speaker-name">木村:</span> 探偵がサングラスをかけています。</p>
+                    <p><span class="speaker-name">漫画家:</span> そうだ。それが何か問題なのか？</p>
+                    <p><span class="speaker-name">木村:</span> なぜ彼にサングラスをかけさせたのですか？</p>
+                    <p><span class="speaker-name">漫画家:</span> は？</p>
+                    <p><span class="speaker-name">木村:</span> そのサングラスは将来重要な役割を果たすのですか？殺人事件と関係があるのですか？</p>
+                    <p><span class="speaker-name">漫画家:</span> あー、どういう意味だ？</p>
+                    <p><span class="speaker-name">木村:</span> 例えば、特殊なサングラスなのですか？もしかして暗闇で物を見るのを助けて、彼が犯人とか？</p>
+                    <p><span class="speaker-name">漫画家:</span> いや、違う違う。彼が犯人ではない。本当の犯人は別人だ。</p>
+                    <p><span class="speaker-name">木村:</span> ああ。では、なぜ彼はそれらをかけているのですか？</p>
+                    <p><span class="speaker-name">漫画家:</span> 理由が必要なのか？サングラスはかっこいいだろう。</p>
+                    <p><span class="speaker-name">木村:</span> では、探偵はファッションを気にする人になるのですね。合っていますか？</p>
+                    <p><span class="speaker-name">漫画家:</span> あー、いや。彼は服やファッションに無頓着な人物だと考えていたんだ。彼は仕事のことしか考えていない。</p>
+                    <p><span class="speaker-name">木村:</span> うーん。それは理にかなっていません。ファッションを気にしない人はおそらくサングラスをかけないでしょう。</p>
+                    <p><span class="speaker-name">漫画家:</span> ああ、えっと、彼は日光が好きではないんだ。</p>
+                    <p><span class="speaker-name">木村:</span> あなたの物語は窓のない部屋の中で展開されます。</p>
+                    <p><span class="speaker-name">漫画家:</span> うっ…</p>
+                    <p><span class="speaker-name">木村:</span> 先生、もしかして、探偵の目を描きたくなかっただけなのでは？</p>
+                    <p><span class="speaker-name">中川:</span> 木村さん！言葉に気をつけなさい！</p>
+                    <p><span class="speaker-name">漫画家:</span> 君の言うとおりだ。サングラスを外そう。</p>
+                    <p><span class="speaker-name">中川:</span> えっ？木村さんが正しかった？</p>
+                    <p><span class="speaker-name">漫画家:</span> 木村さん、君は良い目を持っているし、私に臆することなく意見を言ってくれた。気に入ったよ。私たちは良いチームになるだろう。</p>
+                    <p><span class="speaker-name">木村:</span> ありがとうございます、先生。</p>
+                    <p class="narration">木村さん、やりますね！大御所の漫画家に、もう探偵がかけてるサングラスに意味がありませんでしたね。あの、実はそれは手抜きしたいがためっていう理由をちゃんと認める漫画家もすごい。いや、まあそれにしても木村さん、彼女は良い目を持っていますね。目の付け所が良いですね。それでは、また明日！</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 解説のみ -->
+        <section id="commentary-only" class="mt-5">
+            <h2 class="section-title-custom">3. 解説のみ</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="commentary-title">オリジナルスクリプトの解説</h5>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I am so excited!</span></strong><br>
+                        【解説】「とてもワクワクしている、興奮している」という意味。日常会話でよく使われる表現です。<br>
+                        【関連表現】<code>I'm really looking forward to it!</code>（本当に楽しみにしています！）<br>
+                        【UKネイティブなら】全く自然な表現です。よりカジュアルに言うなら <code>I'm chuffed!</code> (すごく嬉しい、やった！) や <code>I'm dead excited!</code> などもありますが、この状況では <code>I'm so excited!</code> が適切です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I look forward to working with you.</span></strong><br>
+                        【解説】「あなたと仕事をするのを楽しみにしています」という丁寧な表現。ビジネスシーンでよく使われます。<code>look forward to + V-ing</code> の形を覚えることが重要です。<br>
+                        【関連表現】<code>I'm eager to collaborate with you.</code>（あなたと協力するのを楽しみにしています）<br>
+                        【UKネイティブなら】非常に一般的で適切な表現です。<code>I'm looking forward to working with you.</code> と現在進行形にすることがより自然な響きになることが多いです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">About that...</span></strong><br>
+                        【解説】何か言い出しにくいことや、前の話題に水を差すときに使う間接的な表現。「それについてですが…」「実は…」といったニュアンスです。<br>
+                        【UKネイティブなら】同じように使われます。会話のトーンによっては <code>"Actually, about that..."</code> のように "actually" を加えることもあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">there's something I have to tell you.</span></strong><br>
+                        【解説】「お話ししなければならないことがあります」という、前置きのフレーズ。重要な情報を伝える前に使われます。<br>
+                        【UKネイティブなら】非常に自然な言い回しです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I am honored to meet you, sir.</span></strong><br>
+                        【解説】「お会いできて光栄です」という非常に丁寧な挨拶。「sir」は男性の目上の人に対する敬意を表す言葉です。<br>
+                        【関連表現】<code>It's a pleasure to meet you.</code>（お会いできて嬉しいです）<br>
+                        【UKネイティブなら】非常にフォーマルで、少し古風に聞こえるかもしれませんが、敬意を表す丁寧な表現として理解されます。ビジネスシーンでは <code>"It's an honour to meet you."</code> (British spelling) が一般的です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I just graduated from university</span></strong><br>
+                        【解説】「大学を卒業したばかりです」という意味。<code>just</code> は「〜したばかり」という過去の出来事の直後を表します。<br>
+                        【UKネイティブなら】<code>"I've just graduated from university."</code> (現在完了形) の方がより一般的で自然に聞こえます。これは、卒業したことが「先週」という特定の時点ではなく、現在にまで影響している状況を強調するためです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">This must be a joke, right?</span></strong><br>
+                        【解説】「これは冗談に違いないでしょう？」と、信じられない気持ちを表す表現。<code>must be</code> は「～に違いない」という強い確信を示します。<br>
+                        【UKネイティブなら】全く自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I don't want to be impolite, but...</span></strong><br>
+                        【解説】「失礼なことを言いたくありませんが…」という、相手に不快感を与えないように配慮しながら意見を述べる際のクッション言葉。<br>
+                        【UKネイティブなら】非常に丁寧で自然な言い回しです。<code>"I hope you don't mind me saying, but..."</code>（お気を悪くしないでほしいのですが…）のような言い方もできます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">is she ready for a big project like this?</span></strong><br>
+                        【解説】「彼女がこのような大仕事の準備ができているのか？」という意味。<code>be ready for ~</code> で「～の準備ができている」となります。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I may be young with no experience, but...</span></strong><br>
+                        【解説】「私は若く経験がありませんが…」と、自分の弱点を認めつつ、その後に続くポジティブな意図を強調する表現。<code>may be</code> は「～かもしれない」という可能性を示します。<br>
+                        【UKネイティブなら】自然な言い回しです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I will do my very best.</span></strong><br>
+                        【解説】「全力を尽くします」という決意を表す強い表現。<code>very best</code> で「最高の努力」を意味します。<br>
+                        【関連表現】<code>I'll give it my all.</code>（全てを尽くします）、<code>I'll strive for excellence.</code>（最善を尽くします）<br>
+                        【UKネイティブなら】非常に一般的で適切な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I promise to help out.</span></strong><br>
+                        【解説】「手伝うと約束します」という意味。<code>help out</code> は「助ける、手助けする」という句動詞です。<br>
+                        【UKネイティブなら】これも自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">first draft</span></strong><br>
+                        【解説】「初稿、第一稿」という意味。まだ修正される前の初期の原稿を指します。<br>
+                        【UKネイティブなら】同じ表現を使います。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I can't wait to read the next story.</span></strong><br>
+                        【解説】「次の話を読むのが待ちきれません」という、非常に楽しみな気持ちを表す表現。<code>can't wait to do ~</code> は「～するのが待ちきれないほど楽しみだ」という意味です。<br>
+                        【UKネイティブなら】非常によく使われる表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">there is just one thing.</span></strong><br>
+                        【解説】「ただ一つだけあります」と、何か付け加えたいことがあるときに使う表現。この後には、質問や指摘が続くことが多いです。<br>
+                        【UKネイティブなら】自然な言い回しです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Keep quiet!</span></strong><br>
+                        【解説】「黙ってなさい！」という命令。かなり直接的な表現です。<br>
+                        【関連表現】<code>Be quiet!</code>（静かにして！）、<code>Hold your tongue!</code>（口を慎んで！）<br>
+                        【UKネイティブなら】こちらも一般的です。状況によっては <code>"Silence, please!"</code> (もっとフォーマルで少し古風)、<code>"Shush!"</code> (よりインフォーマル) などもあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">play an important role</span></strong><br>
+                        【解説】「重要な役割を果たす」という意味。<code>play a role</code> で「役割を果たす」という句動詞です。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">connected with the murder</span></strong><br>
+                        【解説】「殺人事件と関連している」という意味。<code>be connected with ~</code> で「～と関係がある、つながっている」となります。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">cares about fashion</span></strong><br>
+                        【解説】「ファッションを気にする、関心がある」という意味。<code>care about ~</code> で「～に関心がある、～を気にかける」となります。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">doesn't care about clothes or fashion.</span></strong><br>
+                        【解説】「服やファッションに気を使わない、無頓着である」という意味。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">It doesn't make sense.</span></strong><br>
+                        【解説】「それは理にかなっていない、意味をなさない」という意味。論理的におかしいと感じたときに使います。<br>
+                        【UKネイティブなら】非常によく使われる表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">probably don't wear sunglasses.</span></strong><br>
+                        【解説】「おそらくサングラスをかけないでしょう」と、推測を表す表現。<code>probably</code> は「おそらく、たぶん」という意味の副詞です。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">takes place</span></strong><br>
+                        【解説】「（物語などが）行われる、展開される、発生する」という意味の句動詞。物語の舞台や出来事を説明するときに使われます。<br>
+                        【UKネイティブなら】非常に一般的で自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">is it possible that you just didn't want to draw the eyes...?</span></strong><br>
+                        【解説】「～したくなかっただけということはありえますか？」と、相手の本当の意図を直接的に、しかし丁寧な疑問形で尋ねる表現。<br>
+                        【UKネイティブなら】この文の構造は自然です。<code>"Is it possible that you simply didn't want to draw the detective's eyes?"</code> のように <code>simply</code> を加えることで、より直接的な指摘のニュアンスが出ます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">You should be careful with your words!</span></strong><br>
+                        【解説】「言葉に気をつけなさい！」という警告。相手の発言が不適切だと感じたときに使います。<br>
+                        【UKネイティブなら】非常に一般的で強い警告の表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">You are exactly right.</span></strong><br>
+                        【解説】「君の言うとおりだ、全くその通りだ」と、相手の意見が完全に正しいと認める表現。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">you have a good eye</span></strong><br>
+                        【解説】「（物事を見抜く）良い目を持っている、洞察力がある」という意味のイディオム。特に細部や本質を見抜く能力を褒める際に使われます。<br>
+                        【UKネイティブなら】非常に一般的で褒め言葉としてよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">weren't scared to tell me your opinion.</span></strong><br>
+                        【解説】「私に臆することなく意見を言ってくれた」という意味。<code>be scared to do ~</code> で「～するのを恐れる」となります。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">We are going to make a good team.</span></strong><br>
+                        【解説】「私たちは良いチームになるだろう」と、未来の展望を述べる表現。<code>be going to do ~</code> で「～するつもりだ、～になるだろう」という未来を表します。<br>
+                        【UKネイティブなら】自然な表現です。
+                    </div>
+
+                    <h5 class="commentary-title mt-4">改善されたスクリプト（イギリス英語のニュアンス）の解説</h5>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I'm absolutely delighted!</span></strong><br>
+                        【解説】<code>I am so excited!</code> よりもフォーマルで、プロフェッショナルな喜びを表す表現。ビジネスシーンでの喜びの表明として適切です。<br>
+                        【UKネイティブなら】<code>Absolutely delighted</code> は非常に自然で、特にプロフェッショナルな文脈でよく使われます。<code>Chuffed</code> はもっとカジュアルな表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">crafting some new storylines</span></strong><br>
+                        【解説】<code>write some new stories</code> より創造的な「創作する」というニュアンスを強調。物語を「書く」だけでなく「綿密に作り上げる」という意味合いが含まれます。<br>
+                        【UKネイティブなら】これも非常に自然な表現で、クリエイティブな作業に対してよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">renowned manga series, "Detective's Delights," aren't you?</span></strong><br>
+                        【解説】「有名な」を <code>famous</code> から <code>renowned</code> に変更し、より洗練された印象に。<code>aren't you?</code> は付加疑問で、相手に確認を促しつつ、会話をスムーズに進める効果があります。<br>
+                        【UKネイティブなら】<code>Renowned</code> は <code>famous</code> よりも少しフォーマルで洗練された印象を与えます。付加疑問はイギリス英語で非常によく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">once more</span></strong><br>
+                        【解説】<code>again</code> よりも少しフォーマルで、繰り返しの意味。<br>
+                        【UKネイティブなら】<code>Once more</code> は <code>again</code> と同義ですが、少し改まった響きがあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I have a great deal of faith in you</span></strong><br>
+                        【解説】<code>I trust you a lot</code> よりもプロフェッショナルで強い信頼を表す表現。<code>a great deal of ~</code> で「非常に多くの～」となります。<br>
+                        【UKネイティブなら】これも非常に自然で、ビジネスシーンでよく使われる表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I very much anticipate our continued collaboration.</span></strong><br>
+                        【解説】<code>I look forward to working with you</code> よりもフォーマルで、ビジネスライクな期待を表す表現。<code>anticipate</code> は「予期する、期待する」という意味で、<code>collaboration</code> は「共同作業」です。<br>
+                        【UKネイティブなら】非常にプロフェッショナルで丁寧な言い回しです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Regarding that, actually...</span></strong><br>
+                        【解説】<code>About that...</code> より丁寧で、ビジネスシーンでよく使われる「～に関して」という表現。<code>actually</code> を加えることで、少し躊躇いや本音を話すニュアンスが加わります。<br>
+                        【UKネイティブなら】<code>Regarding that</code> はフォーマルな文脈で非常に一般的です。<code>Actually</code> は会話の切り出しや本題に入る際によく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">a matter I need to discuss with you.</span></strong><br>
+                        【解説】<code>something I have to tell you</code> よりもフォーマルで、ビジネス上の「件」や「議題」を意味します。<br>
+                        【UKネイティブなら】<code>A matter I need to discuss with you</code> は非常に適切で、ビジネス英語の典型的な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">would you step in please?</span></strong><br>
+                        【解説】<code>can you come here please?</code> よりも丁寧で、誰かを部屋に招き入れる際に使われる表現。<br>
+                        【UKネイティブなら】<code>Step in</code> は「中に入る」という意味で、自然な呼びかけ方です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">It's a genuine honour to meet you, Sir.</span></strong><br>
+                        【解説】<code>I am honored to meet you</code> より強調され、より強い敬意を示します。<code>honour</code> はイギリス英語の綴りです。また <code>genuine</code> (心からの、偽りのない) を加えることで、さらに誠意を伝えています。<br>
+                        【UKネイティブなら】<code>Honour</code> はイギリス英語の正しい綴りです。<code>Genuine honour</code> は非常に丁寧で、心のこもった挨拶としてよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I've only just graduated from university</span></strong><br>
+                        【解説】<code>I just graduated</code> を現在完了形（<code>I've just graduated</code>）にすることで、イギリス英語でより自然な「～したばかり」のニュアンスに。<code>only</code> を加えることで「ほんの、つい」といった意味合いが強調されます。<code>publishing house</code> は <code>publishing company</code> の別表現です。<br>
+                        【UKネイティブなら】現在完了形と <code>just</code> の組み合わせは、最近の出来事を表す際によく使われます。<code>Publishing house</code> は <code>publishing company</code> と同じ意味で使われますが、少し伝統的な響きがあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">This is surely a joke, isn't it?</span></strong><br>
+                        【解説】<code>This must be a joke, right?</code> より確信を問うニュアンスで、イギリス英語で好まれる付加疑問文（<code>isn't it?</code>）を使用。<br>
+                        【UKネイティブなら】<code>Surely</code> は「きっと、まさか」というニュアンスで、付加疑問と合わせて使われることがよくあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Indeed, she will be taking over as your new editor.</span></strong><br>
+                        【解説】<code>Yes</code> を <code>Indeed</code> にすることで、よりフォーマルな肯定の返答に。<code>taking over as ~</code> は「～として引き継ぐ」という、業務の交代を明確にする表現です。<br>
+                        【UKネイティブなら】<code>Indeed</code> は肯定の返答としてよく使われ、丁寧な印象を与えます。<code>Taking over as</code> は非常に適切な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">possess ample experience.</span></strong><br>
+                        【解説】<code>have experience</code> よりもフォーマルで、「十分な経験を持っている」という意味。<code>possess</code> は「所有する」、<code>ample</code> は「十分な、豊富な」です。<br>
+                        【UKネイティブなら】<code>Possess ample experience</code> は非常にフォーマルで、文書や改まった会話で使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I truly don't wish to seem impolite</span></strong><br>
+                        【解説】<code>I don't want to be impolite</code> よりも丁寧で、相手への配慮が強調されます。<code>wish to</code> は <code>want to</code> よりフォーマルです。<br>
+                        【UKネイティブなら】<code>I don't wish to seem impolite</code> は非常に丁寧で、ビジネスの場でよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">do you genuinely believe she's prepared for a major undertaking such as this?</span></strong><br>
+                        【解説】<code>is she ready for a big project like this?</code> より丁寧で、相手の「信念」を問うことで、より真剣な疑問を呈しています。<code>major undertaking</code> は <code>big project</code> のよりフォーマルな言い換えです。<code>genuinely</code> は「本当に、心から」という意味です。<br>
+                        【UKネイティブなら】<code>Genuinely believe</code> や <code>major undertaking</code> は、より洗練されたビジネス英語の表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">whilst I may be new to this field with limited experience</span></strong><br>
+                        【解説】<code>I may be young with no experience</code> をよりプロフェッショナルな言葉遣いに変更。<code>whilst</code> はイギリス英語で <code>while</code> の代わりに使われることがあります。<code>new to this field</code> で「この分野の新米」、<code>limited experience</code> で「限られた経験」と表現し、丁寧かつ謙虚な姿勢を保ちます。<br>
+                        【UKネイティブなら】<code>Whilst</code> はイギリス英語で使われることが多く、少しフォーマルな響きがあります。<code>New to this field</code> や <code>limited experience</code> は、自己紹介や現状説明で自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I assure you I shall put forth my absolute best effort.</span></strong><br>
+                        【解説】<code>I promise you that I will do my very best</code> をよりフォーマルに。<code>assure</code> は「保証する」、<code>shall</code> は <code>will</code> よりもフォーマルで、特に約束や義務を表す際に使われます（イギリス英語では特定の文脈で残っています）。<code>put forth ~ effort</code> で「～の努力をする」です。<br>
+                        【UKネイティブなら】<code>Assure</code> は強い確約を示すのに使われます。<code>Shall</code> は、現代のイギリス英語では以前ほど頻繁には使われませんが、フォーマルな文脈や約束の強調で聞かれることがあります。<code>Put forth my best effort</code> は自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Do you invariably speak quite so loudly?</span></strong><br>
+                        【解説】<code>always</code> を <code>invariably</code> に変更し、より洗練された表現に。<code>quite so loudly</code> で「そんなに大声で」と、少し呆れたニュアンスを含みます。<br>
+                        【UKネイティブなら】<code>Invariably</code> は <code>always</code> よりもフォーマルです。<code>Quite so loudly</code> は、強調して「そんなにも」というニュアンスを出すのに使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">My apologies, Sir.</span></strong><br>
+                        【解説】<code>I'm sorry, sir</code> よりフォーマルで、心からの謝罪を表します。<br>
+                        【UKネイティブなら】<code>My apologies</code> は <code>I'm sorry</code> よりも丁寧で、ビジネスやフォーマルな場でよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Should any issues arise, I pledge my full support.</span></strong><br>
+                        【解説】<code>If there are any problems, I promise to help out</code> をより洗練された表現に。<code>Should ~ arise</code> は <code>If ~ arise</code> の倒置表現で、フォーマルな条件文。「問題が生じた際には」という意味。<code>pledge my full support</code> で「全面的な支援を誓う」と、より強いコミットメントを示します。<br>
+                        【UKネイティブなら】<code>Should any issues arise</code> は非常にフォーマルで、契約書やビジネスレターなどでよく見られます。<code>Pledge my full support</code> も、強いコミットメントを示す自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Very well then</span></strong><br>
+                        【解説】<code>Well then</code> より少しフォーマルな切り出し方。<br>
+                        【UKネイティブなら】<code>Very well then</code> は、会話の流れを区切り、次の話題に移る際に使われる、少し古風ながらも丁寧な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">have you had a chance to review the initial draft?</span></strong><br>
+                        【解説】<code>have you read the first draft?</code> よりも丁寧で、ビジネスシーンに適した表現。<code>review</code> は「検討する」、<code>initial draft</code> は <code>first draft</code> のよりプロフェッショナルな言い方です。<br>
+                        【UKネイティブなら】<code>Had a chance to review</code> は、忙しい相手への配慮を示す丁寧な問いかけです。<code>Initial draft</code> も適切な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Absolutely, Sir!</span></strong><br>
+                        【解説】<code>Of course, sir!</code> をより強い肯定の返答に。イギリス英語では <code>Absolutely</code> が非常によく使われます。<br>
+                        【UKネイティブなら】<code>Absolutely</code> は非常に一般的で、強い肯定を意味します。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Right. What were your thoughts?</span></strong><br>
+                        【解説】<code>Okay. What did you think?</code> より少しフォーマルで、相手の意見や見解を問う際に使われます。<br>
+                        【UKネイティブなら】<code>Right</code> は会話を区切る際の一般的なフィラーです。<code>What were your thoughts?</code> は <code>What did you think?</code> より相手の深い見解を求めるニュアンスがあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">It was truly brilliant. I adored it.</span></strong><br>
+                        【解説】<code>It was really good. I loved it.</code> をより強い賛辞に。<code>brilliant</code> はイギリス英語で「素晴らしい」を意味する非常によく使われる言葉。<code>adore</code> は <code>love</code> よりもさらに強い「崇拝するほど好き」という感情を表します。<br>
+                        【UKネイティブなら】<code>Brilliant</code> はイギリスで最高の賛辞の一つです。<code>Adore</code> も強い好意を示すのに使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Only you could possibly conjure such a narrative.</span></strong><br>
+                        【解説】<code>Only you could write that</code> をより文学的で洗練された表現に。<code>conjure</code> は「魔法のように生み出す」、<code>narrative</code> は「物語」で、より芸術的な創作物を指します。<br>
+                        【UKネイティブなら】<code>Conjure such a narrative</code> は非常に洗練された表現で、芸術的な創造性を褒めるのに適しています。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">How on earth will they unmask the culprit?</span></strong><br>
+                        【解説】<code>How are they going to find the killer?</code> をよりドラマチックに。<code>How on earth ~?</code> で「一体どうやって～？」と強い疑問を表します。<code>unmask the culprit</code> は「犯人を暴く」という、よりミステリー小説に相応しい表現です。<br>
+                        【UKネイティブなら】<code>How on earth</code> は強い疑問を示すのによく使われます。<code>Unmask the culprit</code> は犯罪小説で一般的な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I am absolutely itching to read the next instalment!</span></strong><br>
+                        【解説】<code>I can't wait to read the next story</code> をよりイギリス英語らしい表現に。<code>itching to do ~</code> で「～したくてうずうずしている」と、強い期待を表します。<code>instalment</code> は「（連載物の）回、巻」というイギリス英語の綴りです。<br>
+                        【UKネイティブなら】<code>Itching to</code> は非常に一般的で、熱心な期待を示します。<code>Instalment</code> はイギリス英語で、連載物の各部を指すのに使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">However, there is just one tiny point.</span></strong><br>
+                        【解説】<code>But there is just one thing</code> をより丁寧かつ控えめに。<code>However</code> はフォーマルな「しかし」。<code>tiny point</code> で「非常に小さな点」と、指摘を柔らかくしています。<br>
+                        【UKネイティブなら】<code>However</code> は接続詞として一般的です。<code>Tiny point</code> は、批判を和らげるのに使われることがあります。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">What on earth are you going on about?</span></strong><br>
+                        【解説】<code>What are you talking about?</code> をより感情的に。「一体何を言っているんだ？」という、より強い不満や驚きを表します。<code>go on about ~</code> は「～について長々と話す、だらだら話す」という意味ですが、この文脈では「何を言ってるんだ」という強い疑問です。<br>
+                        【UKネイティブなら】<code>What on earth are you going on about?</code> は、かなり強い苛立ちや驚きを示すときに使われる、典型的なイギリス英語のフレーズです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Hold your tongue!</span></strong><br>
+                        【解説】<code>Keep quiet!</code> よりも強く、少し古風な「口を慎みなさい！」という命令。<br>
+                        【UKネイティブなら】<code>Hold your tongue</code> は、非常に直接的で、相手を黙らせるための強い表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">It's quite alright.</span></strong><br>
+                        【解説】<code>It's all right</code> より少し丁寧で、安心させるニュアンスが強まります。<br>
+                        【UKネイティブなら】<code>Quite alright</code> は非常に自然で、相手を落ち着かせたり許可を与えたりするときによく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">sporting sunglasses.</span></strong><br>
+                        【解説】<code>wears sunglasses</code> よりも洒落た表現で、「（ファッションとして）身につけている」という意味。<code>sport</code> は動詞で「～を身につける、得意げに見せびらかす」といった意味があります。<br>
+                        【UKネイティブなら】<code>Sporting</code> は、特にファッションアイテムを身につけているときに使われる、少しカジュアルでおしゃれな響きのある言葉です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Indeed? Why would that pose a difficulty?</span></strong><br>
+                        【解説】<code>Yes? Why is that a problem?</code> よりフォーマル。<code>pose a difficulty</code> で「困難を引き起こす、問題となる」という表現です。<br>
+                        【UKネイティブなら】<code>Pose a difficulty</code> は <code>be a problem</code> よりもフォーマルです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Why ever did you opt for him to wear sunglasses?</span></strong><br>
+                        【解説】<code>Why did you make him wear sunglasses?</code> よりも丁寧で、相手の「選択」に焦点を当てています。<code>Why ever ~?</code> で「一体なぜ～？」と疑問を強調。<code>opt for ~</code> は「～を選ぶ」という意味です。<br>
+                        【UKネイティブなら】<code>Why ever</code> は疑問の強調によく使われます。<code>Opt for</code> は <code>choose</code> よりもフォーマルです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">spectacles play a pivotal role further on?</span></strong><br>
+                        【解説】<code>sunglasses</code> を <code>spectacles</code> にすることで、より広い意味での眼鏡を指しつつ、少し英国的な響きに。<code>pivotal role</code> は <code>important role</code> より「極めて重要な役割」と強調。<code>further on</code> は「今後、さらに進んで」というイギリス英語でよく使われる表現です。<br>
+                        【UKネイティブなら】<code>Spectacles</code> は <code>glasses</code> のフォーマルな言い方で、イギリス英語でよく使われます。<code>Pivotal role</code> は <code>important role</code> よりも強調された表現です。<code>Further on</code> は「後で、以降」という意味で一般的です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Are they somehow linked to the murder?</span></strong><br>
+                        【解説】<code>Are they connected with the murder?</code> をより簡潔に。<code>somehow</code> で「何らかの形で」というニュアンスを加え、ミステリー感を高めます。<br>
+                        【UKネイティブなら】<code>Linked to</code> は <code>connected with</code> と同じ意味で、より簡潔です。<code>Somehow</code> も自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">what exactly are you implying?</span></strong><br>
+                        【解説】<code>what do you mean?</code> をより直接的に。「何を暗に示しているのか」と、相手の真意を問う表現です。<br>
+                        【UKネイティブなら】<code>What exactly are you implying?</code> は、相手の真意を厳しく問うときに使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">a particular type of eyewear?</span></strong><br>
+                        【解説】<code>a special type of sunglasses?</code> をより広範でフォーマルな表現に。<code>eyewear</code> は眼鏡全般を指します。<br>
+                        【UKネイティブなら】<code>Particular type of eyewear</code> は、よりフォーマルで具体的な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Perhaps they aid him in perceiving in the dark, and he is the perpetrator?</span></strong><br>
+                        【解説】<code>Maybe they help you see in the dark and he's the killer?</code> をより洗練された表現に。<code>aid him in perceiving</code> は <code>help you see</code> よりフォーマル。「彼が認識するのを助ける」。<code>perpetrator</code> は <code>killer</code> より、犯罪用語としての「犯人」を指します。<br>
+                        【UKネイティブなら】<code>Aid him in perceiving</code> はよりフォーマルな言い回しです。<code>Perpetrator</code> は犯罪報道などでよく使われる言葉です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">absolutely not. He is certainly not the culprit.</span></strong><br>
+                        【解説】<code>no, no. He is not the killer.</code> をより強く否定し、フォーマルな言葉遣いに。<code>absolutely not</code> は「絶対に違う」、<code>certainly not</code> は「確かに～ではない」。<code>culprit</code> は <code>killer</code> の別表現です。<br>
+                        【UKネイティブなら】<code>Absolutely not</code> や <code>certainly not</code> は、強い否定を示す自然な表現です。<code>Culprit</code> は <code>perpetrator</code> と同様に、犯罪用語として使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I see. Then what is the rationale behind him wearing them?</span></strong><br>
+                        【解説】<code>Oh. Then why is he wearing them?</code> をよりフォーマルに。<code>rationale behind ~</code> で「～の背後にある根拠、理由」という意味です。<br>
+                        【UKネイティブなら】<code>I see</code> は理解を示し、次の質問に繋げる自然な表現です。<code>Rationale behind</code> はビジネスや学術的な文脈でよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Is a reason truly required? Sunglasses are rather stylish.</span></strong><br>
+                        【解説】<code>Do I need a reason? Sunglasses are cool.</code> をよりフォーマルに。<code>truly required</code> で「本当に必要とされるのか」。<code>rather stylish</code> は「かなりおしゃれだ」と、<code>cool</code> よりも上品な表現です。<br>
+                        【UKネイティブなら】<code>Is a reason truly required?</code> は少し皮肉を込めた問いかけにも聞こえます。<code>Rather stylish</code> は、控えめながらも肯定的な評価を示す、典型的なイギリス英語の表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">to be portrayed as someone with a keen interest in fashion</span></strong><br>
+                        【解説】<code>going to be someone who cares about fashion</code> をより洗練された表現に。<code>be portrayed as ~</code> で「～として描かれる」。<code>keen interest in ~</code> で「～に強い関心がある」と、より深い関心を示します。<br>
+                        【UKネイティブなら】<code>To be portrayed as</code> は、物語のキャラクター設定によく使われます。<code>Keen interest in</code> は、強い関心や熱意を示すのに非常に自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Is that an accurate assessment?</span></strong><br>
+                        【解説】<code>Is that right?</code> をよりフォーマルに。「それは正確な評価ですか？」と、相手の意図を正確に理解しようとするビジネスシーンで適切な質問です。<br>
+                        【UKネイティブなら】<code>Accurate assessment</code> は、ビジネスや学術的な文脈で、状況や意見の正確さを問う際によく使われる表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">My conception was of someone who pays no mind to attire or style.</span></strong><br>
+                        【解説】<code>I was thinking he is someone who doesn't care about clothes or fashion.</code> をより洗練された表現に。<code>conception</code> は「構想、概念」。<code>pay no mind to ~</code> で「～に全く注意を払わない」と、無頓着さを強調します。<code>attire or style</code> は <code>clothes or fashion</code> のよりフォーマルな言い換えです。<br>
+                        【UKネイティブなら】<code>Conception</code> は、アイデアや計画の「構想」を意味し、自然な表現です。<code>Pay no mind to</code> は、何かを気にしないという意味で使われます。<code>Attire</code> は <code>clothes</code> のフォーマルな言い方です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">His sole focus is his work.</span></strong><br>
+                        【解説】<code>He only cares about work.</code> をより簡潔かつフォーマルに。「彼の唯一の焦点は仕事だ」と、仕事への集中を強調します。<br>
+                        【UKネイティブなら】<code>Sole focus</code> は、唯一の関心事や目標を強調するのに使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">That does seem rather incongruous. Individuals unconcerned with fashion would scarcely wear sunglasses, one would imagine.</span></strong><br>
+                        【解説】<code>It doesn't make sense.</code> をより洗練された表現に。<code>incongruous</code> は「矛盾した、不調和な」という意味で、より知的で丁寧な指摘になります。<code>rather</code> はイギリス英語で「かなり、少々」と、意見を和らげる際によく使われます。<br>
+                        【UKネイティブなら】<code>Incongruous</code> は、調和が取れていない、矛盾しているという意味で、非常に適切な言葉です。<code>Rather</code> は、意見を述べるときによく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Individuals unconcerned with fashion would scarcely wear sunglasses, one would imagine.</span></strong><br>
+                        【解説】<code>People who don't care about fashion probably don't wear sunglasses.</code> をより洗練された表現に。<code>Individuals</code> は <code>people</code> よりフォーマル。<code>unconcerned with ~</code> は「～に関心がない」。<code>scarcely</code> は「めったに～ない」と、<code>probably don't</code> より強い否定。<code>one would imagine</code> は「普通ならそう思うだろう」という、控えめながらも確信を持った意見表明です。<br>
+                        【UKネイティブなら】<code>Individuals</code> は <code>people</code> のよりフォーマルな代替です。<code>Scarcely</code> は <code>hardly ever</code> と同義で、頻度が低いことを強調します。<code>One would imagine</code> は、一般的な考えや推測を述べる、典型的なイギリス英語のフレーズです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">he simply dislikes direct sunlight.</span></strong><br>
+                        【解説】<code>he doesn't like sunlight</code> をより明確に。<code>simply dislikes</code> で「単に嫌いだ」と、言い訳がましいニュアンス。<code>direct sunlight</code> で「直射日光」と具体化します。<br>
+                        【UKネイティブなら】<code>Simply dislikes</code> は、理由を簡潔に述べるのに使われます。<code>Direct sunlight</code> も自然な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Your narrative, Sir, is set within an enclosed chamber, devoid of any windows.</span></strong><br>
+                        【解説】<code>Your story takes place inside a room with no windows.</code> をより洗練された表現に。<code>narrative</code> は「物語」。<code>set within an enclosed chamber</code> で「閉鎖された部屋の中で設定されている」。<code>devoid of any windows</code> は「窓が全くない」という、よりフォーマルで詩的な表現です。<br>
+                        【UKネイティブなら】<code>Narrative</code> は <code>story</code> よりも文脈によってフォーマルで文学的な響きがあります。<code>Set within an enclosed chamber</code> は物語の設定を説明するのに非常に適切です。<code>Devoid of any windows</code> は、より洗練された言い回しです。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">might it be the case that you merely wished to avoid illustrating the detective's eyes?</span></strong><br>
+                        【解説】<code>is it possible that you just didn't want to draw the eyes of the detective?</code> をより丁寧かつ推量を強める表現に。<code>might it be the case that ~</code> で「～という事実はありえますか」という遠回しな質問。<code>merely wished to avoid illustrating</code> で「単に描くことを避けたかった」と、より婉曲に表現しています。<br>
+                        【UKネイティブなら】<code>Might it be the case that</code> は、仮説を提示する非常に丁寧な方法です。<code>Merely wished to avoid illustrating</code> は、意図を丁寧に問う表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">You must watch your words!</span></strong><br>
+                        【解説】<code>You should be careful with your words!</code> より強い警告。「言葉を慎むべきだ！」という命令的なニュアンス。<br>
+                        【UKネイティブなら】<code>You must watch your words</code> は <code>be careful with your words</code> と同じ意味ですが、より強い必要性を感じさせます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">You are absolutely spot on.</span></strong><br>
+                        【解説】<code>You are exactly right.</code> をより口語的で、イギリス英語で好まれる表現に。<code>spot on</code> は「的を射ている、ぴったりだ」という意味のスラングに近い表現です。<br>
+                        【UKネイティブなら】<code>Spot on</code> は「完璧に正しい、まさにその通り」という意味で、イギリス英語で非常によく使われる口語表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I shall remove the spectacles.</span></strong><br>
+                        【解説】<code>I'll take the sunglasses off.</code> をよりフォーマルに。ここでも <code>shall</code> と <code>spectacles</code> を使用。<br>
+                        【UKネイティブなら】<code>Shall</code> と <code>spectacles</code> の使用は、このキャラクターの少し古風で権威ある立場に合致します。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Kimura was correct?</span></strong><br>
+                        【解説】<code>Kimura was right?</code> と同じ意味で、よりフォーマルな言い方です。<br>
+                        【UKネイティブなら】<code>Correct</code> は <code>right</code> と同義で、フォーマルな文脈でよく使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">you possess a discerning eye</span></strong><br>
+                        【解説】<code>you have a good eye</code> をより洗練された表現に。<code>discerning eye</code> は「識別力のある目、洞察力」を意味し、より深い評価を示します。<br>
+                        【UKネイティブなら】<code>Possess a discerning eye</code> は、非常に洗練された褒め言葉で、観察力や判断力を高く評価する際に使われます。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">you were not afraid to voice your opinion to me.</span></strong><br>
+                        【解説】<code>you weren't scared to tell me your opinion.</code> をよりフォーマルに。<code>voice your opinion</code> は「意見を表明する」という表現です。<br>
+                        【UKネイティブなら】<code>Voice your opinion</code> は、意見を表明する際の自然でプロフェッショナルな言い方です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">I find you rather promising.</span></strong><br>
+                        【解説】<code>I like you.</code> をよりプロフェッショナルな評価に。「君にはかなり見込みがある」という意味。<code>rather</code> を使うことで、評価を控えめにしながらも肯定的に伝えます。<br>
+                        【UKネイティブなら】<code>I find you rather promising</code> は、部下や新人の可能性を評価する際の、非常に自然で丁寧な表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">We are destined to forge an excellent partnership.</span></strong><br>
+                        【解説】<code>We are going to make a good team.</code> をより強い運命的な結びつきと、ビジネス上の協力関係を強調する表現に。<code>destined to ~</code> で「～する運命にある」。<code>forge a partnership</code> は「協力関係を築く」という比喩的な表現です。<br>
+                        【UKネイティブなら】<code>Destined to forge an excellent partnership</code> は、未来に対する強い期待と信頼を示す、非常に力強い表現です。
+                    </div>
+                    <div class="commentary-item">
+                        <strong><span class="highlight">Thank you ever so much, Sir.</span></strong><br>
+                        【解説】<code>Thank you, sir.</code> をより感謝の気持ちを込めて。<code>ever so much</code> はイギリス英語で「非常に、本当に」と感謝を強調する際に使われます。<br>
+                        【UKネイティブなら】<code>Ever so much</code> は、感謝や感情を強調する際にイギリス英語で非常によく使われる表現です。
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. イギリス英語にしたスクリプトのみ -->
+        <section id="british-english-script-only" class="mt-5">
+            <h2 class="section-title-custom">4. イギリス英語に寄せたスクリプトのみ</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p><span class="speaker-name">Nakagawa (Editor, more polished):</span> I'm absolutely delighted! You're finally going to be crafting some new storylines for your renowned manga series, "Detective's Delights," aren't you?</p>
+                    <p><span class="speaker-name">Manga Artist (slightly more refined):</span> Hmph. Well, I'm pleased you'll be my editor once more, Nakagawa-san. I have a great deal of faith in you, and I very much anticipate our continued collaboration.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Regarding that, actually...</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Hmm?</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Well, there's a matter I need to discuss with you. Kimura, would you step in please?</p>
+                    <p><span class="speaker-name">Kimura (slightly more British English, professional but still energetic):</span> It's a genuine honour to meet you, Sir. I'm Taeko Kimura. I've only just graduated from university and joined this publishing house last week.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> What? This is surely a joke, isn't it? Are you suggesting that...</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Indeed, she will be taking over as your new editor.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> You've previously worked with me and possess ample experience. I truly don't wish to seem impolite, but do you genuinely believe she's prepared for a major undertaking such as this?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Sir, whilst I may be new to this field with limited experience, I assure you I shall put forth my absolute best effort.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Do you invariably speak quite so loudly?</p>
+                    <p><span class="speaker-name">Kimura:</span> My apologies, Sir.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Should any issues arise, I pledge my full support.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Nakagawa-san!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Very well then, Kimura-san, have you had a chance to review the initial draft?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Absolutely, Sir!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Right. What were your thoughts?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> It was truly brilliant. I adored it. Only you could possibly conjure such a narrative. How on earth will they unmask the culprit? I am absolutely itching to read the next instalment!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Indeed.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> However, there is just one tiny point.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Kimura! What on earth are you going on about? Hold your tongue!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> It's quite alright. What is it?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> The detective is sporting sunglasses.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Indeed? Why would that pose a difficulty?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Why ever did you opt for him to wear sunglasses?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Hmm?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Do the spectacles play a pivotal role further on? Are they somehow linked to the murder?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Erm, what exactly are you implying?</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> For instance, might they be a particular type of eyewear? Perhaps they aid him in perceiving in the dark, and he is the perpetrator?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> No, no, absolutely not. He is certainly not the culprit. The true perpetrator is someone quite different.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> I see. Then what is the rationale behind him wearing them?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Is a reason truly required? Sunglasses are rather stylish.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> So, the detective is to be portrayed as someone with a keen interest in fashion, then? Is that an accurate assessment?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Ah, no. My conception was of someone who pays no mind to attire or style. His sole focus is his work.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Hmm. That does seem rather incongruous. Individuals unconcerned with fashion would scarcely wear sunglasses, one would imagine.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Ah, well then, he simply dislikes direct sunlight.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Your narrative, Sir, is set within an enclosed chamber, devoid of any windows.</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Ugh...</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Sir, might it be the case that you merely wished to avoid illustrating the detective's eyes?</p>
+                    <p><span class="speaker-name">Nakagawa:</span> Kimura! You must watch your words!</p>
+                    <p><span class="speaker-name">Manga Artist:</span> You are absolutely spot on. I shall remove the spectacles.</p>
+                    <p><span class="speaker-name">Nakagawa:</span> What? Kimura was correct?</p>
+                    <p><span class="speaker-name">Manga Artist:</span> Kimura-san, you possess a discerning eye, and you were not afraid to voice your opinion to me. I find you rather promising. We are destined to forge an excellent partnership.</p>
+                    <p><span class="speaker-name">Kimura (slight British nuance):</span> Thank you ever so much, Sir.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Enjoy Simple English - All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
