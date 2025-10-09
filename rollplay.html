@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イギリス英語 ロールプレイ学習</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons (for play button) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .nav-tabs .nav-link {
+            cursor: pointer;
+        }
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start; /* Adjust alignment to top for longer questions */
+            flex-wrap: wrap; /* Allow wrapping for small screens */
+        }
+        .question-card .question-content {
+            flex-grow: 1;
+            margin-right: 1rem; /* Space between text and button */
+        }
+        .question-card .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem; /* Space between English and Japanese */
+        }
+        .question-card .japanese-translation {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .question-card .play-button-wrapper {
+            flex-shrink: 0; /* Prevent button from shrinking */
+            display: flex; /* For vertical alignment */
+            align-items: center; /* Center icon vertically */
+        }
+        .question-card .play-button {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1; /* Align icon vertically */
+        }
+        .question-card .play-button:hover {
+            color: #0a58ca;
+        }
+        .answer-textarea {
+            margin-top: 1rem; /* Adjust if needed to distance from Japanese translation */
+            min-height: 80px;
+            resize: vertical; /* Allow vertical resizing */
+        }
+        /* Style for the tab panes: Remove inner scrollbar */
+        .tab-pane {
+            /* max-heightとoverflow-yは削除 */
+            padding-right: 0; /* スクロールバーのためのパディングも不要 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container my-5">
+        <header class="text-center mb-5">
+            <h1 class="display-5">イギリス英語 ロールプレイ</h1>
+            <p class="lead">質問の再生ボタンをクリックして、自分の答えを考えてみましょう。</p>
+        </header>
+
+        <!-- タブナビゲーション -->
+        <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="daily-life-tab" data-bs-toggle="tab" data-bs-target="#daily-life-pane" type="button" role="tab" aria-controls="daily-life-pane" aria-selected="true">1. 日常生活</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="travel-tab" data-bs-toggle="tab" data-bs-target="#travel-pane" type="button" role="tab" aria-controls="travel-pane" aria-selected="false">2. 旅行先</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="in-japan-tab" data-bs-toggle="tab" data-bs-target="#in-japan-pane" type="button" role="tab" aria-controls="in-japan-pane" aria-selected="false">3. 日本国内にて</button>
+            </li>
+        </ul>
+
+        <!-- タブコンテンツ -->
+        <div class="tab-content" id="myTabContent">
+            <!-- 1. 日常生活 -->
+            <div class="tab-pane fade show active" id="daily-life-pane" role="tabpanel" aria-labelledby="daily-life-tab" tabindex="0">
+                <!-- JavaScriptによって質問がここに挿入されます -->
+            </div>
+            <!-- 2. 旅行先 -->
+            <div class="tab-pane fade" id="travel-pane" role="tabpanel" aria-labelledby="travel-tab" tabindex="0">
+                <!-- JavaScriptによって質問がここに挿入されます -->
+            </div>
+            <!-- 3. 日本国内にて -->
+            <div class="tab-pane fade" id="in-japan-pane" role="tabpanel" aria-labelledby="in-japan-tab" tabindex="0">
+                <!-- JavaScriptによって質問がここに挿入されます -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // --- 質問データ (JSON) ---
+        const questionsData = {
+            "dailyLife": [
+                { "id": "dl01", "question": "Alright? How's it going?", "translation": "調子どう？" },
+                { "id": "dl02", "question": "What did you get up to at the weekend?", "translation": "週末は何をしましたか？" },
+                { "id": "dl03", "question": "Fancy a cuppa?", "translation": "お茶でもどう？" },
+                { "id": "dl04", "question": "Have you been waiting long?", "translation": "ずいぶん待たせましたか？" },
+                { "id": "dl05", "question": "What do you do for a living?", "translation": "お仕事は何をされていますか？" },
+                { "id": "dl06", "question": "The weather is lovely today, isn't it?", "translation": "今日はいい天気ですね？" },
+                { "id": "dl07", "question": "Have you got any plans for this evening?", "translation": "今夜の予定はありますか？" },
+                { "id": "dl08", "question": "What sort of music are you into?", "translation": "どんな音楽が好きですか？" },
+                { "id": "dl09", "question": "Could you do me a favour?", "translation": "お願いがあるのですが？" },
+                { "id": "dl10", "question": "What's for dinner tonight?", "translation": "今夜の夕食は何ですか？" },
+                { "id": "dl11", "question": "How was your day at work?", "translation": "仕事の一日どうでしたか？" },
+                { "id": "dl12", "question": "Are you watching that new series on the telly?", "translation": "テレビで新しいシリーズを見ていますか？" },
+                { "id": "dl13", "question": "Do you need a hand with that?", "translation": "それ、手伝いましょうか？" },
+                { "id": "dl14", "question": "I'm knackered. I think I'll have an early night.", "translation": "へとへとだよ。早く寝ようかな。" },
+                { "id": "dl15", "question": "Where did you get that lovely jumper?", "translation": "その素敵なセーターはどこで手に入れましたか？" },
+                { "id": "dl16", "question": "Shall we get a takeaway tonight?", "translation": "今夜はテイクアウトにしようか？" },
+                { "id": "dl17", "question": "What time do you call this?", "translation": "一体何時だと思っているんだ？" },
+                { "id": "dl18", "question": "Have you seen my keys anywhere?", "translation": "私の鍵、どこかで見かけましたか？" },
+                { "id": "dl19", "question": "Is it alright if I open the window?", "translation": "窓を開けても大丈夫ですか？" },
+                { "id": "dl20", "question": "What's the matter? You look a bit down.", "translation": "どうしたの？少し元気がないように見えるけど。" }
+            ],
+            "travel": [
+                { "id": "tr01", "question": "Excuse me, could you tell me how to get to the tube station?", "translation": "すみません、地下鉄の駅への行き方を教えていただけますか？" },
+                { "id": "tr02", "question": "A return ticket to Paddington, please.", "translation": "パディントンまで往復切符をください。" },
+                { "id": "tr03", "question": "Does this bus go to Trafalgar Square?", "translation": "このバスはトラファルガー広場に行きますか？" },
+                { "id": "tr04", "question": "What time is the next train to Cambridge?", "translation": "ケンブリッジ行きの次の電車は何時ですか？" },
+                { "id": "tr05", "question": "Could I have the bill, please?", "translation": "お会計をお願いします。" },
+                { "id": "tr06", "question": "Do you have a table for two, please?", "translation": "二人用の席はありますか？" },
+                { "id": "tr07", "question": "I've got a reservation under the name of Sato.", "translation": "佐藤という名前で予約しています。" },
+                { "id": "tr08", "question": "What do you recommend from the menu?", "translation": "メニューでおすすめは何ですか？" },
+                { "id": "tr09", "question": "Could you take a picture for us, please?", "translation": "写真を撮っていただけますか？" },
+                { "id": "tr10", "question": "How much is the entry fee?", "translation": "入場料はいくらですか？" },
+                { "id": "tr11", "question": "Is there a cash machine near here?", "translation": "この近くにキャッシュディスペンサーはありますか？" },
+                { "id": "tr12", "question": "What time do you close?", "translation": "何時に閉まりますか？" },
+                { "id": "tr13", "question": "Can I pay by card or is it cash only?", "translation": "カードで支払えますか、それとも現金のみですか？" },
+                { "id": "tr14", "question": "My hotel key isn't working.", "translation": "ホテルの鍵が使えません。" },
+                { "id": "tr15", "question": "What time is breakfast served until?", "translation": "朝食は何時までですか？" },
+                { "id": "tr16", "question": "Could I have a wake-up call at 7 am, please?", "translation": "午前7時にモーニングコールをお願いできますか？" },
+                { "id": "tr17", "question": "Is the tap water drinkable?", "translation": "水道水は飲めますか？" },
+                { "id": "tr18", "question": "Where is the nearest chemist?", "translation": "一番近い薬局はどこですか？" },
+                { "id": "tr19", "question": "Sorry, could you speak a bit more slowly, please?", "translation": "すみません、もう少しゆっくり話していただけますか？" },
+                { "id": "tr20", "question": "This isn't what I ordered.", "translation": "これは私が注文したものと違います。" }
+            ],
+            "inJapan": [
+                { "id": "ij01", "question": "Excuse me, we're a bit lost. Can you help us?", "translation": "すみません、道に迷ってしまいました。助けていただけますか？" },
+                { "id": "ij02", "question": "Could you recommend a good sushi restaurant around here?", "translation": "この辺りで美味しい寿司レストランをおすすめしてもらえますか？" },
+                { "id": "ij03", "question": "How do I use this ticket machine?", "translation": "この券売機の使い方を教えてください。" },
+                { "id": "ij04", "question": "What's the best way to get to Asakusa?", "translation": "浅草へ行く一番良い方法は何ですか？" },
+                { "id": "ij05", "question": "Is there an English menu available?", "translation": "英語のメニューはありますか？" },
+                { "id": "ij06", "question": "This is delicious! What is it called?", "translation": "これは美味しいですね！何という名前ですか？" },
+                { "id": "ij07", "question": "Where can I buy a SIM card?", "translation": "SIMカードはどこで買えますか？" },
+                { "id": "ij08", "question": "Do you know where the Ghibli Museum is?", "translation": "ジブリ美術館はどこにあるかご存知ですか？" },
+                { "id": "ij09", "question": "Is it okay to take photos here?", "translation": "ここで写真を撮っても大丈夫ですか？" },
+                { "id": "ij10", "question": "How do you say 'thank you' in Japanese?", "translation": "日本語で「ありがとう」は何と言いますか？" },
+                { "id": "ij11", "question": "Can you tell me about this temple's history?", "translation": "このお寺の歴史について教えていただけますか？" },
+                { "id": "ij12", "question": "What's the Wi-Fi password, please?", "translation": "Wi-Fiのパスワードは何ですか？" },
+                { "id": "ij13", "question": "Are the shops open tomorrow? It's a public holiday, isn't it?", "translation": "明日お店は開いていますか？祝日ですよね？" },
+                { "id": "ij14", "question": "What's a must-try food in Osaka?", "translation": "大阪で絶対に試すべき食べ物は何ですか？" },
+                { "id": "ij15", "question": "How do I get to the airport from here?", "translation": "ここから空港へはどう行けばいいですか？" },
+                { "id": "ij16", "question": "Could you write that down for me, please?", "translation": "それを書いていただけますか？" },
+                { "id": "ij17", "question": "Is there a good place to see cherry blossoms nearby?", "translation": "近くに桜を見る良い場所はありますか？" },
+                { "id": "ij18", "question": "What's the etiquette for visiting a shrine?", "translation": "神社を訪れる際の作法は何ですか？" },
+                { "id": "ij19", "question": "Where can I find a traditional Japanese inn (Ryokan)?", "translation": "伝統的な日本の旅館（Ryokan）はどこで見つけられますか？" },
+                { "id": "ij20", "question": "Is this the right platform for the train to Kyoto?", "translation": "これは京都行きの電車の正しいホームですか？" }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Web Speech APIが利用可能かチェック
+            if ('speechSynthesis' in window) {
+                const synth = window.speechSynthesis;
+                let voices = [];
+
+                function populateVoiceList() {
+                    // イギリス英語の音声のみをフィルタリング
+                    voices = synth.getVoices().filter(voice => voice.lang.startsWith('en-GB'));
+                    // 特定の音声名を優先することも可能 (例: 'Google UK English Female', 'Daniel')
+                    voices.sort((a, b) => {
+                        const nameA = a.name.toUpperCase();
+                        const nameB = b.name.toUpperCase();
+                        if (nameA.includes('UK ENGLISH FEMALE')) return -1;
+                        if (nameB.includes('UK ENGLISH FEMALE')) return 1;
+                        if (nameA.includes('DANIEL')) return -1;
+                        if (nameB.includes('DANIEL')) return 1;
+                        return 0;
+                    });
+                }
+                
+                populateVoiceList();
+                if (synth.onvoiceschanged !== undefined) {
+                    synth.onvoiceschanged = populateVoiceList;
+                }
+
+                function speak(text) {
+                    if (synth.speaking) {
+                        // 現在読み上げ中であれば停止
+                        synth.cancel();
+                    }
+                    if (text !== '') {
+                        const utterThis = new SpeechSynthesisUtterance(text);
+                        utterThis.onend = function (event) {
+                            // console.log('SpeechSynthesisUtterance.onend');
+                        }
+                        utterThis.onerror = function (event) {
+                            console.error('SpeechSynthesisUtterance.onerror', event);
+                        }
+                        
+                        // イギリス英語の音声を選択
+                        const ukVoice = voices.find(voice => voice.lang === 'en-GB'); // 最も優先されるen-GB音声
+                        if (ukVoice) {
+                            utterThis.voice = ukVoice;
+                        } else {
+                            // フォールバック: en-GBを指定
+                            utterThis.lang = 'en-GB';
+                        }
+                        
+                        utterThis.pitch = 1; // 音の高さ
+                        utterThis.rate = 1;  // 話す速さ
+                        synth.speak(utterThis);
+                    }
+                }
+
+                function createQuestionCard(item, category, index) {
+                    return `
+                        <div class="question-card" id="${category}-${item.id}">
+                            <div class="question-content">
+                                <div class="question-text">
+                                    Q${index + 1}: ${item.question}
+                                </div>
+                                <div class="japanese-translation">
+                                    ${item.translation}
+                                </div>
+                            </div>
+                            <div class="play-button-wrapper">
+                                <button class="play-button" data-question-text="${item.question}" title="質問を再生">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea class="form-control answer-textarea mb-3" rows="2" placeholder="ここにあなたの答えを入力（任意）"></textarea>
+                    `;
+                }
+
+                function loadQuestions() {
+                    const dailyLifeContainer = document.getElementById('daily-life-pane');
+                    const travelContainer = document.getElementById('travel-pane');
+                    const inJapanContainer = document.getElementById('in-japan-pane');
+
+                    dailyLifeContainer.innerHTML = questionsData.dailyLife.map((q, i) => createQuestionCard(q, 'dailyLife', i)).join('');
+                    travelContainer.innerHTML = questionsData.travel.map((q, i) => createQuestionCard(q, 'travel', i)).join('');
+                    inJapanContainer.innerHTML = questionsData.inJapan.map((q, i) => createQuestionCard(q, 'inJapan', i)).join('');
+                    
+                    // すべての再生ボタンにクリックイベントを追加
+                    document.querySelectorAll('.play-button').forEach(button => {
+                        button.addEventListener('click', () => {
+                            const questionText = button.getAttribute('data-question-text');
+                            speak(questionText);
+                        });
+                    });
+                }
+                
+                loadQuestions();
+
+            } else {
+                alert('申し訳ありませんが、お使いのブラウザは音声合成に対応していません。最新のChromeやEdgeなどをご利用ください。');
+            }
+        });
+    </script>
+
+</body>
+</html>
