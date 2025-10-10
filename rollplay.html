@@ -116,77 +116,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
-        // --- 質問データ (JSON) with more natural conversations ---
-        const questionsData = {
-            "dailyLife": [
-                { "id": "dl01", "question": "Alright?", "translation": "元気？/やあ", "answers": ["Yeah, not too bad, thanks. You alright?", "Alright. Bit busy, you know how it is. How about you?"] },
-                { "id": "dl02", "question": "How was your weekend? Get up to anything nice?", "translation": "週末どうだった？何かいいことした？", "answers": ["It was pretty quiet, to be honest. Just what I needed! Yours?", "Yeah, it was lovely. We went for a roast on Sunday. You should've come!"] },
-                { "id": "dl03", "question": "Fancy a cuppa?", "translation": "お茶でもどう？", "answers": ["Oh, go on then, I'd love one. Cheers. Just a splash of milk for me.", "I'm gasping! Yeah, sounds great. I'll get the biscuits."] },
-                { "id": "dl04", "question": "Sorry to keep you, have you been waiting long?", "translation": "待たせてごめん、長く待った？", "answers": ["Don't be silly, I've only just got here myself.", "Nah, it's fine, only about five minutes. No worries."] },
-                { "id": "dl05", "question": "So, what do you do?", "translation": "で、お仕事は何を？", "answers": ["I'm in marketing. It's... fine.", "I work for the council. It's not as boring as it sounds! What about you?"] },
-                { "id": "dl06", "question": "Bit chilly today, isn't it?", "translation": "今日、ちょっと肌寒くない？", "answers": ["Tell me about it! I should've brought a thicker coat.", "Yeah, it's freezing! I thought it was supposed to be spring."] },
-                { "id": "dl07", "question": "Got any plans for the bank holiday weekend?", "translation": "連休の予定は何かある？", "answers": ["Not yet, might just see what happens. You?", "Hopefully a BBQ, if the weather holds up!"] },
-                { "id": "dl08", "question": "Seen anything good on the telly recently?", "translation": "最近、テレビで何か面白い番組見た？", "answers": ["Oh, you have to watch that new drama on BBC. It's brilliant.", "I'm obsessed with that new series on Netflix. Have you seen it?"] },
-                { "id": "dl09", "question": "You couldn't do me a massive favour, could you?", "translation": "ちょっと、すごくお願いがあるんだけど…いいかな？", "answers": ["Depends what it is! Go on then, what's up?", "Sure, if I can. What do you need?"] },
-                { "id": "dl10", "question": "What are we thinking for dinner?", "translation": "夜ごはん、どうする？", "answers": ["I'm easy. Feel like cooking or shall we be lazy and get a takeaway?", "I've got some pasta in. We could just have that?"] },
-                { "id": "dl11", "question": "You look knackered. Long day?", "translation": "お疲れだね。大変な一日だった？", "answers": ["You have no idea. The commute was a nightmare today.", "Yeah, just one of those days. I'm ready for bed already."] },
-                { "id": "dl12", "question": "Did you see the match last night?", "translation": "昨夜の試合、見た？", "answers": ["Of course! What a shocking result, eh?", "Nah, I missed it. Was it any good?"] },
-                { "id": "dl13", "question": "Need a hand with that? It looks heavy.", "translation": "手伝おうか？重そうだけど。", "answers": ["Oh, would you? That's so kind, thank you.", "No, I'm alright, thanks. It's not as heavy as it looks!"] },
-                { "id": "dl14", "question": "Right, I'm off to the pub. Coming?", "translation": "じゃ、パブに行ってくる。一緒に来る？", "answers": ["Oh, I'd love to but I'm swamped tonight. Rain check?", "Sounds good. Give me five minutes, I'll grab my coat."] },
-                { "id": "dl15", "question": "I love your coat! Where's it from?", "translation": "そのコート素敵！どこの？", "answers": ["Oh, this old thing? I got it in a charity shop in Brighton, can you believe it?", "Thanks! It's from Zara, but from a few years ago."] },
-                { "id": "dl16", "question": "I'm starving. Shall we grab a bite to eat?", "translation": "お腹ペコペコ。何か軽く食べない？", "answers": ["Good idea, I'm famished. Where are you thinking?", "Yeah, let's. There's a decent café just around the corner."] },
-                { "id": "dl17", "question": "Is this seat taken?", "translation": "この席、空いてますか？", "answers": ["No, it's all yours. Go for it.", "Sorry, my friend's just coming back. Apologies."] },
-                { "id": "dl18", "question": "God, I can't believe it's only Tuesday.", "translation": "あー、まだ火曜日なんて信じられない。", "answers": ["I know, right? This week is dragging.", "Tell me about it. Feels like it should be Friday already."] },
-                { "id": "dl19", "question": "Is it alright if I put some music on?", "translation": "音楽かけても大丈夫？", "answers": ["Yeah, of course. Stick something good on.", "Go for it, but nothing too loud, I've got a bit of a headache."] },
-                { "id": "dl20", "question": "Are you alright? You seem a bit quiet.", "translation": "大丈夫？ちょっと静かだけど。", "answers": ["Yeah, I'm fine. Just got a lot on my mind, you know?", "Oh, sorry. Just tired. Long week."] }
-            ],
-            "travel": [
-                { "id": "tr01", "question": "Excuse me, sorry, do you know where the nearest tube is?", "translation": "すみません、一番近い地下鉄はどこかご存知ですか？", "answers": ["Yeah, it's just down that road on the left. You can't miss it.", "Right, so if you keep walking for about five minutes, you'll see the signs."] },
-                { "id": "tr02", "question": "Could I get a return to Camden Town, please?", "translation": "カムデンタウンまで往復一枚お願いします。", "answers": ["Sure. That's eight pounds forty, please. Are you paying by card?", "Right you are. That'll be £8.40."] },
-                { "id": "tr03", "question": "Sorry, does this bus go towards the British Museum?", "translation": "すみません、このバスは 大英博物館の方へ行きますか？", "answers": ["No, you'll need the one on the other side of the road, mate.", "Yes, it does. It stops just a short walk away."] },
-                { "id": "tr04", "question": "Any idea when the next train to Brighton is?", "translation": "次のブライトン行きの電車がいつか分かりますか？", "answers": ["The board says it's delayed, I'm afraid. Should be in about 20 minutes though.", "I think there's one at half past. It'll be on platform 5."] },
-                { "id": "tr05", "question": "Could we get the bill when you have a moment, please?", "translation": "お手すきの際に、お会計をお願いできますか？", "answers": ["Of course. I'll be right back with that for you.", "No problem at all. Are you ready now?"] },
-                { "id": "tr06", "question": "Hi there, have you got a table for two?", "translation": "こんにちは、二人なんですけど、席ありますか？", "answers": ["I'm really sorry, we're fully booked tonight. You could try the pub next door?", "Yes, but we'd need the table back by eight o'clock, if that's alright?"] },
-                { "id": "tr07", "question": "Hi, I've got a booking under the name of Tanaka.", "translation": "こんにちは、タナカという名前で予約しています。", "answers": ["Ah yes, Tanaka for two. Perfect. If you'd like to follow me.", "Let me just check for you... Yes, here we are. This way, please."] },
-                { "id": "tr08", "question": "Everything looks so good! What would you recommend?", "translation": "どれも美味しそうですね！おすすめは何ですか？", "answers": ["Well, the shepherd's pie is the best in London, if you ask me.", "You can't go wrong with the fish and chips. It's what we're known for."] },
-                { "id": "tr09", "question": "Sorry to bother you, could you possibly take a photo of us?", "translation": "お邪魔してすみません、私たちの写真を撮っていただけませんか？", "answers": ["Yeah, no problem. Right, everyone squeeze in. Say cheese!", "Of course. Is it just this button here?"] },
-                { "id": "tr10", "question": "How much is it to get in?", "translation": "入場料はいくらですか？", "answers": ["It's twenty pounds for an adult ticket.", "It's actually free to enter, but we do suggest a small donation."] },
-                { "id": "tr11", "question": "Is there a cash machine anywhere near here?", "translation": "この辺りのどこかにATMはありますか？", "answers": ["Yep, there's one inside the Tesco just across the street.", "The nearest one is a bit of a walk, I'm afraid. Down by the station."] },
-                { "id": "tr12", "question": "What time are you open until tonight?", "translation": "今夜は何時まで開いていますか？", "answers": ["We shut at six today.", "Last orders are at 10:30, and we close at 11."] },
-                { "id": "tr13", "question": "Do you take card?", "translation": "カードは使えますか？", "answers": ["Yes, we take all major cards, except for Amex.", "Sorry, it's cash only, I'm afraid."] },
-                { "id": "tr14", "question": "Hi, sorry, my key card doesn't seem to be working.", "translation": "すみません、このカードキーがどうも動かないみたいで。", "answers": ["Oh, sorry about that. Let me sort that out for you now. One moment.", "That's odd. I'll get you a new one right away."] },
-                { "id": "tr15", "question": "Just wondering what time breakfast finishes?", "translation": "ちょっとお聞きしたいのですが、朝食は何時に終わりますか？", "answers": ["We serve breakfast until half past ten on weekends.", "It finishes at 10 am, so you've still got plenty of time."] },
-                { "id": "tr16", "question": "Could I get a wake-up call for 7 am, please?", "translation": "朝7時にモーニングコールをお願いできますか？", "answers": ["Of course. That's a call for 7 am. All sorted.", "No problem. I'll put that in the system for you."] },
-                { "id": "tr17", "question": "Is the tap water alright to drink here?", "translation": "ここの水道水は飲んでも大丈夫ですか？", "answers": ["Oh yeah, it's perfectly fine.", "Absolutely. Help yourself."] },
-                { "id": "tr18", "question": "Excuse me, where's the nearest chemist?", "translation": "すみません、一番近い薬局はどこですか？", "answers": ["There's a Boots just at the end of this road.", "You'll have to go to the high street, there's one opposite the big M&S."] },
-                { "id": "tr19", "question": "I'm so sorry, could you say that again a bit slower?", "translation": "本当にすみません、もう一度少しゆっくり言っていただけますか？", "answers": ["Oh, of course, sorry about that. I was just saying...", "No problem at all. I tend to speak a bit fast!"] },
-                { "id": "tr20", "question": "Excuse me, I think I might have the wrong order.", "translation": "すみません、多分これ、注文を間違えられたみたいです。", "answers": ["Oh, I'm terribly sorry about that. What did you order?", "My apologies. Let me get that sorted for you straight away."] }
-            ],
-            "inJapan": [
-                { "id": "ij01", "question": "Excuse me, we're a little bit lost. I was hoping you could help?", "translation": "すみません、ちょっと道に迷ってしまって。助けていただけると嬉しいのですが。", "answers": ["Of course. Where are you trying to get to?", "I can certainly try! Do you have a map I can look at?"] },
-                { "id": "ij02", "question": "Do you know a good place for sushi around here?", "translation": "この辺りで美味しいお寿司屋さん、ご存知ですか？", "answers": ["Yes, there's a fantastic little place just two streets away. It's very popular with locals.", "You're in luck! This area is famous for sushi. There's one I always go to just over there."] },
-                { "id": "ij03", "question": "Sorry, I'm struggling with this ticket machine. How does it work?", "translation": "すみません、この券売機に苦戦していて。どうやって使うんですか？", "answers": ["Ah, they can be tricky. First, press the English button here. Then, you find your fare on the big map above.", "Let me help. You need to put the money in first, then choose the number of people."] },
-                { "id": "ij04", "question": "What's the easiest way to get to Shinjuku Gyoen Garden from here?", "translation": "ここから新宿御苑に行くには、どう行くのが一番簡単ですか？", "answers": ["I'd take the subway. The Marunouchi line will take you straight there. It's much quicker than a taxi.", "The best way is probably the train. It's only a few stops on the Yamanote Line."] },
-                { "id": "ij05", "question": "Do you happen to have an English menu?", "translation": "ひょっとして、英語のメニューはありますか？", "answers": ["Yes, of course. One moment, I'll get it for you.", "I am so sorry, we don't. But I can help you, or you can use a translation app on your phone?"] },
-                { "id": "ij06", "question": "Wow, this is amazing! What is this dish called?", "translation": "うわ、これ、すごく美味しい！この料理は何て言うんですか？", "answers": ["I'm so glad you like it! It's called 'Katsudon'. It's a pork cutlet on rice.", "It's a local speciality. It's good, isn't it?"] },
-                { "id": "ij07", "question": "Where's the best place to buy a travel SIM card?", "translation": "旅行者向けのSIMカードを買うのに一番いい場所はどこですか？", "answers": ["You can find them at any big electronics shop, like Bic Camera. They have staff who speak English, too.", "Honestly, the easiest place is probably at the airport as soon as you arrive."] },
-                { "id": "ij08", "question": "We're trying to find the Ghibli Museum. Are we going the right way?", "translation": "ジブリ美術館を探しているんですが、この道で合っていますか？", "answers": ["Ah, you need to book tickets months in advance for that! It's in Mitaka, you'll need to take the train.", "Yes, it's about a 15-minute walk from the station in that direction. Just follow the signs."] },
-                { "id": "ij09", "question": "Is it okay to take photos in here?", "translation": "この中で写真を撮っても大丈夫ですか？", "answers": ["Yes, that's fine, but please, no flash.", "I'm afraid not. Photography is forbidden inside the temple itself."] },
-                { "id": "ij10", "question": "I'm trying to learn a bit of Japanese. How do you say 'delicious'?", "translation": "少し日本語を習っているんです。「美味しい」って何て言うんですか？", "answers": ["You say 'Oishii'. You have very good pronunciation!", "It's 'Oishii'. Give it a try!"] },
-                { "id": "ij11", "question": "This temple is beautiful. Could you tell me a little about it?", "translation": "このお寺、美しいですね。少しだけ、ここのことについて教えてもらえませんか？", "answers": ["Of course. It was originally built in the 17th century, but it was rebuilt after the war.", "I'm not a guide, but I know it's very famous for its gardens in the autumn."] },
-                { "id": "ij12", "question": "Hi, what's the Wi-Fi password, please?", "translation": "こんにちは、Wi-Fiのパスワードは何ですか？", "answers": ["Sure, it's on the little sign on the counter over there.", "It's all one word, 'welcomecoffee', all lowercase."] },
-                { "id": "ij13", "question": "Will most shops be open tomorrow, even though it's a public holiday?", "translation": "明日は祝日ですけど、ほとんどのお店は開いていますか？", "answers": ["Yes, the big department stores and shops in areas like this will be open. Some small, family-run places might close, though.", "Oh, is it? Yes, it will be very busy, but everything will be open."] },
-                { "id": "ij14", "question": "I'm going to Kyoto. What's one food I absolutely have to try?", "translation": "京都に行くんです。絶対に試すべき食べ物が一つあるとしたら何ですか？", "answers": ["Oh, you must try 'Yudofu', which is simmered tofu. It's a Kyoto speciality.", "I would recommend trying some traditional sweets. The matcha green tea flavour is incredible there."] },
-                { "id": "ij15", "question": "What's the best way to get to Narita Airport from here?", "translation": "ここから成田空港に行くにはどうすればいいですか？", "answers": ["The easiest and most comfortable way is the Narita Express train. It goes directly from Shinjuku station.", "You could take the Limousine Bus. It's very convenient as it stops at most major hotels."] },
-                { "id": "ij16", "question": "I'm sorry, my Japanese isn't very good. Could you possibly write down the name for me?", "translation": "すみません、日本語があまり上手ではなくて。名前を書いていただくことは可能ですか？", "answers": ["Of course, no problem at all. Here you go.", "Sure, let me just find a pen."] },
-                { "id": "ij17", "question": "Where would you recommend we go to see the cherry blossoms?", "translation": "桜を見に行くなら、どこがおすすめですか？", "answers": ["Ueno Park is the most famous spot, but it gets incredibly crowded. For somewhere a bit more peaceful, I'd suggest Shinjuku Gyoen.", "You should take a walk along the Meguro River. It's absolutely stunning at night when it's lit up."] },
-                { "id": "ij18", "question": "Is there any special etiquette I should know before visiting a shrine?", "translation": "神社にお参りする前に、何か知っておくべき特別な作法はありますか？", "answers": ["It's polite to bow once at the entrance gate, the 'torii'. Also, you should wash your hands at the water fountain before you approach the main hall.", "The main thing is just to be quiet and respectful. It's a sacred place."] },
-                { "id": "ij19", "question": "We'd love to stay in a traditional Japanese inn. What's the word for that?", "translation": "日本の伝統的な宿に泊まってみたいんです。それって何て言うんですか？", "answers": ["Ah, you mean a 'Ryokan'. For the best experience, I'd recommend visiting a hot spring town like Hakone.", "They're called 'Ryokan'. They are a wonderful experience, but can be quite expensive compared to hotels."] },
-                { "id": "ij20", "question": "Excuse me, is this the right platform for the Shinkansen to Osaka?", "translation": "すみません、これって大阪に行く新幹線のホームで合ってますか？", "answers": ["Yes, that's right. Any train from this platform will go to Shin-Osaka.", "No, I'm afraid this is for Tokyo. You need to be on the other side, platform 23."] }
-            ]
-        };
-
         document.addEventListener('DOMContentLoaded', function() {
+            // Web Speech APIが利用可能かチェック
             if ('speechSynthesis' in window) {
                 const synth = window.speechSynthesis;
                 let voices = [];
@@ -271,7 +202,7 @@
                     `;
                 }
 
-                function loadQuestions() {
+                function loadQuestions(questionsData) {
                     const containers = {
                         dailyLife: document.getElementById('daily-life-pane'),
                         travel: document.getElementById('travel-pane'),
@@ -279,11 +210,14 @@
                     };
 
                     for (const category in questionsData) {
-                        containers[category].innerHTML = questionsData[category]
-                            .map((q, i) => createQuestionCard(q, category, i))
-                            .join('');
+                        if (containers[category]) {
+                            containers[category].innerHTML = questionsData[category]
+                                .map((q, i) => createQuestionCard(q, category, i))
+                                .join('');
+                        }
                     }
                     
+                    // HTMLが生成された後に再生ボタンのイベントリスナーを設定
                     document.querySelectorAll('.play-button').forEach(button => {
                         button.addEventListener('click', () => {
                             const questionText = button.getAttribute('data-question-text');
@@ -292,7 +226,22 @@
                     });
                 }
                 
-                loadQuestions();
+                // ★★★ rollplay.jsonファイルを読み込む処理 ★★★
+                fetch('rollplay.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // 読み込んだデータを使ってページを構築
+                        loadQuestions(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching the question data:', error);
+                        alert('質問データの読み込みに失敗しました。rollplay.jsonファイルが同じ階層にあるか確認してください。');
+                    });
 
             } else {
                 alert('申し訳ありませんが、お使いのブラウザは音声合成に対応していません。最新のChromeやEdgeなどをご利用ください。');
