@@ -1,0 +1,308 @@
+{
+    "dailyConversation": [
+        { "id": "dc01", "question_en": "Alright?", "question_ja": "元気？/やあ", "audio_filename": "dc01.mp3", "answers": [
+            { "en": "Yeah, not too bad, thanks. You alright?", "ja": "ええ、悪くないですよ、ありがとう。あなたは元気？" },
+            { "en": "I'm doing great, thanks for asking. How about you?", "ja": "とても元気です、聞いてくれてありがとう。あなたはどうですか？" },
+            { "en": "Alright. A bit snowed under at work, but can't complain.", "ja": "元気だよ。仕事に追われてるけど、まあ文句は言えないね。" }
+        ] },
+        { "id": "dc02", "question_en": "How was your weekend? Get up to anything nice?", "question_ja": "週末どうだった？何かいいことした？", "audio_filename": "dc02.mp3", "answers": [
+            { "en": "It was lovely, thanks. We went for a long walk on Sunday.", "ja": "素敵でしたよ、ありがとう。日曜に長い散歩に出かけました。" },
+            { "en": "Pretty quiet, to be honest. Just what I needed! Yours?", "ja": "正直、かなり静かでした。まさに私が必要としていたものです！あなたは？" },
+            { "en": "It was brilliant! I caught up with some old friends I hadn't seen in ages.", "ja": "最高でした！何年も会っていなかった旧友たちと会いました。" }
+        ] },
+        { "id": "dc03", "question_en": "Fancy a cuppa?", "question_ja": "お茶でもどう？", "audio_filename": "dc03.mp3", "answers": [
+            { "en": "Oh, go on then, I'd love one. Cheers. Just a splash of milk for me.", "ja": "ああ、じゃあ、いただこうかな。ありがとう。ミルクを少しだけお願い。" },
+            { "en": "I'm gasping! Yeah, sounds great. I'll get the biscuits.", "ja": "喉がカラカラなんだ！いいね、最高だ。ビスケットを持ってくるよ。" },
+            { "en": "I'm okay for now, thanks. I've just had one.", "ja": "今は大丈夫、ありがとう。ちょうど一杯飲んだところなんだ。" }
+        ] },
+        { "id": "dc04", "question_en": "Bit chilly today, isn't it?", "question_ja": "今日、ちょっと肌寒くない？", "audio_filename": "dc04.mp3", "answers": [
+            { "en": "Tell me about it! I should've brought a thicker coat.", "ja": "本当にね！もっと厚いコートを持ってくればよかった。" },
+            { "en": "Yeah, it's freezing! I thought it was supposed to be spring.", "ja": "ええ、凍えるようです！もう春のはずだと思っていました。" },
+            { "en": "It is a bit, yes. Makes you want to stay indoors with a hot chocolate.", "ja": "少しそうですね。ホットチョコレートと一緒に屋内にいたくなります。" }
+        ] },
+        { "id": "dc05", "question_en": "Seen anything good on the telly recently?", "question_ja": "最近、テレビで何か面白い番組見た？", "audio_filename": "dc05.mp3", "answers": [
+            { "en": "Oh, you have to watch that new drama on the BBC. It's brilliant.", "ja": "ああ、BBCの新しいドラマは絶対見るべきだよ。素晴らしいんだ。" },
+            { "en": "I'm obsessed with that new series on Netflix. Have you seen it?", "ja": "Netflixの新しいシリーズに夢中なんだ。見たことある？" },
+            { "en": "Not really, I haven't had much time. Anything you'd recommend?", "ja": "あまり。時間がなくて。何かおすすめはある？" }
+        ] },
+        { "id": "dc06", "question_en": "Sorry to keep you, have you been waiting long?", "question_ja": "待たせてごめん、長く待った？", "audio_filename": "dc06.mp3", "answers": [
+            { "en": "Don't be silly, I've only just got here myself.", "ja": "とんでもない、私も今着いたところですよ。" },
+            { "en": "Not at all, only about five minutes. No worries.", "ja": "全然、5分くらいです。気にしないで。" },
+            { "en": "It's fine, it gave me a chance to catch up on some emails!", "ja": "大丈夫、おかげでメールの返信ができたから！" }
+        ] },
+        { "id": "dc07", "question_en": "Got any plans for the bank holiday weekend?", "question_ja": "連休の予定は何かある？", "audio_filename": "dc07.mp3", "answers": [
+            { "en": "Not yet, might just see what happens. You?", "ja": "まだだよ、どうなるか様子見かな。あなたは？" },
+            { "en": "Hopefully a BBQ, if the weather holds up!", "ja": "天気がもてば、バーベキューをしたいな！" },
+            { "en": "We're thinking of heading to the coast for the day on Monday.", "ja": "月曜に日帰りで海辺に行こうかと考えてるんだ。" }
+        ] },
+        { "id": "dc08", "question_en": "So, what do you do for a living?", "question_ja": "で、お仕事は何をされているんですか？", "audio_filename": "dc08.mp3", "answers": [
+            { "en": "I'm a graphic designer. It's creative, which I love.", "ja": "グラフィックデザイナーです。クリエイティブなのが気に入っています。" },
+            { "en": "I work for the local council. It's not as boring as it sounds!", "ja": "市役所で働いています。聞くほど退屈じゃないですよ！" },
+            { "en": "I'm actually a student at the moment, studying history.", "ja": "実は今学生で、歴史を勉強しています。" }
+        ] },
+        { "id": "dc09", "question_en": "You couldn't do me a massive favour, could you?", "question_ja": "ちょっと、すごくお願いがあるんだけど…いいかな？", "audio_filename": "dc09.mp3", "answers": [
+            { "en": "Depends what it is! Go on then, what's up?", "ja": "内容によるかな！まあ言ってみて、どうしたの？" },
+            { "en": "Sure, if I can. What do you need?", "ja": "もちろん、私にできれば。何が必要？" },
+            { "en": "I'd love to help, but I'm a bit swamped right now. What is it?", "ja": "手伝いたいけど、今ちょっと立て込んでて。どんなこと？" }
+        ] },
+        { "id": "dc10", "question_en": "What are we thinking for dinner tonight?", "question_ja": "今夜の夜ごはん、どうする？", "audio_filename": "dc10.mp3", "answers": [
+            { "en": "I'm easy. Feel like cooking or shall we be lazy and get a takeaway?", "ja": "私は何でもいいよ。料理する気分？それとも面倒だから出前にする？" },
+            { "en": "I've got some pasta in. We could just have that with a salad?", "ja": "パスタがあるよ。サラダと一緒にそれにしない？" },
+            { "en": "I was thinking maybe that new Thai place we wanted to try?", "ja": "私たちが行きたがってた、あの新しいタイ料理のお店はどうかなって思ってた。" }
+        ] },
+        { "id": "dc11", "question_en": "You look knackered. Long day?", "question_ja": "すごく疲れてるね。大変な一日だった？", "audio_filename": "dc11.mp3", "answers": [
+            { "en": "You have no idea. The commute was a nightmare today.", "ja": "もう、信じられないくらい。今日の通勤は悪夢だったよ。" },
+            { "en": "Yeah, just one of those days. I'm ready for bed already.", "ja": "うん、まあそういう日もあるさ。もう寝る準備万端だよ。" },
+            { "en": "Tell me about it. Meetings from nine 'til five straight.", "ja": "本当に。9時から5時まで会議続きだったんだ。" }
+        ] },
+        { "id": "dc12", "question_en": "Did you see the match last night?", "question_ja": "昨夜の試合、見た？", "audio_filename": "dc12.mp3", "answers": [
+            { "en": "Of course! What a shocking result, eh?", "ja": "もちろん！衝撃的な結果だったよね？" },
+            { "en": "Nah, I missed it. Was it any good? Who won?", "ja": "いや、見逃したんだ。面白かった？どっちが勝ったの？" },
+            { "en": "I saw the highlights this morning. That last-minute goal was incredible!", "ja": "今朝ハイライトで見たよ。あの土壇場のゴールは信じられなかった！" }
+        ] },
+        { "id": "dc13", "question_en": "Need a hand with that? It looks heavy.", "question_ja": "手伝おうか？重そうだけど。", "audio_filename": "dc13.mp3", "answers": [
+            { "en": "Oh, would you? That's so kind of you, thank you.", "ja": "あら、いいんですか？ご親切にどうもありがとう。" },
+            { "en": "No, I'm alright, thanks. It's not as heavy as it looks!", "ja": "いえ、大丈夫です、ありがとう。見た目ほど重くないんですよ！" },
+            { "en": "Thanks for the offer, but I'm just taking it to the car.", "ja": "お申し出ありがとう、でも車まで運ぶだけなので大丈夫です。" }
+        ] },
+        { "id": "dc14", "question_en": "Right, I'm off. See you tomorrow!", "question_ja": "じゃ、お先に。また明日！", "audio_filename": "dc14.mp3", "answers": [
+            { "en": "Cheers, you too. Have a good evening!", "ja": "どうも、あなたもね。良い夜を！" },
+            { "en": "Alright, see you in the morning. Don't work too late!", "ja": "わかった、また朝にね。あまり遅くまで働かないように！" },
+            { "en": "Okay, catch you later. Drive safe!", "ja": "オッケー、また後で。気をつけて帰ってね！" }
+        ] },
+        { "id": "dc15", "question_en": "I love your coat! Where did you get it?", "question_ja": "そのコート素敵！どこで買ったの？", "audio_filename": "dc15.mp3", "answers": [
+            { "en": "Oh, this old thing? I got it in a charity shop, can you believe it?", "ja": "あら、この古いやつ？チャリティーショップで買ったの、信じられる？" },
+            { "en": "Thanks! It's from Zara, but from a few years ago.", "ja": "ありがとう！ZARAのだよ、でも数年前の。" },
+            { "en": "Thank you! It was a birthday present, actually.", "ja": "ありがとう！実は誕生日のプレゼントなの。" }
+        ] },
+        { "id": "dc16", "question_en": "Is this seat taken?", "question_ja": "この席、空いてますか？", "audio_filename": "dc16.mp3", "answers": [
+            { "en": "No, it's all yours. Go for it.", "ja": "いえ、どうぞ。使ってください。" },
+            { "en": "Sorry, my friend's just coming back. Apologies.", "ja": "すみません、友達が戻ってくるところなんです。ごめんなさい。" },
+            { "en": "I don't think so, feel free.", "ja": "空いてると思いますよ、ご自由にどうぞ。" }
+        ] },
+        { "id": "dc17", "question_en": "I'm starving. Shall we grab a bite to eat?", "question_ja": "お腹ペコペコ。何か軽く食べない？", "audio_filename": "dc17.mp3", "answers": [
+            { "en": "Good idea, I'm famished. Where are you thinking?", "ja": "いいね、お腹ペコペコだ。どこか考えてる？" },
+            { "en": "Yeah, let's. There's a decent café just around the corner.", "ja": "うん、そうしよう。角を曲がったところに良いカフェがあるよ。" },
+            { "en": "I could eat! Pizza or something else?", "ja": "食べれるよ！ピザか、何か他のものにする？" }
+        ] },
+        { "id": "dc18", "question_en": "God, I can't believe it's only Tuesday.", "question_ja": "あー、まだ火曜日なんて信じられない。", "audio_filename": "dc18.mp3", "answers": [
+            { "en": "I know, right? This week is dragging already.", "ja": "でしょ？今週はもうすでに長く感じるよ。" },
+            { "en": "Tell me about it. Feels like it should be Friday.", "ja": "本当にね。金曜日みたいな気分だよ。" },
+            { "en": "Don't say that! It's going quickly for me, I've got so much to do.", "ja": "そんなこと言わないで！やることが多すぎて、私にとってはあっという間だよ。" }
+        ] },
+        { "id": "dc19", "question_en": "Is it alright if I open the window? It's a bit stuffy in here.", "question_ja": "窓を開けてもいいですか？少し空気がこもっていて。", "audio_filename": "dc19.mp3", "answers": [
+            { "en": "Yeah, of course. Good idea, it is a bit warm.", "ja": "ええ、もちろん。いい考えだね、少し暑いし。" },
+            { "en": "Go for it, but maybe just a crack? I get cold easily.", "ja": "どうぞ、でも少しだけにしてくれる？寒がりなんだ。" },
+            { "en": "Please do, I was thinking the same thing.", "ja": "ぜひお願い、私も同じことを考えてた。" }
+        ] },
+        { "id": "dc20", "question_en": "Are you alright? You seem a bit quiet.", "question_ja": "大丈夫？ちょっと静かだけど。", "audio_filename": "dc20.mp3", "answers": [
+            { "en": "Yeah, I'm fine. Just got a lot on my mind, you know?", "ja": "うん、大丈夫。ちょっと考え事をしててね。" },
+            { "en": "Oh, sorry. Just tired. It's been a long week.", "ja": "ああ、ごめん。疲れてるだけ。長い一週間だったから。" },
+            { "en": "I've got a bit of a headache, that's all. Nothing serious.", "ja": "ちょっと頭痛がするだけ。大したことないよ。" }
+        ] }
+    ],
+    "travelAbroad": [
+        { "id": "ta01", "question_en": "Excuse me, sorry, do you know where the nearest tube station is?", "question_ja": "すみません、一番近い地下鉄の駅はどこかご存知ですか？", "audio_filename": "ta01.mp3", "answers": [
+            { "en": "Yeah, it's just down that road on the left. You can't miss it.", "ja": "ええ、この道を下って左側です。すぐ見つかりますよ。" },
+            { "en": "Right, so if you keep walking for about five minutes, you'll see the signs for it.", "ja": "ええと、5分ほど歩き続ければ、標識が見えてきますよ。" },
+            { "en": "I'm not from around here myself, sorry. Maybe try asking in that shop?", "ja": "すみません、私もこの辺りの者ではないんです。あのお店で聞いてみては？" }
+        ] },
+        { "id": "ta02", "question_en": "Hi there, have you got a table for two, please?", "question_ja": "こんにちは、二人なんですけど、席はありますか？", "audio_filename": "ta02.mp3", "answers": [
+            { "en": "I'm really sorry, we're fully booked tonight. You could try the pub next door?", "ja": "大変申し訳ありません、今夜は満席です。隣のパブを試してみてはいかがですか？" },
+            { "en": "Yes, but we'd need the table back by eight o'clock, if that's alright?", "ja": "はい、ですが8時までにお席を空けていただく必要がございますが、よろしいでしょうか？" },
+            { "en": "Certainly. Would you prefer to sit inside or out on the terrace?", "ja": "もちろんです。店内とテラス席、どちらがよろしいですか？" }
+        ] },
+        { "id": "ta03", "question_en": "Everything looks so good! What would you recommend?", "question_ja": "どれも美味しそうですね！おすすめは何ですか？", "audio_filename": "ta03.mp3", "answers": [
+            { "en": "Well, the shepherd's pie is our specialty. It's the best in London, if you ask me.", "ja": "そうですね、シェパーズパイが当店の自慢です。私に言わせればロンドンで一番ですよ。" },
+            { "en": "You can't go wrong with the fish and chips. It's what we're known for.", "ja": "フィッシュ・アンド・チップスなら間違いありません。それで有名なんです。" },
+            { "en": "If you like seafood, the grilled sea bass is excellent tonight.", "ja": "シーフードがお好きでしたら、今夜はスズキのグリルが絶品です。" }
+        ] },
+        { "id": "ta04", "question_en": "Sorry to bother you, could you possibly take a photo for us?", "question_ja": "お邪魔してすみません、私たちの写真を撮っていただけませんか？", "audio_filename": "ta04.mp3", "answers": [
+            { "en": "Yeah, no problem. Right, everyone squeeze in a bit closer. Say cheese!", "ja": "ええ、いいですよ。さあ、皆さんもう少し詰めて。はい、チーズ！" },
+            { "en": "Of course. Is it just this button here? Ready? Three, two, one...", "ja": "もちろんです。ここのボタンを押すだけですか？準備はいいですか？3、2、1..." },
+            { "en": "Sure. Where would you like to stand? The light is better over here.", "ja": "いいですよ。どこに立ちたいですか？こちらの方が光の加減がいいですよ。" }
+        ] },
+        { "id": "ta05", "question_en": "Could we get the bill when you have a moment, please?", "question_ja": "お手すきの際に、お会計をお願いできますか？", "audio_filename": "ta05.mp3", "answers": [
+            { "en": "Of course. I'll be right back with that for you.", "ja": "もちろんです。すぐにお持ちします。" },
+            { "en": "No problem at all. Are you paying together or separately?", "ja": "承知いたしました。お支払いはご一緒ですか、別々ですか？" },
+            { "en": "Certainly. Would you like to pay by cash or card?", "ja": "かしこまりました。現金とカード、どちらでお支払いになりますか？" }
+        ] },
+        { "id": "ta06", "question_en": "Could I get a return ticket to Brighton, please?", "question_ja": "ブライトンまで往復一枚お願いします。", "audio_filename": "ta06.mp3", "answers": [
+            { "en": "Sure. Are you coming back today? An Off-Peak Day Return is cheaper.", "ja": "はい。本日お戻りですか？オフピーク日帰り往復の方がお安いですよ。" },
+            { "en": "Right you are. That'll be twenty-four pounds fifty, please.", "ja": "承知しました。24ポンド50ペンスになります。" },
+            { "en": "Of course. Paying by cash or card?", "ja": "もちろんです。お支払いは現金ですか、カードですか？" }
+        ] },
+        { "id": "ta07", "question_en": "Sorry, does this bus go towards the British Museum?", "question_ja": "すみません、このバスは大英博物館の方へ行きますか？", "audio_filename": "ta07.mp3", "answers": [
+            { "en": "No, you'll need the number 14 on the other side of the road, mate.", "ja": "いや、道の反対側から14番のバスに乗る必要があるよ。" },
+            { "en": "Yes, it does. It stops just a short walk away. Hop on.", "ja": "はい、行きますよ。歩いてすぐの所に停まります。乗って。" },
+            { "en": "I think so, but you're best off asking the driver to be sure.", "ja": "そうだと思いますが、確かめるために運転手さんに聞くのが一番ですよ。" }
+        ] },
+        { "id": "ta08", "question_en": "Hi, I have a booking under the name of Sato.", "question_ja": "こんにちは、サトウという名前で予約しています。", "audio_filename": "ta08.mp3", "answers": [
+            { "en": "Ah yes, Mr. Sato, for two. Perfect. If you'd like to follow me.", "ja": "ああ、はい、サトウ様、2名様ですね。完璧です。こちらへどうぞ。" },
+            { "en": "Let me just check for you... Yes, here we are. This way, please.", "ja": "確認いたします... はい、ございました。こちらへどうぞ。" },
+            { "en": "Sato... I don't seem to have that here. Could it be under a different name?", "ja": "サトウ様... こちらには見当たらないようです。別のお名前ではありませんか？" }
+        ] },
+        { "id": "ta09", "question_en": "How much is it to get in?", "question_ja": "入場料はいくらですか？", "audio_filename": "ta09.mp3", "answers": [
+            { "en": "It's twenty pounds for an adult ticket, and fifteen for concessions.", "ja": "大人チケットは20ポンド、割引対象者は15ポンドです。" },
+            { "en": "It's actually free to enter, but we do suggest a small donation if you can.", "ja": "実は入場は無料ですが、もしよろしければ少額の寄付をお願いしています。" },
+            { "en": "Admission is included if you have the London Pass.", "ja": "ロンドンパスをお持ちであれば、入場料は含まれています。" }
+        ] },
+        { "id": "ta10", "question_en": "Is there a cash machine anywhere near here?", "question_ja": "この辺りのどこかにATMはありますか？", "audio_filename": "ta10.mp3", "answers": [
+            { "en": "Yep, there's one inside the Tesco Express just across the street.", "ja": "はい、通りの向かいのテスコ・エクスプレスの中に一台ありますよ。" },
+            { "en": "The nearest one is a bit of a walk, I'm afraid. Down by the station.", "ja": "残念ながら、一番近いのは少し歩きます。駅のそばです。" },
+            { "en": "There's one just around the corner, next to the post office.", "ja": "角を曲がってすぐ、郵便局の隣にあります。" }
+        ] },
+        { "id": "ta11", "question_en": "What time do you close tonight?", "question_ja": "今夜は何時まで開いていますか？", "audio_filename": "ta11.mp3", "answers": [
+            { "en": "We shut at six o'clock today.", "ja": "本日は6時に閉まります。" },
+            { "en": "Last orders for food are at 9:30, and we close the bar at 11.", "ja": "お食事のラストオーダーは9時半で、バーは11時に閉まります。" },
+            { "en": "We're open 'til 8pm from Monday to Saturday.", "ja": "月曜から土曜までは、夜8時まで営業しています。" }
+        ] },
+        { "id": "ta12", "question_en": "Do you take credit card?", "question_ja": "クレジットカードは使えますか？", "audio_filename": "ta12.mp3", "answers": [
+            { "en": "Yes, we take all major cards, except for American Express.", "ja": "はい、アメリカン・エキスプレスを除く主要なカードは全て使えます。" },
+            { "en": "Sorry, it's cash only, I'm afraid. The machine is broken.", "ja": "申し訳ありません、現金のみとなっております。機械が壊れていまして。" },
+            { "en": "We do, but there's a minimum spend of ten pounds.", "ja": "はい、ですが最低10ポンドからのご利用となります。" }
+        ] },
+        { "id": "ta13", "question_en": "Hi, my key card doesn't seem to be working.", "question_ja": "すみません、このカードキーがどうも動かないみたいで。", "audio_filename": "ta13.mp3", "answers": [
+            { "en": "Oh, sorry about that. Let me sort that out for you now. One moment.", "ja": "ああ、申し訳ありません。今すぐ対応します。少々お待ちください。" },
+            { "en": "That's odd. I'll get you a new one right away. Here you are.", "ja": "おかしいですね。すぐに新しいものをお渡しします。はい、どうぞ。" },
+            { "en": "Sometimes they stop working if you keep them next to your phone. Let me re-program it.", "ja": "携帯電話の隣に置いておくと、時々作動しなくなります。再設定しますね。" }
+        ] },
+        { "id": "ta14", "question_en": "Just wondering what time breakfast finishes?", "question_ja": "ちょっとお聞きしたいのですが、朝食は何時に終わりますか？", "audio_filename": "ta14.mp3", "answers": [
+            { "en": "We serve breakfast until half past ten on weekends.", "ja": "週末は10時半まで朝食を提供しています。" },
+            { "en": "It finishes at 10 am sharp, so you've still got plenty of time.", "ja": "朝10時ちょうどに終了しますので、まだ時間はたっぷりありますよ。" },
+            { "en": "The buffet closes at 10, but you can order from the room service menu after that.", "ja": "ビュッフェは10時に閉まりますが、その後はルームサービスメニューからご注文いただけます。" }
+        ] },
+        { "id": "ta15", "question_en": "Excuse me, where's the nearest chemist?", "question_ja": "すみません、一番近い薬局はどこですか？", "audio_filename": "ta15.mp3", "answers": [
+            { "en": "There's a Boots just at the end of this road, on the right.", "ja": "この道の突き当り、右側にBootsがあります。" },
+            { "en": "You'll have to go to the high street, there's one opposite the big M&S.", "ja": "大通りまで行く必要があります。大きなM&Sの向かいに一軒あります。" },
+            { "en": "The closest one is probably inside the train station.", "ja": "一番近いのは、おそらく駅の中だと思います。" }
+        ] },
+        { "id": "ta16", "question_en": "I'm so sorry, could you say that again a bit more slowly?", "question_ja": "本当にすみません、もう一度少しゆっくり言っていただけますか？", "audio_filename": "ta16.mp3", "answers": [
+            { "en": "Oh, of course, sorry about that. I was just saying...", "ja": "ああ、もちろん、すみません。私が言っていたのは..." },
+            { "en": "No problem at all. I tend to speak a bit fast!", "ja": "全く問題ありません。私は少し早口な傾向があるので！" },
+            { "en": "Sure. I said, you need to take the... next... left.", "ja": "はい。私が言ったのは、次の...左...を曲がる必要がある、ということです。" }
+        ] },
+        { "id": "ta17", "question_en": "Could I try this on, please?", "question_ja": "これを試着してもいいですか？", "audio_filename": "ta17.mp3", "answers": [
+            { "en": "Of course. The fitting rooms are just over there, behind the tills.", "ja": "もちろんです。試着室はあちら、レジの後ろです。" },
+            { "en": "Certainly. Let me open a cubicle for you.", "ja": "かしこまりました。個室をお開けしますね。" },
+            { "en": "Yes, just through there. How many items do you have?", "ja": "はい、あちらです。何点お持ちですか？" }
+        ] },
+        { "id": "ta18", "question_en": "Do you have this in a larger size?", "question_ja": "これのもう少し大きいサイズはありますか？", "audio_filename": "ta18.mp3", "answers": [
+            { "en": "Let me just check the stockroom for you. One moment.", "ja": "在庫室を確認してまいります。少々お待ちください。" },
+            { "en": "I'm afraid that's the last one we have in that style.", "ja": "申し訳ありません、そのスタイルではあれが最後の１点です。" },
+            { "en": "I think we do. What size are you looking for?", "ja": "あると思います。どのサイズをお探しですか？" }
+        ] },
+        { "id": "ta19", "question_en": "Excuse me, I think this is the wrong order.", "question_ja": "すみません、多分これ、注文を間違えられたみたいです。", "audio_filename": "ta19.mp3", "answers": [
+            { "en": "Oh, I'm terribly sorry about that. What did you order?", "ja": "ああ、大変申し訳ありません。何をご注文されましたか？" },
+            { "en": "My apologies. Let me get that sorted for you straight away.", "ja": "申し訳ありません。すぐに正しいものと交換いたします。" },
+            { "en": "Oh dear, let me check your receipt. You're right, so sorry.", "ja": "あらら、レシートを確認させてください。おっしゃる通りです、すみません。" }
+        ] },
+        { "id": "ta20", "question_en": "Is the tap water safe to drink here?", "question_ja": "ここの水道水は飲んでも安全ですか？", "audio_filename": "ta20.mp3", "answers": [
+            { "en": "Oh yeah, it's perfectly fine. We all drink it.", "ja": "ええ、全く問題ありません。私たちは皆飲んでいますよ。" },
+            { "en": "Absolutely. Help yourself. There are glasses in the cupboard.", "ja": "もちろんです。ご自由にどうぞ。戸棚にグラスがあります。" },
+            { "en": "Yes, it's safe, but some people don't like the taste. Bottled water is in the fridge.", "ja": "はい、安全ですが、味が好きでない人もいます。ボトル入りの水は冷蔵庫にあります。" }
+        ] }
+    ],
+    "inJapan": [
+        { "id": "ij01", "question_en": "Excuse me, we're a little bit lost. I was hoping you could help?", "question_ja": "すみません、ちょっと道に迷ってしまって。助けていただけると嬉しいのですが。", "audio_filename": "ij01.mp3", "answers": [
+            { "en": "Of course. Where are you trying to get to?", "ja": "もちろんです。どこへ行こうとしていますか？" },
+            { "en": "I can certainly try! Do you have a map I can look at?", "ja": "ええ、やってみます！見せてもらえる地図はありますか？" },
+            { "en": "No problem. Which station are you looking for?", "ja": "大丈夫ですよ。どの駅を探していますか？" }
+        ] },
+        { "id": "ij02", "question_en": "Do you know a good place for ramen around here?", "question_ja": "この辺りで美味しいラーメン屋さん、ご存知ですか？", "audio_filename": "ij02.mp3", "answers": [
+            { "en": "Yes, there's a fantastic little place just two streets away. It's very popular with locals.", "ja": "はい、2本先の通りに素晴らしい小さなお店があります。地元の人にとても人気ですよ。" },
+            { "en": "You're in luck! This area is famous for ramen. My favorite is just around the corner.", "ja": "運がいいですね！この辺りはラーメンで有名なんです。私のお気に入りはすぐそこの角です。" },
+            { "en": "There are many! What kind of ramen do you like? Tonkotsu? Shoyu?", "ja": "たくさんありますよ！どんな種類のラーメンが好きですか？とんこつ？醤油？" }
+        ] },
+        { "id": "ij03", "question_en": "Sorry, I'm struggling with this ticket machine. How does it work?", "question_ja": "すみません、この券売機に苦戦していて。どうやって使うんですか？", "audio_filename": "ij03.mp3", "answers": [
+            { "en": "Ah, they can be tricky. First, press the English button up here. Then, find your destination on the map above to see the fare.", "ja": "ああ、これは難しいかもしれませんね。まず、ここの英語ボタンを押します。それから、上の路線図で行き先を見つけて運賃を確認します。" },
+            { "en": "Let me help. You need to put the money in first, then choose the ticket price.", "ja": "お手伝いしますよ。まずお金を入れて、それから切符の値段を選びます。" },
+            { "en": "No worries. Just tell me where you're going and I can show you.", "ja": "大丈夫ですよ。どこへ行くか教えてくれれば、やって見せます。" }
+        ] },
+        { "id": "ij04", "question_en": "Wow, this is amazing! What is this dish called?", "question_ja": "うわ、これ、すごく美味しい！この料理は何て言うんですか？", "audio_filename": "ij04.mp3", "answers": [
+            { "en": "I'm so glad you like it! It's called 'Katsudon'. It's a pork cutlet on rice with egg.", "ja": "気に入ってもらえて嬉しいです！これは「カツ丼」と言います。ご飯の上に豚カツと卵が乗っています。" },
+            { "en": "It's a local specialty here. It's good, isn't it?", "ja": "ここの郷土料理なんです。美味しいでしょう？" },
+            { "en": "This is 'Okonomiyaki'. It's like a savory Japanese pancake.", "ja": "これは「お好み焼き」です。日本の塩味のパンケーキのようなものです。" }
+        ] },
+        { "id": "ij05", "question_en": "Is it okay to take photos in here?", "question_ja": "この中で写真を撮っても大丈夫ですか？", "audio_filename": "ij05.mp3", "answers": [
+            { "en": "Yes, that's fine, but please, no flash photography.", "ja": "はい、大丈夫ですが、フラッシュ撮影はご遠慮ください。" },
+            { "en": "I'm afraid not. Photography is forbidden inside the temple itself, but you can take pictures of the garden.", "ja": "申し訳ありません。お寺の中での写真撮影は禁止されていますが、庭の写真は撮っても大丈夫です。" },
+            { "en": "Yes, absolutely. Feel free to take as many as you like.", "ja": "はい、もちろんです。好きなだけ撮ってください。" }
+        ] },
+        { "id": "ij06", "question_en": "What's the easiest way to get to Shinjuku Gyoen Garden from here?", "question_ja": "ここから新宿御苑に行くには、どう行くのが一番簡単ですか？", "audio_filename": "ij06.mp3", "answers": [
+            { "en": "I'd take the subway. The Marunouchi line will take you straight there. It's much quicker than a taxi.", "ja": "地下鉄に乗るのが良いでしょう。丸ノ内線なら直通です。タクシーよりずっと速いですよ。" },
+            { "en": "The best way is probably the train. It's only a few stops on the Yamanote Line.", "ja": "一番良いのはおそらく電車です。山手線で数駅です。" },
+            { "en": "You could walk, it's about twenty minutes from here, and you can see more of the city.", "ja": "歩いても行けますよ。ここから20分くらいで、街の景色ももっと楽しめます。" }
+        ] },
+        { "id": "ij07", "question_en": "Do you happen to have an English menu?", "question_ja": "ひょっとして、英語のメニューはありますか？", "audio_filename": "ij07.mp3", "answers": [
+            { "en": "Yes, of course. One moment, I'll get it for you.", "ja": "はい、ございます。少々お待ちください、お持ちします。" },
+            { "en": "I am so sorry, we only have a Japanese menu. But maybe I can help you?", "ja": "大変申し訳ありません、日本語のメニューしかありません。ですが、お手伝いしましょうか？" },
+            { "en": "We have a menu with pictures. Would that help?", "ja": "写真付きのメニューがあります。そちらでよろしいですか？" }
+        ] },
+        { "id": "ij08", "question_en": "Where's the best place to buy a travel SIM card?", "question_ja": "旅行者向けのSIMカードを買うのに一番いい場所はどこですか？", "audio_filename": "ij08.mp3", "answers": [
+            { "en": "You can find them at any big electronics shop, like Bic Camera or Yodobashi Camera.", "ja": "ビックカメラやヨドバシカメラのような、大きな家電量販店で見つけられますよ。" },
+            { "en": "Honestly, the easiest place is probably at the airport as soon as you arrive.", "ja": "正直なところ、一番簡単なのは到着してすぐ空港で買うことだと思います。" },
+            { "en": "Many convenience stores like 7-Eleven or Family Mart sell them now.", "ja": "今ではセブン-イレブンやファミリーマートなど、多くのコンビニで売っていますよ。" }
+        ] },
+        { "id": "ij09", "question_en": "I'm trying to learn a bit of Japanese. How do you say 'thank you'?", "question_ja": "少し日本語を習っているんです。「ありがとう」って何て言うんですか？", "audio_filename": "ij09.mp3", "answers": [
+            { "en": "You say 'Arigato'. For a more polite version, you can say 'Arigato gozaimasu'.", "ja": "「アリガトウ」と言います。もっと丁寧な言い方だと「アリガトウゴザイマス」です。" },
+            { "en": "It's 'Arigato'. Your pronunciation is very good!", "ja": "「アリガトウ」です。発音がとても上手ですね！" },
+            { "en": "That's great! You say 'A-ri-ga-to'.", "ja": "素晴らしいですね！「ア・リ・ガ・ト・ウ」と言います。" }
+        ] },
+        { "id": "ij10", "question_en": "What's the Wi-Fi password, please?", "question_ja": "Wi-Fiのパスワードは何ですか？", "audio_filename": "ij10.mp3", "answers": [
+            { "en": "Sure, it's on the little sign on the counter over there.", "ja": "はい、あちらのカウンターの上にある小さな案内に書いてあります。" },
+            { "en": "It's all one word, 'welcomecoffee', all lowercase.", "ja": "すべて小文字で「welcomecoffee」という一つの単語です。" },
+            { "en": "There is no password. You just need to connect to the network called 'Free_Cafe_WiFi'.", "ja": "パスワードはありません。「Free_Cafe_WiFi」というネットワークに接続するだけです。" }
+        ] },
+        { "id": "ij11", "question_en": "Will shops be open tomorrow, even though it's a public holiday?", "question_ja": "明日は祝日ですけど、お店は開いていますか？", "audio_filename": "ij11.mp3", "answers": [
+            { "en": "Yes, the big department stores and shops in areas like this will be open. Some small places might close.", "ja": "はい、この辺りの大きなデパートやお店は開いています。小さなお店は閉まるかもしれませんが。" },
+            { "en": "Oh, is it? Yes, it will be very busy, but everything will be open as usual.", "ja": "ああ、そうですか？はい、とても混雑するでしょうが、すべて通常通り開いていますよ。" },
+            { "en": "Most will be open, but they may close an hour earlier than normal.", "ja": "ほとんどが開いていますが、通常より1時間早く閉まるかもしれません。" }
+        ] },
+        { "id": "ij12", "question_en": "What's one food I absolutely have to try in Osaka?", "question_ja": "大阪に行ったら絶対に試すべき食べ物が一つあるとしたら何ですか？", "audio_filename": "ij12.mp3", "answers": [
+            { "en": "Oh, you must try 'Takoyaki'! They are octopus balls, and they are delicious.", "ja": "ああ、「たこ焼き」は絶対に試すべきです！タコのボールで、とても美味しいですよ。" },
+            { "en": "I would recommend 'Okonomiyaki'. It's a savory pancake, very famous in Osaka.", "ja": "「お好み焼き」をおすすめします。塩味のパンケーキで、大阪ではとても有名です。" },
+            { "en": "Definitely 'Kushikatsu'. They are deep-fried skewers of meat and vegetables.", "ja": "間違いなく「串カツ」です。肉や野菜を揚げた串料理です。" }
+        ] },
+        { "id": "ij13", "question_en": "My Japanese isn't very good. Could you write down the address for me?", "question_ja": "日本語があまり上手ではなくて。住所を書いていただくことは可能ですか？", "audio_filename": "ij13.mp3", "answers": [
+            { "en": "Of course, no problem at all. Here you go. You can show this to the taxi driver.", "ja": "もちろん、全く問題ありません。はい、どうぞ。これをタクシーの運転手に見せれば大丈夫です。" },
+            { "en": "Sure, let me just find a pen. Is this the place?", "ja": "いいですよ、ペンを探しますね。この場所で合っていますか？" },
+            { "en": "I can write it, or I can type it into the map on your phone if you like?", "ja": "書くこともできますし、もしよければあなたのスマホの地図アプリに打ち込みましょうか？" }
+        ] },
+        { "id": "ij14", "question_en": "Where would you recommend we go to see the cherry blossoms?", "question_ja": "桜を見に行くなら、どこがおすすめですか？", "audio_filename": "ij14.mp3", "answers": [
+            { "en": "Ueno Park is the most famous spot, but it gets incredibly crowded. I'd suggest Shinjuku Gyoen.", "ja": "上野公園が一番有名ですが、信じられないほど混みます。新宿御苑をおすすめします。" },
+            { "en": "You should take a walk along the Meguro River. It's absolutely stunning at night when it's lit up.", "ja": "目黒川沿いを散歩すべきです。ライトアップされる夜は本当に素晴らしいですよ。" },
+            { "en": "For a quieter spot, Inokashira Park is beautiful and you can rent a boat on the lake.", "ja": "もっと静かな場所なら、井の頭公園が美しくて、池でボートを借りることもできますよ。" }
+        ] },
+        { "id": "ij15", "question_en": "Is there any special etiquette I should know before visiting a shrine?", "question_ja": "神社にお参りする前に、何か知っておくべき特別な作法はありますか？", "audio_filename": "ij15.mp3", "answers": [
+            { "en": "It's polite to bow once at the entrance gate. Also, you should wash your hands at the water fountain before you approach the main hall.", "ja": "入り口の門で一度お辞儀をするのが礼儀です。また、本殿に近づく前に水屋で手を清めるべきです。" },
+            { "en": "The main thing is just to be quiet and respectful. It's a sacred place for many people.", "ja": "一番大事なのは、静かに敬意を払うことです。多くの人々にとって神聖な場所ですから。" },
+            { "en": "Don't walk in the very center of the path, as that is considered the path for the gods.", "ja": "参道のど真ん中は神様の通り道とされているので、歩かないようにしてください。" }
+        ] },
+        { "id": "ij16", "question_en": "We'd love to stay in a traditional Japanese inn. What's that called?", "question_ja": "日本の伝統的な宿に泊まってみたいんです。それは何て言うんですか？", "audio_filename": "ij16.mp3", "answers": [
+            { "en": "Ah, you mean a 'Ryokan'. For the best experience, I'd recommend visiting a hot spring town like Hakone.", "ja": "ああ、「旅館」のことですね。最高の体験をするなら、箱根のような温泉街を訪れることをお勧めします。" },
+            { "en": "They're called 'Ryokan'. They are a wonderful experience, but can be quite expensive.", "ja": "「旅館」と呼ばれています。素晴らしい体験ができますが、かなり高価なこともあります。" },
+            { "en": "It's a 'Ryokan'. You sleep on a futon on tatami mats. It's very comfortable.", "ja": "「旅館」です。畳の上に布団を敷いて寝ます。とても快適ですよ。" }
+        ] },
+        { "id": "ij17", "question_en": "Excuse me, is this the right platform for the Shinkansen to Kyoto?", "question_ja": "すみません、これって京都に行く新幹線のホームで合ってますか？", "audio_filename": "ij17.mp3", "answers": [
+            { "en": "Yes, that's right. Any train from this platform will go towards Kyoto and Osaka.", "ja": "はい、合っています。このホームからの電車はどれも京都・大阪方面へ行きます。" },
+            { "en": "No, I'm afraid this is for Tokyo. You need to be on the other side, platform 23.", "ja": "いえ、申し訳ありませんが、ここは東京方面です。反対側の23番線に行く必要があります。" },
+            { "en": "Yes, but be careful. Make sure your ticket is for the 'Nozomi' or 'Hikari' train, not the 'Kodama'.", "ja": "はい、でも気をつけて。「こだま」ではなく「のぞみ」か「ひかり」の切符か確認してくださいね。" }
+        ] },
+        { "id": "ij18", "question_en": "Is it better to use cash or card in Japan?", "question_ja": "日本では現金とカード、どちらを使うのが良いですか？", "audio_filename": "ij18.mp3", "answers": [
+            { "en": "Many small shops and restaurants still only accept cash, so it's a good idea to always have some with you.", "ja": "多くの小さなお店やレストランでは、まだ現金しか受け付けていないので、常にいくらか持っておくと良いでしょう。" },
+            { "en": "In big cities like Tokyo, you can use a card in most places, like hotels and department stores.", "ja": "東京のような大都市では、ホテルやデパートなどほとんどの場所でカードが使えます。" },
+            { "en": "I would recommend using a transport card like Suica or Pasmo for trains and convenience stores. It's very easy.", "ja": "電車やコンビニでは、SuicaやPasmoのような交通系ICカードを使うことをお勧めします。とても簡単ですよ。" }
+        ] },
+        { "id": "ij19", "question_en": "This is a gift for my friend. Could you wrap it, please?", "question_ja": "これは友人への贈り物です。ラッピングしていただけますか？", "audio_filename": "ij19.mp3", "answers": [
+            { "en": "Of course. We have a few different wrapping papers you can choose from.", "ja": "もちろんです。いくつか包装紙の種類があり、お選びいただけます。" },
+            { "en": "Certainly. Would you like to put a message card with it?", "ja": "かしこまりました。メッセージカードはお付けしますか？" },
+            { "en": "Yes, gift wrapping is a free service here.", "ja": "はい、ギフトラッピングは無料サービスとなっております。" }
+        ] },
+        { "id": "ij20", "question_en": "Do I need to take my shoes off here?", "question_ja": "ここで靴を脱ぐ必要はありますか？", "audio_filename": "ij20.mp3", "answers": [
+            { "en": "Yes, please take off your shoes at the entrance and use the slippers provided.", "ja": "はい、玄関で靴を脱いで、用意されているスリッパをお使いください。" },
+            { "en": "Not in this area, but you will need to if you go into the tatami mat room.", "ja": "このエリアでは不要ですが、畳の部屋に入る場合は脱ぐ必要があります。" },
+            { "en": "Yes, please. You can leave your shoes in the small cupboard by the door.", "ja": "はい、お願いします。靴はドアの横にある下駄箱に入れてください。" }
+        ] }
+    ]
+}
