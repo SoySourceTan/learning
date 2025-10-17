@@ -67,7 +67,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // --- フォントサイズ変更 ---
-        const fontSizes = [16, 18, 20, 22, 24, 26]; let currentSizeIndex = 0;
+        const fontSizes = [16, 22, 30, 38, 46, 54]; let currentSizeIndex = 0;
         const increaseButton = document.getElementById('increase-font'), decreaseButton = document.getElementById('decrease-font');
         function updateFontSize() { document.documentElement.style.setProperty('--base-font-size', `${fontSizes[currentSizeIndex]}px`); decreaseButton.disabled = (currentSizeIndex === 0); increaseButton.disabled = (currentSizeIndex === fontSizes.length - 1); }
         increaseButton.addEventListener('click', () => { if (currentSizeIndex < fontSizes.length - 1) { currentSizeIndex++; updateFontSize(); } });
