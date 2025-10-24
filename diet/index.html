@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ダイエット計画ツール プロトタイプ v4</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container-fluid p-3 p-md-4">
+        <header class="pb-3 mb-4 border-bottom">
+            <h1 class="fs-4"><i class="fa-solid fa-bullseye me-2"></i>ダイエット計画シミュレーター</h1>
+        </header>
+
+        <!-- User Goal Setting Area -->
+        <div class="card mb-4">
+            <div class="card-header"><h5><i class="fa-solid fa-user-pen me-2"></i>あなたの情報を入力</h5></div>
+            <div class="card-body">
+                <div class="row g-3 align-items-end" id="user-input-form">
+                    <div class="col-md-2 col-6"><label for="current-weight" class="form-label">現在体重(kg)</label><input type="number" class="form-control" id="current-weight" value="65"></div>
+                    <div class="col-md-2 col-6"><label for="goal-weight" class="form-label">目標体重(kg)</label><input type="number" class="form-control" id="goal-weight" value="60"></div>
+                    <div class="col-md-2 col-6"><label for="height" class="form-label">身長(cm)</label><input type="number" class="form-control" id="height" value="160"></div>
+                    <div class="col-md-2 col-6"><label for="age" class="form-label">年齢</label><input type="number" class="form-control" id="age" value="30"></div>
+                    <div class="col-md-4 col-12"><label for="activity-level" class="form-label">活動レベル</label><select class="form-select" id="activity-level"><option value="1.2">ほぼ運動しない</option><option value="1.375" selected>週1-3回の軽い運動</option><option value="1.55">週3-5回の中程度の運動</option><option value="1.725">週6-7回の激しい運動</option></select></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Area (変更なし) -->
+        <div class="card mb-4">
+            <div class="card-header"><h5><i class="fa-solid fa-chart-line me-2"></i>今日のプランサマリー</h5></div>
+            <div class="card-body">
+                <div class="row align-items-center text-center gy-3">
+                    <div class="col-lg-3 col-md-6"><div class="fs-1 fw-bold text-primary" id="days-to-goal">---</div><div class="fw-bold">目標達成まで</div></div>
+                    <div class="col-lg-3 col-md-6"><div id="calorie-summary"><span class="fs-4 text-success" id="total-intake">0</span><small>kcal</small> - <span class="fs-4 text-danger" id="total-burn">0</span><small>kcal</small> = <span class="fs-4" id="net-calories">0</span><small>kcal</small></div><div class="fw-bold">今日のカロリー収支</div></div>
+                    <div class="col-lg-3 col-md-6"><div class="fs-4" id="calorie-deficit">---</div><div class="fw-bold">目標に対する差分</div></div>
+                    <div class="col-lg-3 col-md-6"><div class="fs-5"><small>P: <span id="total-protein">0</span>g</small>|<small>F: <span id="total-fat">0</span>g</small>|<small>C: <span id="total-carbs">0</span>g</small></div><div class="fw-bold">PFCバランス</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="row">
+            <!-- ★★★ここからが変更箇所★★★ -->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5><i class="fa-solid fa-book-open me-2"></i>メニューライブラリ</h5>
+                    <input type="text" id="search-bar" class="form-control form-control-sm w-50" placeholder="検索...">
+                </div>
+                
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="food-tab" data-bs-toggle="tab" data-bs-target="#food-tab-pane" type="button" role="tab"><i class="fa-solid fa-utensils me-1"></i>食事</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="exercise-tab" data-bs-toggle="tab" data-bs-target="#exercise-tab-pane" type="button" role="tab"><i class="fa-solid fa-person-running me-1"></i>運動</button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content border border-top-0 rounded-bottom p-2 bg-light" id="myTabContent">
+                    <div class="tab-pane fade show active" id="food-tab-pane" role="tabpanel">
+                        <div class="library-container">
+                            <div id="food-library" class="d-flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="exercise-tab-pane" role="tabpanel">
+                        <div class="library-container">
+                            <div id="exercise-library" class="d-flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- ★★★ここまでが変更箇所★★★ -->
+
+            <div class="col-lg-8">
+                <h5><i class="fa-solid fa-calendar-day me-2"></i>1日のプラン</h5>
+                <div class="row">
+                    <div class="col-sm-6 mb-3"><div class="card h-100"><div class="card-header"><i class="fa-solid fa-sun me-2"></i>朝食</div><div id="breakfast" class="card-body drop-zone"></div></div></div>
+                    <div class="col-sm-6 mb-3"><div class="card h-100"><div class="card-header"><i class="fa-solid fa-cloud-sun me-2"></i>昼食</div><div id="lunch" class="card-body drop-zone"></div></div></div>
+                    <div class="col-sm-6 mb-3"><div class="card h-100"><div class="card-header"><i class="fa-solid fa-moon me-2"></i>夕食</div><div id="dinner" class="card-body drop-zone"></div></div></div>
+                    <div class="col-sm-6 mb-3"><div class="card h-100"><div class="card-header"><i class="fa-solid fa-person-running me-2"></i>運動</div><div id="exercise" class="card-body drop-zone"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal (変更なし) -->
+    <div class="modal fade" id="addToSlotModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">どこに追加しますか？</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body d-grid gap-2">
+                    <button class="btn btn-outline-primary" data-slot-id="breakfast">朝食</button>
+                    <button class="btn btn-outline-primary" data-slot-id="lunch">昼食</button>
+                    <button class="btn btn-outline-primary" data-slot-id="dinner">夕食</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
