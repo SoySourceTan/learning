@@ -1,0 +1,112 @@
+@media print {
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: #fff !important;
+        color: #000;
+    }
+
+    /* 印刷時に非表示にする要素 */
+    .no-print {
+        display: none !important;
+    }
+
+    /* 印刷時のみ表示する要素 */
+    .print-only {
+        display: block !important;
+    }
+
+    /* 全体レイアウト */
+    .container-fluid {
+        padding: 0 !important;
+    }
+
+    #plan-area {
+        width: 100% !important;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    /* ヘッダー */
+    #print-title {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 24px;
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+    }
+    #print-date {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* ダッシュボードの再スタイリング */
+    #dashboard {
+        border: 2px solid #000 !important;
+        box-shadow: none !important;
+        margin-bottom: 20px !important;
+    }
+    #dashboard .card-body .row > div {
+        text-align: left !important;
+        padding: 5px 15px;
+    }
+     #dashboard .card-body .row > div .fw-bold {
+        font-size: 14px;
+        color: #555;
+     }
+    #dashboard .fs-1, #dashboard .fs-4, #dashboard .fs-5 {
+        font-size: 18px !important;
+    }
+    #dashboard #pfc-summary small {
+        margin-right: 15px;
+    }
+
+
+    /* プランボードの再スタイリング */
+    #plan-area h5 {
+        display: none; /* 「1日のプラン」というタイトルは不要 */
+    }
+
+    #plan-area .card {
+        border: none !important;
+        box-shadow: none !important;
+        page-break-inside: avoid; /* 枠の途中で改ページさせない */
+    }
+
+    #plan-area .card-header {
+        background-color: #eee !important;
+        color: #000 !important;
+        border: 1px solid #ccc !important;
+        font-weight: bold;
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    .drop-zone {
+        border: 1px solid #ccc !important;
+        border-top: none !important;
+        min-height: auto !important;
+        padding: 10px !important;
+        display: block !important; /* カードを縦に並べる */
+    }
+
+    .planned-card {
+        background-color: transparent !important;
+        border: none !important;
+        border-bottom: 1px dashed #ccc !important;
+        padding: 5px 0 !important;
+        display: flex !important;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .planned-card div, .planned-card small {
+        font-size: 14px;
+    }
+    
+    .planned-card .text-muted {
+        display: none; /* カテゴリは非表示 */
+    }
+
+    .remove-btn {
+        display: none !important;
+    }
+}

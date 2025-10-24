@@ -61,7 +61,16 @@ body {
     opacity: 1;
     transform: scale(1.1);
 }
-/* カウンターアニメーション用 */
 #days-to-goal {
     transition: color 0.5s;
+}
+
+/* 印刷時に非表示にするクラス */
+.no-print {
+    /* 画面表示では通常通り */
+}
+
+/* 印刷時のみ表示するクラス (画面では非表示) */
+.print-only {
+    display: none;
 }
