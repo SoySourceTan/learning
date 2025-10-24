@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英語学習ページ【上級者向け】 | 盗まれたギターの物語から学ぶ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-font: 'Lora', serif;
+            --secondary-font: 'Lato', 'Noto Sans JP', sans-serif;
+            --primary-color: #1a5276;
+            --secondary-color: #2980b9;
+            --text-color: #34495e;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --border-color: #e9ecef;
+            --highlight-bg: #eaf5fc;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: var(--secondary-font);
+            line-height: 1.9;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--primary-font);
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        .hero p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px 40px;
+        }
+
+        h2 {
+            font-family: var(--primary-font);
+            font-size: 2.2em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin: 0 0 30px 0;
+        }
+
+        h3 {
+            font-family: var(--secondary-font);
+            font-weight: 700;
+            font-size: 1.6em;
+            color: var(--secondary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .vocab-item {
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+        .vocab-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .vocab-word {
+            font-family: var(--primary-font);
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .quote {
+            display: block;
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .deep-dive {
+            background-color: #fdfdfd;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .deep-dive strong {
+            color: var(--primary-color);
+        }
+
+        .grammar-point {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Appendix Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-family: var(--secondary-font);
+            font-weight: 700;
+        }
+        .comparison-table td:first-child {
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .hero h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <header class="hero">
+                <h1>英語学習ページ【上級者向け】</h1>
+                <p>「盗まれたギターの物語」から学ぶ、生きた英語表現</p>
+            </header>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>文脈で学ぶ重要ボキャブラリー＆表現</h2>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Vintage</h3>
+                    <p><strong>定義：</strong> 過去の時代のものの中で特に品質が高く、その時代を代表するような逸品を指す言葉。</p>
+                    <span class="quote">"A <strong>vintage</strong> guitar shop in Tokyo had bought it..." (東京の**ヴィンテージ**ギターショップがそれを購入していました...)</span>
+                    <div class="deep-dive">
+                        <strong>深掘り解説：</strong> この単語の語源は、ラテン語の 'vindemia'（vinum 'ワイン' + demere '取り除く'）で、元々はブドウの収穫や特定の年に作られたワインを指しました。この語源が重要です。「ヴィンテージワイン」がそうであるように、「ヴィンテージ」なモノは単に古いだけでなく、特定のクラシックな時代に作られた、広く認められた高品質なモノであることを含意します。したがって、"old"（古い）や "second-hand"（中古の）よりも、はるかにポジティブで格調高いニュアンスを持ちます。
+                    </div>
+                </div>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Moved by</h3>
+                    <p><strong>定義：</strong> 誰かの言動によって、特に悲しみや同情などの強い感情を抱くこと。心が動かされること。</p>
+                    <span class="quote">"Takeshi was <strong>moved by</strong> Randy's love for the guitar..." (TAKESHIはランディのギターへの愛に**心を動かされ**ました...)</span>
+                    <div class="deep-dive">
+                        <strong>深掘り解説：</strong> これは比喩的な意味を持つ句動詞の好例です。物理的に動かされるのではなく、感情がかき立てられたり、変化したりすることを指します。コーパス言語学（実際の言語使用を集めたデータベース）のデータによると、"moved by" の後には「親切心 (kindness)」「物語 (a story)」「パフォーマンス (a performance)」「寛大さ (generosity)」といった概念が続くことが最も多いです。これは、深く、本質的な感情的インパクトがあったことを示唆します。
+                    </div>
+                </div>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Gave up</h3>
+                    <p><strong>定義：</strong> 何かをしようとすることをやめること。希望を捨てること。諦めること。</p>
+                    <span class="quote">"I've been searching for my guitar forever and almost <strong>gave up</strong>." (永遠にギターを探し続け、ほとんど**諦めかけて**いました。)</span>
+                    <div class="deep-dive">
+                        <strong>深掘り解説：</strong> この句動詞は英語で最も頻繁に使われるものの一つです。ここでのニュアンスは「最終的な断念」と「あきらめの境地」です。単に "stopped trying"（試すのをやめた）よりも強い意味を持ちます。これ以上の努力は無駄だという結論に達したことを含意します。引用文中の "almost"（ほとんど）という単語が極めて重要で、良い知らせが届く直前の彼の絶望の深さを際立たせています。
+                    </div>
+                </div>
+                 <div class="vocab-item">
+                    <h3 class="vocab-word">Unbelievable</h3>
+                    <p><strong>定義：</strong> 信じることが難しいほど並外れていること。</p>
+                    <span class="quote">"This is <strong>unbelievable</strong>." (これは**信じられません**。)</span>
+                    <div class="deep-dive">
+                        <strong>深掘り解説：</strong> 文字通りの意味は「信じることができない」ですが、日常的な用法では、ポジティブかネガティブかにかかわらず、何か極度に驚くべきことを強調する言葉として使われます。この文脈では、圧倒的にポジティブな意味です。話者は出来事の真実性を疑っているのではなく、深い驚きと喜びを表現しています。通常の期待をはるかに超えた感情的な衝撃を伝える言葉です。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>文法の深掘り解説：時制における 'have' の概念（完了相）</h2>
+                <p>多くの教科書では、完了形（現在完了形、過去完了形）を複雑なルールとして提示します。しかし、その核心的なコンセプトは非常にシンプルです。助動詞として "have"（または "had"）を使うことは、ラテン語の 'perfectus'（完了した）に由来する**「完了のアスペクト（相）」**を加えることを意味します。このアスペクトは、ある行動を単なる過去の一点としてではなく、別の時点との関係性の中で捉え、その結果や現在の状況との関連性を強調する視点を提供します。</p>
+
+                <div class="grammar-point">
+                    <h3>1. 現在完了形 (have + 過去分詞)</h3>
+                    <p><strong>核心コンセプト：</strong> 過去の出来事を「今、この瞬間」と結びつける感覚。</p>
+                    <p>現在完了形は、過去の行動が**「今」**感じられる結果や影響、関連性を持つときに使われます。過去と現在を繋ぐ架け橋の役割を果たします。</p>
+                    <span class="quote">"I'<strong>ve been searching</strong> for my guitar forever and almost gave up."</span>
+                    <p><strong>言語学的分析：</strong> ランディは単純過去形 ("I searched") を使っていません。彼は現在完了進行形 ("I have been searching") を使うことで、45年前に始まった「探す」という行為が、話している「今」この瞬間にも深く関連していることを強調しています。その長い探索の感情的な重みが「今」感じられるのです。この形は、彼の長い苦闘の継続的な性質と、現在の状況との関連性を見事に捉えています。</p>
+                </div>
+                
+                <div class="grammar-point">
+                    <h3>2. 過去完了形 (had + 過去分詞)</h3>
+                    <p><strong>核心コンセプト：</strong> 過去の出来事の順序を明確にする感覚。</p>
+                    <p>過去完了形は、ある出来事が**過去のある特定の時点よりも前に**起こったことを明確にするために使われます。「過去の中の、さらに過去」を作り出す役割です。</p>
+                    <span class="quote">"A vintage guitar shop in Tokyo <strong>had bought</strong> it from a seller in Texas."</span>
+                    <p><strong>言語学的分析：</strong> この物語は、ウィリアム・ロングの探索（過去の出来事）の視点から語られています。ギターショップがギターを*購入した*という行動は、その探索よりもさらに前に起こりました。過去完了形 ("had bought") は、この時間的な順序を明確に示しています。第一に、店がギターを買った。第二に、ウィリアムが探索を始めた。単純過去形 ("the shop bought it") を使うことも文法的には可能ですが、過去完了形ほど正確で洗練された表現にはなりません。</p>
+                    <span class="quote">"But the shop <strong>had already sold</strong> it to someone."</span>
+                    <p><strong>分析：</strong> 同様に、この行動（ギターを売ったこと）は、ウィリアムがその店を見つける*前*に完了していました。過去完了形は、出来事のタイムラインを読者（聞き手）に明確に伝えるために不可欠です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>付録：イギリス英語 vs. アメリカ英語</h2>
+                <p>この物語は北米英語（特にアメリカ英語と非常によく似たカナダ英語）で語られていますが、学習者にとってイギリス英語との主な違いを知っておくことは非常に有益です。</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>カテゴリ</th>
+                            <th>アメリカ英語 (AmE)</th>
+                            <th>イギリス英語 (BrE)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>語彙</strong></td>
+                            <td>物語ではギター<strong>shop</strong>と述べられています。AmEでは小売店を指す場合 "store" がより一般的ですが、"shop" は小規模な専門店にも使われます。</td>
+                            <td>"Shop" が物を買う場所を指す標準的な言葉です。"Store" は通常、大規模なデパートなどを指します。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>過去分詞</strong></td>
+                            <td>"get" の過去分詞は "gotten" が頻繁に使われます (例: "He has gotten a new guitar")。</td>
+                            <td>"get" の過去分詞は "got" です (例: "He has got a new guitar")。</td>
+                        </tr>
+                        <tr>
+                            <td><strong>スペル</strong></td>
+                            <td>-or (color, honor)<br>-er (center, theater)<br>-ize (organize, realize)</td>
+                            <td>-our (colour, honour)<br>-re (centre, theatre)<br>-ise (organise, realise)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>集合名詞</strong></td>
+                            <td>集合名詞（"band," "team," "company" など）は、ほぼ常に単数として扱われます (例: "The band **is** on tour")。</td>
+                            <td>集合名詞は単数または複数として扱われ、グループ内の個人を強調する場合は複数が一般的です (例: "The band **are** on tour")。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>この学習ページは、GoogleのAIが英米の言語学的な原則および学術情報源のデータに基づき生成しました。</p>
+        </footer>
+    </div>
+
+</body>
+</html>

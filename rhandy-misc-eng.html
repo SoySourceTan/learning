@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced English Learning Page: The Story of a Stolen Guitar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-font: 'Lora', serif;
+            --secondary-font: 'Lato', 'Noto Sans JP', sans-serif;
+            --primary-color: #1a5276;
+            --secondary-color: #2980b9;
+            --text-color: #34495e;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --border-color: #e9ecef;
+            --highlight-bg: #eaf5fc;
+            --shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: var(--secondary-font);
+            line-height: 1.9;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: var(--primary-font);
+            margin: 0;
+            font-size: 2.6em;
+            font-weight: 700;
+        }
+
+        .hero p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px 40px;
+        }
+
+        h2 {
+            font-family: var(--primary-font);
+            font-size: 2.2em;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin: 0 0 30px 0;
+        }
+
+        h3 {
+            font-family: var(--secondary-font);
+            font-weight: 700;
+            font-size: 1.6em;
+            color: var(--secondary-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .vocab-item {
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 25px;
+        }
+        .vocab-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .vocab-word {
+            font-family: var(--primary-font);
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .quote {
+            display: block;
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .deep-dive {
+            background-color: #fdfdfd;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+        .deep-dive strong {
+            color: var(--primary-color);
+        }
+
+        .grammar-point {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        /* Appendix Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-family: var(--secondary-font);
+            font-weight: 700;
+        }
+        .comparison-table td:first-child {
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .content { padding: 20px; }
+            .hero h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <header class="hero">
+                <h1>Advanced English Learning Page</h1>
+                <p>An In-Depth Analysis of the "Stolen Guitar" Story</p>
+            </header>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>Key Vocabulary & Expressions in Context</h2>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Vintage</h3>
+                    <p><strong>Definition:</strong> Denoting something from the past of high quality, especially something representing the best of its time.</p>
+                    <span class="quote">"A <strong>vintage</strong> guitar shop in Tokyo had bought it..."</span>
+                    <div class="deep-dive">
+                        <strong>Deep Dive:</strong> The word "vintage" originates from the Latin 'vindemia' (vinum 'wine' + demere 'to remove'), referring to the grape harvest or the wine from a particular year. This origin is key. Just like a "vintage wine," a "vintage" object isn't just old; it implies a recognized high quality from a specific, classic era. It carries a much stronger positive connotation than simply "old" or "second-hand."
+                    </div>
+                </div>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Moved by</h3>
+                    <p><strong>Definition:</strong> To feel strong emotions, especially of sadness or sympathy, because of something someone says or does.</p>
+                    <span class="quote">"Takeshi was <strong>moved by</strong> Randy's love for the guitar..."</span>
+                    <div class="deep-dive">
+                        <strong>Deep Dive:</strong> This is an excellent example of a phrasal verb where the meaning is figurative. You are not physically moved. Instead, your emotions are stirred or shifted. According to corpus linguistics data (databases of real-world language use), "moved by" is most frequently followed by concepts like 'kindness,' 'a story,' 'a performance,' or 'generosity.' It signifies a profound emotional impact.
+                    </div>
+                </div>
+                <div class="vocab-item">
+                    <h3 class="vocab-word">Gave up</h3>
+                    <p><strong>Definition:</strong> To stop trying to do something; to abandon hope.</p>
+                    <span class="quote">"I've been searching for my guitar forever and almost <strong>gave up</strong>."</span>
+                    <div class="deep-dive">
+                        <strong>Deep Dive:</strong> This phrasal verb is one of the most common in English. The nuance here is one of finality and resignation. It's stronger than just "stopped trying." It implies that the person has reached a conclusion that further effort will be futile. In the quote, the word "almost" is crucial, as it highlights the depth of his despair just before the good news arrived.
+                    </div>
+                </div>
+                 <div class="vocab-item">
+                    <h3 class="vocab-word">Unbelievable</h3>
+                    <p><strong>Definition:</strong> So extraordinary as to be difficult to believe.</p>
+                    <span class="quote">"This is <strong>unbelievable</strong>."</span>
+                    <div class="deep-dive">
+                        <strong>Deep Dive:</strong> While the literal meaning is "not able to be believed," its common usage is as an intensifier for something extremely surprising, whether positive or negative. In this context, it's overwhelmingly positive. The speaker is not questioning the reality of the event but expressing profound astonishment and joy. It conveys an emotional shock that transcends normal expectations.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>Grammar Deep Dive: The Concept of 'Have' in Tenses (The Perfect Aspect)</h2>
+                <p>Many textbooks present the perfect tenses (present perfect, past perfect) as complex rules. However, the core concept is simple. Using "have" (or "had") as an auxiliary verb adds the **Aspect of "Perfection"** (from Latin 'perfectus', meaning 'completed'). This aspect views an action not just as a point in time, but in relation to another point in time, emphasizing its result or relevance.</p>
+
+                <div class="grammar-point">
+                    <h3>1. The Present Perfect (have + past participle)</h3>
+                    <p><strong>Core Concept:</strong> Linking a Past Event to the Present Moment.</p>
+                    <p>The present perfect is used when a past action has a result, relevance, or connection that is felt **now**. It bridges the past and the present.</p>
+                    <span class="quote">"I'<strong>ve been searching</strong> for my guitar forever and almost gave up."</span>
+                    <p><strong>Linguistic Analysis:</strong> Randy doesn't use the simple past ("I searched"). He uses the present perfect continuous ("I have been searching") to emphasize that the action of searching, which started 45 years ago, is still relevant at the moment of speaking. The emotional weight of that long search is felt *now*. This form perfectly captures the continuous nature and present relevance of his long struggle.</p>
+                </div>
+                
+                <div class="grammar-point">
+                    <h3>2. The Past Perfect (had + past participle)</h3>
+                    <p><strong>Core Concept:</strong> Sequencing Events in the Past.</p>
+                    <p>The past perfect is used to clarify that an event happened **before another specific event in the past**. It creates a "past within the past."</p>
+                    <span class="quote">"A vintage guitar shop in Tokyo <strong>had bought</strong> it from a seller in Texas."</span>
+                    <p><strong>Linguistic Analysis:</strong> The story is being told from the perspective of William Long's search (a past event). The action of the shop *buying* the guitar happened even before that. The past perfect ("had bought") clearly establishes this sequence. First, the shop bought the guitar. Second, William Long began his search. Using the simple past ("the shop bought it") would be grammatically possible but less precise and elegant.</p>
+                    <span class="quote">"But the shop <strong>had already sold</strong> it to someone."</span>
+                    <p><strong>Analysis:</strong> Similarly, this action (selling the guitar) was completed *before* William found the shop. The past perfect is essential for making the timeline of events clear to the listener.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>Appendix: British English vs. American English</h2>
+                <p>While the story uses North American English (specifically Canadian, which is very similar to American), it's useful for learners to know some key differences from British English.</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>American English (AmE)</th>
+                            <th>British English (BrE)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Vocabulary</strong></td>
+                            <td>The narrative mentions a guitar <strong>shop</strong>. In AmE, "store" is more common for retail, though "shop" is also used for smaller, specialized places.</td>
+                            <td>"Shop" is the standard term for any place where you buy things. "Store" often refers to a very large department store.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Past Participles</strong></td>
+                            <td>The past participle of "get" is often "gotten" (e.g., "He has gotten a new guitar").</td>
+                            <td>The past participle of "get" is "got" (e.g., "He has got a new guitar").</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spelling</strong></td>
+                            <td>-or (color, honor)<br>-er (center, theater)<br>-ize (organize, realize)</td>
+                            <td>-our (colour, honour)<br>-re (centre, theatre)<br>-ise (organise, realise)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Collective Nouns</strong></td>
+                            <td>Collective nouns (like "band," "team," "company") are almost always treated as singular (e.g., "The band **is** on tour").</td>
+                            <td>Collective nouns can be treated as singular or plural, with plural being common to emphasize the individuals within the group (e.g., "The band **are** on tour").</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>This learning page was generated by Google's AI based on linguistic principles and data from English-language academic sources.</p>
+        </footer>
+    </div>
+
+</body>
+</html>

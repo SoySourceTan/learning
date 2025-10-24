@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盗まれたギターの素晴らしい物語 | The Amazing Story of a Stolen Guitar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --text-color: #34495e;
+            --background-color: #ecf0f1;
+            --card-background: #ffffff;
+            --border-color: #dfe6e9;
+            --shadow: 0 10px D30px rgba(0, 0, 0, 0.07);
+            --border-radius: 15px;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+            line-height: 1.8;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 700;
+        }
+
+        .hero p {
+            margin: 10px 0 0;
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-top: 35px;
+            margin-bottom: 15px;
+        }
+
+        /* --- Transcript Styles --- */
+        .transcript-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .transcript-column h3 {
+            margin-top: 0;
+            font-size: 1.6em;
+            color: var(--primary-color);
+        }
+        
+        .english-text p, .japanese-text p,
+        .english-text blockquote, .japanese-text blockquote {
+            margin: 0 0 20px 0;
+        }
+
+        blockquote {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px 20px;
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* Mobile Stacked View */
+        .transcript-stacked {
+            display: none;
+        }
+
+        /* Responsive Layout Switch */
+        @media (max-width: 900px) {
+            .transcript-grid {
+                display: none;
+            }
+            .transcript-stacked {
+                display: block;
+            }
+            .transcript-pair {
+                margin-bottom: 25px;
+                padding-bottom: 25px;
+                border-bottom: 1px dashed var(--border-color);
+            }
+            .transcript-pair:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            .japanese-text {
+                margin-top: 15px;
+                padding-left: 15px;
+                border-left: 3px solid #bdc3c7;
+                color: #555;
+                font-size: 0.95em;
+            }
+        }
+        
+        .embassy-report {
+            background-color: #f1f8e9;
+            border-left: 5px solid #8bc34a;
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .embassy-report h4 {
+            margin-top: 0;
+            color: #33691e;
+        }
+
+        .dual-language-section p {
+            margin-bottom: 20px;
+        }
+        .dual-language-section .jp-translation {
+            color: #555;
+            font-size: 0.95em;
+            padding-left: 15px;
+            border-left: 2px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <header class="hero">
+                <h1>盗まれたギターの素晴らしい物語</h1>
+                <p>The Amazing Story of a Stolen Guitar</p>
+            </header>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>スクリプト対訳</h2>
+                
+                <!-- Desktop View: Grid -->
+                <div class="transcript-grid">
+                    <div class="transcript-column" id="english-column">
+                        <h3>English Transcript</h3>
+                        <p><strong>(0:36)</strong> In 1977, a famous Canadian rock star named Randy Bachman had his favorite guitar stolen. 45 years later, the guitar was returned to him in Japan. How did he find his guitar? And why was it in Japan? Let's find out more about this amazing story.</p>
+                        <p><strong>(1:09)</strong> One day in 1977, when Randy was touring with his band, his guitar disappeared from his hotel. The police could not find it. Randy was so sad.</p>
+                        <blockquote>"With that guitar, I wrote many million-selling songs. It was like a magical guitar."</blockquote>
+                        <p>As a teenager, he worked hard and saved $400 to buy the guitar.</p>
+                        <blockquote>"Back then, I earned two dollars a week delivering newspapers."</blockquote>
+                        <p>After each show, Randy's manager always locked up the guitar. But one day, he forgot to lock it up. In interviews, Randy often spoke about his stolen guitar. He bought over 300 guitars from the same company, but none were as good as his magical guitar.</p>
+                        <p><strong>(2:14)</strong> In 2020, a man named William Long heard about the guitar... He found a video of a musician named Takeshi playing the guitar. He thought, "The patterns in the wood on Takeshi's guitar match the ones on Randy's." William had finally found the lost guitar. Soon, he gave the good news to Randy.</p>
+                        <blockquote>"This is unbelievable. I've been searching for my guitar forever and almost gave up."</blockquote>
+                        <p>The man who had the guitar, Takeshi, is a musician and a songwriter... Takeshi had bought the guitar in 2014.</p>
+                        <blockquote>"When I played the guitar for the first time, I knew I had to have it."</blockquote>
+                        <p><strong>(3:52)</strong> Soon, Randy contacted Takeshi, and they met online... When Randy saw Takeshi and the guitar, he smiled and said,</p>
+                        <blockquote>"Thank you for taking care of my guitar."</blockquote>
+                        <p>Then they played a few songs together. After 45 years, the stolen guitar was finally back with its owner.</p>
+                    </div>
+                    <div class="transcript-column" id="japanese-column">
+                        <h3>日本語訳</h3>
+                        <p><strong>(0:36)</strong> 1977年、ランディ・バックマンという有名なカナダのロックスターが、お気に入りのギターを盗まれました。45年後、そのギターは日本の彼のもとに返ってきました。彼はどのようにしてギターを見つけたのでしょうか？そして、なぜそれは日本にあったのでしょうか？この素晴らしい物語について、もっと詳しく見ていきましょう。</p>
+                        <p><strong>(1:09)</strong> 1977年のある日、ランディがバンドとツアーをしていた時、彼のギターがホテルから消えてしまいました。警察は見つけることができませんでした。ランディはとても悲しみました。</p>
+                        <blockquote>「あのギターで、ミリオンセラーの曲をたくさん書いたんだ。魔法のギターのようだった。」</blockquote>
+                        <p>10代の頃、彼は懸命に働き、400ドルを貯めてそのギターを買いました。</p>
+                        <blockquote>「当時は、新聞配達で週に2ドル稼いでいたよ。」</blockquote>
+                        <p>毎回のショーの後、ランディのマネージャーはいつもギターを鍵のかかる場所にしまっていました。しかしある日、彼はそれを忘れてしまいました。インタビューで、ランディはしばしば盗まれたギターについて話していました。彼は同じ会社から300本以上のギターを買いましたが、どれも彼の魔法のギターほど良いものはありませんでした。</p>
+                        <p><strong>(2:14)</strong> 2020年、ウィリアム・ロングという男性がそのギターの話を耳にしました... 彼はTAKESHIというミュージシャンがそのギターを弾いているビデオを見つけました。彼は思いました、「TAKESHIのギターの木目は、ランディのものと一致する」。ウィリアムはついに失われたギターを発見したのです。すぐに、彼はその良い知らせをランディに伝えました。</p>
+                        <blockquote>「信じられない。永遠にギターを探し続けて、ほとんど諦めかけていたんだ。」</blockquote>
+                        <p>そのギターを持っていた男性、TAKESHIは、ミュージシャンでありソングライターです... TAKESHIは2014年にそのギターを購入していました。</p>
+                        <blockquote>「初めてこのギターを弾いたとき、手に入れなければならないとわかったんです。」</blockquote>
+                        <p><strong>(3:52)</strong> すぐに、ランディはTAKESHIに連絡を取り、彼らはオンラインで会いました... ランディはTAKESHIとギターを見ると、微笑んで言いました。</p>
+                        <blockquote>「私のギターを大切にしてくれてありがとう。」</blockquote>
+                        <p>そして彼らは一緒に数曲を演奏しました。45年の時を経て、盗まれたギターはついに持ち主のもとに戻ったのです。</p>
+                    </div>
+                </div>
+
+                <!-- Mobile View: Stacked Pairs -->
+                <div class="transcript-stacked">
+                    <div class="transcript-pair">
+                        <div class="english-text"><p><strong>(0:36)</strong> In 1977, a famous Canadian rock star named Randy Bachman had his favorite guitar stolen. 45 years later, the guitar was returned to him in Japan. How did he find his guitar? And why was it in Japan? Let's find out more about this amazing story.</p></div>
+                        <div class="japanese-text"><p><strong>(0:36)</strong> 1977年、ランディ・バックマンという有名なカナダのロックスターが、お気に入りのギターを盗まれました。45年後、そのギターは日本の彼のもとに返ってきました。彼はどのようにしてギターを見つけたのでしょうか？そして、なぜそれは日本にあったのでしょうか？この素晴らしい物語について、もっと詳しく見ていきましょう。</p></div>
+                    </div>
+                    <div class="transcript-pair">
+                        <div class="english-text"><p><strong>(1:09)</strong> One day in 1977, when Randy was touring with his band, his guitar disappeared from his hotel. The police could not find it. Randy was so sad.</p><blockquote>"With that guitar, I wrote many million-selling songs. It was like a magical guitar."</blockquote><p>As a teenager, he worked hard and saved $400 to buy the guitar.</p><blockquote>"Back then, I earned two dollars a week delivering newspapers."</blockquote><p>After each show, Randy's manager always locked up the guitar. But one day, he forgot to lock it up. In interviews, Randy often spoke about his stolen guitar. He bought over 300 guitars from the same company, but none were as good as his magical guitar.</p></div>
+                        <div class="japanese-text"><p><strong>(1:09)</strong> 1977年のある日、ランディがバンドとツアーをしていた時、彼のギターがホテルから消えてしまいました。警察は見つけることができませんでした。ランディはとても悲しみました。</p><blockquote>「あのギターで、ミリオンセラーの曲をたくさん書いたんだ。魔法のギターのようだった。」</blockquote><p>10代の頃、彼は懸命に働き、400ドルを貯めてそのギターを買いました。</p><blockquote>「当時は、新聞配達で週に2ドル稼いでいたよ。」</blockquote><p>毎回のショーの後、ランディのマネージャーはいつもギターを鍵のかかる場所にしまっていました。しかしある日、彼はそれを忘れてしまいました。インタビューで、ランディはしばしば盗まれたギターについて話していました。彼は同じ会社から300本以上のギターを買いましたが、どれも彼の魔法のギターほど良いものはありませんでした。</p></div>
+                    </div>
+                    <div class="transcript-pair">
+                        <div class="english-text"><p><strong>(2:14)</strong> In 2020, a man named William Long heard about the guitar... He found a video of a musician named Takeshi playing the guitar. He thought, "The patterns in the wood on Takeshi's guitar match the ones on Randy's." William had finally found the lost guitar. Soon, he gave the good news to Randy.</p><blockquote>"This is unbelievable. I've been searching for my guitar forever and almost gave up."</blockquote><p>The man who had the guitar, Takeshi, is a musician and a songwriter... Takeshi had bought the guitar in 2014.</p><blockquote>"When I played the guitar for the first time, I knew I had to have it."</blockquote></div>
+                        <div class="japanese-text"><p><strong>(2:14)</strong> 2020年、ウィリアム・ロングという男性がそのギターの話を耳にしました... 彼はTAKESHIというミュージシャンがそのギターを弾いているビデオを見つけました。彼は思いました、「TAKESHIのギターの木目は、ランディのものと一致する」。ウィリアムはついに失われたギターを発見したのです。すぐに、彼はその良い知らせをランディに伝えました。</p><blockquote>「信じられない。永遠にギターを探し続けて、ほとんど諦めかけていたんだ。」</blockquote><p>そのギターを持っていた男性、TAKESHIは、ミュージシャンでありソングライターです... TAKESHIは2014年にそのギターを購入していました。</p><blockquote>「初めてこのギターを弾いたとき、手に入れなければならないとわかったんです。」</blockquote></div>
+                    </div>
+                    <div class="transcript-pair">
+                        <div class="english-text"><p><strong>(3:52)</strong> Soon, Randy contacted Takeshi, and they met online... When Randy saw Takeshi and the guitar, he smiled and said,</p><blockquote>"Thank you for taking care of my guitar."</blockquote><p>Then they played a few songs together. After 45 years, the stolen guitar was finally back with its owner.</p></div>
+                        <div class="japanese-text"><p><strong>(3:52)</strong> すぐに、ランディはTAKESHIに連絡を取り、彼らはオンラインで会いました... ランディはTAKESHIとギターを見ると、微笑んで言いました。</p><blockquote>「私のギターを大切にしてくれてありがとう。」</blockquote><p>そして彼らは一緒に数曲を演奏しました。45年の時を経て、盗まれたギターはついに持ち主のもとに戻ったのです。</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>国境を越えた物語：メディアの反響とカナダ大使館の声明</h2>
+                <p>この奇跡的な物語は、日本とカナダの両国で大きな注目を集めました。日本では音楽専門メディア「BARKS」などが詳細を報じ、カナダでは国営放送「CBC」をはじめとする主要メディアがトップニュースとして取り上げ、国民的な話題となりました。</p>
+                <div class="embassy-report">
+                    <h4>在日カナダ大使館の祝福</h4>
+                    <div class="dual-language-section">
+                        <p>The reunion was celebrated at the Embassy of Canada in Tokyo. The embassy released a statement saying, "A great day at the Embassy of Canada to Japan as we welcomed Canadian rock legend Randy Bachman and Japanese rock star TAKESHI. We were honoured to host the moment where Randy was reunited with his beloved 1957 Gretsch guitar after it was stolen 46 years ago. This is a story that has touched people all over the world."</p>
+                        <p class="jp-translation">この再会は東京の在日カナダ大使館で祝われました。大使館は次のような声明を発表しました。「カナダのロック界のレジェンド、ランディ・バックマン氏と日本のロックスター、TAKESHI氏を在日カナダ大使館にお迎えし、素晴らしい一日となりました。46年前に盗まれたランディ氏の愛器である1957年製グレッチギターとの再会の瞬間に立ち会えたことを光栄に思います。これは世界中の人々を感動させた物語です。」</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="content">
+                <h2>時代の残響：The Guess Whoとロックシーン</h2>
+                <h3>ふたつの「Who」の物語</h3>
+                <div class="dual-language-section">
+                    <p>An interesting anecdote connects The Guess Who with the iconic British band, The Who. In 1969, both bands were booked to play at the Fillmore East in New York. The Guess Who, being cheeky, opened their set by playing The Who's hit "My Generation." Later that night, The Who took the stage and, in a nod of mutual respect, played a bit of The Guess Who's "No Time." This playful exchange between two major bands highlights the camaraderie and competitive spirit of the era's rock scene.</p>
+                    <p class="jp-translation">The Guess Whoと、象徴的な英国のバンドThe Whoを結びつける興味深い逸話があります。1969年、両バンドはニューヨークのフィルモア・イーストで演奏することになっていました。The Guess Whoは生意気にも、The Whoのヒット曲「マイ・ジェネレーション」を演奏して自分たちのセットを開始しました。その夜遅く、ステージに上がったThe Whoは、互いへの敬意を示す形で、The Guess Whoの「ノー・タイム」を少し演奏しました。二つの主要バンド間のこの遊び心あふれるやり取りは、当時のロックシーンに存在した仲間意識と競争心を浮き彫りにしています。</p>
+                </div>
+
+                <h3>庶民の声：なぜ彼らは称賛されたのか</h3>
+                <div class="dual-language-section">
+                    <p>The late 1960s and early 1970s was a time of immense social change, and rock music was its soundtrack. Unlike some of the more psychedelic or avant-garde bands from London or San Francisco, The Guess Who came from the prairies of Winnipeg, Canada. Their story was not one of privilege, but of hard work and dedication—a "rags-to-riches" narrative that resonated deeply with the working and middle classes. Randy Bachman's story of saving up $400 from odd jobs to buy his dream guitar is the perfect embodiment of this spirit.</p>
+                    <p class="jp-translation">1960年代後半から70年代前半は、巨大な社会変革の時代であり、ロックミュージックはそのサウンドトラックでした。ロンドンやサンフランシスコのサイケデリックで前衛的なバンドとは異なり、The Guess Whoはカナダ・ウィニペグの平原出身でした。彼らの物語は特権階級のものではなく、努力と献身の物語、つまり労働者階級や中流階級の心に深く響く「無一文からの成功物語」でした。ランディ・バックマンが雑用で400ドルを貯めて夢のギターを買ったという話は、この精神を完璧に体現しています。</p>
+                    <p>Their music, a straightforward, powerful blend of blues and rock, was accessible and anthemic. Songs like "American Woman" carried a potent anti-war and anti-establishment message, but it was wrapped in a radio-friendly package that ordinary people could connect with. They were seen as authentic and relatable, a band of regular guys who made it big, giving a voice to a generation grappling with change. This authenticity is why they, and their story, continue to be cherished.</p>
+                    <p class="jp-translation">彼らの音楽は、ブルースとロックをストレートかつパワフルに融合させたもので、親しみやすく、誰もが口ずさめるものでした。「アメリカン・ウーマン」のような曲は、強力な反戦・反体制のメッセージを内包していましたが、それは一般の人々が共感できるラジオ向けのパッケージに包まれていました。彼らは本物で親近感が持てる存在、つまり大成功を収めた普通の男たちのバンドと見なされ、変化に苦闘する世代に声を与えました。この本物であることこそが、彼らとその物語が今なお愛され続ける理由なのです。</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Generated by a Google AI.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
