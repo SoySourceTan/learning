@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アナグラム脳トレ・ゲーム</title>
+    
+    <!-- PWA（インストール可能アプリ）のための設定 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="アナグラム脳トレ">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    
+    <script>
+        const manifest = {"name":"アナグラム脳トレ・ゲーム","short_name":"アナグラム脳トレ","start_url":".","display":"standalone","background_color":"#f0f4f8","theme_color":"#5c6bc0","description":"アナグラムで楽しく脳のトレーニングができるアプリ","icons":[{"src":"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>","sizes":"192x192","type":"image/svg+xml"}]};
+        const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+        document.head.appendChild(Object.assign(document.createElement('link'), {rel: 'manifest', href: URL.createObjectURL(manifestBlob)}));
+    </script>
+
+    <style>
+        :root {
+            --font-family: "Hiragino Kaku Gothic ProN", "Meiryo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            --background: #f0f4f8;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --primary-color: #5c6bc0; /* Indigo */
+            --primary-hover: #3f51b5;
+            --secondary-color: #ffb74d; /* Orange */
+            --secondary-hover: #ffa726;
+            --border-color: #dce4ec;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 20px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #263238;
+                --text-color: #eceff1;
+                --card-bg: #37474f;
+                --primary-color: #7986cb;
+                --primary-hover: #9fa8da;
+                --secondary-color: #ffcc80;
+                --secondary-hover: #ffb74d;
+                --border-color: #546e7a;
+            }
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: var(--font-family);
+            background-color: var(--background);
+            color: var(--text-color);
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent; /* タップ時のハイライトを消す */
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* 画面共通 */
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* ボタン共通スタイル */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .btn-primary { background-color: var(--primary-color); }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+        .btn-secondary { background-color: var(--secondary-color); }
+        .btn-secondary:hover { background-color: var(--secondary-hover); }
+        .btn-subtle {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            font-size: 1.2rem;
+            padding: 0.8rem;
+        }
+
+        /* --- スタート画面 --- */
+        #start-screen h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: clamp(2rem, 10vw, 3rem);
+        }
+        .input-wrapper {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        #inputText {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.8rem;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+        }
+        #candidate-list {
+            list-style: none;
+            padding: 0; margin: 2rem 0 0 0;
+            text-align: center;
+        }
+        #candidate-list li {
+            background-color: var(--background);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #candidate-list li:hover {
+            transform: scale(1.05);
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* --- クイズ画面 --- */
+        #quiz-screen .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .card-container {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .card {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            position: absolute;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            font-size: clamp(2.5rem, 15vw, 5rem);
+            font-weight: bold;
+            padding: 1rem;
+        }
+        .card-front {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .card-back {
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            transform: rotateY(180deg);
+        }
+        .instruction { text-align: center; margin-top: 1.5rem; opacity: 0.8; }
+
+        /* --- 履歴モーダル --- */
+        #history-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: none; /* JSで制御 */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        #history-modal.open { display: flex; }
+        .history-content {
+            background-color: var(--background);
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .history-content h2 { margin-top: 0; text-align: center; }
+        .history-list {
+            list-style: none; padding: 0; margin: 0;
+            overflow-y: auto; flex-grow: 1;
+        }
+        .history-list li {
+            background-color: var(--card-bg);
+            padding: 1rem; margin-bottom: 0.75rem;
+            border-radius: 15px; cursor: pointer; font-size: 1.3rem;
+            transition: background-color 0.3s;
+        }
+        .history-list li:hover { background-color: #e0e0e0; }
+        .history-list small { display: block; opacity: 0.6; font-size: 0.9rem; }
+        #close-history { margin-top: 1rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== スタート画面 ===== -->
+        <div id="start-screen" class="screen active">
+            <h1>🧠 アナグラム脳トレ</h1>
+            <div class="input-wrapper">
+                <input type="text" id="inputText" placeholder="ことばを入力 (8文字まで)" maxlength="8">
+                <button id="generateBtn" class="btn btn-primary">問題をつくる</button>
+                <ul id="candidate-list"></ul>
+            </div>
+            <button id="show-history" class="btn btn-subtle">履歴を見る</button>
+        </div>
+
+        <!-- ===== クイズ画面 ===== -->
+        <div id="quiz-screen" class="screen">
+            <div class="header">
+                <button id="back-to-start" class="btn btn-subtle">もどる</button>
+            </div>
+            <div class="card-container">
+                <div class="card">
+                    <div id="card-front" class="card-face card-front"></div>
+                    <div id="card-back" class="card-face card-back"></div>
+                </div>
+            </div>
+            <p class="instruction">カードをタップして答え合わせ！</p>
+        </div>
+    </div>
+    
+    <!-- ===== 履歴モーダル ===== -->
+    <div id="history-modal">
+        <div class="history-content">
+            <h2>これまでの問題</h2>
+            <ul id="history-list" class="history-list"></ul>
+            <button id="close-history" class="btn btn-secondary">とじる</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM要素
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const inputText = document.getElementById('inputText');
+        const generateBtn = document.getElementById('generateBtn');
+        const candidateList = document.getElementById('candidate-list');
+        const card = document.querySelector('.card');
+        const cardFront = document.getElementById('card-front');
+        const cardBack = document.getElementById('card-back');
+        const backToStartBtn = document.getElementById('back-to-start');
+        const historyModal = document.getElementById('history-modal');
+        const showHistoryBtn = document.getElementById('show-history');
+        const closeHistoryBtn = document.getElementById('close-history');
+        const historyList = document.getElementById('history-list');
+
+        let history = [];
+
+        // --- 画面遷移ロジック ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // --- アナグラム生成ロジック ---
+        function shuffleString(s) {
+            const arr = s.split('');
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr.join('');
+        }
+
+        function generateCandidates(str, count) {
+            if (str.length < 2) return [];
+            const resultSet = new Set();
+            for (let i = 0; i < 200 && resultSet.size < count; i++) {
+                const shuffled = shuffleString(str);
+                if (shuffled !== str) resultSet.add(shuffled);
+            }
+            return Array.from(resultSet);
+        }
+
+        // --- 履歴管理ロジック ---
+        const HISTORY_KEY = 'anagramHistory';
+        const MAX_HISTORY = 20;
+
+        function loadHistory() {
+            const stored = localStorage.getItem(HISTORY_KEY);
+            history = stored ? JSON.parse(stored) : [];
+        }
+
+        function saveHistory() {
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+        }
+
+        function addToHistory(original, anagram) {
+            // 重複チェック
+            if (history.some(item => item.original === original && item.anagram === anagram)) return;
+
+            history.unshift({ original, anagram }); // 新しいものを先頭に追加
+            if (history.length > MAX_HISTORY) {
+                history.pop(); // 20件を超えたら一番古いものを削除
+            }
+            saveHistory();
+        }
+
+        // --- イベントハンドラ ---
+        generateBtn.addEventListener('click', () => {
+            const text = inputText.value.trim();
+            if (!text) { alert('言葉を入力してください。'); return; }
+
+            const candidates = generateCandidates(text, 3);
+            candidateList.innerHTML = '';
+
+            if (candidates.length === 0) {
+                alert('うまくシャッフルできませんでした。別の言葉で試してみてください。');
+                return;
+            }
+
+            candidates.forEach(cand => {
+                const li = document.createElement('li');
+                li.textContent = cand;
+                li.onclick = () => {
+                    startQuiz(text, cand);
+                    addToHistory(text, cand);
+                };
+                candidateList.appendChild(li);
+            });
+        });
+        
+        function startQuiz(original, anagram) {
+            card.classList.remove('is-flipped');
+            setTimeout(() => {
+                cardFront.textContent = anagram;
+                cardBack.textContent = original;
+                showScreen('quiz-screen');
+            }, 100); // わずかな遅延でアニメーションをスムーズに
+        }
+
+        card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+
+        backToStartBtn.addEventListener('click', () => {
+            showScreen('start-screen');
+            inputText.value = '';
+            candidateList.innerHTML = '';
+        });
+
+        showHistoryBtn.addEventListener('click', () => {
+            historyList.innerHTML = '';
+            if (history.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'まだ履歴がありません。';
+                li.style.cursor = 'default';
+                historyList.appendChild(li);
+            } else {
+                history.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `${item.anagram} <small>（もとは: ${item.original}）</small>`;
+                    li.onclick = () => {
+                        historyModal.classList.remove('open');
+                        startQuiz(item.original, item.anagram);
+                    };
+                    historyList.appendChild(li);
+                });
+            }
+            historyModal.classList.add('open');
+        });
+
+        closeHistoryBtn.addEventListener('click', () => historyModal.classList.remove('open'));
+        historyModal.addEventListener('click', (e) => {
+            if (e.target === historyModal) historyModal.classList.remove('open');
+        });
+
+        // 初期化処理
+        document.addEventListener('DOMContentLoaded', () => {
+            loadHistory();
+        });
+    </script>
+</body>
+</html>
