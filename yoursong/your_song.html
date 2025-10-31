@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrics Player | Your Song (Perfect Sync Edition)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Comfortaa:wght@400;700&display=swap');
+        :root { --glow-color: hsl(197, 100%, 50%); --future-text-color: #ccc; --past-text-color: #888; }
+        body { background-color: #f4f7f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }
+        .player-container { background-color: #ffffff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); padding: 30px 40px; width: 90%; max-width: 800px; }
+        h1 { font-family: 'Righteous', cursive; font-size: 2.8em; color: #333; margin-top: 0; }
+        audio { width: 100%; margin-top: 20px; }
+        #lyricsContainer { font-family: 'Comfortaa', cursive; margin-top: 25px; height: 280px; overflow-y: auto; overflow-x: hidden; padding: 10px 20px; scrollbar-width: thin; scrollbar-color: #ddd #f4f7f9; }
+        .line { margin-bottom: 25px; font-size: 1.8em; line-height: 1.8; font-weight: 700; }
+        .word-wrapper { display: inline-block; position: relative; margin: 0; }
+        .word-bg, .word-fg { display: block; white-space: pre; }
+        .word-bg { color: var(--future-text-color); }
+        .word-fg { position: absolute; top: 0; left: 0; width: 0; white-space: nowrap; overflow: hidden; color: var(--glow-color); text-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color); transition: width 0.05s linear; }
+        .word-wrapper.finished .word-bg { color: var(--past-text-color); }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <h1>Your Song</h1>
+        <audio id="audioPlayer" controls src="your_song.mp3"></audio>
+        <div id="lyricsContainer"></div>
+    </div>
+    <script>
+    // <<< ここに、sync_editor.htmlで生成したデータを貼り付けます >>>
+    // (以下はサンプルのデータです。必ずご自身で生成したものに置き換えてください)
+const lyricsDataWithWords = [
+    { words: [ { startTime: 9.03, endTime: 9.22, text: "It's " }, { startTime: 9.23, endTime: 9.5, text: "a " }, { startTime: 9.51, endTime: 9.98, text: "little " }, { startTime: 9.99, endTime: 10.54, text: "bit " }, { startTime: 10.55, endTime: 11.66, text: "funny" } ] },
+    { words: [ { startTime: 12.67, endTime: 12.92, text: "This " }, { startTime: 12.93, endTime: 13.33, text: "feelin' " }, { startTime: 13.34, endTime: 14.38, text: "inside" } ] },
+    { words: [ { startTime: 16.69, endTime: 16.9, text: "I'm " }, { startTime: 16.91, endTime: 17.27, text: "not " }, { startTime: 17.28, endTime: 17.61, text: "one " }, { startTime: 17.62, endTime: 17.92, text: "of " }, { startTime: 17.93, endTime: 18.46, text: "those " }, { startTime: 18.47, endTime: 18.92, text: "who " }, { startTime: 18.93, endTime: 20.15, text: "can " }, { startTime: 20.16, endTime: 21.31, text: "easily " }, { startTime: 21.32, endTime: 22.72, text: "hide" } ] },
+    { words: [ { startTime: 22.73, endTime: 24.02, text: "I " }, { startTime: 24.03, endTime: 24.55, text: "don't " }, { startTime: 24.56, endTime: 24.79, text: "have " }, { startTime: 24.8, endTime: 25.27, text: "much " }, { startTime: 25.28, endTime: 25.95, text: "money, " }, { startTime: 25.96, endTime: 26.57, text: "but " }, { startTime: 27.58, endTime: 27.81, text: "boy, " }, { startTime: 27.82, endTime: 28.16, text: "if " }, { startTime: 28.17, endTime: 28.78, text: "I " }, { startTime: 28.79, endTime: 29.48, text: "did" } ] },
+    { words: [ { startTime: 31.29, endTime: 31.47, text: "I'd " }, { startTime: 31.48, endTime: 31.93, text: "buy " }, { startTime: 31.94, endTime: 32.1, text: "a " }, { startTime: 32.11, endTime: 32.71, text: "big " }, { startTime: 32.72, endTime: 33.32, text: "house " }, { startTime: 33.33, endTime: 34.06, text: "where " }, { startTime: 34.97, endTime: 35.26, text: "we " }, { startTime: 35.27, endTime: 35.74, text: "both " }, { startTime: 35.75, endTime: 36.33, text: "could " }, { startTime: 36.34, endTime: 37.72, text: "live" } ] },
+    { words: [ { startTime: 41.1, endTime: 41.26, text: "If " }, { startTime: 41.27, endTime: 41.6, text: "I " }, { startTime: 41.61, endTime: 41.86, text: "was " }, { startTime: 41.87, endTime: 42.15, text: "a " }, { startTime: 42.16, endTime: 43.26, text: "sculptor, " }, { startTime: 43.27, endTime: 43.59, text: "huh" } ] },
+    { words: [ { startTime: 44.57, endTime: 44.7, text: "But " }, { startTime: 44.71, endTime: 44.85, text: "then " }, { startTime: 44.86, endTime: 46.07, text: "again, " }, { startTime: 46.08, endTime: 46.44, text: "no" } ] },
+    { words: [ { startTime: 47.41, endTime: 47.51, text: "Or " }, { startTime: 47.52, endTime: 47.63, text: "a " }, { startTime: 47.64, endTime: 48.12, text: "man " }, { startTime: 48.93, endTime: 49.09, text: "who " }, { startTime: 49.1, endTime: 49.53, text: "makes " }, { startTime: 49.54, endTime: 50.17, text: "potions " }, { startTime: 50.18, endTime: 50.69, text: "in " }, { startTime: 50.7, endTime: 52.36, text: "a " }, { startTime: 52.37, endTime: 53.11, text: "travellin' " }, { startTime: 53.12, endTime: 54.02, text: "show, " }, { startTime: 54.03, endTime: 54.48, text: "oh" } ] },
+    { words: [ { startTime: 54.49, endTime: 55.99, text: "I " }, { startTime: 56, endTime: 56.18, text: "know " }, { startTime: 56.19, endTime: 56.81, text: "it's " }, { startTime: 56.82, endTime: 56.97, text: "not " }, { startTime: 56.98, endTime: 57.62, text: "much, " }, { startTime: 57.63, endTime: 58.08, text: "but " }, { startTime: 58.09, endTime: 58.36, text: "it's " }, { startTime: 58.37, endTime: 58.65, text: "the " }, { startTime: 58.66, endTime: 59.54, text: "best " }, { startTime: 59.55, endTime: 59.98, text: "I " }, { startTime: 59.99, endTime: 60.56, text: "can " }, { startTime: 60.57, endTime: 61.31, text: "do" } ] },
+    { words: [ { startTime: 63.02, endTime: 63.23, text: "My " }, { startTime: 63.24, endTime: 63.7, text: "gift " }, { startTime: 63.71, endTime: 63.84, text: "is " }, { startTime: 63.85, endTime: 64.49, text: "my " }, { startTime: 64.5, endTime: 65.15, text: "song " }, { startTime: 65.16, endTime: 66.76, text: "and " }, { startTime: 66.77, endTime: 66.98, text: "this " }, { startTime: 66.99, endTime: 67.46, text: "one's " }, { startTime: 67.47, endTime: 67.75, text: "for " }, { startTime: 67.76, endTime: 69.08, text: "you" } ] },
+    { words: [ { startTime: 72.49, endTime: 72.66, text: "And " }, { startTime: 72.67, endTime: 73.21, text: "you " }, { startTime: 73.22, endTime: 73.44, text: "can " }, { startTime: 73.45, endTime: 73.91, text: "tell " }, { startTime: 73.92, endTime: 74.80, text: "everybody" } ] },
+    { words: [ { startTime: 76.46, endTime: 76.81, text: "This " }, { startTime: 76.82, endTime: 77.06, text: "is " }, { startTime: 77.07, endTime: 77.35, text: "your " }, { startTime: 77.36, endTime: 79.09, text: "song" } ] },
+    { words: [ { startTime: 80.1, endTime: 80.28, text: "It " }, { startTime: 80.29, endTime: 80.64, text: "may " }, { startTime: 80.65, endTime: 81.08, text: "be " }, { startTime: 81.09, endTime: 81.96, text: "quite " }, { startTime: 81.97, endTime: 82.26, text: "simple, " }, { startTime: 82.27, endTime: 83.56, text: "but" } ] },
+    { words: [ { startTime: 84.17, endTime: 84.25, text: "Now " }, { startTime: 84.26, endTime: 84.61, text: "that " }, { startTime: 84.62, endTime: 84.93, text: "it's " }, { startTime: 84.94, endTime: 85.81, text: "done" } ] },
+    { words: [ { startTime: 87.32, endTime: 87.47, text: "I " }, { startTime: 87.48, endTime: 87.68, text: "hope " }, { startTime: 87.69, endTime: 87.97, text: "you " }, { startTime: 87.98, endTime: 88.23, text: "don't " }, { startTime: 88.24, endTime: 89.14, text: "mind, " }, { startTime: 89.15, endTime: 89.35, text: "I " }, { startTime: 89.36, endTime: 89.58, text: "hope " }, { startTime: 89.59, endTime: 89.82, text: "you " }, { startTime: 89.83, endTime: 90.08, text: "don't " }, { startTime: 90.09, endTime: 90.88, text: "mind" } ] },
+    { words: [ { startTime: 90.89, endTime: 91.08, text: "That " }, { startTime: 91.09, endTime: 91.3, text: "I " }, { startTime: 91.31, endTime: 91.83, text: "put " }, { startTime: 91.84, endTime: 92.19, text: "down " }, { startTime: 92.2, endTime: 92.61, text: "in " }, { startTime: 92.62, endTime: 94.39, text: "words" } ] },
+    { words: [ { startTime: 95.9, endTime: 96.41, text: "How " }, { startTime: 96.42, endTime: 98.39, text: "wonderful " }, { startTime: 98.4, endTime: 99.15, text: "life " }, { startTime: 99.16, endTime: 100.12, text: "is" } ] },
+    { words: [ { startTime: 100.13, endTime: 100.41, text: "While " }, { startTime: 100.42, endTime: 101.12, text: "you're " }, { startTime: 101.13, endTime: 101.56, text: "in " }, { startTime: 101.57, endTime: 101.81, text: "the " }, { startTime: 101.82, endTime: 103.96, text: "world" } ] },
+    { words: [ { startTime: 114.27, endTime: 114.49, text: "I " }, { startTime: 114.5, endTime: 114.69, text: "sat " }, { startTime: 114.7, endTime: 115.15, text: "on " }, { startTime: 115.16, endTime: 115.4, text: "the " }, { startTime: 115.41, endTime: 115.94, text: "roof" } ] },
+    { words: [ { startTime: 117.95, endTime: 118.19, text: "And " }, { startTime: 118.2, endTime: 118.54, text: "kicked " }, { startTime: 118.55, endTime: 119.07, text: "off " }, { startTime: 119.08, endTime: 119.23, text: "the " }, { startTime: 119.24, endTime: 120.08, text: "moss" } ] },
+    { words: [ { startTime: 120.49, endTime: 120.6, text: "Well, " }, { startTime: 120.61, endTime: 120.75, text: "a " }, { startTime: 120.76, endTime: 121.27, text: "few " }, { startTime: 122.28, endTime: 122.45, text: "of " }, { startTime: 122.46, endTime: 122.71, text: "the " }, { startTime: 122.72, endTime: 123.96, text: "verses" } ] },
+    { words: [ { startTime: 123.97, endTime: 124.13, text: "Well, " }, { startTime: 124.14, endTime: 124.35, text: "they've " }, { startTime: 124.36, endTime: 124.79, text: "got " }, { startTime: 124.8, endTime: 125.8, text: "me " }, { startTime: 125.81, endTime: 126.2, text: "quite " }, { startTime: 126.21, endTime: 127.61, text: "cross" } ] },
+    { words: [ { startTime: 128.62, endTime: 128.76, text: "But " }, { startTime: 128.77, endTime: 129.01, text: "the " }, { startTime: 129.02, endTime: 129.42, text: "sun's " }, { startTime: 129.43, endTime: 129.88, text: "been " }, { startTime: 129.89, endTime: 130.31, text: "quite " }, { startTime: 130.32, endTime: 131.25, text: "kind" } ] },
+    { words: [ { startTime: 132.26, endTime: 132.44, text: "While " }, { startTime: 132.45, endTime: 132.75, text: "I " }, { startTime: 132.76, endTime: 133.15, text: "wrote " }, { startTime: 133.16, endTime: 133.7, text: "this " }, { startTime: 133.71, endTime: 134.93, text: "song" } ] },
+    { words: [ { startTime: 135.94, endTime: 136.13, text: "It's " }, { startTime: 136.14, endTime: 136.38, text: "for " }, { startTime: 136.39, endTime: 136.57, text: "people " }, { startTime: 136.58, endTime: 137.5, text: "like " }, { startTime: 137.51, endTime: 138.27, text: "you " }, { startTime: 138.28, endTime: 140.42, text: "that " }, { startTime: 140.43, endTime: 140.66, text: "keep " }, { startTime: 140.67, endTime: 141.08, text: "it " }, { startTime: 141.09, endTime: 141.76, text: "turned " }, { startTime: 141.77, endTime: 142.35, text: "on" } ] },
+    { words: [ { startTime: 145.36, endTime: 145.56, text: "So " }, { startTime: 145.57, endTime: 145.92, text: "excuse " }, { startTime: 145.93, endTime: 146.7, text: "me " }, { startTime: 146.71, endTime: 147.55, text: "forgettin'" } ] },
+    { words: [ { startTime: 149.56, endTime: 149.91, text: "But " }, { startTime: 149.92, endTime: 150.43, text: "these " }, { startTime: 150.44, endTime: 150.69, text: "things " }, { startTime: 150.7, endTime: 151.11, text: "I " }, { startTime: 151.12, endTime: 152.35, text: "do" } ] },
+    { words: [ { startTime: 153.36, endTime: 153.59, text: "You " }, { startTime: 153.6, endTime: 153.87, text: "see, " }, { startTime: 153.88, endTime: 154.36, text: "I've " }, { startTime: 154.37, endTime: 155.59, text: "forgotten" } ] },
+    { words: [ { startTime: 155.6, endTime: 155.86, text: "If " }, { startTime: 155.87, endTime: 156.04, text: "they're " }, { startTime: 156.05, endTime: 157.44, text: "green " }, { startTime: 157.45, endTime: 157.68, text: "or " }, { startTime: 157.69, endTime: 158.17, text: "they're " }, { startTime: 158.18, endTime: 169.29, text: "blue" } ] },
+    { words: [ { startTime: 160.3, endTime: 161.27, text: "Anyway, " }, { startTime: 161.28, endTime: 161.39, text: "the " }, { startTime: 161.4, endTime: 161.56, text: "thing " }, { startTime: 161.57, endTime: 163.01, text: "is" } ] },
+    { words: [ { startTime: 163.02, endTime: 163.17, text: "What " }, { startTime: 163.18, endTime: 163.48, text: "I " }, { startTime: 163.49, endTime: 163.8, text: "really " }, { startTime: 163.81, endTime: 165.46, text: "mean" } ] },
+    { words: [ { startTime: 168.47, endTime: 168.73, text: "Yours " }, { startTime: 168.74, endTime: 168.9, text: "are " }, { startTime: 168.91, endTime: 169.51, text: "the " }, { startTime: 169.52, endTime: 170.07, text: "sweetest " }, { startTime: 170.08, endTime: 170.68, text: "eyes " }, { startTime: 170.69, endTime: 172.28, text: "I've " }, { startTime: 172.29, endTime: 172.49, text: "ever " }, { startTime: 172.5, endTime: 173.8, text: "seen" } ] },
+    { words: [ { startTime: 176.81, endTime: 177.49, text: "And " }, { startTime: 177.5, endTime: 177.72, text: "you " }, { startTime: 177.73, endTime: 178.15, text: "can " }, { startTime: 178.16, endTime: 178.58, text: "tell " }, { startTime: 178.59, endTime: 179.59, text: "everybody" } ] },
+    { words: [ { startTime: 181.6, endTime: 181.88, text: "This " }, { startTime: 181.89, endTime: 182.07, text: "is " }, { startTime: 182.08, endTime: 182.32, text: "your " }, { startTime: 182.33, endTime: 183.84, text: "song" } ] },
+    { words: [ { startTime: 184.85, endTime: 185.11, text: "It " }, { startTime: 185.12, endTime: 185.51, text: "may " }, { startTime: 185.52, endTime: 185.97, text: "be " }, { startTime: 185.98, endTime: 186.9, text: "quite " }, { startTime: 186.91, endTime: 187.3, text: "simple, " }, { startTime: 187.31, endTime: 188.14, text: "but" } ] },
+    { words: [ { startTime: 189.15, endTime: 189.35, text: "Now " }, { startTime: 189.36, endTime: 189.55, text: "that " }, { startTime: 189.56, endTime: 189.88, text: "it's " }, { startTime: 189.89, endTime: 190.17, text: "done" } ] },
+    { words: [ { startTime: 192.18, endTime: 192.36, text: "I " }, { startTime: 192.37, endTime: 192.6, text: "hope " }, { startTime: 192.61, endTime: 192.87, text: "you " }, { startTime: 192.88, endTime: 193.15, text: "don't " }, { startTime: 193.16, endTime: 194.04, text: "mind, " }, { startTime: 194.05, endTime: 194.29, text: "I " }, { startTime: 194.3, endTime: 194.52, text: "hope " }, { startTime: 194.53, endTime: 194.78, text: "you " }, { startTime: 194.79, endTime: 195.02, text: "don't " }, { startTime: 195.03, endTime: 195.91, text: "mind" } ] },
+    { words: [ { startTime: 195.92, endTime: 196.13, text: "That " }, { startTime: 196.14, endTime: 196.34, text: "I " }, { startTime: 196.35, endTime: 196.76, text: "put " }, { startTime: 196.77, endTime: 197.04, text: "down " }, { startTime: 197.05, endTime: 197.53, text: "in " }, { startTime: 197.54, endTime: 199.85, text: "words" } ] },
+    { words: [ { startTime: 200.86, endTime: 201.36, text: "How " }, { startTime: 201.37, endTime: 203.47, text: "wonderful " }, { startTime: 203.48, endTime: 204.1, text: "life " }, { startTime: 204.11, endTime: 205.12, text: "is" } ] },
+    { words: [ { startTime: 205.13, endTime: 205.35, text: "While " }, { startTime: 205.36, endTime: 205.97, text: "you're " }, { startTime: 205.98, endTime: 206.45, text: "in " }, { startTime: 206.46, endTime: 206.77, text: "the " }, { startTime: 206.78, endTime: 209.3, text: "world" } ] },
+    { words: [ { startTime: 211.31, endTime: 211.46, text: "I " }, { startTime: 211.47, endTime: 211.63, text: "hope " }, { startTime: 211.64, endTime: 211.96, text: "you " }, { startTime: 211.97, endTime: 212.27, text: "don't " }, { startTime: 212.28, endTime: 213.01, text: "mind, " }, { startTime: 213.02, endTime: 213.2, text: "I " }, { startTime: 213.21, endTime: 213.39, text: "hope " }, { startTime: 213.4, endTime: 213.63, text: "you " }, { startTime: 213.64, endTime: 213.93, text: "don't " }, { startTime: 213.94, endTime: 214.66, text: "mind" } ] },
+    { words: [ { startTime: 214.67, endTime: 214.88, text: "That " }, { startTime: 214.89, endTime: 215.25, text: "I " }, { startTime: 215.26, endTime: 215.73, text: "put " }, { startTime: 215.74, endTime: 216.01, text: "down " }, { startTime: 216.02, endTime: 216.44, text: "in " }, { startTime: 216.45, endTime: 219.01, text: "words" } ] },
+    { words: [ { startTime: 219.58, endTime: 220.36, text: "How " }, { startTime: 220.37, endTime: 222.31, text: "wonderful " }, { startTime: 222.32, endTime: 222.91, text: "life " }, { startTime: 222.92, endTime: 223.92, text: "is" } ] },
+    { words: [ { startTime: 223.93, endTime: 224.23, text: "While " }, { startTime: 224.24, endTime: 224.86, text: "you're " }, { startTime: 224.87, endTime: 225.32, text: "in " }, { startTime: 225.33, endTime: 225.63, text: "the " }, { startTime: 225.64, endTime: 226.64, text: "world" } ] }
+];
+    document.addEventListener('DOMContentLoaded', () => {
+        const audioPlayer = document.getElementById('audioPlayer');
+        const lyricsContainer = document.getElementById('lyricsContainer');
+        let allWords = [];
+        let currentLineElement = null;
+
+        function initializeLyrics() {
+            lyricsContainer.innerHTML = '';
+            lyricsDataWithWords.forEach(line => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'line';
+                line.words.forEach(word => {
+                    const wordWrapper = document.createElement('span');
+                    wordWrapper.className = 'word-wrapper';
+                    const wordBg = document.createElement('span');
+                    wordBg.className = 'word-bg';
+                    wordBg.textContent = word.text;
+                    const wordFg = document.createElement('span');
+                    wordFg.className = 'word-fg';
+                    wordFg.textContent = word.text;
+                    wordWrapper.appendChild(wordBg);
+                    wordWrapper.appendChild(wordFg);
+                    lineDiv.appendChild(wordWrapper);
+                    allWords.push({ 
+                        element: wordWrapper, fgElement: wordFg,
+                        startTime: word.startTime, endTime: word.endTime 
+                    });
+                });
+                lyricsContainer.appendChild(lineDiv);
+            });
+        }
+
+        function animationLoop() {
+            const currentTime = audioPlayer.currentTime;
+            allWords.forEach(word => {
+                const { element, fgElement, startTime, endTime } = word;
+                const duration = endTime - startTime;
+                if (currentTime >= startTime && currentTime <= endTime) {
+                    element.classList.remove('finished');
+                    const progress = Math.min(1, (currentTime - startTime) / duration);
+                    fgElement.style.width = `${progress * 100}%`;
+                    const parentLine = element.closest('.line');
+                    if (parentLine && parentLine !== currentLineElement) {
+                        currentLineElement = parentLine;
+                        parentLine.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else if (currentTime > endTime) {
+                    fgElement.style.width = '100%';
+                    element.classList.add('finished');
+                } else {
+                    fgElement.style.width = '0%';
+                    element.classList.remove('finished');
+                }
+            });
+            if (!audioPlayer.paused) {
+                requestAnimationFrame(animationLoop);
+            }
+        }
+        
+        audioPlayer.onplay = () => requestAnimationFrame(animationLoop);
+        audioPlayer.onseeked = () => requestAnimationFrame(animationLoop);
+        initializeLyrics();
+    });
+    </script>
+</body>
+</html>
