@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>発音徹底講座：Goodbye Yellow Brick Road</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @media print { .no-print { display: none; } }
+        body { background-color: #fdfaf0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .lesson-sheet { background-color: #fff; max-width: 900px; margin: 30px auto; padding: 40px; border: 1px solid #e0c068; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 15px solid #f1c40f; }
+        .pronunciation-key { background-color: #fff3cd; padding: 10px 15px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-weight: bold; color: #856404; display: inline-block; margin-bottom: 10px; }
+        .technique-card { border-radius: 12px; border-left: 5px solid #2c3e50; background-color: #f8f9fa; margin-bottom: 25px; padding: 20px; }
+        .vocal-tip { color: #d35400; font-weight: bold; font-size: 0.9rem; }
+        .lyrics-target { font-size: 1.4rem; font-weight: 700; color: #2c3e50; line-height: 1.2; }
+        .phonetic { color: #6c757d; font-size: 1rem; font-style: italic; margin-bottom: 15px; }
+        .point-box { border: 1px dashed #f1c40f; padding: 15px; border-radius: 8px; margin-top: 10px; }
+        .highlight-yellow { background: linear-gradient(transparent 60%, #fff3cd 0%); }
+    </style>
+</head>
+<body>
+
+<div class="lesson-sheet">
+    <div class="text-center mb-5">
+        <h6 class="text-uppercase tracking-widest text-muted">Vocal & Pronunciation Masterclass</h6>
+        <h1 class="display-5 fw-bold" style="color: #b8860b;">Goodbye Yellow Brick Road</h1>
+        <p class="lead">エルトン・ジョンの「響き」を再現する3つの極意</p>
+    </div>
+
+    <div class="technique-card shadow-sm">
+        <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">01</span> 音の連結と消失（The Flow）</h5>
+        
+        <div class="mb-4">
+            <p class="lyrics-target">"When are you <span class="highlight-yellow">gonna come</span> down?"</p>
+            <p class="phonetic">/wenəjə ɡʌnə kʌm daʊn/</p>
+            <div class="point-box">
+                <strong>Point:</strong> "When are you" は一つに繋がって「ウェナユ」のように発音。
+                "gonna" の 'a' と "come" の 'c' を繋げる際、口を閉じずに一気に流すのがエルトン流です。
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <p class="lyrics-target">"I <span class="highlight-yellow">should have stayed</span> on the farm"</p>
+            <p class="phonetic">/aɪ ʃʊdə steɪdon ðə fɑːm/</p>
+            <div class="point-box">
+                <strong>Point:</strong> "Should have" は短縮されて「シュダ」になります。
+                さらに "Stayed on" は <strong>d</strong> と <strong>o</strong> が連結して「ステイドン」と一つの単語のように響かせます。
+            </div>
+        </div>
+    </div>
+
+    <div class="technique-card shadow-sm">
+        <h5 class="fw-bold mb-3"><span class="badge bg-dark me-2">02</span> 英国式「R」の制御と重厚な「O」</h5>
+        
+        <div class="mb-4">
+            <p class="lyrics-target">"Where the <span class="highlight-yellow">dogs of society</span> howl"</p>
+            <p class="phonetic">/weə ðə dɒɡz əv səˈsaɪəti haʊl/</p>
+            <div class="point-box">
+                <strong>Point:</strong> "Dogs" の <strong>o</strong> は口を縦に大きく開ける英国式 /ɒ/。
+                "Society" の <strong>t</strong> はアメリカ式のように「d」っぽくならず、はっきりと「ティ」と弾くのがエルトン（英国英語）の美学です。
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <p class="lyrics-target">"I'm going back to my <span class="highlight-yellow">plough</span>"</p>
+            <p class="phonetic">/aɪm ɡəʊɪŋ bæk tə maɪ plaʊ/</p>
+            <div class="point-box">
+                <strong>Point:</strong> "Plough"（プラウ）の <strong>ou</strong> は「アウ」。"Howl" と同じ響きで韻を踏んでいることを意識して、口を大きく動かして余韻を残します。
+            </div>
+        </div>
+    </div>
+
+    <div class="technique-card shadow-sm" style="border-left-color: #d35400;">
+        <h5 class="fw-bold mb-3"><span class="badge bg-danger me-2">03</span> 感情を乗せる「裏声」の切り替え</h5>
+        
+        <div class="mb-4">
+            <p class="lyrics-target">"Beyond the yellow brick road <span class="highlight-yellow">Ah, ah</span>"</p>
+            <div class="p-3 bg-white border rounded">
+                <span class="vocal-tip">VOCAL TIP:</span> 
+                この「Ah, ah」は、地声からファルセットへ一気に跳ね上がります。
+                発音のコツは、<strong>「H」の音を混ぜないこと</strong>。
+                喉の奥をパッと開いて、温かい空気を頭のてっぺんにぶつけるイメージで「アー、アー」と響かせます。
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h5 class="fw-bold text-center mb-4">【仕上げ】スピードとリズムの確認</h5>
+        <table class="table table-bordered align-middle">
+            <tr class="table-dark">
+                <th width="40%">フレーズ</th>
+                <th>カタカナ近似値（イメージ）</th>
+                <th>注意点</th>
+            </tr>
+            <tr>
+                <td>I didn't sign up with you</td>
+                <td>アイディドゥン・サイナップ・ウィズユ</td>
+                <td>sign up の <strong>n</strong> と <strong>u</strong> を繋げる</td>
+            </tr>
+            <tr>
+                <td>Horny back toad</td>
+                <td>ホーニー・バック・トォゥドゥ</td>
+                <td>Toadの <strong>oa</strong> は二重母音。丁寧に。</td>
+            </tr>
+            <tr>
+                <td>Set you on your feet</td>
+                <td>セッチュ・オン・ヨア・フィート</td>
+                <td>Set you は「セッチュ」と連結。</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="text-center mt-5 no-print">
+        <p class="text-muted small">エルトンの発音は、一言一句が「ピアノの打鍵」のように正確です。一音ずつ大切に置いていきましょう。</p>
+        <button class="btn btn-warning btn-lg fw-bold shadow-sm px-5" onclick="window.print()">発音ガイドを印刷して練習する</button>
+    </div>
+</div>
+
+</body>
+</html>

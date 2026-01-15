@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Salon Lecture Sheet (Queen & Elton John)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Noto+Sans+JP:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* A4印刷設定 */
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #333;
+            background-color: #fff;
+            -webkit-print-color-adjust: exact;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Caveat', cursive;
+            color: #2c3e50;
+        }
+
+        .header-title {
+            border-bottom: 3px double #2c3e50;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .section-box {
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            background-color: #f8f9fa;
+        }
+
+        .lyrics-box {
+            font-family: 'Roboto Slab', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            background-color: #fff;
+            border-left: 4px solid #dc3545; /* Queen color */
+            padding: 10px 15px;
+        }
+
+        .lyrics-box-elton {
+            border-left: 4px solid #198754; /* Elton color */
+        }
+
+        .blank-line {
+            display: inline-block;
+            min-width: 80px;
+            border-bottom: 1px solid #000;
+            text-align: center;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .translation-area {
+            background-image: linear-gradient(to bottom, transparent 29px, #ccc 30px);
+            background-size: 100% 30px;
+            line-height: 30px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            min-height: 150px;
+        }
+
+        /* 印刷時の制御 */
+        @media print {
+            .no-print { display: none !important; }
+            .section-box {
+                break-inside: avoid;
+                background-color: #fff;
+                border: 1px solid #000;
+            }
+            body { font-size: 10pt; }
+            h1 { font-size: 24pt; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-3">
+    <div class="row header-title align-items-end">
+        <div class="col-9">
+            <h1 class="fw-bold mb-0">English Salon Lecture Sheet</h1>
+            <p class="mb-0 text-muted small">Topic: Legends of UK Rock & Disney Magic</p>
+        </div>
+        <div class="col-3 text-end">
+            <div class="border p-1 rounded">
+                <small>Name:</small><br><br>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="section-title mb-0 text-danger">🎸 Part 1: Rhythm & Future</h3>
+            <span class="badge bg-danger">Warm-up</span>
+        </div>
+        <p class="small text-muted mb-1">Song: <strong>We Will Rock You</strong> by Queen (1977)</p>
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <div class="lyrics-box">
+                    Buddy, you're a <span class="blank-line">(1) ______</span>, make a big noise<br>
+                    Playing in the street, gonna be a big <span class="blank-line">(2) ______</span> someday<br>
+                    You got mud on your <span class="blank-line">(3) ______</span>, you big disgrace<br>
+                    Kicking your can all over the <span class="blank-line">(4) ______</span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="alert alert-light border text-center mb-0">
+                    <strong>Rhythm:</strong><br>
+                    👣 Stomp - 👣 Stomp - 👏 Clap!<br>
+                    <hr class="my-1">
+                    <small class="text-muted">Hints: Face / Place / Boy / Man</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="section-title mb-0 text-success">🎹 Part 2: Listening & Emotions</h3>
+            <span class="badge bg-success">Listening</span>
+        </div>
+        <p class="small text-muted mb-1">Song: <strong>Your Song</strong> by Elton John (1970)</p>
+        <p class="small mb-2">歌詞を聞き取って、空欄を埋めましょう。韻（Rhyme）を踏んでいます。</p>
+        
+        <div class="lyrics-box lyrics-box-elton">
+            It's a little bit <span class="blank-line">(1) ______</span> this feeling inside<br>
+            I'm not one of those who can easily hide<br>
+            I don't have much <span class="blank-line">(2) ______</span> but boy if I did<br>
+            I'd buy a big house where we both could live
+        </div>
+        <div class="mt-2 p-2 bg-white border rounded">
+            <strong class="text-success">💡 Key Phrase:</strong> "I hope you don't mind"<br>
+            <small>意味: 「気にしないでくれるといいな（＝気に入ってくれると嬉しい）」という控えめな表現です。</small>
+        </div>
+        <div class="text-end mt-1">
+            <small class="text-muted">Hints: money / funny</small>
+        </div>
+    </div>
+
+    <div class="section-box py-2">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="section-title mb-0 text-dark">📝 Understanding Check</h3>
+        </div>
+        <div class="row mt-1">
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk1">
+                    <label class="form-check-label small" for="chk1">"We will ~"（意志）の意味がつかめた</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk2">
+                    <label class="form-check-label small" for="chk2">Elton Johnの優しい発音が聞き取れた</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="chk3">
+                    <label class="form-check-label small" for="chk3">Rhyme（韻）を見つけられた</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box border-primary mb-0" style="border-width: 2px;">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="section-title mb-0 text-primary">✨ Finale: Translation</h3>
+            <span class="badge bg-primary">Challenge</span>
+        </div>
+        <p class="small text-muted mb-2">From <strong>Aladdin</strong> - "A Whole New World"</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="p-3 bg-light rounded h-100">
+                    <p class="mb-1 fw-bold" style="font-family: 'Roboto Slab', serif;">A whole new world</p>
+                    <p class="mb-1 fw-bold" style="font-family: 'Roboto Slab', serif;">A new fantastic point of view</p>
+                    <p class="mb-1 fw-bold" style="font-family: 'Roboto Slab', serif;">No one to tell us "no"</p>
+                    <p class="mb-1 fw-bold" style="font-family: 'Roboto Slab', serif;">Or where to go</p>
+                    <p class="mb-0 fw-bold" style="font-family: 'Roboto Slab', serif;">Or say we're only dreaming</p>
+                    <hr>
+                    <ul class="list-unstyled small text-muted mb-0">
+                        <li>• Fantastic: 素晴らしい、幻想的な</li>
+                        <li>• Point of view: 視点、景色</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="h-100 d-flex flex-column">
+                    <label class="small fw-bold text-primary mb-1">あなたの言葉で訳してみましょう:</label>
+                    <div class="translation-area flex-grow-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3 no-print">
+        <button onclick="window.print()" class="btn btn-dark shadow-sm">
+            🖨️ Print Sheet (A4)
+        </button>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

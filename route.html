@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>久我山病院 ➡️ 武蔵野大学 ルート決定版</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* カスタムスタイル */
+        body { background-color: #f8f9fa; }
+        .header-section { background-color: #007bff; color: white; padding: 20px 0; margin-bottom: 20px; }
+        .card-route { border-left: 5px solid; transition: transform 0.3s; }
+        .card-route:hover { transform: translateY(-5px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .bg-recommend { background-color: #d4edda; border-left-color: #28a745 !important; }
+        .bg-stable { background-color: #fff3cd; border-left-color: #ffc107 !important; }
+        .bg-quick { background-color: #cfe2ff; border-left-color: #007bff !important; }
+        .metric-box { padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: center; }
+        .metric-box h4 { font-size: 1.2rem; margin-bottom: 0; }
+        .metric-box p { margin-bottom: 0; font-weight: bold; font-size: 1.5rem; }
+        .icon-stage { font-size: 1.2rem; margin-right: 5px; }
+        .stage-box { padding: 10px; margin-bottom: 5px; border-radius: 5px; background-color: #e9ecef; }
+        .legend-color-stable { color: #ffc107; font-weight: bold; }
+        .legend-color-quick { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="header-section">
+    <div class="container">
+        <h1 class="display-5"><i class="fas fa-route"></i> ルート決定版：久我山病院 ➡️ 武蔵野大学</h1>
+        <p class="lead">目標到着時刻 <strong>8:20</strong> / 想定日 2025年11月10日 (月)</p>
+    </div>
+</div>
+
+<div class="container">
+    
+    <section class="mb-5">
+        <h2 class="mb-4 text-primary"><i class="fas fa-star"></i> 総合結論：状況別 最適ルート</h2>
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="card card-route bg-recommend shadow-sm h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-success"><i class="fas fa-bicycle"></i> **晴れ/急ぎ** の最適解</h3>
+                        <p class="card-text text-muted">自己裁量度が高く、トータル最短</p>
+                        <hr>
+                        <h4 class="text-success">🥇 ルート：No. 4 (自転車 + 武蔵境バス)</h4>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-bicycle"></i> **病院 ➡️ 武蔵境駅** (約35分)
+                        </div>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-bus"></i> **武蔵境駅 ➡️ 大学** (約18分)
+                        </div>
+                        <p class="mt-3">⏱️ **最速到着**：8:13 / ⚠️ **遅延リスク**：低</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-route bg-stable shadow-sm h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-warning"><i class="fas fa-umbrella"></i> **雨の日/確実性** の最適解</h3>
+                        <p class="card-text text-muted">バス遅延を最小限に抑える安定策</p>
+                        <hr>
+                        <h4 class="text-warning">🏆 ルート：安定性重視プラン (電車 + 武蔵境バス)</h4>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-train"></i> **久我山 ➡️ 吉祥寺 ➡️ 武蔵境** (電車)
+                        </div>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-bus"></i> **武蔵境駅 ➡️ 大学** (約18分)
+                        </div>
+                        <p class="mt-3">⏱️ **最速到着**：8:05 / ⚠️ **遅延リスク**：極低</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card card-route bg-quick shadow-sm h-100">
+                    <div class="card-body">
+                        <h3 class="card-title text-primary"><i class="fas fa-map-marked-alt"></i> **バス本数重視** の最適解</h3>
+                        <p class="card-text text-muted">短時間で次のバスに乗れる安心感</p>
+                        <hr>
+                        <h4 class="text-primary">✨ ルート：No. 9 (電車 + 吉祥寺バス)</h4>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-train"></i> **久我山 ➡️ 吉祥寺** (井の頭線)
+                        </div>
+                        <div class="stage-box">
+                            <i class="icon-stage fas fa-bus"></i> **吉祥寺駅 ➡️ 大学** (約18分)
+                        </div>
+                        <p class="mt-3">⏱️ **最速到着**：7:53 / ⚠️ **遅延リスク**：高</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <section class="mb-5">
+        <h2 class="mb-4 text-dark"><i class="fas fa-table"></i> 全10ルート 詳細比較リスト</h2>
+        <p class="mb-3 text-muted"><span class="legend-color-stable">安定性重視（遅延リスク低）</span>と<span class="legend-color-quick">スピード重視（バス本数多）</span>を色分けしています。</p>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>パターン</th>
+                        <th>自転車区間</th>
+                        <th>主要乗換駅</th>
+                        <th>バス乗車 (目安)</th>
+                        <th>**大学到着**</th>
+                        <th>遅延リスク</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-warning">
+                        <td>1</td>
+                        <td>自転車 + 短距離バス</td>
+                        <td>桜橋まで (長)</td>
+                        <td>桜橋バス停</td>
+                        <td>**5分**</td>
+                        <td>**8:16**</td>
+                        <td>極低</td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>4</td>
+                        <td>**🏅 自転車終点**</td>
+                        <td>武蔵境駅まで (最長)</td>
+                        <td>武蔵境駅</td>
+                        <td>18分</td>
+                        <td>**8:13**</td>
+                        <td>低</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td>5</td>
+                        <td>電車 + 最短バス</td>
+                        <td>久我山駅まで (短)</td>
+                        <td>武蔵境駅</td>
+                        <td>18分</td>
+                        <td>**8:07**</td>
+                        <td>低</td>
+                    </tr>
+                    <tr class="table-primary">
+                        <td>9</td>
+                        <td>**✨ 最多本数**</td>
+                        <td>久我山駅まで (短)</td>
+                        <td>吉祥寺駅</td>
+                        <td>18分</td>
+                        <td>**7:53**</td>
+                        <td>高</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>電車 + 三鷹バス</td>
+                        <td>久我山駅まで (短)</td>
+                        <td>三鷹駅</td>
+                        <td>21分</td>
+                        <td>**8:08**</td>
+                        <td>中</td>
+                    </tr>
+                    <tr><td>2</td><td>自転車+短バス</td><td>関前三丁目まで</td><td>関前三丁目</td><td>10分</td><td>8:15</td><td>低</td></tr>
+                    <tr><td>3</td><td>自転車+短バス</td><td>柳橋まで</td><td>柳橋</td><td>7分</td><td>8:17</td><td>中</td></tr>
+                    <tr><td>6</td><td>電車+最短バス</td><td>三鷹台駅まで</td><td>武蔵境駅</td><td>18分</td><td>8:07</td><td>低</td></tr>
+                    <tr><td>7</td><td>電車+三鷹バス</td><td>西荻窪駅まで</td><td>三鷹駅</td><td>21分</td><td>8:16</td><td>中</td></tr>
+                    <tr><td>8</td><td>電車+最短バス</td><td>西荻窪駅まで</td><td>武蔵境駅</td><td>18分</td><td>8:07</td><td>低</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="mb-4 text-danger"><i class="fas fa-exclamation-triangle"></i> 特殊分析：道路混雑時の最長遅延リスク</h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="metric-box bg-danger bg-opacity-25">
+                    <h4>吉祥寺駅発バス (No. 9)</h4>
+                    <p class="text-danger">最大遅延推定: 40分〜60分</p>
+                    <p class="text-muted small">通常時18分が、雨天や事故で大幅増の可能性</p>
+                    [Chart: 遅延幅の大きな棒グラフ]
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="metric-box bg-success bg-opacity-25">
+                    <h4>武蔵境駅発バス (No. 4, 5, 6, 8)</h4>
+                    <p class="text-success">最大遅延推定: 10分〜20分</p>
+                    <p class="text-muted small">大学までが短区間であり、安定性が高い</p>
+                    [Chart: 遅延幅の小さな棒グラフ]
+                </div>
+            </div>
+        </div>
+
+        <blockquote class="blockquote mt-4 border-start border-4 border-info ps-3">
+            <p class="mb-0 text-dark"><strong>結論：雨の日は「電車で武蔵境駅」または「自転車で武蔵境駅」</strong>へ向かい、バス乗車時間を短縮することで、大幅な遅延（40分以上）のリスクをほぼ回避できます。</p>
+        </blockquote>
+    </section>
+    
+    <section class="mb-5">
+        <h2 class="mb-4 text-info"><i class="fas fa-map-marked-alt"></i> ルートマップイメージ</h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <p class="text-muted">（実際の地図画像は埋め込めませんが、主要な流れを図示します）</p>
+                
+                <h5 class="text-info">主要な流れ：</h5>
+                <p>久我山病院 → (🚴 **自転車**) → **久我山駅** (井の頭線) → **吉祥寺駅** (JR乗換) → **武蔵境駅** → (🚌 **バス**) → 武蔵野大学</p>
+                <div class="progress" style="height: 30px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">病院-駅(🚴)</div>
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">久我山-吉祥寺-武蔵境(🚂)</div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">武蔵境-大学(🚌)</div>
+                </div>
+                
+                <p class="mt-3">（または、自転車で武蔵境通り沿いのバス停まで直行するルート）</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/xxxxxxxxxx.js" crossorigin="anonymous"></script> 
+</body>
+</html>

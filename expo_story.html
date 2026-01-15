@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enjoy Simple English - World Exposition</title>
+    <!-- Bootstrap 5.3.3 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .script-row {
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px 0;
+            transition: background-color 0.2s;
+        }
+        .script-row:hover {
+            background-color: #ffffff;
+        }
+        .speaker-name {
+            font-weight: bold;
+            color: #0d6efd;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .speaker-dad { color: #198754; } /* Green for Dad */
+        .speaker-kotoha { color: #d63384; } /* Pink for Kotoha */
+        .speaker-mom { color: #fd7e14; } /* Orange for Mom */
+        .speaker-narrator { color: #6c757d; } /* Grey for Narrator */
+        
+        .eng-text {
+            font-size: 1.1rem;
+            color: #212529;
+        }
+        .jp-text {
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        .vocab-badge {
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+        header {
+            background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="text-center shadow-sm">
+        <div class="container">
+            <h1 class="display-5 fw-bold">World Exposition</h1>
+            <p class="lead">Enjoy Simple English - Short Story</p>
+        </div>
+    </header>
+
+    <div class="container mb-5">
+        
+        <!-- Introduction Card -->
+        <div class="card mb-4 shadow-sm border-0">
+            <div class="card-body bg-light">
+                <h5 class="card-title text-primary"><i class="bi bi-info-circle-fill"></i> Introduction</h5>
+                <p class="card-text">
+                    万博（World Exposition）に行きたい女の子「コトハ」と、お弁当屋さんで忙しい「お父さん」の会話です。<br>
+                    物語に出てくる重要な単語：<br>
+                    <span class="badge bg-secondary">Mars (火星)</span>
+                    <span class="badge bg-secondary">Antarctica (南極大陸)</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Script Section -->
+        <div class="card shadow border-0">
+            <div class="card-header bg-white py-3">
+                <h4 class="mb-0 text-primary">Script & Translation</h4>
+            </div>
+            <div class="card-body p-0">
+                <!-- Narrator Intro -->
+                <div class="container-fluid">
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-narrator">Narrator</span>
+                            <p class="eng-text">It's time for Enjoy Simple English. Today's story is "World Exposition". A girl who wants to go to the Expo and her father talking.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">ナレーター</span>
+                            <p class="jp-text">エンジョイ・シンプル・イングリッシュの時間です。今日の物語は「万博（ワールド・エクスポジション）」。万博に行きたい女の子と、その父親の会話です。</p>
+                        </div>
+                    </div>
+
+                    <!-- Dialogue Start -->
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">Dad, we have a problem.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">お父さん、大変なの。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Kotoha, how many times have I told you? You can't come into the shop while I'm preparing food.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">コトハ、何回言ったらわかるんだ？ 食事の準備をしている間は店に入ってきちゃだめだと言っただろう。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">I know, I know, but I need to talk to you.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">わかってる、わかってるよ。でもお父さんと話したいことがあるの。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Okay, what's wrong?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">わかったよ、どうしたんだ？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">You know Yamada, right? My classmate? He has already been there.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">山田くんを知ってるでしょ？ 私のクラスメイトの。彼、もう行ってきたんだって。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Where?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">どこへ？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">The Expo! The World Exposition, right here in Osaka! It started this week on Yumeshima Island.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">万博よ！ 国際博覧会、ここ大阪であるやつ！ 今週、夢洲（ゆめしま）で始まったの。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Oh, that. Okay. Take your school bag and go upstairs. Your mother is waiting for you.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">ああ、それか。わかった。ランドセルを持って2階へ行きなさい。お母さんが待ってるぞ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">Dad!</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">お父さん！</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">What? I'm making bentos. I have to deliver 10 of them in 30 minutes.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">なんだ？ 今、お弁当を作ってるんだ。あと30分で10個配達しなきゃいけないんだよ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">Yamada told me there were flying cars. He saw them at the Expo. Cars that fly in the sky. Can you believe it?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">山田くんが「空飛ぶクルマ」があったって言ってたの。万博で見たんだって。空を飛ぶ車だよ。信じられる？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Ah, I just remembered. I need to put air in your bicycle tires. They are flat.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">あ、思い出した。お前の自転車のタイヤに空気を入れなきゃな。パンク（空気が抜けて）してるんだ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">Dad, Yamada said that one of the overseas pavilions is a must-see. Was it Azerbaijan or Uzbekistan? Anyway, he said it looked really cool and that you can learn about sustainability.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">お父さん、山田くんが海外パビリオンの一つは絶対見るべきだって言ってたの。アゼルバイジャンだったかな、ウズベキスタンだったかな？ とにかく、すごくかっこよくて、サステナビリティ（持続可能性）について学べるんだって。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Is that right. Honey, can you buy onions and eggs when you go to the supermarket?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">そうか。母さん、スーパーに行くとき玉ねぎと卵を買ってきてくれないか？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">And Dad, he told me there was a rock from Mars. It came to Earth over 10,000 years ago. And then it was found in Antarctica about 25 years ago. It's the first time for the rock to be shown in public!</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">それとねお父さん、火星の岩があるんだって。1万年以上前に地球に来て、25年くらい前に南極で見つかったんだって。その岩が一般公開されるのは初めてなの！</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">Dad, are you listening to me?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">お父さん、聞いてるの？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">I hear you. Why are you telling me about this Expo?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">聞こえてるよ。なんで私にそんな万博の話をしてるんだ？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">I have to go! You don't have to take me this month. It can be on a long weekend or during summer vacation. And I don't care if we go in the morning or late at night. I just want to go, please!</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">行かなきゃいけないの！ 今月連れて行ってくれなくていいから。連休でも夏休みでもいいの。朝でも夜遅くても気にしないから。ただ行きたいの、お願い！</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Ah... what about the bento shop? You can take a day off. We are only closed on the first three days of January. It has been like that ever since your grandfather opened this shop. You know that.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">あぁ... 弁当屋はどうするんだ？ 休みは取れるだろ。うちは1月の三が日しか閉めないんだ。おじいちゃんが店を開いてからずっとそうなんだ。知ってるだろ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-kotoha">Kotoha</span>
+                            <p class="eng-text">But the Expo will be finished by then... Fine. I'll go with my friends. Bye.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">コトハ</span>
+                            <p class="jp-text">でもその頃には万博終わっちゃってるよ...。もういい。友達と行くから。バイバイ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">I'm going to go to the supermarket now.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">スーパーに行ってくるわね。</p>
+                        </div>
+                    </div>
+                     <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">Isn't there something we can do?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">何かできることはないのかしら？</p>
+                        </div>
+                    </div>
+                     <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Honey.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">母さん。</p>
+                        </div>
+                    </div>
+                     <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">She wants to go so much.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">あの子、あんなに行きたがってるのに。</p>
+                        </div>
+                    </div>
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Don't worry. I already bought the tickets.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">心配するな。もうチケットは買ってあるよ。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">Really?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">本当に？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">Did you know, my father closed this shop one time outside of January? In 1970, Osaka held an Expo for the first time. He took a day off and took Mom and me to the Expo. So, I thought I would do the same.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">知ってたか？ 親父が1月以外に一度だけ店を閉めたことがあるんだ。1970年、大阪で初めて万博が開かれた時だ。親父は休みを取って、お袋と俺を万博に連れて行ってくれたんだ。だから、俺も同じことをしようと思ってな。</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">Why didn't you tell her?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">なんであの子に言わなかったの？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-dad">Dad</span>
+                            <p class="eng-text">I'm going to tell her on her birthday next week. So, let's keep it a secret until then, okay?</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">父</span>
+                            <p class="jp-text">来週の誕生日に伝えるつもりなんだ。だから、それまでは内緒にしておこう、いいな？</p>
+                        </div>
+                    </div>
+
+                    <div class="row script-row border-bottom-0">
+                        <div class="col-md-6">
+                            <span class="speaker-name speaker-mom">Mom</span>
+                            <p class="eng-text">Of course. Kotoha is going to be so happy.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="speaker-name">母</span>
+                            <p class="jp-text">もちろん。コトハ、すごく喜ぶわね。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Learning Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="mb-4 border-bottom pb-2">English Learning Point</h3>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Useful Phrases</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>How many times have I told you?</strong><br>
+                                「何回言ったらわかるの？」<br>
+                                <small class="text-muted">子供を叱る時などの定番フレーズ。現在完了形を使うことで「過去から今まで何度も言っている」ニュアンスが出ます。</small>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Can you believe it?</strong><br>
+                                「信じられる？」<br>
+                                <small class="text-muted">驚きを共有したい時に使います。ポジティブなことにもネガティブなことにも使えます。</small>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>A must-see</strong><br>
+                                「必見のもの」<br>
+                                <small class="text-muted">観光地やイベントでおすすめする時に便利。 "This movie is a must-see." のように使います。</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Vocabulary & Grammar</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Sustainability</strong><br>
+                                環境保全や持続可能性。近年の万博やビジネスシーンで頻出の重要単語です。
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Flat tires</strong><br>
+                                パンクしたタイヤ。英語では "My bike has a flat tire" や "The tires are flat" と表現します。「Puncture」も使いますが、日常会話ではFlatが一般的。
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Overseas pavilions</strong><br>
+                                海外パビリオン。「Overseas」は「海外の」という形容詞です。
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Cultural Note</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>1970 Osaka Expo vs 2025</strong><br>
+                            物語でお父さんが話していた「1970年の万博」は、日本中が熱狂した伝説的なイベントです（岡本太郎の「太陽の塔」が有名）。<br>
+                            <br>
+                            お父さんにとって、自分の父親（コトハのおじいちゃん）が忙しい仕事を休んで連れて行ってくれた特別な思い出の場所。それを自分の娘にもしてあげたいという、世代を超えた愛情が描かれています。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="alert alert-primary mt-5" role="alert">
+            <h4 class="alert-heading"><i class="bi bi-question-circle"></i> Comprehension Quiz</h4>
+            <p><strong>Q: When is the bento shop usually closed?</strong></p>
+            <hr>
+            <p class="mb-0"><strong>Answer:</strong> It is only closed on the first three days of January. (Jan 1st - 3rd)</p>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <small>&copy; 2025 English Study Script. Based on "Enjoy Simple English".</small>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

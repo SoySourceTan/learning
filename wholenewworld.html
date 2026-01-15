@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Whole New World - Black & White Worksheet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Noto+Sans+JP:wght@400;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        @page {
+            size: A4;
+            margin: 10mm; /* 余白を最小限に */
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            color: #000 !important; /* 完全な黒 */
+            background-color: #fff;
+            -webkit-print-color-adjust: exact;
+            font-size: 10pt; /* 1枚に収めるため少しフォントを小さく */
+        }
+
+        /* Header */
+        .header-section {
+            border-bottom: 2px solid #000;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+        }
+
+        h1 { font-size: 1.8rem; color: #000 !important; }
+
+        /* Singer Styles (Monochrome distinct) */
+        .singer-aladdin { font-weight: 800; } /* 太字 */
+        .singer-jasmine { font-style: italic; font-weight: 500; } /* イタリック */
+        .singer-both { font-weight: 800; text-decoration: underline; } /* 太字＋下線 */
+
+        .singer-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            border: 1px solid #000;
+            padding: 1px 4px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 2px;
+            background: #fff;
+        }
+
+        /* Layout Grid */
+        .lyrics-block {
+            margin-bottom: 12px;
+            break-inside: avoid;
+        }
+
+        .lyrics-text {
+            font-family: 'Roboto Slab', serif;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            padding-right: 5px;
+        }
+
+        /* Note Lines */
+        .notes-area {
+            height: 100%;
+            min-height: 80px; /* 高さを少し抑制 */
+            /* 罫線をグレーで作成 */
+            background-image: linear-gradient(to bottom, transparent 19px, #999 20px);
+            background-size: 100% 20px;
+            line-height: 20px;
+            border-left: 1px dotted #999;
+            margin-left: 5px;
+        }
+
+        /* Column Divider */
+        .col-divider {
+            border-right: 1px solid #ccc;
+            padding-right: 15px;
+        }
+        .col-right-side {
+            padding-left: 15px;
+        }
+
+        /* Legend */
+        .legend-box {
+            border: 1px solid #000;
+            padding: 5px;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            background-color: #f8f9fa; /* 印刷時は薄いグレーまたは白 */
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 9.5pt; }
+            .legend-box { background-color: #fff; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    
+    <div class="header-section row align-items-end">
+        <div class="col-8">
+            <h1 style="font-family: 'Cinzel', serif;">A Whole New World</h1>
+            <p class="mb-0 small">Disney's <em>Aladdin</em> | Listening & Translation Practice</p>
+        </div>
+        <div class="col-4 text-end">
+            <div class="border-bottom border-dark mb-1">Name: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="small">Date: ____/____/____</div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="legend-box text-center">
+                <strong>Singer Key:</strong> &nbsp;
+                <span class="singer-aladdin">Aladdin (Bold)</span> &nbsp; | &nbsp; 
+                <span class="singer-jasmine">Jasmine (Italic)</span> &nbsp; | &nbsp; 
+                <span class="singer-both">Both (Underlined)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-6 col-divider">
+            
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Aladdin</span><br>
+                    <span class="singer-aladdin">
+                    I can show you the world<br>
+                    Shining, shimmering, splendid<br>
+                    Tell me, princess, now when did<br>
+                    You last let your heart decide?
+                    </span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Aladdin</span><br>
+                    <span class="singer-aladdin">
+                    I can open your eyes<br>
+                    Take you wonder by wonder<br>
+                    Over, sideways and under<br>
+                    On a magic carpet ride
+                    </span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Chorus</span><br>
+                    <span class="singer-aladdin">A whole new world</span><br>
+                    <span class="singer-aladdin">A new fantastic point of view</span><br>
+                    <span class="singer-aladdin">No one to tell us "no"</span><br>
+                    <span class="singer-aladdin">Or where to go</span><br>
+                    <span class="singer-aladdin">Or say we're only dreaming</span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Chorus</span><br>
+                    <span class="singer-jasmine">A whole new world</span><br>
+                    <span class="singer-jasmine">A dazzling place I never knew</span><br>
+                    <span class="singer-jasmine">But when I'm way up here</span><br>
+                    <span class="singer-jasmine">It's crystal clear</span><br>
+                    <span class="singer-jasmine">That now I'm in a whole new world with you</span><br>
+                    <span class="singer-aladdin small">(Now I'm in a whole new world with you)</span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+        </div>
+
+        <div class="col-6 col-right-side">
+            
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Jasmine</span><br>
+                    <span class="singer-jasmine">
+                    Unbelievable sights<br>
+                    Indescribable feeling<br>
+                    Soaring, tumbling, freewheeling<br>
+                    Through an endless diamond sky
+                    </span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Duet</span><br>
+                    <span class="singer-jasmine">A whole new world</span> <span class="small">(A: Don't you dare close your eyes)</span><br>
+                    <span class="singer-aladdin">A hundred thousand things to see</span> <span class="small">(J: Hold your breath - it gets better)</span><br>
+                    <span class="singer-both">I'm like a shooting star, I've come so far</span><br>
+                    <span class="singer-both">I can't go back to where I used to be</span><br>
+                    <br>
+                    <span class="singer-aladdin">A whole new world</span> <span class="small">(J: Every turn a surprise)</span><br>
+                    <span class="singer-jasmine">With new horizons to pursue</span> <span class="small">(A: Every moment red-letter)</span><br>
+                    <span class="singer-both">I'll chase them anywhere, there's time to spare</span><br>
+                    <span class="singer-both">Let me share this whole new world with you</span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="row lyrics-block">
+                <div class="col-7 lyrics-text">
+                    <span class="singer-label">Outro</span><br>
+                    <span class="singer-aladdin">A whole new world...</span> <span class="singer-jasmine">(A whole new world)</span><br>
+                    <span class="singer-aladdin">That's where we'll be...</span> <span class="singer-jasmine">(That's where we'll be)</span><br>
+                    <span class="singer-aladdin">A thrilling chase...</span><br>
+                    <span class="singer-jasmine">A wondrous place...</span><br>
+                    <span class="singer-both">For you and me</span>
+                </div>
+                <div class="col-5"><div class="notes-area"></div></div>
+            </div>
+
+            <div class="mt-4 pt-2 border-top border-dark text-end small">
+                 Self Check: &nbsp; Vocab □ &nbsp;&nbsp; Grammar □ &nbsp;&nbsp; Listening □
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-center mt-3 no-print">
+        <button onclick="window.print()" class="btn btn-outline-dark">
+            🖨️ Print Sheet (A4 Black & White)
+        </button>
+    </div>
+
+</div>
+
+</body>
+</html>
