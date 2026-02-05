@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSHIDORI - Teacher's Q&A Guide (JP)</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .header-panel {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .category-title {
+            border-left: 5px solid;
+            padding-left: 15px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .q-card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+            height: 100%; /* Align height */
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+        .answer-area {
+            flex-grow: 1;
+        }
+        .teacher-move {
+            background-color: #e3f2fd;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            color: #0d47a1;
+            margin-top: 15px;
+            border-left: 4px solid #0d47a1;
+        }
+        .answer-direct {
+            color: #198754;
+            font-weight: bold;
+        }
+        .answer-guide {
+            color: #d63384;
+            font-weight: bold;
+        }
+        
+        /* Category Colors */
+        .cat-advanced { border-color: #6610f2; color: #6610f2; }
+        .cat-vocab { border-color: #0d6efd; color: #0d6efd; }
+        .cat-confused { border-color: #fd7e14; color: #fd7e14; }
+        .cat-lost { border-color: #dc3545; color: #dc3545; }
+        .cat-weird { border-color: #198754; color: #198754; }
+    </style>
+</head>
+<body>
+
+    <div class="header-panel text-center">
+        <div class="container">
+            <h1>先生用 Q&A ファシリテーションガイド</h1>
+            <p class="lead">『OSHIDORI』 クラス内質問対応マニュアル</p>
+            <small>日本語クラス向け：返答例と指導のポイント</small>
+        </div>
+    </div>
+
+    <div class="container pb-5">
+
+        <div class="alert alert-light border-start border-4 border-dark mb-4 shadow-sm" role="alert">
+            <h5 class="alert-heading"><i class="bi bi-info-circle-fill"></i> ガイドの使い方</h5>
+            <p class="mb-0">
+                <span class="text-success fw-bold">緑のテキスト</span>は、先生がそのまま生徒に言える「回答例」です。<br>
+                <span class="text-primary fw-bold">青いボックス</span>は、クラス全体を巻き込んで学びを深めるための「指導のヒント（導線）」です。
+            </p>
+        </div>
+
+        <!-- 1. 理解力が高い生徒からの鋭い質問 -->
+        <h3 class="category-title cat-advanced">1. 理解力が高い生徒からの質問（深い内容）</h3>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-chat-quote-fill"></i> "なんで最後、髪を剃ったんですか？（Shaved his head?）"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-chat-left-text"></i> 回答例：</p>
+                            <p>「これはね、『お坊さん（僧侶）になった』という意味なんだよ。昔の日本では、大きな罪を犯したと思った時に、反省して仏門に入るために髪を剃る習慣があったんだ。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-lightbulb"></i> クラスへの問いかけ：</strong><br>
+                            「Sonjoは鳥を食べてしまっただけなのに、どうしてお坊さんになるほど反省したんだと思う？彼が感じた気持ちを想像してみよう。」
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-chat-quote-fill"></i> "夢に出てきた女性は幽霊？それとも鳥の化身？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-guide"><i class="bi bi-chat-left-text"></i> 解説・誘導：</p>
+                            <p>「いいところに気づいたね！実ははっきりとは書いてないんだけど、物語の流れからすると『鳥の魂が人間の姿になって夢に出てきた』と考えるのが自然だね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-search"></i> 証拠探しゲーム：</strong><br>
+                            「彼女がただの人間じゃない証拠がセリフにあるよ。"I sleep alone in the shadow of river grass"（川草の影で寝ている）なんて人間は言うかな？探してみよう！」
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 語彙力・文法が不安な生徒からの質問 -->
+        <h3 class="category-title cat-vocab">2. 語彙力のない生徒からの質問（単語・文法）</h3>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-question-circle"></i> "Tore open...? Tear...? 破る？意味が変じゃないですか？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-chat-left-text"></i> 回答例：</p>
+                            <p>「紙を『破る』って時も使うけど、ここではもっと怖い意味で『（自分の身体を）引き裂く』という意味なんだ。想像すると痛いよね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-body-text"></i> アクションで説明：</strong><br>
+                            ジェスチャーで胸をガッと開くような動作を見せることで、単語の持つ強いイメージを記憶に残させるチャンスです。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-question-circle"></i> "Mutsuって何？英語？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-chat-left-text"></i> 回答例：</p>
+                            <p>「これは英語じゃなくて、昔の日本の地名だよ。『むつの国』って社会科で聞いたことないかな？今の東北地方（青森〜福島あたり）のことだね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-pen"></i> 英語のコツ伝授：</strong><br>
+                            「大文字（A, M, Sなど）で始まっている単語は『名前』だから、辞書で意味を調べなくても、そのまま『ムツ』『ソンジォ』って読めばOKだよ！」と伝える。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. あまりわかっていない質問 -->
+        <h3 class="category-title cat-confused">3. あまりわかっていない人からの質問（勘違い）</h3>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-shuffle"></i> "なんでSonjoは自分の奥さんを殺しちゃったの？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="text-secondary small">※人間の女性を殺したと勘違いしているパターン</p>
+                            <p class="answer-guide"><i class="bi bi-chat-left-text"></i> 修正・解説：</p>
+                            <p>「あ、そこ混乱しやすいよね！ちょっと整理しようか。Sonjoが殺したのは『オスの鳥』だね。で、夢に出てきたのが『人間の姿をしたメスの鳥』なんだ。本当の人間の奥さんじゃないんだよ。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-diagram-3"></i> 板書で図解：</strong><br>
+                            黒板に「Sonjo vs 鳥夫婦」の図を描く。<br>
+                            Male bird = Killed 💀<br>
+                            Female bird = Dream Woman 👩💤<br>
+                            と繋げて視覚的に整理してあげる。
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-shuffle"></i> "これハッピーエンドですよね？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-chat-left-text"></i> 回答例：</p>
+                            <p>「えっ、ハッピーに聞こえた！？ どこでそう思った？ 最後に二人（二羽）とも死んじゃったから、悲しい話（Tragedy）だね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-music-note-beamed"></i> 雰囲気の確認：</strong><br>
+                            「最後のDJ Winさんのセリフを聞いてみよう。『Zotto shimashita（ゾッとしました）』って言ってるね。これは怖い話や悲しい話の時に使う言葉だよね。」と音声を根拠にする。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. チンプンカンプンな質問 -->
+        <h3 class="category-title cat-lost">4. チンプンカンプンな質問（迷子）</h3>
+        <div class="row g-3">
+            <div class="col-md-12">
+                <div class="card q-card border-danger border-opacity-25">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-exclamation-triangle"></i> "これって、お腹が空いたから焼き鳥食べる話ですか？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-emoji-smile"></i> 回答例：</p>
+                            <p>「うん、前半は合ってる！確かにお腹が空いて料理して食べたね。でも、この話の大事なところは『食べた後』なんだよ！食べた日の夜、どうなったんだっけ？」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-arrow-return-left"></i> ストーリーへの引き戻し：</strong><br>
+                            生徒を否定せず、「前半は正解！」と褒めた上で、「その後、枕元に誰か立たなかった？」と質問を返して、クライマックスへ誘導する。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 意味不明な質問 -->
+        <h3 class="category-title cat-weird">5. 意味不明・想定外の質問（珍問・難問）</h3>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-stars"></i> "おしどりって泳げるんですか？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-check-circle"></i> 回答例：</p>
+                            <p>「泳げるよ！おしどりはカモ（duck）の仲間だから水鳥だね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-book"></i> テキストへ誘導：</strong><br>
+                            「いい質問だね、実は本文に証拠が書いてあるよ！ 最初のほうに "swimming together in a river" ってあるから探してみよう！」<br>（どんな質問も英語を読むきっかけにする）
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-stars"></i> "食べた鳥はおいしかったんですか？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-emoji-neutral"></i> 回答例：</p>
+                            <p>「本文には書いてないねぇ（笑）。でもSonjoさん、次の朝ご飯も食べずにすぐ川に行ってるから、味わう余裕もなかったのかもね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-chat-dots"></i> 想像力の活用：</strong><br>
+                            「食べたからこそ、呪いじゃないけど、夢に出てきちゃったのかもね。もし食べてなかったら、夢に出なかったと思う？」と議論に発展させる。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card q-card">
+                    <div class="card-body">
+                        <h6 class="card-title fw-bold"><i class="bi bi-stars"></i> "なんで英語で『KOWAI NA』って言うんですか？"</h6>
+                        <hr>
+                        <div class="answer-area">
+                            <p class="answer-direct"><i class="bi bi-check-circle"></i> 回答例：</p>
+                            <p>「あ、最後のDJのセリフだね！ これはDJが日本人（森崎ウィンさん）だから、思わず日本語が出ちゃったんだね。」</p>
+                        </div>
+                        <div class="teacher-move">
+                            <strong><i class="bi bi-translate"></i> 英語に直しちゃおう：</strong><br>
+                            「じゃあ、これを英語にするなら何て言えばいいかな？ 'It's scary!' とか 'That's creepy!' とか、なんて言う？」と言い換え練習にする。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
